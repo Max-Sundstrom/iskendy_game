@@ -1,0 +1,32 @@
+# Static server inside the game container (ADR-021, INFRASTRUCTURE §0). The shared Caddy on the Iskendi server
+# terminates TLS for play.iskendy.ru and only reverse-proxies here, so security headers live in this repo.
+# ISKENDY_HOST_ORIGIN: the Iskendi guest front-end origin that may frame the game (SECURITY T13).
+{
+	admin off
+	auto_https off
+}
+
+:8080 {
+	root * /srv/kometa
+	encode zstd gzip
+	file_server
+
+	header {
+		# SECURITY T12/T13. 'wasm-unsafe-eval' only for the meshopt/KTX2 decoders; no inline script or style.
+		Content-Security-Policy "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors {$ISKENDY_HOST_ORIGIN}"
+		# Trusted Types observed first; enforced once E2E shows no violations (P0-08).
+		Content-Security-Policy-Report-Only "require-trusted-types-for 'script'"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "strict-origin-when-cross-origin"
+		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self), gamepad=(self), screen-wake-lock=(self)"
+		Cross-Origin-Resource-Policy "same-origin"
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+
+	# Hashed build files never change; entry points always revalidate (INFRASTRUCTURE §4).
+	@immutable path /assets/*
+	header @immutable Cache-Control "public, max-age=31536000, immutable"
+	@entry path / /index.html /sw.js /flags.json
+	header @entry Cache-Control "no-cache"
+}

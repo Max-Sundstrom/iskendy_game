@@ -1,0 +1,52 @@
+# Project rules (SECURITY T12, T14, invariant 11). Run in CI next to the registry rulesets.
+rules:
+  - id: kometa-no-html-injection
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Writing HTML from strings bypasses the CSP/Trusted Types model (SECURITY T12). Use textContent or React.
+    pattern-either:
+      - pattern: $EL.innerHTML = $X
+      - pattern: $EL.outerHTML = $X
+      - pattern: $EL.insertAdjacentHTML(...)
+      - pattern: document.write(...)
+      - pattern: <$TAG dangerouslySetInnerHTML={...} />
+
+  - id: kometa-no-dynamic-code
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: Untrusted input stays data; no eval or Function constructor (invariant 11, SECURITY T12).
+    pattern-either:
+      - pattern: eval(...)
+      - pattern: new Function(...)
+      - pattern: Function(...)
+      - pattern: setTimeout("...", ...)
+      - pattern: setInterval("...", ...)
+
+  - id: kometa-postmessage-wildcard-origin
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: postMessage must name the exact target origin (EMBEDDING §3, SECURITY T14).
+    pattern: $W.postMessage($MSG, "*", ...)
+
+  - id: kometa-message-listener-checks-origin
+    languages: [typescript, javascript]
+    severity: ERROR
+    message: A message listener must check event.origin before using event.data (SECURITY T14).
+    patterns:
+      - pattern-either:
+          - pattern: |
+              $W.addEventListener("message", ($E) => { ... })
+          - pattern: |
+              $W.addEventListener("message", function ($E) { ... })
+      - pattern-not: |
+          $W.addEventListener("message", ($E) => {
+            ...
+            <... $E.origin ...>;
+            ...
+          })
+      - pattern-not: |
+          $W.addEventListener("message", function ($E) {
+            ...
+            <... $E.origin ...>;
+            ...
+          })
