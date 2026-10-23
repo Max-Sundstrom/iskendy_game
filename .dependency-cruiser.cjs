@@ -9,7 +9,7 @@ module.exports = {
       severity: 'error',
       comment: 'packages/sim may import only packages/shared, packages/content and itself.',
       from: { path: '(^|/)packages/sim/' },
-      to: { pathNot: '(^|/)packages/(sim|shared|content)/', dependencyTypesNot: ['type-only'] },
+      to: { pathNot: '(^|/)packages/(sim|shared|content)/' },
     },
     {
       name: 'sim-no-presentation-libs',

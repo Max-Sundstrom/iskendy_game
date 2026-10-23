@@ -2,6 +2,10 @@ packages:
   - apps/*
   - packages/*
 
+# pnpm 12 reads its settings here, not from .npmrc.
+saveExact: true
+engineStrict: true
+
 # Supply-chain rule (SECURITY T15): only versions published at least 14 days ago (value in minutes).
 minimumReleaseAge: 20160
 

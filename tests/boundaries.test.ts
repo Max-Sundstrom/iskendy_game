@@ -4,20 +4,15 @@ import { describe, expect, it } from 'vitest';
 
 // ARCHITECTURE §2: each boundary rule has a fixture that must fail, so a broken rule can't pass silently.
 const FIXTURES = 'tests/fixtures/boundaries';
+const DEPCRUISE = 'node_modules/dependency-cruiser/bin/dependency-cruiser.mjs';
 
 type CruiseViolation = { rule: { name: string }; from: string; to: string };
 
 function cruiseFixtures(): CruiseViolation[] {
-  const bin = process.platform === 'win32' ? 'depcruise.cmd' : 'depcruise';
+  const args = [DEPCRUISE, FIXTURES, '--config', '.dependency-cruiser.cjs', '--output-type', 'json'];
   let output: string;
   try {
-    output = execFileSync(
-      `node_modules/.bin/${bin}`,
-      [FIXTURES, '--config', '.dependency-cruiser.cjs', '--output-type', 'json'],
-      {
-        encoding: 'utf8',
-      },
-    );
+    output = execFileSync(process.execPath, args, { encoding: 'utf8' });
   } catch (error) {
     // depcruise exits non-zero when it finds violations; the JSON report is still on stdout.
     output = (error as { stdout: string }).stdout;
@@ -39,6 +34,7 @@ describe('dependency-cruiser boundaries', () => {
       expect.arrayContaining([
         `${FIXTURES}/packages/sim/src/imports-three.ts -> three`,
         `${FIXTURES}/packages/sim/src/imports-web.ts -> ${FIXTURES}/apps/web/src/engine/renderer.ts`,
+        `${FIXTURES}/packages/sim/src/imports-web-type.ts -> ${FIXTURES}/apps/web/src/engine/renderer.ts`,
       ]),
     );
   });
