@@ -1,0 +1,36 @@
+name: Bug
+description: Something behaves differently from the GDD, a scenario or a test.
+labels: [bug]
+body:
+  - type: input
+    id: scenario
+    attributes:
+      label: Scenario ID
+      description: From docs/SCENARIOS.md, or "new".
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include the seed or attach a replay file if you have one.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected vs actual
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device, browser, build
+      placeholder: iPhone 13, Safari 19, web 0.1.0 (embedded in Iskendi)
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Screenshots, video or logs
+      description: No personal data, tokens or promo codes from real guests.

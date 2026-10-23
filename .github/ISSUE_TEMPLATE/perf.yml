@@ -1,0 +1,25 @@
+name: Performance
+description: Frame time, memory, load time or bundle size outside the budgets.
+labels: [perf]
+body:
+  - type: input
+    id: device
+    attributes:
+      label: Device and quality tier
+      placeholder: Pixel 6a, Mid, Chrome 141
+    validations:
+      required: true
+  - type: textarea
+    id: numbers
+    attributes:
+      label: Measured vs budget (ARCHITECTURE §12)
+      description: p95 frame time, draw calls, triangles, heap, load time — whatever applies.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: Seed, distance, biome, perf:smoke report or a trace.
+    validations:
+      required: true
