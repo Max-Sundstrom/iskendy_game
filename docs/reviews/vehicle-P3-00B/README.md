@@ -103,6 +103,12 @@ late-game density, High-profile 90-second timing, physical-device performance, G
 pauses remain unmeasured. No simulation, golden or cross-engine fixture changes are required for this card.
 
 The measured runtime tree IDs are `7dba25cab43fb330efb313a5b7c415367a7c1cba` for `apps/web/src` and
-`71be3dffae7e4f5f8c1e99446a535bb31741befa` for `packages`. Rebase provenance is recorded below after
-the final perf-base update; these report measurements are not relabelled as a new run.
+`71be3dffae7e4f5f8c1e99446a535bb31741befa` for `packages`. After rebasing onto perf head
+`cbf084b452b2c62825af8b9dce347de270c8ab55`, both tree IDs match exactly and
+`git diff --exit-code a16f8ee4af95d1a50f6ed770356671c83690fbaa HEAD -- apps/web/src packages` is empty.
+The base update changes only perf cleanup tooling, its tests and documentation. Game runtime is identical
+to the measured source; the preserved report measurements are not relabelled as a new run.
 
+The branch is stacked on [P0-09 draft PR #2](https://github.com/Max-Sundstrom/iskendy_game/pull/2).
+Its independent visual acceptance covers the implementation for draft review. CI on the published model
+branch and eventual owner design review are separate gates; this card does not authorize merge or deployment.
