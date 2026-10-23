@@ -1,12 +1,15 @@
 import { SimEventKind, type SimTuning } from '@kometa/shared';
 import { emit } from './events';
 import { jumpPhysics } from './jump';
+import { cosHalfTurn } from './math';
 import { crash, CrashCause } from './outcome';
 import type { SimState } from './state';
+import { COS_HALF_TURN_ERROR } from './tables';
 
 // Front flips and landing grades (GDD §5.6–5.7). Pressing Jump again in the air starts a 360° front flip that is
 // committed once started; another press during a flip queues one more. The angle from upright at touchdown grades
-// the landing: PERFECT ≤ 12°, STUNT ≤ 35°, SLOPPY ≤ 75° (speed penalty), worse is a crash. Barrel rolls: P2-02.
+// the landing: PERFECT ≤ 12°, STUNT ≤ 35°, SLOPPY ≤ 75° (speed penalty), worse is a crash. Mixed-axis grading
+// defaults to upright AND forward; the explicit upVector mode ignores heading (GDD §5.7 / DECISIONS Q23).
 
 export const LandingGrade = { perfect: 1, stunt: 2, sloppy: 3 } as const;
 
@@ -60,29 +63,63 @@ export function uprightErrorDeg(flipTurns: number): number {
   return Math.abs(frac) * 360;
 }
 
-/** Grades a touchdown on any surface. Plain jumps (no flip) aren't graded. Returns false if the landing crashed. */
-export function gradeLanding(state: SimState, tuning: SimTuning): boolean {
+/** Whether the trick orientation lies inside an inclusive landing bound, without inverse trig in the sim. */
+export function withinLandingAngle(
+  flipTurns: number,
+  rollTurns: number,
+  maxDeg: number,
+  mode: SimTuning['landing']['orientationMode'],
+): boolean {
+  const pitch = uprightErrorDeg(flipTurns);
+  const roll = uprightErrorDeg(rollTurns);
+  // Preserve existing G6 degree boundaries exactly when one axis is an integer number of turns.
+  if (pitch === 0 || roll === 0) return Math.max(pitch, roll) <= maxDeg + 1e-9;
+  const cp = cosHalfTurn(flipTurns);
+  const cr = cosHalfTurn(rollTurns);
+  const limit = cosHalfTurn(maxDeg / 360);
+  const roundoff = 16 * Number.EPSILON;
+  if (mode === 'uprightForward') {
+    // Two interpolated factors plus one interpolated threshold: at most 3 table-error bounds.
+    return cp * cr + 3 * COS_HALF_TURN_ERROR + roundoff >= limit;
+  }
+  // cos(full angle) = 2*cos(half angle)^2 - 1; each error is <=4E, including the threshold.
+  // Keep the sign: abs would incorrectly accept a single upside-down axis.
+  return (2 * cp * cp - 1) * (2 * cr * cr - 1) + 12 * COS_HALF_TURN_ERROR + roundoff >= 2 * limit * limit - 1;
+}
+
+function resetLandedTricks(state: SimState): void {
   const p = state.player;
-  const tricked = p.flipping || p.flipsDone > 0;
-  const angle = uprightErrorDeg(p.flipTurns);
-  const flips = p.flipsDone;
   p.flipping = false;
   p.flipQueued = false;
   p.flipTurns = 0;
   p.flipsDone = 0;
-  if (!tricked) return true;
+  p.rolling = false;
+  p.rollQueuedDir = 0;
+  p.rollTurns = 0;
+  p.rollTargetTurns = 0;
+  p.rollsDone = 0;
+}
+
+/** Grades a touchdown on any surface; a failed landing preserves its exact terminal pitch/roll. */
+export function gradeLanding(state: SimState, tuning: SimTuning): boolean {
+  const p = state.player;
+  const tricked = p.flipping || p.flipsDone > 0 || p.rolling || p.rollsDone > 0;
+  const flips = p.flipsDone;
+  if (!tricked) {
+    resetLandedTricks(state);
+    return true;
+  }
   const l = tuning.landing;
-  const EPS = 1e-9; // bounds are inclusive (G6); turns→degrees isn't exact in floating point
-  if (angle > l.sloppyMaxDeg + EPS) {
+  if (!withinLandingAngle(p.flipTurns, p.rollTurns, l.sloppyMaxDeg, l.orientationMode)) {
     crash(state, CrashCause.landing);
     return false;
   }
-  const grade =
-    angle <= l.perfectMaxDeg + EPS
-      ? LandingGrade.perfect
-      : angle <= l.stuntMaxDeg + EPS
-        ? LandingGrade.stunt
-        : LandingGrade.sloppy;
+  const grade = withinLandingAngle(p.flipTurns, p.rollTurns, l.perfectMaxDeg, l.orientationMode)
+    ? LandingGrade.perfect
+    : withinLandingAngle(p.flipTurns, p.rollTurns, l.stuntMaxDeg, l.orientationMode)
+      ? LandingGrade.stunt
+      : LandingGrade.sloppy;
+  resetLandedTricks(state);
   if (grade === LandingGrade.sloppy) {
     p.penaltyS = tuning.speed.sloppyPenaltyDurationS;
     p.penaltyFactor = tuning.speed.sloppyPenalty;

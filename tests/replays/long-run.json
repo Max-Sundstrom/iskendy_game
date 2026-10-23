@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "simVersion": 1,
   "seed": 1234,
-  "tuningHash": "38343d240df13aa3",
+  "tuningHash": "9e2e6e03faddfbea",
   "mode": "endless",
   "ticks": 2070,
   "inputs": [
@@ -43,5 +43,5 @@
   ],
   "claimedScore": 1531,
   "claimedDistanceM": 1531.9897301506035,
-  "finalHash": "a6039b65"
+  "finalHash": "c82fb955"
 }

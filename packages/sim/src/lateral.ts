@@ -1,6 +1,7 @@
 import { SimEventKind, type SimTuning } from '@kometa/shared';
 import { emit } from './events';
 import { easeOutCubic } from './math';
+import { requestRoll } from './roll';
 import { laneCenterX, type SimState } from './state';
 
 // Lane changes (GDD §5.1, scenarios G1–G2).
@@ -18,6 +19,7 @@ function startLaneChange(state: SimState, tuning: SimTuning, dir: number): void 
   p.laneT = 0;
   p.changing = true;
   emit(state.events, SimEventKind.laneChangeStarted, p.laneFrom, p.laneTo);
+  requestRoll(state, tuning, dir);
 }
 
 export function requestLaneChange(state: SimState, tuning: SimTuning, dir: number): void {

@@ -62,6 +62,11 @@ export function stateHash(s: SimState): string {
   h = mixNumber(h, p.penaltyFactor);
   h = mixNumber(h, p.flipTurns);
   h = mixWord(h, (p.flipping ? 1 : 0) | (p.flipQueued ? 2 : 0) | (p.flipsDone << 2));
+  h = mixNumber(h, p.rollTurns);
+  h = mixNumber(h, p.rollTargetTurns);
+  h = mixWord(h, p.rolling ? 1 : 0);
+  h = mixWord(h, p.rollQueuedDir & 0xff);
+  h = mixWord(h, p.rollsDone);
   h = mixNumber(h, s.director.nextRowM);
   h = mixNumber(h, s.score.total);
   const t = s.traffic;
