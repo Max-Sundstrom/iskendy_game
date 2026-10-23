@@ -21,6 +21,17 @@ export type PlayerState = {
   z: number;
   distanceM: number;
   speedMps: number;
+  y: number;
+  vy: number;
+  airborne: boolean;
+  flying: boolean;
+  slamming: boolean;
+  boosting: boolean;
+  /** How long Jump has been held since it was pressed while airborne; fly starts past holdThresholdS. */
+  jumpHeldS: number;
+  /** Remaining jump-buffer time from a press made in the air (GDD §4, scenario G3). */
+  jumpBufferS: number;
+  airLiters: number;
 };
 
 export type SimState = {
@@ -58,6 +69,15 @@ export function createSimState(seed: number, tuning: SimTuning): SimState {
       z: 0,
       distanceM: 0,
       speedMps: tuning.speed.minMps,
+      y: 0,
+      vy: 0,
+      airborne: false,
+      flying: false,
+      slamming: false,
+      boosting: false,
+      jumpHeldS: 0,
+      jumpBufferS: 0,
+      airLiters: tuning.air.startL,
     },
     rng: { director: createRng(seed, 1), pickups: createRng(seed, 2) },
     events: createEventBuffer(),

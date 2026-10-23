@@ -20,3 +20,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · D0-1…D0-4 · Orchestrator · Design lab (apps/lab) with art board, A/B/C blockouts + liveries, style-test chunk with frame-time readout, HUD/results frames; 28 captures in docs/reviews/art-D0; owner review page published; D0-5 sign-off open.
 - 2026-10-23 · D0-5 · Owner · Design Agreement signed (ADR-023); hard gate open, P1 starts.
 - 2026-10-23 · P1-01 · Orchestrator · Sim core: seeded RNG, LUT speed curve, lanes and lane change (G1/G2), origin shift, state hash; 10 000-tick hash identical in Node and Chromium.
+- 2026-10-23 · P1-02 · Orchestrator · Jump (exact kinematics), fly with glide easing and ceiling, slam, boost, AIR costs/regen; G3, G5; goldens logged under ADR-024.

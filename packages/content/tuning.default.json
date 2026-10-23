@@ -31,6 +31,7 @@
     "fly": {
       "holdThresholdS": 0.15,
       "glideVyMps": -1.0,
+      "glideEaseS": 0.25,
       "maxAltitudeM": 9.0,
       "airCostLps": 60
     },

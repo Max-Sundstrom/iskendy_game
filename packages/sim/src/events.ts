@@ -4,6 +4,9 @@ import { SimEventKind, type SimEvent } from '@kometa/shared';
 
 const CAPACITY = 32;
 
+/** Index = FlyStop code from vertical.ts. */
+const FLY_STOP_REASONS = [undefined, 'released', 'airEmpty', 'slam', 'landed'] as const;
+
 export type EventBuffer = {
   count: number;
   readonly kind: Uint8Array;
@@ -42,6 +45,24 @@ export function readEvents(buf: EventBuffer): SimEvent[] {
         break;
       case SimEventKind.originShift:
         out.push({ kind: 'originShift', dz: a });
+        break;
+      case SimEventKind.jump:
+        out.push({ kind: 'jump' });
+        break;
+      case SimEventKind.flyStart:
+        out.push({ kind: 'flyStart' });
+        break;
+      case SimEventKind.flyStop:
+        out.push({ kind: 'flyStop', reason: FLY_STOP_REASONS[a] ?? 'released' });
+        break;
+      case SimEventKind.slam:
+        out.push({ kind: 'slam' });
+        break;
+      case SimEventKind.land:
+        out.push({ kind: 'land', slam: a === 1 });
+        break;
+      case SimEventKind.airEmpty:
+        out.push({ kind: 'airEmpty' });
         break;
     }
   }

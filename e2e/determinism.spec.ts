@@ -7,5 +7,5 @@ test.skip(Boolean(process.env['BASE_URL']), 'probe page exists only on the dev s
 test('the sim hashes the same in the browser as in Node', async ({ page }) => {
   await page.goto('/test/determinism.html?seed=7&ticks=10000');
   await expect(page.locator('body')).toHaveAttribute('data-tick', '10000');
-  await expect(page.locator('body')).toHaveAttribute('data-hash', 'eb26e68b');
+  await expect(page.locator('body')).toHaveAttribute('data-hash', '6ae1d455');
 });

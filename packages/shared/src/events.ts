@@ -6,6 +6,12 @@ export const SimEventKind = {
   laneChangeQueued: 2,
   laneBump: 3,
   originShift: 4,
+  jump: 5,
+  flyStart: 6,
+  flyStop: 7,
+  slam: 8,
+  land: 9,
+  airEmpty: 10,
 } as const;
 
 export type SimEventKind = (typeof SimEventKind)[keyof typeof SimEventKind];
@@ -15,4 +21,10 @@ export type SimEvent =
   | { kind: 'laneChangeStarted'; fromLane: number; toLane: number }
   | { kind: 'laneChangeQueued'; toLane: number }
   | { kind: 'laneBump'; direction: -1 | 1 }
-  | { kind: 'originShift'; dz: number };
+  | { kind: 'originShift'; dz: number }
+  | { kind: 'jump' }
+  | { kind: 'flyStart' }
+  | { kind: 'flyStop'; reason: 'released' | 'airEmpty' | 'slam' | 'landed' }
+  | { kind: 'slam' }
+  | { kind: 'land'; slam: boolean }
+  | { kind: 'airEmpty' };
