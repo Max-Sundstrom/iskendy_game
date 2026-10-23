@@ -47,10 +47,11 @@ export function createSession(seed: number, tuning: SimTuning = DEFAULT_TUNING.s
   return { tuning, state, prev, frameEvents: [], recorder: createRecorder(seed, tuning) };
 }
 
-/** Runs `steps` sim steps with the held input; keeps the snapshot before the last one for interpolation. */
-export function advance(session: Session, steps: number, held: number): void {
+/** Samples input once per actual sim tick, recording that mask; keeps the preceding snapshot for interpolation. */
+export function advance(session: Session, steps: number, input: number | (() => number)): void {
   session.frameEvents.length = 0;
   for (let i = 0; i < steps && session.state.status === SimStatus.running; i++) {
+    const held = typeof input === 'number' ? input : input();
     snapshot(session.state, session.prev);
     session.recorder.record(held);
     step(session.state, held, session.tuning);

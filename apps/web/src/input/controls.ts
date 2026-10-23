@@ -1,13 +1,17 @@
 import { Action } from '@kometa/sim';
 
-// One place that turns devices into the held action mask the sim reads (GDD §4). A press shorter than a frame — a
-// quick key tap or a swipe — is latched until a sim step has seen it, so no input is ever lost between frames.
+// Devices enqueue presses; each sim tick samples a held mask (GDD §4). Repeated taps need a release tick between
+// them, even when both physical events arrived between frames, because the sim derives presses from mask edges.
+
+const ACTIONS = Object.values(Action);
 
 export type Controls = {
-  /** Mask for this frame's steps: held actions plus latched presses. */
+  /** Mask for the next sim tick; reading alone never consumes input. */
   held(): number;
-  /** Call after a frame that ran at least one step: latched presses are released. */
+  /** Commit exactly one tick's mask. */
   consume(): void;
+  /** Read and consume the next tick's mask. Pass this stable function to the session. */
+  sample(): number;
   press(bit: number): void;
   hold(bit: number, down: boolean): void;
   releaseAll(): void;
@@ -15,26 +19,56 @@ export type Controls = {
 
 export function createControls(): Controls {
   let down = 0;
-  let latched = 0;
+  let sampled = 0;
+  const pending = new Float64Array(ACTIONS.length);
+  const enqueue = (bits: number) => {
+    for (let i = 0; i < ACTIONS.length; i++) {
+      const bit = ACTIONS[i] ?? 0;
+      if ((bits & bit) !== 0) pending[i] = (pending[i] ?? 0) + 1;
+    }
+  };
+  const held = () => {
+    let mask = down;
+    for (let i = 0; i < ACTIONS.length; i++) {
+      if ((pending[i] ?? 0) === 0) continue;
+      const bit = ACTIONS[i] ?? 0;
+      // A real release/repress must reach the sim as two separate edges, not one uninterrupted hold.
+      if ((sampled & bit) !== 0) mask &= ~bit;
+      else mask |= bit;
+    }
+    return mask;
+  };
+  const consume = () => {
+    const mask = held();
+    for (let i = 0; i < ACTIONS.length; i++) {
+      const bit = ACTIONS[i] ?? 0;
+      if ((mask & bit) !== 0 && (pending[i] ?? 0) > 0) pending[i] = (pending[i] ?? 0) - 1;
+    }
+    sampled = mask;
+  };
   return {
-    held: () => down | latched,
-    consume: () => {
-      latched = 0;
+    held,
+    consume,
+    sample: () => {
+      const mask = held();
+      consume();
+      return mask;
     },
     press: (bit) => {
-      latched |= bit;
+      enqueue(bit & ~down);
     },
     hold: (bit, isDown) => {
       if (isDown) {
+        enqueue(bit & ~down);
         down |= bit;
-        latched |= bit;
       } else {
         down &= ~bit;
       }
     },
     releaseAll: () => {
       down = 0;
-      latched = 0;
+      pending.fill(0);
+      // Keep sampled until the next tick: a press just after blur still needs to release the sim's old hold.
     },
   };
 }

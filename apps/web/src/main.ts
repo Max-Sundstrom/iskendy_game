@@ -138,8 +138,7 @@ if (root && canvas) {
     }
     if (!paused && screen === 'playing') {
       const steps = stepsForFrame(acc, frameS);
-      advance(session, steps, controls.held());
-      if (steps > 0) controls.consume();
+      advance(session, steps, controls.sample);
       if (session.state.status === SimStatus.crashed) finish();
     }
     const s = session.state;

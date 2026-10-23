@@ -96,8 +96,19 @@ test('a double tap or double Space jumps and flips', async ({ page, isMobile }) 
   await press();
   // The second press must reach a sim step after the first: wait until the car is in the air.
   await expect(app).toHaveAttribute('data-air', '1', { timeout: 10_000 });
-  await press();
-  await expect
-    .poll(async () => Number(await app.getAttribute('data-flip')), { timeout: 10_000, intervals: [16] })
-    .toBeGreaterThan(0);
+  // Observe in the browser before sending input: software rendering can delay the key API and locator replies
+  // until after the flip lands and its angle resets. The actual positive angle must still be rendered.
+  const [flip] = await Promise.all([
+    page.waitForFunction(
+      () => {
+        const turns = Number(document.getElementById('app')?.dataset['flip']);
+        return turns > 0 ? turns : false;
+      },
+      undefined,
+      { timeout: 10_000, polling: 'raf' },
+    ),
+    press(),
+  ]);
+  expect(await flip.jsonValue()).toBeGreaterThan(0);
+  await flip.dispose();
 });
