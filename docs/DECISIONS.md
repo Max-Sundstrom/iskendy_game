@@ -72,7 +72,7 @@ Portrait primary on phones, landscape supported; desktop uses keyboard with opti
 
 ---
 
-## ADR-009 · proposed · Visual direction "Moscow Vice"
+## ADR-009 · accepted (ADR-023) · Visual direction "Moscow Vice"
 Fictional Moscow-inspired city (Kometograd) with a GTA VI–trailer mood; archetypes not replicas; strict IP
 guardrails. Details: ART_DIRECTION.md. **Needs Design Agreement (D0-5).**
 
@@ -162,6 +162,16 @@ The owner approved Architecture v1.0 and the hosting proposal in writing: "ут�
 - The defaults of open questions 3, 5, 6, 7, 8, 12, 14, 16, 17, 18 and 19, listed on the signed page, become
   decisions. Any of them can be reopened by the owner with a new ADR.
 
+## ADR-023 · accepted · Design Agreement signed (owner, 2026-10-23)
+The owner approved the D0 evidence (`docs/reviews/art-D0/`, review page) in writing: "Давай подтверждаю продолжай".
+- Accepted: the "Moscow Vice" palette and per-biome grading, the world archetypes and landmark rule, vehicle concept
+  B "Samodelka" with the A details, the four liveries (Iskendi Courier default in v1), the HUD and results frames,
+  and the IP guardrails. ADR-009 (visual direction) is accepted with it. AgX tone mapping is chosen.
+- Item 5 (p95 ≤ 16.7 ms on the Mid phone) is still to be measured. It moves into P1-04's acceptance, on the real
+  renderer, and becomes a release gate (P7-02) if a phone readout misses the budget.
+- Consequence: the hard gate is open; P1 starts. Courier roof ornament: our own placeholder pattern until the
+  owner supplies one (open question 20).
+
 ## Open questions (owner) — defaults are used until answered
 
 Since ADR-022 every default in this table is an accepted decision; a new owner answer supersedes it.
@@ -186,6 +196,7 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
 | 16 | Promo code rules: when it appears, format, whether the host page shows it too | After every finished run; format `ISK-XXXX-XXXX` from a CSPRNG (Crockford Base32, ARCHITECTURE §11); shown on the results screen and sent to the host in `game.runEnded.promoCode`; display only, no value until server-issued |
 | 17 | Telemetry in v1: does the game collect gameplay analytics? | No: no analytics in the game and no third-party scripts on its origin. The host may record its own analytics goals from `game.ready`, `game.runEnded` (without the promo code) and `game.error` |
 | 18 | Error reporting in v1 | No reporting service; fatal errors reach the host as `game.error { code }`; Caddy access logs on the server. Revisit before a public build |
+| 20 | Ornament on the Iskendi Courier roof livery | Our own pattern in Iskendi orange and cream, made for KOMETA; replaced if the owner supplies the brand ornament |
 | 19 | Share button on the results screen in v1 | Hidden: there is no public standalone build for a share link to open, and a share image would spread the promo code. Share returns with the standalone build |
 
 ## Change log
@@ -197,4 +208,5 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
 - 2026-10-23 — Owner answers: no ranking in v1, car concept left to the orchestrator (B chosen), hosting in Russia (ADR-019).
 - 2026-10-23 — Owner answers: crash ends the run, results with score + Retry, unique promo code shown (meaning later), all bonus mechanics in v1 (ADR-020); Q16 added.
 - 2026-10-23 — A-07 consistency review (`docs/reviews/consistency-A07-2026-10-23.md`): docs aligned to the v1 scope and marked v1.0 RC; ADR-017 clarified; ADR-021 (hosting) proposed; Q7 default updated; Q17–Q19 added; night batch ≤ 3 cards.
+- 2026-10-23 — Owner signed the Design Agreement (ADR-023); P1 starts; phone p95 moves into P1-04; Q20 added.
 - 2026-10-23 — Owner signed Architecture v1.0 and the hosting (ADR-022): docs v1.0, ADR-021 accepted, open-question defaults accepted.

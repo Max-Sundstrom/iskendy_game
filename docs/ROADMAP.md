@@ -189,9 +189,9 @@ paints · daily missions · Route mode with a destination and story endings · g
 | Phase | Status | Notes |
 |---|---|---|
 | A | **signed 2026-10-23** (ADR-022) | Architecture v1.0; defaults accepted; A-04 = ADR-021; A-06 moved into P1-01 |
-| D0 | **awaiting owner sign-off** | D0-1…D0-4 evidence ready (`docs/reviews/art-D0/`, review page linked there); D0-5 needs the owner's signature and a phone p95 readout |
+| D0 | **signed 2026-10-23** (ADR-023) | evidence in `docs/reviews/art-D0/`; phone p95 measured in P1-04 |
 | P0 | **done** (2026-10-23) | P0-01…P0-08; P0-06 table keeps filling as libraries arrive; server setup is an owner action (`docs/runbooks/deploy-game-origin.md`); P1+ waits for D0 |
-| P1 | not started | |
+| P1 | in progress | gate open (A and D0 signed); P1-01 first |
 | P2 | not started | |
 | P3 | not started | |
 | P4 | not started | |
