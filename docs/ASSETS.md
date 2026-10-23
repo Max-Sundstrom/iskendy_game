@@ -65,7 +65,7 @@ high-poly visualisation models that would need full retopology anyway and still 
   structure the game needs (separate wheels, thruster sockets, flip pivot, LODs).
 - **Traffic:** Kenney Car Kit (CC0) restyled + 4 original Soviet-inspired bodies built in Blender with the
   same pipeline + selected CC-BY models above.
-- **Environment:** Kenney kits + Panelka (CC-BY) + custom props for the biomes in ART_DIRECTION §5–§6 (ski-jump hill,
+- **Environment:** Kenney kits + Panelka (CC-BY) + custom props for the biomes in ART_DIRECTION §5–§6 (launch gantry,
   Cosmos Park rocket, arch bridge, ring-road tunnels, kiosks). The v0.1 launch gantry and palms are dropped.
 
 ---
@@ -193,7 +193,7 @@ materials; export `.glb` (+Y up); write a JSON report next to the file.
 
 **Environment kit (custom, modular):** embankment segments, steel arch bridge, stepped spire tower archetype,
 glass tower cluster, TV-needle archetype (far backdrop only), panel blocks (Panelka CC-BY + variants), kiosks,
-bus stops, lamp posts, trolley wires, billboards (brand slots), ski-jump intro ramp, Cosmos Park rocket.
+bus stops, lamp posts, trolley wires, billboards (brand slots), launch gantry and ramp, Cosmos Park rocket.
 All archetypes are original; no faithful replicas of named landmarks (ART_DIRECTION §5).
 
 All share the palette atlas, use generic proportions, carry no badges or real names, and get unique

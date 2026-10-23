@@ -1,45 +1,48 @@
 import art from '@kometa/content/art.json';
 import { laneCenterX, TRAFFIC_CAPACITY, type Traffic } from '@kometa/sim';
 import type { SimTuning } from '@kometa/shared';
-import { BoxGeometry, Color, InstancedMesh, Matrix4, MeshStandardMaterial, Quaternion, Vector3 } from 'three';
+import { Color, Group, InstancedMesh, Matrix4 } from 'three';
+import { vehicleGeometry } from './models';
+import { vehicleMaterial } from './models/parts';
 
-// Grey-box traffic: one instanced unit box scaled per vehicle type — one draw call for all 64 slots (invariant 5).
+// Traffic: one instanced mesh per vehicle type (13 draw calls at most, invariant 5). Each frame the active sim slots
+// are packed into their type's mesh; a slot keeps its paint colour for as long as it lives.
 
-export type TrafficView = { mesh: InstancedMesh; update(traffic: Traffic, prevZ: Float64Array, alpha: number): void };
+export type TrafficView = { group: Group; update(traffic: Traffic, prevZ: Float64Array, alpha: number): void };
 
 export function createTrafficView(tuning: SimTuning): TrafficView {
-  const geometry = new BoxGeometry(1, 1, 1);
-  geometry.translate(0, 0.5, -0.5); // origin at the rear bottom centre; length runs toward three −z (sim +z)
-  const mesh = new InstancedMesh(
-    geometry,
-    new MeshStandardMaterial({ roughness: 0.35, metalness: 0.1 }),
-    TRAFFIC_CAPACITY,
-  );
-  mesh.castShadow = true;
-  mesh.frustumCulled = false;
+  const group = new Group();
+  const material = vehicleMaterial();
+  const meshes = tuning.vehicles.map((_, type) => {
+    const mesh = new InstancedMesh(vehicleGeometry(tuning, type), material, TRAFFIC_CAPACITY);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    mesh.frustumCulled = false; // instances span the whole road; the bounding sphere is the template's
+    mesh.count = 0;
+    group.add(mesh);
+    return mesh;
+  });
   const colors = art.traffic.map((c) => new Color(c));
   const m = new Matrix4();
-  const pos = new Vector3();
-  const scale = new Vector3();
-  const rot = new Quaternion();
-  const hidden = new Matrix4().makeScale(0, 0, 0);
-  for (let i = 0; i < TRAFFIC_CAPACITY; i++) mesh.setColorAt(i, colors[(i * 7) % colors.length] ?? new Color());
 
   return {
-    mesh,
+    group,
     update(traffic, prevZ, alpha) {
+      for (const mesh of meshes) mesh.count = 0;
       for (let i = 0; i < TRAFFIC_CAPACITY; i++) {
-        const v = tuning.vehicles[traffic.type[i] ?? 0];
-        if (traffic.active[i] === 0 || !v) {
-          mesh.setMatrixAt(i, hidden);
-          continue;
-        }
+        if (traffic.active[i] === 0) continue;
+        const mesh = meshes[traffic.type[i] ?? 0];
+        if (!mesh) continue;
         const z = (prevZ[i] ?? 0) + ((traffic.z[i] ?? 0) - (prevZ[i] ?? 0)) * alpha;
-        pos.set(laneCenterX(traffic.lane[i] ?? 0, tuning), 0, -z);
-        scale.set(v.widthM, v.heightM, v.lengthM);
-        mesh.setMatrixAt(i, m.compose(pos, rot, scale));
+        const k = mesh.count++;
+        mesh.setMatrixAt(k, m.makeTranslation(laneCenterX(traffic.lane[i] ?? 0, tuning), 0, -z));
+        const color = colors[(i * 7) % colors.length];
+        if (color) mesh.setColorAt(k, color);
       }
-      mesh.instanceMatrix.needsUpdate = true;
+      for (const mesh of meshes) {
+        mesh.instanceMatrix.needsUpdate = true;
+        if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+      }
     },
   };
 }

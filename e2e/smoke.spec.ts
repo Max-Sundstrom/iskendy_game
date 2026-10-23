@@ -23,7 +23,7 @@ test('the game boots, renders and drives forward', async ({ page }) => {
   await expect(app).toHaveAttribute('data-sim-version', /^[1-9]\d*$/);
   await expect(page.locator('#game')).toBeVisible();
   await expect
-    .poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 15_000 })
+    .poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 30_000 }) // after the 3.6 s intro
     .toBeGreaterThan(20);
   expect(await page.evaluate(() => window.__cspViolations)).toEqual([]);
   expect(errors).toEqual([]);

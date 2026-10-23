@@ -187,6 +187,26 @@ bumps `SIM_VERSION` (invariant 10).
 | 2026-10-23 | P1-05 | determinism `cb0aae87-91cfb58f` | `score.total` (1 point per metre, GDD §9) joins the state; events, streaks and the pot follow in P2-03 |
 | 2026-10-23 | P1-03 | determinism `7083bcea-3e3cf928` (now a session with restarts after crashes); tuningHash `38343d24…` | traffic, director v0, collisions; new keys `sim.player`, `sim.traffic`, `sim.vehicles`, `sim.director.firstRowM/spawnAheadM/despawnBehindM` |
 
+## ADR-026 · accepted · Owner playtest feedback: launch gantry intro and a visual slice before P2 (owner, 2026-10-23)
+After playing the P1 build, the owner asked for:
+- BOOST that visibly works;
+- a far more detailed, more realistic car and world;
+- a start like the reference: the car on a ramp, a countdown, then the run;
+- vapour jets from the nozzles by the wheels, as in the reference roadster's cold-gas thruster concept;
+- obstacles of many vehicle types from cars to trucks;
+- the reference's movement mechanics and physics reproduced exactly.
+
+Decisions:
+- **Intro:** a steel truss launch gantry with a curved ramp and the 3-2-1, as in the reference, replaces the ski-jump hill
+  of ART_DIRECTION §5 (GDD §2/§12 updated). The structure is a generic gantry, not a copy of the reference's layout.
+- **Visual slice first:** P3-00 pulls the art work forward with procedural models (no Blender in the cloud workspace). The
+  Blender assets of P3-01…P3-03 replace them later.
+- **Mechanics and physics:** they follow the reference through GDD §1's derived numbers (speeds, jump, fly, AIR), and the
+  cold-gas concept matches it: main thrusters at the tail for boost, lift nozzles under the car for the jump and hover,
+  attitude nozzles on the flanks. Flips, roof hops, streaks and modes arrive in P2.
+- **Guardrail kept (AGENTS §12):** the car stays the original Kometa R (concept B); no real brand names, model names or
+  copied body shapes. Realism means detail and materials, not a replica.
+
 ## Open questions (owner) — defaults are used until answered
 
 Since ADR-022 every default in this table is an accepted decision; a new owner answer supersedes it.
@@ -225,3 +245,4 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
 - 2026-10-23 — A-07 consistency review (`docs/reviews/consistency-A07-2026-10-23.md`): docs aligned to the v1 scope and marked v1.0 RC; ADR-017 clarified; ADR-021 (hosting) proposed; Q7 default updated; Q17–Q19 added; night batch ≤ 3 cards.
 - 2026-10-23 — Owner signed the Design Agreement (ADR-023); P1 starts; phone p95 moves into P1-04; Q20 added.
 - 2026-10-23 — Owner signed Architecture v1.0 and the hosting (ADR-022): docs v1.0, ADR-021 accepted, open-question defaults accepted.
+- 2026-10-23 — ADR-026: owner playtest feedback; launch gantry intro returns; visual slice P3-00 before P2.
