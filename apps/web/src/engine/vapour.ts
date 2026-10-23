@@ -124,10 +124,20 @@ export function createVapour(): Vapour {
         size0[i] = b.sizeM * (0.8 + Math.random() * 0.4);
         grow[i] = b.growM;
         alpha0[i] = b.alpha;
+        // A reused slot starts invisible at age zero, including an emission on a paused frame.
+        size[i] = size0[i] ?? 0;
+        alpha[i] = 0;
+      }
+      if (count > 0) {
+        posAttr.needsUpdate = true;
+        sizeAttr.needsUpdate = true;
+        alphaAttr.needsUpdate = true;
       }
     },
     update(dt, scale) {
       uScale.value = scale;
+      // Recomputing from rounded Float32 ages can change pixels even at dt 0; road contact also samples randomness.
+      if (dt <= 0) return;
       const drag = Math.exp(-DRAG_PER_S * dt);
       for (let i = 0; i < POOL; i++) {
         const a = (age[i] ?? 1) + dt;
@@ -164,6 +174,7 @@ export function createVapour(): Vapour {
     },
     shift(dz) {
       for (let i = 0; i < POOL; i++) pos[i * 3 + 2] = (pos[i * 3 + 2] ?? 0) + dz;
+      posAttr.needsUpdate = true;
     },
   };
 }
