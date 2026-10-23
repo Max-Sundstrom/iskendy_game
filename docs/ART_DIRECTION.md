@@ -1,7 +1,7 @@
 # KOMETA — Art Direction v1.0 · Design Agreement signed 2026-10-23 (ADR-023)
 
-Status: **proposal**. Nothing here is final until the owner signs the Design Agreement (§9). Phase D0 in
-ROADMAP produces the evidence (boards, blockouts, style-test chunk). Supersedes the palette in GDD v0.1 §19.
+Status: **accepted** — Design Agreement signed by the owner on 2026-10-23 (ADR-023). Changes go through a new ADR.
+Supersedes the palette in GDD v0.1 §19.
 
 ---
 

@@ -19,3 +19,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · P0-08 · Orchestrator · Game container (Caddy, nobody, healthcheck), kill switch KOMETA_MODE=off, reproducible release archive + GitHub Release on tags, CI container job with live headers and embed E2E; Trusted Types enforced; deploy, kill-switch and rollback runbooks.
 - 2026-10-23 · D0-1…D0-4 · Orchestrator · Design lab (apps/lab) with art board, A/B/C blockouts + liveries, style-test chunk with frame-time readout, HUD/results frames; 28 captures in docs/reviews/art-D0; owner review page published; D0-5 sign-off open.
 - 2026-10-23 · D0-5 · Owner · Design Agreement signed (ADR-023); hard gate open, P1 starts.
+- 2026-10-23 · P1-01 · Orchestrator · Sim core: seeded RNG, LUT speed curve, lanes and lane change (G1/G2), origin shift, state hash; 10 000-tick hash identical in Node and Chromium.
