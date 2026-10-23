@@ -40,6 +40,21 @@ export type PlayerState = {
   penaltyS: number;
   /** A second scrape while this is above 0 is a crash (GDD §5.9). */
   scrapeTimerS: number;
+  /** Traffic slot of the platform being ridden (bus, semi trailer, car-carrier…), or −1 (GDD §5.8). */
+  rideSlot: number;
+  /** Time left to jump after driving off a platform's end (GDD §4 coyote time, scenario G4). */
+  coyoteS: number;
+  /** Roof hops since the car last touched the road; 3 = Hat-trick (GDD §5.8). */
+  hopChain: number;
+  /** Bumped whenever the car touches a surface; a CLEAR only counts if no touch happened while passing over. */
+  touchSeq: number;
+  /** Speed lost while penaltyS > 0: the scrape or sloppy-landing fraction (GDD §5.2). */
+  penaltyFactor: number;
+  /** Front-flip rotation in this jump, in turns (1 = 360°, nose over forward); presentation reads it (GDD §5.6). */
+  flipTurns: number;
+  flipping: boolean;
+  flipQueued: boolean;
+  flipsDone: number;
 };
 
 export type SimState = {
@@ -95,6 +110,15 @@ export function createSimState(seed: number, tuning: SimTuning): SimState {
       airLiters: tuning.air.startL,
       penaltyS: 0,
       scrapeTimerS: 0,
+      rideSlot: -1,
+      coyoteS: 0,
+      hopChain: 0,
+      touchSeq: 0,
+      penaltyFactor: 0,
+      flipTurns: 0,
+      flipping: false,
+      flipQueued: false,
+      flipsDone: 0,
     },
     rng: { director: createRng(seed, 1), pickups: createRng(seed, 2) },
     traffic: createTraffic(),

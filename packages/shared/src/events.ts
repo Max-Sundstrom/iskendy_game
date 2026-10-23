@@ -15,6 +15,18 @@ export const SimEventKind = {
   hop: 11,
   scrape: 12,
   crash: 13,
+  /** a: vehicle slot, b: 1 when the landing was a slam (GDD §5.8, scenario G10). */
+  rideStart: 14,
+  /** a: RideEnd reason (1 drove off the end, 2 left sideways, 3 jumped, 4 vehicle gone). */
+  rideEnd: 15,
+  /** a: vehicle type index, b: 1 for a platform vehicle (SEMI CLEARED), 0 for a car or van (CLEAR). */
+  clear: 16,
+  /** a: the flip's number within this jump (1, 2, …). */
+  flipStart: 17,
+  /** a: flips completed in this jump. */
+  flipDone: 18,
+  /** a: LandingGrade (1 perfect, 2 stunt, 3 sloppy), b: flips in the jump (GDD §5.7). */
+  landingGraded: 19,
 } as const;
 
 export type SimEventKind = (typeof SimEventKind)[keyof typeof SimEventKind];
@@ -31,6 +43,12 @@ export type SimEvent =
   | { kind: 'slam' }
   | { kind: 'land'; slam: boolean }
   | { kind: 'airEmpty' }
-  | { kind: 'hop' }
+  | { kind: 'hop'; chain: number; slam: boolean }
   | { kind: 'scrape' }
-  | { kind: 'crash'; cause: 'rear' | 'secondScrape' };
+  | { kind: 'crash'; cause: 'rear' | 'secondScrape' | 'landing' }
+  | { kind: 'rideStart'; slot: number; slam: boolean }
+  | { kind: 'rideEnd'; reason: 'droveOff' | 'sideways' | 'jumped' | 'gone' }
+  | { kind: 'clear'; vehicleType: number; semi: boolean }
+  | { kind: 'flipStart'; index: number }
+  | { kind: 'flipDone'; count: number }
+  | { kind: 'landingGraded'; grade: 'perfect' | 'stunt' | 'sloppy'; flips: number };

@@ -55,6 +55,7 @@ function spawnRow(state: SimState, tuning: SimTuning, rowM: number): void {
     state.traffic.type[slot] = type;
     state.traffic.lane[slot] = lane;
     state.traffic.z[slot] = z;
+    state.traffic.over[slot] = 0;
     state.traffic.speed[slot] = v.minMps + nextFloat(state.rng.director) * (v.maxMps - v.minMps);
   }
 }

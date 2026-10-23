@@ -185,6 +185,7 @@ bumps `SIM_VERSION` (invariant 10).
 | 2026-10-23 | P1-02 | determinism `6ae1d455`; tuningHash `908b5867…` | jump, fly, slam, boost and AIR join the step; new key `sim.fly.glideEaseS` (0.25 s) |
 | 2026-10-23 | P1-06 | golden replays `early-crash` `5fff0579`, `busy-inputs` `aa0d3369`, `long-run` `34563692` | first goldens (`tools/make-golden-replays.ts`) |
 | 2026-10-23 | P1-05 | determinism `cb0aae87-91cfb58f` | `score.total` (1 point per metre, GDD §9) joins the state; events, streaks and the pot follow in P2-03 |
+| 2026-10-23 | P2-01 + P2-02 (flips) | determinism `9685154f-ea4436ea`; golden replays `early-crash` `0ec6d8a9`, `busy-inputs` `950f5632`, `long-run` `a6039b65` | platforms ridden with coyote time, hop chains and slam hops, CLEAR tracking; front flips, landing grades and the sloppy penalty; new state joins the hash |
 | 2026-10-23 | P1-03 | determinism `7083bcea-3e3cf928` (now a session with restarts after crashes); tuningHash `38343d24…` | traffic, director v0, collisions; new keys `sim.player`, `sim.traffic`, `sim.vehicles`, `sim.director.firstRowM/spawnAheadM/despawnBehindM` |
 
 ## ADR-026 · accepted · Owner playtest feedback: launch gantry intro and a visual slice before P2 (owner, 2026-10-23)
@@ -234,6 +235,12 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
 | 20 | Ornament on the Iskendi Courier roof livery | Our own pattern in Iskendi orange and cream, made for KOMETA; replaced if the owner supplies the brand ornament |
 | 19 | Share button on the results screen in v1 | Hidden: there is no public standalone build for a share link to open, and a share image would spread the promo code. Share returns with the standalone build |
 
+- **Q21 (default applied, 2026-10-23): a Jump press in the air flips, except near the road.** GDD §4 maps a second press in
+  the air to a front flip, and scenario G3 buffers a press made just before landing. Default: the press is a buffered
+  jump when the free-fall time to the road is under `jump.bufferS` (120 ms); otherwise it starts or queues a flip.
+  While flying, a flip needs a re-press, so the 150 ms hold threshold costs a little height; a double flip wants
+  altitude, for example after a roof hop.
+
 ## Change log
 - 2026-10-23 — Kit created from reference screenshot analysis.
 - 2026-10-23 — v0.2: Moscow × GTA VI-inspired direction (proposed), security/anti-cheat, infrastructure and
@@ -246,3 +253,4 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
 - 2026-10-23 — Owner signed the Design Agreement (ADR-023); P1 starts; phone p95 moves into P1-04; Q20 added.
 - 2026-10-23 — Owner signed Architecture v1.0 and the hosting (ADR-022): docs v1.0, ADR-021 accepted, open-question defaults accepted.
 - 2026-10-23 — ADR-026: owner playtest feedback; launch gantry intro returns; visual slice P3-00 before P2.
+- 2026-10-23 — P2-01 platforms and hops; P2-02 front flips and landing grades; Q21 (air press vs jump buffer).

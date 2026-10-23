@@ -4,24 +4,16 @@
   "seed": 7,
   "tuningHash": "38343d240df13aa3",
   "mode": "endless",
-  "ticks": 305,
+  "ticks": 106,
   "inputs": [
     [0, 4],
     [15, 1],
     [48, 4],
     [74, 2],
     [82, 4],
-    [97, 1],
-    [123, 3],
-    [134, 8],
-    [166, 16],
-    [178, 8],
-    [211, 1],
-    [237, 8],
-    [277, 0],
-    [303, 1]
+    [97, 1]
   ],
-  "claimedScore": 186,
-  "claimedDistanceM": 186.62398664798616,
-  "finalHash": "aa0d3369"
+  "claimedScore": 62,
+  "claimedDistanceM": 62.645557488526215,
+  "finalHash": "950f5632"
 }

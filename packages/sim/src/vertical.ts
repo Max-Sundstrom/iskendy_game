@@ -1,21 +1,19 @@
 import { SimEventKind, type SimTuning } from '@kometa/shared';
 import { emit } from './events';
+import { FlyStop, jumpPhysics } from './jump';
+import { endRide, RideEnd, touch } from './roofs';
 import type { SimState } from './state';
+import { advanceFlip, airJumpPress, gradeLanding } from './tricks';
 
 // Jump, fly, slam and gravity (GDD §5.3–5.5). Jumps integrate constant gravity exactly within each step, so the apex
 // lands on 4.2 m at 0.45 s instead of the ~4 % low peak plain Euler gives at 60 Hz.
 
-/** Launch speed and rising gravity from apex height and time to apex: v0 = 2h/t, g = 2h/t². */
-export function jumpPhysics(tuning: SimTuning): { v0: number; gUp: number; gDown: number } {
-  const { apexHeightM: h, timeToApexS: t, fallGravityMultiplier: k } = tuning.jump;
-  const gUp = (2 * h) / (t * t);
-  return { v0: (2 * h) / t, gUp, gDown: gUp * k };
-}
-
-export const FlyStop = { released: 1, airEmpty: 2, slam: 3, landed: 4 } as const;
+export { FlyStop, jumpPhysics };
 
 function launch(state: SimState, tuning: SimTuning): void {
   const p = state.player;
+  endRide(state, tuning, RideEnd.jumped); // jumping off a platform starts from its height
+  p.coyoteS = 0;
   p.vy = jumpPhysics(tuning).v0;
   p.airborne = true;
   p.jumpHeldS = 0;
@@ -41,8 +39,9 @@ export function verticalInput(
 ): void {
   const p = state.player;
   if (jumpPressed) {
-    if (!p.airborne) launch(state, tuning);
-    else p.jumpBufferS = tuning.jump.bufferS; // G3: remembered, fires on touchdown if still fresh
+    if (!p.airborne || p.coyoteS > 0)
+      launch(state, tuning); // G4: coyote time after leaving a platform
+    else if (!airJumpPress(state, tuning)) p.jumpBufferS = tuning.jump.bufferS; // G3: fires on touchdown
   }
   if (p.airborne && jumpHeld && !jumpPressed) {
     p.jumpHeldS += dt;
@@ -67,7 +66,9 @@ export function verticalInput(
 export function verticalIntegrate(state: SimState, tuning: SimTuning, dt: number): void {
   const p = state.player;
   if (p.jumpBufferS > 0) p.jumpBufferS = Math.max(0, p.jumpBufferS - dt);
+  if (p.coyoteS > 0) p.coyoteS = Math.max(0, p.coyoteS - dt);
   if (!p.airborne) return;
+  advanceFlip(state, tuning, dt);
 
   if (p.flying) {
     // Thrusters: gravity is off and vertical speed eases toward the glide speed.
@@ -93,8 +94,11 @@ export function verticalIntegrate(state: SimState, tuning: SimTuning, dt: number
     p.vy = 0;
     p.airborne = false;
     p.slamming = false;
+    p.hopChain = 0; // the chain lasts until the road
+    touch(state);
     stopFlying(state, FlyStop.landed);
     emit(state.events, SimEventKind.land, wasSlam ? 1 : 0);
+    if (!gradeLanding(state, tuning)) return;
     if (p.jumpBufferS > 0) launch(state, tuning);
   }
 }
