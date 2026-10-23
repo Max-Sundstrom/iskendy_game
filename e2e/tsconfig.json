@@ -1,0 +1,9 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    // Specs run in Node but their page callbacks run in the browser.
+    "lib": ["ES2022", "DOM"],
+    "types": ["node"]
+  },
+  "include": ["**/*.ts"]
+}

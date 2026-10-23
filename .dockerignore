@@ -1,0 +1,5 @@
+# Only the build output and the server config go into the image.
+*
+!deploy/Caddyfile
+!apps/web/dist
+!deploy/disabled

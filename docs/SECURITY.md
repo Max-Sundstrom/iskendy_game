@@ -89,8 +89,10 @@ game, and it is sent to the host only in `game.runEnded`.
 Other measures:
 - Actions pinned by SHA; tokens read-only by default.
 - Renovate config with a 14-day minimum release age; pnpm enforces the same age on install.
-- Header skeleton for the game origin in `deploy/Caddyfile`. It was checked with a local Caddy serving the
-  build; Trusted Types run report-only until P0-08.
+- Header skeleton for the game origin in `deploy/Caddyfile`. It was checked with a local Caddy serving the build.
+- **P0-08:** Trusted Types are enforced (`require-trusted-types-for 'script'`). CI builds the container and
+  checks the live headers. E2E fails on any CSP or Trusted Types violation; it found zod 4's `new Function`
+  probe, which is now off via `z.config({ jitless: true })`.
 - Branch protection and code-security settings are an owner action: `docs/runbooks/github-settings.md`.
 
 - HTTPS only; HSTS with preload once stable.

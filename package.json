@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "pnpm --filter @kometa/web dev",
     "build": "pnpm --filter @kometa/web build",
-    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p packages/shared && tsc --noEmit -p packages/sim && tsc --noEmit -p apps/web",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p e2e && tsc --noEmit -p packages/shared && tsc --noEmit -p packages/sim && tsc --noEmit -p apps/web",
     "lint": "eslint . && depcruise apps packages --config .dependency-cruiser.cjs",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
@@ -18,7 +18,8 @@
     "test:e2e": "playwright test",
     "check:size": "tsx tools/check-size.ts",
     "assets:build": "tsx tools/assets/build.ts",
-    "assets:check": "tsx tools/assets/check.ts"
+    "assets:check": "tsx tools/assets/check.ts",
+    "check:headers": "tsx tools/check-headers.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

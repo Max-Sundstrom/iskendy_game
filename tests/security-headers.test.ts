@@ -27,6 +27,7 @@ describe('game origin security headers', () => {
     expect(policy.get('script-src')).toEqual(["'self'", "'wasm-unsafe-eval'"]);
     expect(policy.get('object-src')).toEqual(["'none'"]);
     expect(policy.get('base-uri')).toEqual(["'none'"]);
+    expect(policy.get('require-trusted-types-for')).toEqual(["'script'"]);
     expect(header('Content-Security-Policy')).not.toMatch(/'unsafe-inline'|'unsafe-eval'|\*/);
   });
 

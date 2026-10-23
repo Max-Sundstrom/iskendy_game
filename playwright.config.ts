@@ -10,7 +10,8 @@ export default defineConfig({
   forbidOnly: Boolean(process.env['CI']),
   retries: 0,
   reporter: process.env['CI'] ? [['list'], ['html', { open: 'never' }]] : 'list',
-  use: { baseURL: 'http://localhost:5173', trace: 'retain-on-failure' },
+  // BASE_URL points the suite at a running build (e.g. the game container) instead of the dev server.
+  use: { baseURL: process.env['BASE_URL'] ?? 'http://localhost:5173', trace: 'retain-on-failure' },
   projects: [
     {
       name: 'desktop',
@@ -28,10 +29,12 @@ export default defineConfig({
       },
     },
   ],
-  webServer: {
-    command: 'pnpm --filter @kometa/web dev',
-    url: 'http://localhost:5173',
-    reuseExistingServer: !process.env['CI'],
-    timeout: 60_000,
-  },
+  webServer: process.env['BASE_URL']
+    ? undefined
+    : {
+        command: 'pnpm --filter @kometa/web dev',
+        url: 'http://localhost:5173',
+        reuseExistingServer: !process.env['CI'],
+        timeout: 60_000,
+      },
 });

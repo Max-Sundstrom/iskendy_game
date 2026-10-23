@@ -2,3 +2,5 @@ pnpm-lock.yaml
 docs/
 *.md
 packages/content/*.json
+# Caddy template syntax inside an attribute; Prettier cannot parse it.
+deploy/disabled/index.html

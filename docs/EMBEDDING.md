@@ -23,7 +23,7 @@ agree; signed together with Architecture v1.0). v1 builds only the "Embedded web
   `loading="lazy"`, created only after the player taps.
 - Host CSP adds the game origin to `frame-src` only. Game CSP lists the host in `frame-ancestors`.
 - Kill switch: hide or disable the game without a host deploy. The Iskendi front-end has no remote config, so in
-  v1 the fast path is on the game origin: the build is replaced by a `disabled` page that immediately sends
+  v1 the fast path is on the game origin: the container switches to a `disabled` page (`KOMETA_MODE=off`) that immediately sends
   `game.error { code: 'disabled' }`, and the host shows "Игра недоступна". The host flag `features.gameTile`
   plus a host PATCH release is the slower full path (host docs/53 §10).
 - The game never calls the host's backend directly. If rewards are enabled, server-to-server calls go through
