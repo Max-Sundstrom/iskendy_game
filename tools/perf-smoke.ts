@@ -95,17 +95,28 @@ async function main(): Promise<void> {
         .match(/Content-Security-Policy "([^"]+)"/)?.[1]
         ?.replace('{$ISKENDY_HOST_ORIGIN}', "'none'");
       if (!csp || csp.includes('{$')) throw new Error('Cannot resolve the deployment CSP for local preview');
-      server = await preview({
-        root,
-        configFile,
-        preview: {
-          host: '127.0.0.1',
-          port: 0,
-          strictPort: true,
-          open: false,
-          headers: { 'Content-Security-Policy': csp },
-        },
-      });
+      // Vite preview installs auto-exit handlers. This CLI owns signals so interrupted reports reach finally.
+      // Preserve existing listeners and detach only those added by this isolated preview startup.
+      const sigtermListeners = new Set(process.rawListeners('SIGTERM'));
+      const stdinEndListeners = new Set(process.stdin.rawListeners('end'));
+      try {
+        server = await preview({
+          root,
+          configFile,
+          preview: {
+            host: '127.0.0.1',
+            port: 0,
+            strictPort: true,
+            open: false,
+            headers: { 'Content-Security-Policy': csp },
+          },
+        });
+      } finally {
+        for (const listener of process.rawListeners('SIGTERM'))
+          if (!sigtermListeners.has(listener)) process.removeListener('SIGTERM', listener);
+        for (const listener of process.stdin.rawListeners('end'))
+          if (!stdinEndListeners.has(listener)) process.stdin.removeListener('end', listener);
+      }
       base = server.resolvedUrls?.local[0];
       report['bundle'] = bundleBytes(resolve('apps/web/dist'));
     } else {
@@ -195,11 +206,8 @@ async function main(): Promise<void> {
       errors.push(`Browser cleanup: ${String(error)}`);
     }
     try {
-      if (server) {
-        const httpServer = server.httpServer;
-        if ('closeAllConnections' in httpServer) httpServer.closeAllConnections();
-        await new Promise<void>((done, reject) => httpServer.close((error) => (error ? reject(error) : done())));
-      }
+      // Public close also clears Vite's signal callback registry and plugin resources.
+      if (server) await server.close();
     } catch (error) {
       errors.push(`Server cleanup: ${String(error)}`);
     }
