@@ -1,5 +1,9 @@
 import { z } from 'zod';
 
+// The game origin's CSP forbids eval (SECURITY T12). Without this, zod probes `new Function` on first parse,
+// which the browser reports as a CSP and Trusted Types violation even though zod catches the error.
+z.config({ jitless: true });
+
 // Shape of packages/content/tuning*.json (invariant 3). Objects are strict so a misspelt key fails loudly
 // instead of silently falling back to nothing.
 

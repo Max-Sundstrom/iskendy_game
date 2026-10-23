@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Mock Iskendi host</title>
+  </head>
+  <body>
+    <!-- Test-only stand-in for the Iskendi order page: frames the game and records what it says. -->
+    <iframe id="game" title="KOMETA" sandbox="allow-scripts allow-same-origin" width="390" height="600"></iframe>
+    <script>
+      const gameUrl = new URLSearchParams(location.search).get('game');
+      const gameOrigin = new URL(gameUrl).origin;
+      document.getElementById('game').src = gameUrl;
+      window.addEventListener('message', (event) => {
+        if (event.origin !== gameOrigin) return;
+        document.body.dataset.lastMessage = JSON.stringify(event.data);
+      });
+    </script>
+  </body>
+</html>

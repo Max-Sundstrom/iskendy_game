@@ -190,7 +190,7 @@ paints · daily missions · Route mode with a destination and story endings · g
 |---|---|---|
 | A | **signed 2026-10-23** (ADR-022) | Architecture v1.0; defaults accepted; A-04 = ADR-021; A-06 moved into P1-01 |
 | D0 | in progress | car concept B "Samodelka" chosen (ADR-019); blockouts next |
-| P0 | in progress | P0-01…P0-05 and P0-07 done; P0-06 fills as libraries arrive; P0-08 waits for the server owner (container on the Iskendi server); P1+ waits for D0 |
+| P0 | **done** (2026-10-23) | P0-01…P0-08; P0-06 table keeps filling as libraries arrive; server setup is an owner action (`docs/runbooks/deploy-game-origin.md`); P1+ waits for D0 |
 | P1 | not started | |
 | P2 | not started | |
 | P3 | not started | |

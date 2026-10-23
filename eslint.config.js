@@ -50,6 +50,7 @@ export default tseslint.config(
   },
   { files: ['**/*.cjs'], languageOptions: { sourceType: 'commonjs', globals: { ...globals.node } } },
   { files: ['apps/web/src/**/*.ts'], languageOptions: { globals: { ...globals.browser } } },
+  { files: ['deploy/disabled/*.js'], languageOptions: { sourceType: 'script', globals: { ...globals.browser } } },
   {
     files: ['*.{js,ts}', 'tests/**/*.ts', 'e2e/**/*.ts', 'tools/**/*.ts', 'apps/web/vite.config.ts'],
     languageOptions: { globals: { ...globals.node } },

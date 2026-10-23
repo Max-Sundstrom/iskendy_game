@@ -7,15 +7,23 @@
 }
 
 :8080 {
-	root * /srv/kometa
 	encode zstd gzip
-	file_server
+
+	# Kill switch: KOMETA_MODE=off serves the disabled page instead of the game, without a host deploy.
+	@disabled expression `"{$KOMETA_MODE:on}" == "off"`
+	handle @disabled {
+		root * /srv/disabled
+		templates
+		file_server
+	}
+	handle {
+		root * /srv/kometa
+		file_server
+	}
 
 	header {
 		# SECURITY T12/T13. 'wasm-unsafe-eval' only for the meshopt/KTX2 decoders; no inline script or style.
-		Content-Security-Policy "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors {$ISKENDY_HOST_ORIGIN}"
-		# Trusted Types observed first; enforced once E2E shows no violations (P0-08).
-		Content-Security-Policy-Report-Only "require-trusted-types-for 'script'"
+		Content-Security-Policy "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors {$ISKENDY_HOST_ORIGIN}; require-trusted-types-for 'script'"
 		X-Content-Type-Options "nosniff"
 		Referrer-Policy "strict-origin-when-cross-origin"
 		Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), fullscreen=(self), gamepad=(self), screen-wake-lock=(self)"

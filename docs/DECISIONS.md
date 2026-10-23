@@ -38,6 +38,7 @@ Rule: the newest stable release published at least 14 days before pinning (SECUR
 | @gltf-transform/cli | | |
 | CI actions | checkout v7.0.1 · setup-node v7.1.0 · upload-artifact v7.0.2 · codeql-action v4.38.3 · osv-scanner-action v2.6.0 (all by SHA) | 2026-10-23 |
 | security tools | gitleaks 8.30.1 (sha256) · Semgrep 1.180.0 (image digest) | 2026-10-23 |
+| caddy (game container) | 2.11.6-alpine @ sha256:d44355d3… (deploy/Dockerfile) | 2026-10-23 |
 | Blender | | |
 
 ## ADR-002 · accepted · Deterministic fixed-step simulation in its own package

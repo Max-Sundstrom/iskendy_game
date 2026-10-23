@@ -21,8 +21,12 @@ infrastructure change):
   §4 and the game CSP (`frame-ancestors` = the Iskendi host origin). No secrets, no database, no writes.
 - **Delivery:** CI builds `kometa-web-X.Y.Z.tar.gz` + SHA-256 as a GitHub Release; the server pulls a pinned
   version. Rollback = pin the previous version (O2).
-- **Kill switch:** replace the build with the `disabled` page, which answers with `game.error { code: 'disabled' }`
-  (EMBEDDING §2); the host's own flag is the slower path.
+- **Kill switch:** restart the same image with `KOMETA_MODE=off`. It then serves `deploy/disabled`, which posts
+  `game.error { code: 'disabled' }` to the host (EMBEDDING §2; runbook `host-kill-switch.md`). The host's own
+  flag is the slower path.
+- **Built in P0-08:** `deploy/Dockerfile` (Caddy 2.11.6, digest-pinned, runs as nobody, healthcheck),
+  `.github/workflows/release.yml` (reproducible `kometa-web-<version>.tar.gz` + `.sha256`; GitHub Release on
+  `vX.Y.Z` tags), CI job `container` (real headers + embed E2E against the built image).
 - **Egress (L1):** ≈ 3 MB per first play, cached for returning guests. At an assumed 200 orders/day × 30 %
   opt-in ≈ 180 MB/day ≈ 5–6 GB/month; even 1 000 orders/day ≈ 27 GB/month — well inside a VPS traffic
   allowance, so no CDN in v1. Replace the assumption with real order numbers after launch.
