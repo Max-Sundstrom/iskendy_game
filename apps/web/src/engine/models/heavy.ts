@@ -1,7 +1,7 @@
 import { ConeGeometry, CylinderGeometry } from 'three';
 import { type Size } from './cars';
 import { loft, type Station } from './loft';
-import { axle, box, tag, type Part } from './parts';
+import { axle, box, panel, Surface, tag, type Part } from './parts';
 
 // Heavy traffic and road works (GDD §7): bus, trolleybus, semi, car-carrier, street-sweeper, road-works truck, cones
 // and a concrete barrier. Front = +z, centred, metres.
@@ -35,14 +35,20 @@ function tails(z: number, hw: number, y: number): Part[] {
 
 /** Side window band and the rear window of a bus-like body. */
 function windowBand(L: number, W: number, y0: number, y1: number, panes: number): Part[] {
-  const parts: Part[] = [tag(box(W * 0.8, (y1 - y0) * 0.9, 0.04, 0, (y0 + y1) / 2, -L / 2 - 0.012), GLASS)];
+  const parts: Part[] = [
+    tag(box(W * 0.8, (y1 - y0) * 0.9, 0.04, 0, (y0 + y1) / 2, -L / 2 - 0.012), GLASS, 0, 0, Surface.glass),
+  ];
   const len = L - 1.2;
   for (let i = 0; i < panes; i++) {
     const z = -L / 2 + 0.4 + (i + 0.5) * (len / panes);
     for (const sx of [1, -1])
-      parts.push(tag(box(0.03, y1 - y0, len / panes - 0.1, sx * (W / 2 + 0.005), (y0 + y1) / 2, z), GLASS));
+      parts.push(
+        tag(box(0.03, y1 - y0, len / panes - 0.1, sx * (W / 2 + 0.005), (y0 + y1) / 2, z), GLASS, 0, 0, Surface.glass),
+      );
   }
-  parts.push(tag(box(W * 0.9, (y1 - y0) * 1.2, 0.04, 0, (y0 + y1) / 2 + 0.05, L / 2 + 0.012), GLASS));
+  parts.push(
+    tag(box(W * 0.9, (y1 - y0) * 1.2, 0.04, 0, (y0 + y1) / 2 + 0.05, L / 2 + 0.012), GLASS, 0, 0, Surface.glass),
+  );
   return parts;
 }
 
@@ -52,6 +58,10 @@ export function bus({ L, W, H }: Size): Part[] {
     tag(loft(slab(-L / 2, L / 2, hw, 0.35, H - 0.25)), '#ffffff', 1),
     tag(box(W * 0.6, 0.25, L * 0.3, 0, H - 0.12, -L * 0.1), '#d7d9dd'), // roof air unit
     ...windowBand(L, W, H * 0.45, H * 0.82, 6),
+    tag(box(W * 0.7, 0.05, 0.045, 0, H * 0.29, -L / 2 - 0.025), STEEL, 0, 0, Surface.trim), // rear engine hatch
+    tag(box(W * 0.7, 0.05, 0.045, 0, H * 0.34, -L / 2 - 0.025), STEEL, 0, 0, Surface.trim),
+    tag(box(W * 0.94, 0.18, 0.08, 0, 0.55, -L / 2 - 0.015), STEEL, 0, 0, Surface.trim),
+    tag(box(0.05, H * 0.6, 0.05, hw + 0.025, H * 0.5, L / 2 - 1.15), STEEL, 0, 0, Surface.trim), // passenger door split
     ...tails(-L / 2 - 0.012, hw, 0.9),
     ...axle(L / 2 - 2.6, W - 0.25, 0.5, 0.3),
     ...axle(-L / 2 + 3.0, W - 0.25, 0.5, 0.3),
@@ -76,12 +86,25 @@ function cab(z0: number, len: number, W: number, H: number, colour?: string): Pa
   const hw = W / 2;
   const c = colour ?? '#ffffff';
   const p = colour ? 0 : 1;
+  const front = z0 + len;
+  // The roof slopes into a short nose, giving the work vehicles a recognisable cab silhouette.
+  const body = slab(z0, front, hw, 0.6, H, 0.88).map((station, i) => {
+    if (i === 2) return { ...station, z: front - 0.35 };
+    if (i === 3) return { ...station, yt: H * 0.65, ysh: H * 0.49 };
+    return station;
+  });
+  const windscreen = box(W * 0.8, Math.hypot(0.35, H * 0.35) * 0.84, 0.035, 0, 0, 0)
+    .rotateX(-Math.atan2(0.35, H * 0.35))
+    .translate(0, H * 0.825 + 0.02, front - 0.175 + 0.02);
   return [
-    tag(loft(slab(z0, z0 + len, hw, 0.6, H, 0.88)), c, p),
-    tag(box(W * 0.86, H * 0.32, 0.04, 0, H * 0.72, z0 + len + 0.012), GLASS),
-    tag(box(0.03, H * 0.28, len * 0.45, hw + 0.005, H * 0.74, z0 + len * 0.7), GLASS),
-    tag(box(0.03, H * 0.28, len * 0.45, -hw - 0.005, H * 0.74, z0 + len * 0.7), GLASS),
-    tag(box(W * 0.96, 0.3, 0.2, 0, 0.55, z0 + len - 0.05), STEEL), // bumper
+    tag(loft(body), c, p),
+    tag(windscreen, GLASS, 0, 0, Surface.glass),
+    tag(box(0.03, H * 0.28, len * 0.35, hw + 0.005, H * 0.74, z0 + len * 0.6), GLASS, 0, 0, Surface.glass),
+    tag(box(0.03, H * 0.28, len * 0.35, -hw - 0.005, H * 0.74, z0 + len * 0.6), GLASS, 0, 0, Surface.glass),
+    tag(box(0.12, 0.3, 0.15, hw + 0.06, H * 0.7, front - 0.42), STEEL, 0, 0, Surface.trim),
+    tag(box(0.12, 0.3, 0.15, -hw - 0.06, H * 0.7, front - 0.42), STEEL, 0, 0, Surface.trim),
+    tag(box(W * 0.56, 0.16, 0.04, 0, H * 0.4, front + 0.01), STEEL, 0, 0, Surface.trim), // lower cooling inlet
+    tag(box(W * 0.96, 0.3, 0.2, 0, 0.55, front - 0.05), STEEL, 0, 0, Surface.trim), // bumper
     tag(box(0.3, 0.12, 0.04, hw - 0.3, 0.75, z0 + len + 0.015), '#fff1d6', 0, 1.2),
     tag(box(0.3, 0.12, 0.04, -(hw - 0.3), 0.75, z0 + len + 0.015), '#fff1d6', 0, 1.2),
   ];
@@ -96,6 +119,10 @@ export function semi({ L, W, H }: Size): Part[] {
     tag(loft(slab(-L / 2, -L / 2 + trailerLen, hw, 1.1, H)), '#e4e4df'), // box trailer
     tag(box(W * 0.9, 0.12, trailerLen * 0.96, 0, H * 0.62, -L / 2 + trailerLen / 2), '#ffffff', 1, 0), // livery band
     tag(box(W * 0.5, 0.25, L, 0, 0.75, 0), STEEL), // chassis
+    tag(box(0.045, H - 1.35, 0.045, 0, (H + 1.1) / 2, -L / 2 - 0.018), STEEL, 0, 0, Surface.trim), // split trailer doors
+    tag(box(W * 0.9, 0.055, 0.045, 0, 1.3, -L / 2 - 0.018), STEEL, 0, 0, Surface.metal),
+    tag(box(0.035, H * 0.55, 0.05, W * 0.28, H * 0.57, -L / 2 - 0.035), '#9ea5ab', 0, 0, Surface.metal),
+    tag(box(0.035, H * 0.55, 0.05, -W * 0.28, H * 0.57, -L / 2 - 0.035), '#9ea5ab', 0, 0, Surface.metal),
     ...tails(-L / 2 - 0.012, hw, 1.0),
     ...axle(L / 2 - 0.9, W - 0.3, 0.5, 0.3),
     ...axle(L / 2 - cabLen - 0.3, W - 0.3, 0.5, 0.3),
@@ -112,7 +139,15 @@ function cargoCar(z: number, y: number, colour: string): Part[] {
     { z: z + 0.6, ys: y + 0.2, wb: 0.78, ysh: y + 0.7, wsh: 0.87, yt: y + 1.25, wt: 0.62, crown: 0.04 },
     { z: z + 2.0, ys: y + 0.25, wb: 0.72, ysh: y + 0.5, wsh: 0.82, yt: y + 0.7, wt: 0.66 },
   ];
-  return [tag(loft(st, { side: 6, between: 0 }), colour)]; // small and far up: coarse is enough
+  const parts: Part[] = [tag(loft(st, { side: 6, between: 0 }), colour)]; // same coarse hull; glass defines the cabin
+  for (const side of [-1, 1]) {
+    const a = [side * 0.85, y + 0.76, z - 0.62] as const;
+    const b = [side * 0.63, y + 1.27, z - 0.58] as const;
+    const c = [side * 0.63, y + 1.22, z + 0.58] as const;
+    const d = [side * 0.85, y + 0.76, z + 0.62] as const;
+    parts.push(tag(side > 0 ? panel(a, b, c, d) : panel(d, c, b, a), GLASS, 0, 0, Surface.glass));
+  }
+  return parts;
 }
 
 export function carCarrier({ L, W, H }: Size): Part[] {
@@ -192,7 +227,7 @@ export function cones({ H }: Size): Part[] {
   const cone = (x: number, z: number): Part[] => [
     tag(new ConeGeometry(0.18, H * 0.75, 14).translate(x, (H * 0.75) / 2 + 0.03, z), '#ff6a13'),
     tag(new CylinderGeometry(0.105, 0.125, 0.1, 14).translate(x, H * 0.4, z), '#f3f3f3', 0, 0.6),
-    tag(box(0.42, 0.05, 0.42, x, 0.025, z), '#1a1a1a'),
+    tag(box(0.42, 0.05, 0.42, x, 0.025, z), '#1a1a1a', 0, 0, Surface.rubber),
   ];
   return [
     ...cone(-0.3, 0.25),
@@ -209,7 +244,7 @@ export function barrier({ L, W, H }: Size): Part[] {
   const jersey: Station[] = [];
   for (const z of [-L / 2, -L / 2 + 0.05, L / 2 - 0.05, L / 2])
     jersey.push({ z, ys: 0, wb: hw, ysh: 0.3, wsh: hw * 0.98, yt: H * 0.8, wt: hw * 0.9, crown: 0.01 });
-  const parts: Part[] = [tag(loft(jersey), '#b9b4a8')];
+  const parts: Part[] = [tag(loft(jersey), '#b9b4a8', 0, 0, Surface.concrete)];
   for (let i = 0; i < 6; i++)
     parts.push(
       tag(

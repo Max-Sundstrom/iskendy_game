@@ -3,6 +3,7 @@ import { Box3, Vector3 } from 'three';
 import { describe, expect, it } from 'vitest';
 import { vehicleGeometry } from '.';
 import { loft } from './loft';
+import { wheelParts } from './parts';
 
 const tuning = DEFAULT_TUNING.sim;
 
@@ -15,7 +16,17 @@ describe('vehicle models', () => {
       const g = vehicleGeometry(tuning, i);
       const triangles = g.getAttribute('position').count / 3;
       expect(triangles).toBeLessThanOrEqual(3000); // ARCHITECTURE §12: traffic vehicle ≤ 3k
-      for (const name of ['color', 'paint', 'glow', 'normal']) expect(g.getAttribute(name)).toBeDefined();
+      for (const name of ['color', 'paint', 'glow', 'normal', 'surface']) expect(g.getAttribute(name)).toBeDefined();
+      // Every finish remains part of the same instanced draw, with a complete, bounded shader input.
+      expect(g.groups).toHaveLength(0);
+      const surface = g.getAttribute('surface');
+      expect(surface.itemSize).toBe(2);
+      expect(surface.count).toBe(g.getAttribute('position').count);
+      for (const value of surface.array) {
+        expect(Number.isFinite(value)).toBe(true);
+        expect(value).toBeGreaterThanOrEqual(0);
+        expect(value).toBeLessThanOrEqual(1);
+      }
       const box = new Box3().setFromBufferAttribute(g.getAttribute('position') as never);
       const size = box.getSize(new Vector3());
       // The rear sits at z = 0 and the body runs toward −z (sim +z); the model stays close to the sim's box.
@@ -27,6 +38,17 @@ describe('vehicle models', () => {
       expect(box.min.y).toBeGreaterThanOrEqual(-0.01);
     },
   );
+});
+
+describe('traffic wheel dishes', () => {
+  it.each([-1, 1])('keeps the visible rim facing out on side %s', (side) => {
+    const rim = wheelParts(side, 0, 0.32, 0.24)[1];
+    if (!rim) throw new Error('missing wheel rim');
+    const normal = rim.getAttribute('normal');
+    let outward = 0;
+    for (let i = 0; i < normal.count; i++) outward += normal.getX(i) * side;
+    expect(outward / normal.count).toBeGreaterThan(0.7);
+  });
 });
 
 describe('loft', () => {
