@@ -22,6 +22,7 @@ import { createWorld } from './scene';
 import { createThrusters } from './thrusters';
 import { createTrafficView } from './traffic';
 import { createVapour } from './vapour';
+import { setTrickPose } from './renderer-pose';
 
 // Renderer: reads sim snapshots, interpolates between the last two steps, never touches sim state. Before tick 0 it
 // plays the launch intro (presentation only).
@@ -46,7 +47,6 @@ export type Quality = 'high' | 'low';
 
 const LANE_ROLL = MathUtils.degToRad(DEFAULT_TUNING.presentation.car.laneBodyRollDeg);
 const WHEEL_R = 0.34;
-const COM_M = 0.55;
 
 /** Height of the surface under the car: a ridden platform's top, else the road. */
 function groundUnder(s: Session): number {
@@ -99,9 +99,6 @@ export function createGameRenderer(
 
   const buffer = new Vector2();
   const pose: IntroPose = { position: new Vector3(), quaternion: new Quaternion(), speed: 0, phase: 'approach' };
-  const flipQ = new Quaternion();
-  const com = new Vector3();
-  const xAxis = new Vector3(1, 0, 0);
   const look = new Vector3();
   const side = new Vector3();
   let lastX = 0;
@@ -145,17 +142,12 @@ export function createGameRenderer(
     // The terminal pose is placed at dt=0. Its lean comes from the actual final tick, not a fictitious 1 ms frame.
     const vx = crashed ? (p.x - s.prev.x) * tuning.tickRateHz : (x - lastX) / dt;
     const vy = crashed ? (p.y - s.prev.y) * tuning.tickRateHz : (y - lastY) / dt;
-    // Front flip: the whole car turns nose-over about its centre of mass (GDD §5.6). Don't interpolate across the
-    // reset to 0 at touchdown.
-    const f = crashed
-      ? crashFlipTurns(s)
-      : Math.abs(p.flipTurns - s.prev.flip) > 0.5
-        ? p.flipTurns
-        : lerp(s.prev.flip, p.flipTurns, alpha);
-    flipQ.setFromAxisAngle(xAxis, -2 * Math.PI * f);
-    rig.group.quaternion.copy(flipQ);
-    com.set(0, COM_M, 0).applyQuaternion(flipQ);
-    placeCar(x, y + COM_M - com.y, -z - com.z, p.speedMps, crashed ? 0 : frameS, groundUnder(s));
+    // Session aligns snapshots on safe touchdown. Signed angles retain complete/queued turns during flight;
+    // terminal crashes use the current tick exactly, including both axes of a failed landing.
+    const f = crashed ? crashFlipTurns(s) : lerp(s.prev.flip, p.flipTurns, alpha);
+    const r = crashed ? p.rollTurns : lerp(s.prev.roll, p.rollTurns, alpha);
+    placeCar(x, y, -z, p.speedMps, crashed ? 0 : frameS, groundUnder(s));
+    setTrickPose(rig.group, x, y, -z, f, r);
     // Lean outward and nose into the lane change; pitch with vertical speed in the air.
     const laneSpeed = tuning.lanes.widthM / Math.max(0.05, tuning.lanes.changeDurationS);
     const k = MathUtils.clamp(vx / laneSpeed, -1, 1);
