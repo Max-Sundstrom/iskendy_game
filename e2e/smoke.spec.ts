@@ -17,7 +17,7 @@ test('the game boots, renders and drives forward', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
 
-  await page.goto('/?seed=1');
+  await page.goto('/?seed=1&q=low');
   await expect(page).toHaveTitle('KOMETA');
   const app = page.locator('#app');
   await expect(app).toHaveAttribute('data-sim-version', /^[1-9]\d*$/);

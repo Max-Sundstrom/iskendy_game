@@ -28,7 +28,7 @@ if (root && canvas) {
     fixedSeed !== undefined ? fixedSeed + run++ : (crypto.getRandomValues(new Uint32Array(1))[0] ?? 1);
 
   let session: Session = createSession(nextSeed());
-  const gfx = createGameRenderer(canvas, session);
+  const gfx = createGameRenderer(canvas, session, query.get('q') === 'low' ? 'low' : 'high');
   const perf = createPerfMeter(gfx.info);
   const touch = matchMedia('(pointer: coarse)').matches;
   const hud = createHud(root, t, touch);
