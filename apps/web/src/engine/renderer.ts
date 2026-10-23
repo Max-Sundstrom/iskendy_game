@@ -1,4 +1,5 @@
 import { AgXToneMapping, PCFShadowMap, SRGBColorSpace, WebGLRenderer } from 'three';
+import { DEFAULT_TUNING } from '@kometa/sim';
 import { lerp, type Session } from '../game/session';
 import { createChaseCamera } from './camera';
 import { createCar } from './car';
@@ -14,13 +15,25 @@ export type GameRenderer = {
   readonly info: WebGLRenderer['info'];
 };
 
-export function createGameRenderer(canvas: HTMLCanvasElement, session: Session): GameRenderer {
-  const renderer = new WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+/**
+ * Low = the lowest dynamic-resolution step from the tuning, no shadows, no MSAA: the floor of the quality tiers
+ * (full tiers and dynamic resolution arrive in P3-06). E2E uses it because CI renders without a GPU.
+ */
+export type Quality = 'high' | 'low';
+
+export function createGameRenderer(
+  canvas: HTMLCanvasElement,
+  session: Session,
+  quality: Quality = 'high',
+): GameRenderer {
+  const low = quality === 'low';
+  const renderer = new WebGLRenderer({ canvas, antialias: !low, powerPreference: 'high-performance' });
+  const steps = DEFAULT_TUNING.presentation.quality.pixelRatioSteps;
+  renderer.setPixelRatio(low ? (steps[steps.length - 1] ?? 0.7) : Math.min(window.devicePixelRatio, 2));
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.toneMapping = AgXToneMapping; // chosen in the Design Agreement (ADR-023)
   renderer.toneMappingExposure = 1.1;
-  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.enabled = !low;
   renderer.shadowMap.type = PCFShadowMap; // PCFSoft was removed in three r186
 
   const tuning = session.tuning;

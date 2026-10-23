@@ -1,0 +1,46 @@
+{
+  "runs": 200,
+  "reports": [
+    {
+      "bot": "novice",
+      "runs": 200,
+      "medianM": 498.23224242139133,
+      "p10M": 265.2386006912444,
+      "p90M": 693.1314801609916,
+      "maxM": 846.5810584236154,
+      "causes": {
+        "rear": 102,
+        "secondScrape": 98,
+        "timeout": 0
+      },
+      "histogram": [
+        [0, 17],
+        [250, 84],
+        [500, 87],
+        [750, 12]
+      ],
+      "anomalies": []
+    },
+    {
+      "bot": "chaos",
+      "runs": 200,
+      "medianM": 358.22545172540435,
+      "p10M": 171.8858337056564,
+      "p90M": 599.0544154904879,
+      "maxM": 886.1655835149921,
+      "causes": {
+        "rear": 196,
+        "secondScrape": 4,
+        "timeout": 0
+      },
+      "histogram": [
+        [0, 63],
+        [250, 92],
+        [500, 38],
+        [750, 7]
+      ],
+      "anomalies": []
+    }
+  ],
+  "alerts": ["novice median 498 m < 600 m (TEST_STRATEGY §3 target)"]
+}
