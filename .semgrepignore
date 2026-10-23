@@ -1,0 +1,8 @@
+# Replaces Semgrep's defaults (which skip tests/). Fixtures with deliberate violations are scanned only by the
+# fixture check in CI, which passes their paths explicitly.
+node_modules/
+dist/
+playwright-report/
+test-results/
+pnpm-lock.yaml
+tests/fixtures/

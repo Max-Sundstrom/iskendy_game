@@ -77,6 +77,22 @@ game, and it is sent to the host only in `game.runEnded`.
 
 ## 4. Web security baseline (configured in P0-07)
 
+**In place (P0-07, 2026-10-23):** `.github/workflows/security.yml`:
+- gitleaks 8.30.1 over the full history: the MIT binary with its sha256 checked, not gitleaks-action, which
+  has an EULA and a licence call;
+- Semgrep 1.180.0, container pinned by digest. It runs the project rules `tools/semgrep/kometa.yml` (HTML
+  injection, eval/Function, wildcard `postMessage`, message listener without an origin check), each proven on
+  a fixture, plus the `p/typescript`, `p/javascript` and `p/secrets` rulesets;
+- CodeQL `security-and-quality`;
+- OSV-Scanner on `pnpm-lock.yaml`, also weekly.
+
+Other measures:
+- Actions pinned by SHA; tokens read-only by default.
+- Renovate config with a 14-day minimum release age; pnpm enforces the same age on install.
+- Header skeleton for the game origin in `deploy/Caddyfile`. It was checked with a local Caddy serving the
+  build; Trusted Types run report-only until P0-08.
+- Branch protection and code-security settings are an owner action: `docs/runbooks/github-settings.md`.
+
 - HTTPS only; HSTS with preload once stable.
 - Headers: `Content-Security-Policy` (strict, report-to), `X-Content-Type-Options: nosniff`,
   `Referrer-Policy: strict-origin-when-cross-origin`, `Permissions-Policy` (deny camera, mic, geolocation…;

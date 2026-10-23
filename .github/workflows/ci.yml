@@ -3,7 +3,8 @@ name: CI
 on:
   pull_request:
   push:
-    branches: [main]
+    # Every branch, so a task branch is green before it is merged (no PR needed).
+    branches: ['**']
 
 # Least privilege (SECURITY T17): read-only token.
 permissions:
