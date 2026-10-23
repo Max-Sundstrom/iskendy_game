@@ -33,6 +33,7 @@ export function createIntroOverlay(parent: HTMLElement, t: Strings): IntroOverla
     },
     hide() {
       count.textContent = t.intro.go;
+      toast.hidden = true; // the controls hint takes its place
       goTimer = window.setTimeout(() => (root.hidden = true), 700);
     },
   };

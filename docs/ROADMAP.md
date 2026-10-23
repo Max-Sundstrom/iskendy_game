@@ -193,7 +193,7 @@ paints · daily missions · Route mode with a destination and story endings · g
 | D0 | **signed 2026-10-23** (ADR-023) | evidence in `docs/reviews/art-D0/`; phone p95 measured in P1-04 |
 | P0 | **done** (2026-10-23) | P0-01…P0-08; P0-06 table keeps filling as libraries arrive; server setup is an owner action (`docs/runbooks/deploy-game-origin.md`); P1+ waits for D0 |
 | P1 | **awaiting playtest** | P1-01…P1-08 done; exit gate needs the owner playtest (checklist in the P1-07 review) and the phone p95 readout |
-| P2 | not started | |
+| P2 | in progress | P2-01 done; P2-02 part 1 (front flips, landing grades) done, barrel rolls next; then P2-03 scoring |
 | P3 | P3-00 done (ADR-026) | visual slice ahead of P2 on the owner's request; Blender assets P3-01…03 later |
 | P4 | not started | |
 | P5 | not started | v1: P5-09 only; P5-01…08 deferred (no ranking) |

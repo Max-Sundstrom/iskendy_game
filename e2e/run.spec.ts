@@ -66,3 +66,38 @@ test('the launch intro counts down and hands over to the run', async ({ page }) 
     .poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 15_000 })
     .toBeGreaterThan(5);
 });
+
+test('a double tap or double Space jumps and flips', async ({ page, isMobile }) => {
+  await page.goto('/?seed=5&q=low&intro=0');
+  const app = page.locator('#app');
+  await expect(app).toHaveAttribute('data-screen', 'playing');
+  await expect
+    .poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 15_000 })
+    .toBeGreaterThan(5);
+  const press = async () => {
+    if (!isMobile) return page.keyboard.press('Space');
+    // A tap: down and up on the same spot within one task, so a slow software frame can't stretch it.
+    await page.evaluate(() => {
+      const canvas = document.getElementById('game');
+      if (!canvas) throw new Error('no canvas');
+      const r = canvas.getBoundingClientRect();
+      const init = {
+        pointerId: 9,
+        pointerType: 'touch',
+        clientX: r.width / 2,
+        clientY: r.height / 2,
+        isPrimary: true,
+        bubbles: true,
+      };
+      canvas.dispatchEvent(new PointerEvent('pointerdown', init));
+      canvas.dispatchEvent(new PointerEvent('pointerup', init));
+    });
+  };
+  await press();
+  // The second press must reach a sim step after the first: wait until the car is in the air.
+  await expect(app).toHaveAttribute('data-air', '1', { timeout: 10_000 });
+  await press();
+  await expect
+    .poll(async () => Number(await app.getAttribute('data-flip')), { timeout: 10_000, intervals: [16] })
+    .toBeGreaterThan(0);
+});

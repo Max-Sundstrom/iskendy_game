@@ -2,23 +2,22 @@ import art from '@kometa/content/art.json';
 import type { SimTuning } from '@kometa/shared';
 import {
   BoxGeometry,
-  CanvasTexture,
   Color,
   CylinderGeometry,
   Euler,
   Group,
-  IcosahedronGeometry,
   InstancedMesh,
   Matrix4,
   Mesh,
   MeshStandardMaterial,
   PlaneGeometry,
   Quaternion,
-  SRGBColorSpace,
   Vector3,
   type BufferGeometry,
 } from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
+import { buildingKinds, facadeMaterial } from './buildings';
+import { lindenGeometry } from './flora';
 import { box, tag, vehicleMaterial } from './models/parts';
 
 // Embankment Gold roadside per 200 m chunk (ART_DIRECTION §5–§6): parapets with steel railings on both edges, arched
@@ -47,50 +46,6 @@ function railPostGeometry(): BufferGeometry {
   return merged([tag(box(0.07, 1.0, 0.07, 0, 0.5, 0), '#5b5f69')]);
 }
 
-/** Linden: trunk and a cluster of soft canopy lobes in two greens warmed by the low sun. */
-function treeGeometry(): BufferGeometry {
-  const lobes: [number, number, number, number, string][] = [
-    [0, 4.6, 0, 2.2, '#4f6b2f'],
-    [0.9, 5.3, 0.4, 1.6, '#5f7d36'],
-    [-0.8, 5.1, -0.3, 1.7, '#47622b'],
-    [0.1, 6.1, -0.2, 1.4, '#6a8a3c'],
-  ];
-  return merged([
-    tag(new CylinderGeometry(0.16, 0.24, 3.6, 7).translate(0, 1.8, 0), '#4a3b30'),
-    ...lobes.map(([x, y, z, r, c]) => tag(new IcosahedronGeometry(r, 1).translate(x, y, z), c)),
-  ]);
-}
-
-/** Lit-window facade, one texture for every building; emissive so the city glows at dusk. */
-function facade(): MeshStandardMaterial {
-  const w = 64;
-  const h = 128;
-  const canvas = document.createElement('canvas');
-  canvas.width = w;
-  canvas.height = h;
-  const ctx = canvas.getContext('2d');
-  if (ctx) {
-    ctx.fillStyle = '#000';
-    ctx.fillRect(0, 0, w, h);
-    for (let y = 4; y < h; y += 8)
-      for (let x = 3; x < w; x += 8) {
-        const lit = (x * 7 + y * 13) % 5 < 2;
-        ctx.fillStyle = lit ? '#ffcf8a' : '#1a1a22';
-        ctx.fillRect(x, y, 4, 5);
-      }
-  }
-  const tex = new CanvasTexture(canvas);
-  tex.colorSpace = SRGBColorSpace;
-  return new MeshStandardMaterial({
-    color: '#8d7f8f',
-    roughness: 0.8,
-    emissive: '#ffffff',
-    emissiveMap: tex,
-    emissiveIntensity: 0.55,
-    map: tex,
-  });
-}
-
 export type ChunkProps = { group: Group; layout(index: number): void };
 
 /** Small deterministic hash so a chunk index always gets the same trees and buildings. */
@@ -101,7 +56,7 @@ function rand(index: number, k: number): number {
 }
 
 const TREES = 18;
-const BUILDINGS = 10;
+const PER_KIND = 8; // instances per building kind and chunk
 const LAMPS = 4;
 const POSTS = Math.floor(CHUNK_M / 2.5);
 
@@ -128,10 +83,10 @@ export function createChunkProps(tuning: SimTuning, shared: ReturnType<typeof sh
   const posts = new InstancedMesh(shared.post, shared.material, POSTS * 2);
   const lamps = new InstancedMesh(shared.lamp, shared.material, LAMPS * 2);
   const trees = new InstancedMesh(shared.tree, shared.material, TREES);
-  const buildings = new InstancedMesh(shared.building, shared.facade, BUILDINGS);
+  const blocks = shared.buildings.map((k) => new InstancedMesh(k.geometry, shared.facade, PER_KIND));
   trees.castShadow = true;
   lamps.castShadow = true;
-  group.add(posts, lamps, trees, buildings);
+  group.add(posts, lamps, trees, ...blocks);
 
   const m = new Matrix4();
   const p = new Vector3();
@@ -162,19 +117,24 @@ export function createChunkProps(tuning: SimTuning, shared: ReturnType<typeof sh
           m.compose(p.set(x, 0, z), q.setFromEuler(e.set(0, rand(index, i + 7) * 6.28, 0)), s.set(k, k, k)),
         );
       }
-      for (let i = 0; i < BUILDINGS; i++) {
-        const z = CHUNK_M / 2 - (i + 0.5) * (CHUNK_M / BUILDINGS);
-        const tall = rand(index, i + 200);
-        const height = 14 + tall * tall * 70;
-        const width = 12 + rand(index, i + 300) * 16;
-        const x = half + 24 + rand(index, i + 400) * 60 + width / 2;
-        buildings.setMatrixAt(
-          i,
-          m.compose(p.set(x, height / 2, z), q.identity(), s.set(width, height, 14 + rand(index, i + 500) * 8)),
-        );
+      // Buildings in a row along the chunk, each of a random kind, with gaps; a kind's mesh holds its instances.
+      for (const b of blocks) b.count = 0;
+      let z = CHUNK_M / 2;
+      for (let i = 0; z > -CHUNK_M / 2 && i < 40; i++) {
+        const kind = Math.floor(rand(index, i + 200) * blocks.length);
+        const spec = shared.buildings[kind];
+        const mesh = blocks[kind];
+        if (!spec || !mesh || mesh.count >= PER_KIND) break;
+        const k = 0.85 + rand(index, i + 300) * 0.35;
+        const depth = spec.depthM * k;
+        z -= depth / 2;
+        const x = half + 26 + rand(index, i + 400) * 40 + (spec.widthM * k) / 2;
+        const turn = rand(index, i + 500) < 0.5 ? 0 : Math.PI;
+        mesh.setMatrixAt(mesh.count++, m.compose(p.set(x, 0, z), q.setFromEuler(e.set(0, turn, 0)), s.set(k, k, k)));
+        z -= depth / 2 + 4 + rand(index, i + 600) * 10;
       }
       trees.instanceMatrix.needsUpdate = true;
-      buildings.instanceMatrix.needsUpdate = true;
+      for (const b of blocks) b.instanceMatrix.needsUpdate = true;
     },
   };
 }
@@ -194,7 +154,8 @@ export function sharedPropAssets(tuning: SimTuning) {
       metalness: 0.4,
     }),
     groundMat: new MeshStandardMaterial({ color: '#2b2630', roughness: 0.95 }),
-    facade: facade(),
+    facade: facadeMaterial(),
+    buildings: buildingKinds(),
     walls: both((sx) => [new BoxGeometry(0.45, 0.6, CHUNK_M).translate(sx * (half + 0.2), 0.3, 0)]),
     rails: both((sx) =>
       [1.1, 1.55].map((y) => new BoxGeometry(0.08, 0.08, CHUNK_M).translate(sx * (half + 0.2), y, 0)),
@@ -205,7 +166,6 @@ export function sharedPropAssets(tuning: SimTuning) {
     ground: new PlaneGeometry(200, CHUNK_M),
     post: railPostGeometry(),
     lamp: lampGeometry(),
-    tree: treeGeometry(),
-    building: new BoxGeometry(1, 1, 1),
+    tree: lindenGeometry(),
   };
 }

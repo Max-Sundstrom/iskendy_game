@@ -2,8 +2,6 @@ import art from '@kometa/content/art.json';
 import {
   BoxGeometry,
   BufferGeometry,
-  CubicBezierCurve3,
-  DoubleSide,
   Float32BufferAttribute,
   Group,
   InstancedMesh,
@@ -14,27 +12,41 @@ import {
   Vector3,
 } from 'three';
 
-// Launch intro (GDD §1 img 14/20, §3; owner request 2026-10-23, ADR-026): the car waits on the deck of a steel truss
-// gantry, drops down a curved ramp during the 3-2-1 countdown and meets the road at the run's start speed. Pure
-// presentation before tick 0: the sim starts when the car touches the road, so replays and determinism are unaffected.
+// Launch intro (owner request 2026-10-23, ADR-026/027): the reference's C-shaped launch ramp on a steel truss tower. The
+// car drives in along the road, climbs the inside of the C, runs along the underside of the top arm upside down,
+// leaves the lip with the thrusters firing, turns 1½ times in the air and lands on the road as the run starts.
+// Presentation before tick 0 only: the sim starts at touchdown, so replays and determinism are untouched.
 
-export const INTRO_S = 3.6;
-/** Retry skips the wait at the top (GDD §3: short 1.5 s ramp). */
-export const RETRY_START_S = INTRO_S - 1.5;
-const DESCENT_START_S = 0.3;
 const RAMP_WIDTH_M = 6;
+/** The C: an ellipse half (semi-axes A across, B up) plus a straight top arm ending at the launch lip. */
+const A = 7.5;
+const B = 12;
+const ARM_M = 10;
+const RAMP_MPS = 30;
+const G = 9.81;
+const COM_M = 0.55; // centre of mass above the contact point; the car turns about it in the air
 
-// Three coordinates: the run starts at z = 0 and heads to −z, so the gantry stands behind the start (+z).
-// The drop starts level, steepens, and flattens out at the road, so the car never changes pitch abruptly.
-const PATH = new CubicBezierCurve3(
-  new Vector3(0, 22, 70),
-  new Vector3(0, 22, 40),
-  new Vector3(0, 0, 42),
-  new Vector3(0, 0, 0),
-);
-const DECK_START = new Vector3(0, 22, 92);
+// Three coordinates: the run heads to −z and touches down at the origin, so the lip sits where a ballistic arc from
+// height 2B lands there, and the C stands behind it.
+export const FLIGHT_S = Math.sqrt((4 * B) / G);
+const LIP_Z = RAMP_MPS * FLIGHT_S;
+const ZC = LIP_Z + ARM_M; // the C's centre line
+const APPROACH_S = 1.2;
+const RAMP_LEN = Math.PI * Math.sqrt((A * A + B * B) / 2) + ARM_M;
+const CLIMB_S = RAMP_LEN / RAMP_MPS;
 
-export type IntroPose = { x: number; y: number; z: number; pitch: number; speed: number };
+export const INTRO_S = APPROACH_S + CLIMB_S + FLIGHT_S;
+/** Retry starts mid-flight (GDD §3: a short 1.5 s intro). */
+export const RETRY_START_S = INTRO_S - 1.5;
+
+export type IntroPose = {
+  /** Contact point (the car's origin) in three coordinates. */
+  position: Vector3;
+  /** Orientation of the whole car: its −z is the travel direction, +y its roof. */
+  quaternion: Quaternion;
+  speed: number;
+  phase: 'approach' | 'ramp' | 'flight';
+};
 
 /** Countdown digit shown at intro time t (3, 2, 1), or 0 once the run has started. */
 export function countdownDigit(t: number): number {
@@ -44,19 +56,70 @@ export function countdownDigit(t: number): number {
 
 export type Intro = {
   group: Group;
-  /** Car pose at intro time t; arrives at the origin at INTRO_S moving at `startMps`. */
+  /** Car pose at intro time t; touches down at the origin, upright, at INTRO_S. */
   pose(t: number, out: IntroPose): IntroPose;
 };
 
-/** Ramp deck: a strip along the path with raised kerbs, built from path samples. */
-function deckGeometry(samples: Vector3[]): BufferGeometry {
+/** A point on the ramp at arc length s from the bottom of the C: contact point, travel direction, roof normal. */
+function rampFrame(s: number, p: Vector3, fwd: Vector3, up: Vector3): void {
+  const half = RAMP_LEN - ARM_M;
+  if (s <= half) {
+    // Ellipse from the bottom (−90°) round the back to the top (+90°); arc length → angle numerically.
+    const phi = -Math.PI / 2 + Math.PI * ellipseAngleAt(s / half);
+    p.set(0, B + B * Math.sin(phi), ZC + A * Math.cos(phi));
+    fwd.set(0, B * Math.cos(phi), -A * Math.sin(phi)).normalize();
+  } else {
+    p.set(0, 2 * B, ZC - (s - half));
+    fwd.set(0, 0, -1);
+  }
+  // The roof points to the inside of the C: the travel direction turned a quarter toward the centre.
+  up.set(0, fwd.z, -fwd.y);
+}
+
+// Arc-length parameterisation of the half ellipse, tabulated once.
+const TABLE: number[] = (() => {
+  const n = 256;
+  const acc = [0];
+  let prev = new Vector3(0, 0, ZC);
+  for (let i = 1; i <= n; i++) {
+    const phi = -Math.PI / 2 + (Math.PI * i) / n;
+    const q = new Vector3(0, B + B * Math.sin(phi), ZC + A * Math.cos(phi));
+    acc.push((acc[i - 1] ?? 0) + q.distanceTo(prev));
+    prev = q;
+  }
+  const total = acc[n] ?? 1;
+  return acc.map((v) => v / total);
+})();
+
+function ellipseAngleAt(u: number): number {
+  const n = TABLE.length - 1;
+  let lo = 0;
+  let hi = n;
+  while (hi - lo > 1) {
+    const mid = (lo + hi) >> 1;
+    if ((TABLE[mid] ?? 0) < u) lo = mid;
+    else hi = mid;
+  }
+  const a = TABLE[lo] ?? 0;
+  const b = TABLE[hi] ?? 1;
+  return (lo + (b > a ? (u - a) / (b - a) : 0)) / n;
+}
+
+/** Ramp body: the running surface (inner face), a back face and side faces, from samples along the C. */
+function rampGeometry(samples: { p: Vector3; up: Vector3 }[], thick: number): BufferGeometry {
   const pos: number[] = [];
   const hw = RAMP_WIDTH_M / 2;
+  const quad = (a: number[], b: number[], c: number[], d: number[]) => pos.push(...a, ...b, ...c, ...a, ...c, ...d);
   for (let i = 0; i + 1 < samples.length; i++) {
-    const a = samples[i];
-    const b = samples[i + 1];
-    if (!a || !b) continue;
-    pos.push(-hw, a.y, a.z, hw, a.y, a.z, hw, b.y, b.z, -hw, a.y, a.z, hw, b.y, b.z, -hw, b.y, b.z);
+    const s0 = samples[i];
+    const s1 = samples[i + 1];
+    if (!s0 || !s1) continue;
+    const inner = (s: { p: Vector3 }, x: number) => [x, s.p.y, s.p.z];
+    const outer = (s: { p: Vector3; up: Vector3 }, x: number) => [x, s.p.y - s.up.y * thick, s.p.z - s.up.z * thick];
+    quad(inner(s0, -hw), inner(s1, -hw), inner(s1, hw), inner(s0, hw)); // running surface
+    quad(outer(s0, hw), outer(s1, hw), outer(s1, -hw), outer(s0, -hw)); // back
+    quad(inner(s0, hw), inner(s1, hw), outer(s1, hw), outer(s0, hw)); // sides
+    quad(outer(s0, -hw), outer(s1, -hw), inner(s1, -hw), inner(s0, -hw));
   }
   const g = new BufferGeometry();
   g.setAttribute('position', new Float32BufferAttribute(pos, 3));
@@ -66,30 +129,71 @@ function deckGeometry(samples: Vector3[]): BufferGeometry {
 
 export function createIntro(startMps: number): Intro {
   const group = new Group();
-  const steel = new MeshStandardMaterial({ color: '#6a3f33', roughness: 0.55, metalness: 0.6 });
-  const deckMat = new MeshStandardMaterial({ color: '#2a2a33', roughness: 0.45, side: DoubleSide });
-  const kerbMat = new MeshStandardMaterial({
-    color: art.palette.enamelCream,
-    emissive: '#fff1d6',
-    emissiveIntensity: 0.25,
-  });
+  const steel = new MeshStandardMaterial({ color: '#8d9099', roughness: 0.4, metalness: 0.85 });
+  const deck = new MeshStandardMaterial({ color: '#d9d4c8', roughness: 0.6, side: 2 });
+  const led = new MeshStandardMaterial({ color: '#ff2a2a', emissive: '#ff1a1a', emissiveIntensity: 2.4 });
+  const paint = new MeshStandardMaterial({ color: art.palette.enamelCream, roughness: 0.5 });
 
-  const samples = [DECK_START.clone(), ...PATH.getSpacedPoints(48)];
-  const deck = new Mesh(deckGeometry(samples), deckMat);
-  deck.position.y = 0.02;
-  deck.receiveShadow = true;
-  group.add(deck);
+  // Samples from just before the bottom of the C (a short flat run-in) to the lip.
+  const samples: { p: Vector3; up: Vector3 }[] = [];
+  const fwd = new Vector3();
+  for (let s = -6; s <= RAMP_LEN + 1e-6; s += 0.5) {
+    const p = new Vector3();
+    const up = new Vector3();
+    if (s < 0) {
+      p.set(0, 0, ZC + s);
+      up.set(0, 1, 0);
+    } else rampFrame(s, p, fwd, up);
+    samples.push({ p, up });
+  }
+  const ramp = new Mesh(rampGeometry(samples, 0.6), deck);
+  ramp.receiveShadow = true;
+  ramp.castShadow = true;
+  group.add(ramp);
 
-  // Kerbs, cross-ties under the deck and support columns down to the ground, all instanced.
-  const beams: Matrix4[] = [];
-  const kerbs: Matrix4[] = [];
+  // LED edges and two lane lines along the running surface, as instanced short segments.
+  const strips: { m: Matrix4; mat: 'led' | 'paint' }[] = [];
   const q = new Quaternion();
-  const up = new Vector3(0, 1, 0);
-  const fwd = new Vector3(0, 0, 1);
+  const zAxis = new Vector3(0, 0, 1);
+  const yAxis = new Vector3(0, 1, 0);
+  const d = new Vector3();
+  const basis = new Matrix4();
+  for (let i = 0; i + 1 < samples.length; i++) {
+    const s0 = samples[i];
+    const s1 = samples[i + 1];
+    if (!s0 || !s1) continue;
+    d.subVectors(s1.p, s0.p);
+    const len = d.length();
+    d.normalize();
+    const up = s0.up;
+    basis.makeBasis(new Vector3().crossVectors(up, d), up, d);
+    q.setFromRotationMatrix(basis);
+    for (const [x, w, mat] of [
+      [-RAMP_WIDTH_M / 2 + 0.08, 0.12, 'led'],
+      [RAMP_WIDTH_M / 2 - 0.08, 0.12, 'led'],
+      [-0.9, 0.1, 'paint'],
+      [0.9, 0.1, 'paint'],
+    ] as const) {
+      const c = new Vector3(x, 0, 0)
+        .add(s0.p)
+        .addScaledVector(d, len / 2)
+        .addScaledVector(up, 0.02);
+      strips.push({ m: new Matrix4().compose(c, q.clone(), new Vector3(w, 0.03, len + 0.02)), mat });
+    }
+  }
+  for (const kind of ['led', 'paint'] as const) {
+    const list = strips.filter((s) => s.mat === kind);
+    const mesh = new InstancedMesh(new BoxGeometry(1, 1, 1), kind === 'led' ? led : paint, list.length);
+    list.forEach((s, i) => mesh.setMatrixAt(i, s.m));
+    group.add(mesh);
+  }
+
+  // Truss: a tower behind the C, a girder over the top arm and struts from the C's back to the tower.
+  const beams: Matrix4[] = [];
   const dir = new Vector3();
   const beam = (a: Vector3, b: Vector3, thick: number) => {
     dir.subVectors(b, a).normalize();
-    q.setFromUnitVectors(up, dir);
+    q.setFromUnitVectors(yAxis, dir);
     beams.push(
       new Matrix4().compose(
         a.clone().add(b).multiplyScalar(0.5),
@@ -98,93 +202,107 @@ export function createIntro(startMps: number): Intro {
       ),
     );
   };
-  for (let i = 0; i + 1 < samples.length; i++) {
-    const a = samples[i];
-    const b = samples[i + 1];
-    if (!a || !b) continue;
-    dir.subVectors(b, a).normalize();
-    q.setFromUnitVectors(fwd, dir);
-    for (const sx of [-1, 1]) {
-      const centre = new Vector3((sx * RAMP_WIDTH_M) / 2, (a.y + b.y) / 2 + 0.19, (a.z + b.z) / 2);
-      kerbs.push(new Matrix4().compose(centre, q.clone(), new Vector3(0.3, 0.35, a.distanceTo(b) + 0.06)));
-    }
-    if (i % 3 === 0)
-      beam(
-        new Vector3(-RAMP_WIDTH_M / 2 - 0.3, a.y - 0.3, a.z),
-        new Vector3(RAMP_WIDTH_M / 2 + 0.3, a.y - 0.3, a.z),
-        0.3,
-      );
-    if (i % 4 === 0 && a.y > 1.5)
-      for (const sx of [-1, 1])
-        beam(
-          new Vector3((sx * RAMP_WIDTH_M) / 2 + sx * 0.4, 0, a.z),
-          new Vector3((sx * RAMP_WIDTH_M) / 2 + sx * 0.4, a.y - 0.3, a.z),
-          0.35,
-        );
-  }
-  const kerbMesh = new InstancedMesh(new BoxGeometry(1, 1, 1), kerbMat, kerbs.length);
-  kerbs.forEach((k, i) => kerbMesh.setMatrixAt(i, k));
-  group.add(kerbMesh);
-  // The gantry tower: four legs, a lattice of diagonals and a top frame over the start deck (cf. reference img 14).
-  const top = 28;
-  const legs = [
-    [-5, 66],
-    [5, 66],
-    [-5, 92],
-    [5, 92],
-  ] as const;
-  for (const [x, z] of legs) beam(new Vector3(x, 0, z), new Vector3(x, top, z), 0.6);
-  for (let y = 0; y < top; y += 5) {
-    for (const [x0, z0, x1, z1] of [
-      [-5, 66, 5, 66],
-      [-5, 92, 5, 92],
-      [-5, 66, -5, 92],
-      [5, 66, 5, 92],
+  const top = 2 * B + 3;
+  const z0 = ZC + A + 1.2;
+  const z1 = z0 + 3.5;
+  for (const x of [-4, 4]) for (const z of [z0, z1]) beam(new Vector3(x, 0, z), new Vector3(x, top, z), 0.35);
+  for (let y = 0; y < top - 0.1; y += 3) {
+    for (const [xa, za, xb, zb] of [
+      [-4, z0, 4, z0],
+      [-4, z1, 4, z1],
+      [-4, z0, -4, z1],
+      [4, z0, 4, z1],
     ] as const) {
-      beam(new Vector3(x0, y, z0), new Vector3(x1, y + 5, z1), 0.25);
-      beam(new Vector3(x1, y, z1), new Vector3(x0, y + 5, z0), 0.25);
-      beam(new Vector3(x0, y + 5, z0), new Vector3(x1, y + 5, z1), 0.3);
+      beam(new Vector3(xa, y, za), new Vector3(xb, Math.min(top, y + 3), zb), 0.12);
+      beam(new Vector3(xa, Math.min(top, y + 3), za), new Vector3(xb, Math.min(top, y + 3), zb), 0.16);
     }
   }
-  // A crane-like arm over the ramp carrying the start lights.
-  beam(new Vector3(-5, top, 66), new Vector3(-5, top, 34), 0.5);
-  beam(new Vector3(5, top, 66), new Vector3(5, top, 34), 0.5);
-  beam(new Vector3(-5, top, 34), new Vector3(5, top, 34), 0.5);
-  beam(new Vector3(-5, 0, 34), new Vector3(-5, top, 34), 0.5);
-  beam(new Vector3(5, 0, 34), new Vector3(5, top, 34), 0.5);
+  // Girder over the arm, from the tower to just past the lip.
+  for (const x of [-3.6, 3.6]) {
+    beam(new Vector3(x, 2 * B + 0.6, z1), new Vector3(x, 2 * B + 0.6, LIP_Z - 0.5), 0.3);
+    beam(new Vector3(x, top, z1), new Vector3(x, top, LIP_Z + 1), 0.3);
+    for (let z = LIP_Z; z < z1; z += 2.5) {
+      beam(new Vector3(x, 2 * B + 0.6, z), new Vector3(x, top, z + 2.5), 0.12);
+      beam(new Vector3(x, 2 * B + 0.6, z), new Vector3(x, top, z), 0.14);
+    }
+  }
+  // Struts from the back of the C to the tower.
+  for (let k = 1; k < 8; k++) {
+    const phi = -Math.PI / 2 + (Math.PI * k) / 8;
+    const y = B + B * Math.sin(phi);
+    const z = ZC + A * Math.cos(phi) + 0.6;
+    for (const x of [-2.5, 2.5]) beam(new Vector3(x, y, z), new Vector3(x * 1.6, y, z0), 0.2);
+  }
   const truss = new InstancedMesh(new BoxGeometry(1, 1, 1), steel, beams.length);
   beams.forEach((b, i) => truss.setMatrixAt(i, b));
   truss.castShadow = true;
   group.add(truss);
+  // Warning lights on the tower top.
+  for (const [x, z] of [
+    [-4, z0],
+    [4, z0],
+    [-4, z1],
+    [4, z1],
+  ] as const) {
+    const lamp = new Mesh(new BoxGeometry(0.4, 0.4, 0.4), led);
+    lamp.position.set(x, top + 0.3, z);
+    group.add(lamp);
+  }
 
-  // Arc length table for constant-acceleration motion along the path.
-  PATH.arcLengthDivisions = 400;
-  const total = PATH.getLength();
-  const T = INTRO_S - DESCENT_START_S;
-  const v0 = Math.max(4, (2 * total) / T - startMps);
-  const accel = (startMps - v0) / T;
   const p = new Vector3();
-  const tan = new Vector3();
+  const up = new Vector3();
+  const right = new Vector3();
+  const back = new Vector3();
+  const m = new Matrix4();
+  const upright = new Quaternion();
+  const spin = new Quaternion();
+  const comStart = new Vector3(0, 2 * B - COM_M, LIP_Z);
+  const comEnd = new Vector3(0, COM_M, 0);
+  const vy0 = (comEnd.y - comStart.y + 0.5 * G * FLIGHT_S * FLIGHT_S) / FLIGHT_S;
+  void startMps;
+
+  /** Sets the car's orientation from its travel direction and roof normal. */
+  const orient = (out: IntroPose, f: Vector3, u: Vector3) => {
+    right.crossVectors(f, u);
+    back.copy(f).negate();
+    m.makeBasis(right, u, back);
+    out.quaternion.setFromRotationMatrix(m);
+  };
 
   return {
     group,
     pose(t, out) {
-      if (t < DESCENT_START_S) {
-        // Waiting at the start of the drop.
-        PATH.getPointAt(0, p);
-        PATH.getTangentAt(0, tan);
-        out.speed = 0;
+      if (t < APPROACH_S) {
+        // Rolling in along the road toward the C (+z), speeding up to ramp speed.
+        const v0 = 10;
+        const acc = (RAMP_MPS - v0) / APPROACH_S;
+        const sAlong = v0 * t + 0.5 * acc * t * t;
+        const total = v0 * APPROACH_S + 0.5 * acc * APPROACH_S * APPROACH_S;
+        out.position.set(0, 0, ZC - total + sAlong);
+        orient(out, fwd.set(0, 0, 1), up.set(0, 1, 0));
+        out.speed = v0 + acc * t;
+        out.phase = 'approach';
+      } else if (t < APPROACH_S + CLIMB_S) {
+        rampFrame((t - APPROACH_S) * RAMP_MPS, p, fwd, up);
+        out.position.copy(p);
+        orient(out, fwd, up);
+        out.speed = RAMP_MPS;
+        out.phase = 'ramp';
       } else {
-        const tau = Math.min(T, t - DESCENT_START_S);
-        const d = Math.min(total, v0 * tau + 0.5 * accel * tau * tau);
-        PATH.getPointAt(d / total, p);
-        PATH.getTangentAt(d / total, tan);
-        out.speed = v0 + accel * tau;
+        // Ballistic flight of the centre of mass. The car left the lip upside down and still facing the run, so it
+        // rolls 1½ times about its length to land upright, easing in to touch down level.
+        const tau = Math.min(FLIGHT_S, t - APPROACH_S - CLIMB_S);
+        const u = tau / FLIGHT_S;
+        const com = p.set(0, comStart.y + vy0 * tau - 0.5 * G * tau * tau, comStart.z + (comEnd.z - comStart.z) * u);
+        const eased = u * u * (3 - 2 * u);
+        upright.identity();
+        spin.setFromAxisAngle(zAxis, Math.PI * (1 - 3 * eased)); // π (inverted) → −2π (upright after 1½ rolls)
+        out.quaternion.copy(upright).multiply(spin);
+        up.set(0, 1, 0).applyQuaternion(out.quaternion);
+        out.position.copy(com).addScaledVector(up, -COM_M);
+        out.speed = RAMP_MPS;
+        out.phase = 'flight';
       }
-      out.x = p.x;
-      out.y = p.y;
-      out.z = p.z;
-      out.pitch = Math.atan2(-tan.y, -tan.z); // nose-down angle while dropping toward −z
       return out;
     },
   };

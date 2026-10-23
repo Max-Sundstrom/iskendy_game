@@ -208,6 +208,30 @@ Decisions:
 - **Guardrail kept (AGENTS §12):** the car stays the original Kometa R (concept B); no real brand names, model names or
   copied body shapes. Realism means detail and materials, not a replica.
 
+## ADR-027 · accepted · Owner feedback round 2: C-shaped launch ramp, tap-to-jump, flips, more detail (owner, 2026-10-23)
+The owner asked for:
+- the launch ramp exactly like the reference roadster demo: a C-shaped ramp on a steel truss tower, with photos supplied;
+- a fix for wheels that floated above the body and sank into the ramp at the bottom of the old ramp;
+- flips on a double tap or a double Space;
+- smoother, more detailed cars, trees and buildings, with bevels instead of raw primitives.
+
+Decisions:
+- **Intro:**
+  - The car drives in along the road and climbs the inside of a C (an ellipse half, 24 m tall) to the top arm.
+  - It runs along the arm upside down and leaves the lip with the thrusters firing.
+  - It rolls 1½ times about its length and lands upright at the start line as tick 0 begins.
+  - LED edges and the truss follow the photos. The shape is a generic stunt ramp; no names or logos.
+- **Car pose:** the whole car (body and wheels) is oriented from the travel direction and the surface normal, and it
+  turns about its centre of mass in the air. This fixes the floating and sinking wheels.
+- **Input:** a quick tap on the screen is a Jump press. In the air a press flips (Q21), so a double tap jumps and
+  flips. Keyboard: Space twice. GDD §4 updated.
+- **Detail:**
+  - Bodies are lofted with Catmull-Rom between stations: the hero is dense, traffic stays within the 3k budget.
+  - Hero parts have rounded edges, and the sills have a two-tone satin band.
+  - Lindens have welded, lumpy, height-shaded crowns.
+  - City blocks come in three kinds (stepped with a spire, glass slab, panel block) with cornices and metre-scaled
+    windows.
+
 ## Open questions (owner) — defaults are used until answered
 
 Since ADR-022 every default in this table is an accepted decision; a new owner answer supersedes it.
@@ -254,3 +278,4 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
 - 2026-10-23 — Owner signed Architecture v1.0 and the hosting (ADR-022): docs v1.0, ADR-021 accepted, open-question defaults accepted.
 - 2026-10-23 — ADR-026: owner playtest feedback; launch gantry intro returns; visual slice P3-00 before P2.
 - 2026-10-23 — P2-01 platforms and hops; P2-02 front flips and landing grades; Q21 (air press vs jump buffer).
+- 2026-10-23 — ADR-027: C-shaped launch ramp, whole-car pose, tap to jump / double tap to flip, smoother models.

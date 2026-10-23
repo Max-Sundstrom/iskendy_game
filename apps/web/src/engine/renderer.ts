@@ -3,6 +3,7 @@ import {
   MathUtils,
   PCFShadowMap,
   PerspectiveCamera,
+  Quaternion,
   SRGBColorSpace,
   Vector2,
   Vector3,
@@ -13,7 +14,7 @@ import { lerp, type Session } from '../game/session';
 import { createChaseCamera, fovForAspect } from './camera';
 import { createCar } from './car';
 import { createHorizon } from './horizon';
-import { createIntro, INTRO_S, type IntroPose } from './intro';
+import { createIntro, FLIGHT_S, INTRO_S, type IntroPose } from './intro';
 import { createRoad } from './road';
 import { createWorld } from './scene';
 import { createThrusters } from './thrusters';
@@ -41,6 +42,14 @@ export type Quality = 'high' | 'low';
 
 const LANE_ROLL = MathUtils.degToRad(DEFAULT_TUNING.presentation.car.laneBodyRollDeg);
 const WHEEL_R = 0.34;
+const COM_M = 0.55;
+
+/** Height of the surface under the car: a ridden platform's top, else the road. */
+function groundUnder(s: Session): number {
+  const p = s.state.player;
+  if (p.rideSlot >= 0) return s.tuning.vehicles[s.state.traffic.type[p.rideSlot] ?? 0]?.heightM ?? 0;
+  return 0;
+}
 
 export function createGameRenderer(
   canvas: HTMLCanvasElement,
@@ -83,7 +92,10 @@ export function createGameRenderer(
   resize();
 
   const buffer = new Vector2();
-  const pose: IntroPose = { x: 0, y: 0, z: 0, pitch: 0, speed: 0 };
+  const pose: IntroPose = { position: new Vector3(), quaternion: new Quaternion(), speed: 0, phase: 'approach' };
+  const flipQ = new Quaternion();
+  const com = new Vector3();
+  const xAxis = new Vector3(1, 0, 0);
   const look = new Vector3();
   const side = new Vector3();
   let lastX = 0;
@@ -97,12 +109,13 @@ export function createGameRenderer(
     renderer.getDrawingBufferSize(buffer);
     return buffer.y / (2 * Math.tan(MathUtils.degToRad(fovDeg) / 2));
   };
-  const placeCar = (x: number, y: number, threeZ: number, speed: number, dt: number, groundY = 0) => {
+  /** Moves the car (the whole rig, wheels included) and its contact shadow on the surface at groundY. */
+  const placeCar = (x: number, y: number, threeZ: number, speed: number, dt: number, groundY = 0, shadow = true) => {
     rig.group.position.set(x, y, threeZ);
     const h = Math.max(0, y - groundY);
     rig.shadow.position.set(x, groundY + 0.03, threeZ);
     rig.shadow.scale.setScalar(1 + h * 0.08);
-    (rig.shadow.material as { opacity: number }).opacity = Math.max(0.15, 1 - h * 0.09);
+    (rig.shadow.material as { opacity: number }).opacity = shadow ? Math.max(0.15, 1 - h * 0.09) : 0;
     sun.position.set(x - 33, y + 12, threeZ + 48);
     spin += (speed * dt) / WHEEL_R;
     for (const w of rig.wheels) {
@@ -120,32 +133,36 @@ export function createGameRenderer(
     },
     renderIntro(s, t, frameS) {
       intro.pose(t, pose);
-      const simZ = -pose.z;
-      placeCar(pose.x, pose.y, pose.z, pose.speed, frameS, pose.y);
-      rig.body.rotation.set(pose.pitch, 0, 0);
-      road.update(simZ, 0);
+      const { position: c, quaternion } = pose;
+      const vx = (c.x - lastX) / Math.max(frameS, 1e-3);
+      const vy = (c.y - lastY) / Math.max(frameS, 1e-3);
+      const vz = (c.z - lastZ) / Math.max(frameS, 1e-3);
+      placeCar(c.x, c.y, c.z, pose.speed, frameS, 0, pose.phase !== 'ramp');
+      rig.group.quaternion.copy(quaternion);
+      rig.body.rotation.set(0, 0, 0);
+      road.update(Math.min(-c.z, 0), 0);
       traffic.update(s.state.traffic, s.prev.trafficZ, 1);
-      chase.update(pose.x, pose.y, simZ, pose.speed, false, frameS);
-      // Side shot that travels with the car down the gantry (cf. reference img 14), then eases into the chase camera
-      // for the last 0.9 s.
-      const car = rig.group.position;
-      side.set(car.x + 17, car.y + 4.5, car.z - 1);
-      look.set(car.x, car.y + 0.5, car.z - 2);
+      chase.update(c.x, Math.max(0, c.y), -c.z, pose.speed, false, frameS);
+      // A wide side shot of the C and its tower that pans with the car (cf. the reference photos), easing into the
+      // chase camera for the last 0.9 s of the flight.
+      const fly = MathUtils.clamp((t - (INTRO_S - FLIGHT_S)) / FLIGHT_S, 0, 1);
+      side.set(32 - 12 * fly, 11 - 4 * fly, MathUtils.lerp(70, c.z + 14, fly));
+      look.set(0, 12, 72).lerp(c, 0.3 + 0.6 * fly);
       introCam.position.copy(side);
       introCam.lookAt(look);
       const blend = MathUtils.smoothstep(t, INTRO_S - 0.9, INTRO_S);
       introCam.position.lerp(chase.camera.position, blend);
       introCam.quaternion.slerp(chase.camera.quaternion, blend);
-      introCam.fov = MathUtils.lerp(fovForAspect(50, aspect), chase.camera.fov, blend);
+      introCam.fov = MathUtils.lerp(fovForAspect(46, aspect), chase.camera.fov, blend);
       introCam.updateProjectionMatrix();
       thrusters.update({
         dt: frameS,
-        vx: 0,
-        vy: 0,
-        vz: -pose.speed,
-        boosting: false,
-        flying: false,
-        airborne: false,
+        vx,
+        vy,
+        vz,
+        boosting: pose.phase !== 'approach', // main thrusters push it up the C and off the lip
+        flying: pose.phase === 'flight', // lift and attitude nozzles hold and turn it in the air
+        airborne: pose.phase === 'flight',
         lane: s.state.player.lane,
         crashed: false,
       });
@@ -155,9 +172,9 @@ export function createGameRenderer(
       }
       vapour.update(frameS, pointScale(introCam.fov));
       horizon.update(introCam.position.z);
-      lastX = pose.x;
-      lastY = pose.y;
-      lastZ = pose.z;
+      lastX = c.x;
+      lastY = c.y;
+      lastZ = c.z;
       renderer.render(scene, introCam);
     },
     render(s, alpha, frameS) {
@@ -172,7 +189,13 @@ export function createGameRenderer(
       const dt = Math.max(frameS, 1e-3);
       const vx = (x - lastX) / dt;
       const vy = (y - lastY) / dt;
-      placeCar(x, y, -z, p.speedMps, frameS);
+      // Front flip: the whole car turns nose-over about its centre of mass (GDD §5.6). Don't interpolate across the
+      // reset to 0 at touchdown.
+      const f = Math.abs(p.flipTurns - s.prev.flip) > 0.5 ? p.flipTurns : lerp(s.prev.flip, p.flipTurns, alpha);
+      flipQ.setFromAxisAngle(xAxis, -2 * Math.PI * f);
+      rig.group.quaternion.copy(flipQ);
+      com.set(0, COM_M, 0).applyQuaternion(flipQ);
+      placeCar(x, y + COM_M - com.y, -z - com.z, p.speedMps, frameS, groundUnder(s));
       // Lean outward and nose into the lane change; pitch with vertical speed in the air.
       const laneSpeed = tuning.lanes.widthM / Math.max(0.05, tuning.lanes.changeDurationS);
       const k = MathUtils.clamp(vx / laneSpeed, -1, 1);

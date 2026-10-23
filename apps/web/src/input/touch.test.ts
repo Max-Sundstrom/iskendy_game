@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { createControls } from './controls';
-import { classifySwipe } from './touch';
+import { classifySwipe, isTap } from './touch';
 
 const T = { swipeMinPx: 24, swipeMaxMs: 180 };
 
@@ -12,6 +12,14 @@ describe('swipe classification (GDD §4)', () => {
     expect(classifySwipe(5, -40, 100, T)).toBe('up');
     expect(classifySwipe(5, 40, 100, T)).toBe('down');
     expect(classifySwipe(100, 0, 181, T)).toBeUndefined();
+  });
+});
+
+describe('taps (double tap = jump + flip)', () => {
+  it('is short and nearly still', () => {
+    expect(isTap(3, 4, 120, T)).toBe(true);
+    expect(isTap(0, 12, 120, T)).toBe(false); // moved half a swipe
+    expect(isTap(0, 0, 400, T)).toBe(false); // a long press is not a tap
   });
 });
 

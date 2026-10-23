@@ -28,3 +28,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · P1-08 · Orchestrator · Novice and Chaos bots with a nightly dashboard; first report: Novice median 498 m (target 600), nobody past ~850 m — input for P2-06/P2-10.
 - 2026-10-23 · P1-07 · Orchestrator · Provisional feel review from numbers and bots with four tuning deltas; owner playtest checklist for the P1 exit gate.
 - 2026-10-23 · P3-00 · Orchestrator · Owner feedback (ADR-026): detailed procedural car and 13 traffic models, roadside and horizon, cold-gas vapour from the nozzles, launch gantry intro with 3-2-1, BOOST visibly working; 108 draws in the run.
+- 2026-10-23 · P2-01/P2-02a + P3-00 r2 · Orchestrator · Platforms, hop chains, CLEAR; front flips and landing grades; C-shaped launch ramp like the reference demo, whole-car pose, double tap to flip, smoother cars, trees and buildings (ADR-027).

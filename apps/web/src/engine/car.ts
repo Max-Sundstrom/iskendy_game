@@ -19,7 +19,8 @@ import {
   type Material,
 } from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { loft, type Station } from './models/loft';
+import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
+import { HERO_DETAIL, loft, type Station } from './models/loft';
 
 // Kometa R, concept B "Samodelka" (ART_DIRECTION §8, ADR-019) in the v1 Iskendi Courier livery: knife-edge wedge,
 // low nose, full-width light bar, targa glass, wide flat tail with four round lamps behind a smoked strip, and visible
@@ -42,6 +43,23 @@ const BODY: Station[] = [
   { z: 2.15, ys: 0.24, wb: 0.74, ysh: 0.35, wsh: 0.8, yt: 0.42, wt: 0.66, crown: 0.01 },
   { z: 2.22, ys: 0.28, wb: 0.62, ysh: 0.32, wsh: 0.66, yt: 0.36, wt: 0.56, crown: 0 },
 ];
+
+/** The lowest 0.2 m of the body, a hair proud of the paint, for the two-tone sill band. */
+const SILL: Station[] = BODY.map((b) => ({
+  z: b.z,
+  ys: b.ys - 0.005,
+  wb: b.wb + 0.008,
+  ysh: b.ys + 0.1,
+  wsh: Math.min(b.wsh, b.wb + 0.05) + 0.008,
+  yt: Math.min(b.ys + 0.19, b.ysh),
+  wt: Math.min(b.wsh, b.wb + 0.07) + 0.006,
+  crown: 0,
+}));
+
+/** Box with softly rounded edges (a small bevel), so no part reads as a raw primitive. */
+function rbox(w: number, h: number, d: number): RoundedBoxGeometry {
+  return new RoundedBoxGeometry(w, h, d, 2, Math.min(w, h, d) * 0.45);
+}
 
 const glassStation = (z: number, base: number, top: number, w: number): Station => ({
   z,
@@ -251,6 +269,7 @@ export function createCar(): CarRig {
   });
   const glass = new MeshPhysicalMaterial({ color: '#10141d', roughness: 0.04, metalness: 0.3, clearcoat: 1 });
   const dark = new MeshStandardMaterial({ color: '#0b0b0f', roughness: 0.25, metalness: 0.4 });
+  const satin = new MeshPhysicalMaterial({ color: '#141519', roughness: 0.45, metalness: 0.2, clearcoat: 0.6 });
   const trim = new MeshStandardMaterial({ color: art.palette.enamelCream, roughness: 0.3, metalness: 0.7 });
   const tyre = new MeshStandardMaterial({ color: '#141416', roughness: 0.85 });
   const rim = new MeshStandardMaterial({ color: '#d8d4cc', roughness: 0.25, metalness: 0.8 });
@@ -265,33 +284,34 @@ export function createCar(): CarRig {
     emissiveIntensity: 0.15,
   });
 
-  body.add(mesh(loft(BODY), paint));
-  body.add(mesh(loft(CANOPY), glass));
-  body.add(mesh(new BoxGeometry(1.02, 0.03, 0.8), ornament('#F6E7C8', art.palette.iskendiOrange), 0, 1.14, -0.43));
+  body.add(mesh(loft(BODY, HERO_DETAIL), paint));
+  body.add(mesh(loft(CANOPY, HERO_DETAIL), glass));
+  // Two-tone: a satin-black band along the sills, as on modern EV roadsters, keeps the body visually light.
+  body.add(mesh(loft(SILL, HERO_DETAIL), satin));
+  body.add(mesh(rbox(1.02, 0.03, 0.8), ornament('#F6E7C8', art.palette.iskendiOrange), 0, 1.14, -0.43));
 
   // Tail: ducktail lip, smoked strip with four round lamps, diffuser with fins.
-  const lip = mesh(new BoxGeometry(1.74, 0.04, 0.26), paint, 0, 0.88, -2.04);
+  const lip = mesh(rbox(1.74, 0.04, 0.26), paint, 0, 0.88, -2.04);
   lip.rotation.x = -0.12;
-  body.add(lip, mesh(new BoxGeometry(1.84, 0.17, 0.03), dark, 0, 0.66, -2.215));
+  body.add(lip, mesh(rbox(1.84, 0.17, 0.03), dark, 0, 0.66, -2.215));
   for (const x of [-0.72, -0.33, 0.33, 0.72]) {
     const lamp = mesh(new CylinderGeometry(0.06, 0.06, 0.03, 20), tail, x, 0.66, -2.235, false);
     lamp.rotation.x = Math.PI / 2;
     body.add(lamp);
   }
-  body.add(mesh(new BoxGeometry(1.5, 0.05, 0.03), trim, 0, 0.5, -2.22, false));
-  body.add(mesh(new BoxGeometry(1.6, 0.14, 0.3), dark, 0, 0.3, -2.06));
-  for (const x of [-0.5, -0.17, 0.17, 0.5])
-    body.add(mesh(new BoxGeometry(0.02, 0.12, 0.28), dark, x, 0.24, -2.08, false));
+  body.add(mesh(rbox(1.5, 0.05, 0.03), trim, 0, 0.5, -2.22, false));
+  body.add(mesh(rbox(1.6, 0.14, 0.3), dark, 0, 0.3, -2.06));
+  for (const x of [-0.5, -0.17, 0.17, 0.5]) body.add(mesh(rbox(0.02, 0.12, 0.28), dark, x, 0.24, -2.08, false));
 
   // Nose: full-width light bar (pop-up headlamp nod) and a lower intake.
-  body.add(mesh(new BoxGeometry(1.24, 0.045, 0.04), head, 0, 0.39, 2.215, false));
-  body.add(mesh(new BoxGeometry(1.1, 0.08, 0.05), dark, 0, 0.29, 2.2, false));
+  body.add(mesh(rbox(1.24, 0.045, 0.04), head, 0, 0.39, 2.215, false));
+  body.add(mesh(rbox(1.1, 0.08, 0.05), dark, 0, 0.29, 2.2, false));
 
   // Flanks: side intakes ahead of the rear wheels, mirrors, and the pontoon trim line (an A detail).
   for (const s of [-1, 1]) {
-    body.add(mesh(new BoxGeometry(0.03, 0.16, 0.5), dark, s * 0.955, 0.52, -0.95, false));
-    body.add(mesh(new BoxGeometry(0.12, 0.06, 0.16), paint, s * 0.92, 0.86, 0.5));
-    const strip = mesh(new BoxGeometry(0.02, 0.03, 2.1), trim, s * 0.962, 0.58, 0, false);
+    body.add(mesh(rbox(0.03, 0.16, 0.5), dark, s * 0.955, 0.52, -0.95, false));
+    body.add(mesh(rbox(0.12, 0.06, 0.16), paint, s * 0.92, 0.86, 0.5));
+    const strip = mesh(rbox(0.02, 0.03, 2.1), trim, s * 0.962, 0.58, 0, false);
     strip.rotation.x = 0.03;
     body.add(strip);
   }

@@ -17,6 +17,8 @@ export type Snapshot = {
   x: number;
   y: number;
   z: number;
+  /** Front-flip rotation in turns (PlayerState.flipTurns). */
+  flip: number;
   readonly trafficZ: Float64Array;
 };
 
@@ -34,12 +36,13 @@ function snapshot(s: SimState, into: Snapshot): void {
   into.x = s.player.x;
   into.y = s.player.y;
   into.z = s.player.z;
+  into.flip = s.player.flipTurns;
   into.trafficZ.set(s.traffic.z);
 }
 
 export function createSession(seed: number, tuning: SimTuning = DEFAULT_TUNING.sim): Session {
   const state = createSimState(seed, tuning);
-  const prev: Snapshot = { x: 0, y: 0, z: 0, trafficZ: new Float64Array(TRAFFIC_CAPACITY) };
+  const prev: Snapshot = { x: 0, y: 0, z: 0, flip: 0, trafficZ: new Float64Array(TRAFFIC_CAPACITY) };
   snapshot(state, prev);
   return { tuning, state, prev, frameEvents: [], recorder: createRecorder(seed, tuning) };
 }
