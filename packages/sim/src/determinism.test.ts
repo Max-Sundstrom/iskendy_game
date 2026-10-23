@@ -1,22 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { stateHash } from './hash';
-import { createSimState } from './state';
-import { step } from './step';
-import { scriptedInputs } from './testing';
+import { runScripted } from './testing';
 import { DEFAULT_TUNING } from './tuning';
 
-/** 10 000 ticks of scripted input; the same check runs in Chromium (e2e/determinism.spec.ts). */
-export const DETERMINISM_SEED = 7;
-export const DETERMINISM_TICKS = 10_000;
-
+/** 10 000 ticks of scripted input with restarts; the same check runs in Chromium (e2e/determinism.spec.ts). */
 describe('determinism golden', () => {
   it('produces the pinned hash after 10 000 scripted ticks', () => {
-    const s = createSimState(DETERMINISM_SEED, DEFAULT_TUNING.sim);
-    const inputs = scriptedInputs(DETERMINISM_SEED, DETERMINISM_TICKS);
-    for (const held of inputs) step(s, held, DEFAULT_TUNING.sim);
-    expect(s.tick).toBe(DETERMINISM_TICKS);
-    expect(stateHash(s)).toBe(GOLDEN_10K);
+    const { hash, runs } = runScripted(7, 10_000, DEFAULT_TUNING.sim);
+    expect(runs).toBeGreaterThan(1); // the script crashes and retries, so traffic and collisions are exercised
+    expect(hash).toBe(GOLDEN_10K);
   });
 });
 
-const GOLDEN_10K = '6ae1d455';
+const GOLDEN_10K = '7083bcea-3e3cf928';

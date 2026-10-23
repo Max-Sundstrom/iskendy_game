@@ -8,7 +8,12 @@ import { speedAtDistance, step } from './step';
 import { DEFAULT_TUNING } from './tuning';
 
 const T = DEFAULT_TUNING.sim;
-const fresh = (seed = 1) => createSimState(seed, T);
+/** A run on an empty road: these tests are about lanes and speed, not traffic (see traffic.test.ts). */
+const fresh = (seed = 1) => {
+  const s = createSimState(seed, T);
+  s.director.nextRowM = Infinity;
+  return s;
+};
 const kinds = (s: SimState) => Array.from(s.events.kind.slice(0, s.events.count));
 
 /** Holds `mask` for one tick, then releases for one tick. */
@@ -95,7 +100,7 @@ describe('forward motion', () => {
     const s = fresh();
     let shifts = 0;
     let ticks = 0;
-    while (s.player.distanceM < 4500) {
+    while (s.player.distanceM < 4500 && ticks < 60 * 120) {
       step(s, 0, T);
       ticks++;
       if (kinds(s).includes(SimEventKind.originShift)) shifts++;

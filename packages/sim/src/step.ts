@@ -1,12 +1,19 @@
 import { SimEventKind, type SimTuning } from '@kometa/shared';
 import { emit } from './events';
 import { Action, pressed } from './input';
+import { resolveCollisions, type StepStart } from './collisions';
+import { runDirector } from './director';
 import { advanceLaneChange, requestLaneChange } from './lateral';
 import { saturatingExp } from './math';
 import { SimStatus, type SimState } from './state';
+import { moveTraffic, TRAFFIC_CAPACITY } from './traffic';
 import { updateAir, verticalInput, verticalIntegrate } from './vertical';
 
-// One fixed 60 Hz step (ARCHITECTURE §4.3). Order so far: input → lateral → AIR → vertical → forward → origin shift.
+/** Reused scratch for the step's starting position (no allocation per step). */
+const start: StepStart = { x: 0, y: 0, z: 0 };
+
+// One fixed 60 Hz step (ARCHITECTURE §4.3). Order so far:
+// input → lateral → AIR → vertical → forward → traffic → collisions → director → origin shift.
 // Mutates `state` in place and allocates nothing (invariant 5).
 
 /** Forward speed from distance (GDD §5.2): vMin + (vMax − vMin) · (1 − e^(−d / dScale)). */
@@ -21,6 +28,12 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   if (state.status !== SimStatus.running) return;
   const dt = 1 / tuning.tickRateHz;
   const p = state.player;
+
+  start.x = p.x;
+  start.y = p.y;
+  start.z = p.z;
+  if (p.penaltyS > 0) p.penaltyS = Math.max(0, p.penaltyS - dt);
+  if (p.scrapeTimerS > 0) p.scrapeTimerS = Math.max(0, p.scrapeTimerS - dt);
 
   const press = pressed(held, state.prevHeld);
   state.prevHeld = held;
@@ -41,15 +54,21 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   updateAir(state, tuning, (held & Action.boost) !== 0, dt);
   verticalIntegrate(state, tuning, dt);
 
-  p.speedMps = speedAtDistance(p.distanceM, tuning) * (p.boosting ? tuning.speed.boostMultiplier : 1);
+  const penalty = p.penaltyS > 0 ? 1 - tuning.speed.scrapePenalty : 1;
+  p.speedMps = speedAtDistance(p.distanceM, tuning) * (p.boosting ? tuning.speed.boostMultiplier : 1) * penalty;
   const dz = p.speedMps * dt;
   p.distanceM += dz;
   p.z += dz;
+
+  moveTraffic(state.traffic, tuning, dt);
+  resolveCollisions(state, tuning, start, dt);
+  runDirector(state, tuning);
 
   // Floating origin (invariant 7): nothing in the sim depends on absolute z.
   const shift = tuning.world.originShiftM;
   if (p.z >= shift) {
     p.z -= shift;
+    for (let i = 0; i < TRAFFIC_CAPACITY; i++) state.traffic.z[i] = (state.traffic.z[i] ?? 0) - shift;
     emit(state.events, SimEventKind.originShift, -shift);
   }
 

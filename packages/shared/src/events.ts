@@ -12,6 +12,9 @@ export const SimEventKind = {
   slam: 8,
   land: 9,
   airEmpty: 10,
+  hop: 11,
+  scrape: 12,
+  crash: 13,
 } as const;
 
 export type SimEventKind = (typeof SimEventKind)[keyof typeof SimEventKind];
@@ -27,4 +30,7 @@ export type SimEvent =
   | { kind: 'flyStop'; reason: 'released' | 'airEmpty' | 'slam' | 'landed' }
   | { kind: 'slam' }
   | { kind: 'land'; slam: boolean }
-  | { kind: 'airEmpty' };
+  | { kind: 'airEmpty' }
+  | { kind: 'hop' }
+  | { kind: 'scrape' }
+  | { kind: 'crash'; cause: 'rear' | 'secondScrape' };

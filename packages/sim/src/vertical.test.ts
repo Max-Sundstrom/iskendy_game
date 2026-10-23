@@ -8,7 +8,12 @@ import { DEFAULT_TUNING } from './tuning';
 import { jumpPhysics } from './vertical';
 
 const T = DEFAULT_TUNING.sim;
-const fresh = () => createSimState(1, T);
+/** Empty road: these tests are about vertical motion and AIR, not traffic. */
+const fresh = () => {
+  const s = createSimState(1, T);
+  s.director.nextRowM = Infinity;
+  return s;
+};
 const has = (s: SimState, kind: number) => Array.from(s.events.kind.slice(0, s.events.count)).includes(kind);
 const within1pct = (actual: number, expected: number) =>
   expect(Math.abs(actual - expected) / Math.abs(expected)).toBeLessThan(0.01);

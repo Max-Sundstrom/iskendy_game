@@ -22,6 +22,25 @@ const lanes = z.strictObject({
   queuedInputs: nonNegInt(),
 });
 
+const player = z.strictObject({ lengthM: pos(), widthM: pos(), heightM: pos() });
+
+const vehicle = z
+  .strictObject({
+    id: z.string().regex(/^[a-z][A-Za-z0-9]*$/),
+    lengthM: pos(),
+    widthM: pos(),
+    heightM: pos(),
+    minMps: nonNeg(),
+    maxMps: nonNeg(),
+    behaviour: z.enum(['constant', 'slow', 'laneChanger', 'stopGo', 'static']),
+    top: z.enum(['hop', 'platform', 'none']),
+    fromM: fromM(),
+    weight: pos(),
+  })
+  .refine((v) => v.minMps <= v.maxMps, { message: 'minMps must not exceed maxMps', path: ['minMps'] });
+
+const traffic = z.strictObject({ followGapM: pos(), spawnClearanceM: nonNeg() });
+
 const speed = z
   .strictObject({
     minMps: pos(),
@@ -184,6 +203,9 @@ const director = z
     conesFromM: fromM(),
     barriersFromM: fromM(),
     laneChangeTelegraphS: durationS(),
+    firstRowM: pos(),
+    spawnAheadM: pos(),
+    despawnBehindM: pos(),
     marshrutkaFromM: fromM(),
     trolleybusFromM: fromM(),
     sweeperFromM: fromM(),
@@ -203,6 +225,7 @@ export const SimTuningSchema = z
   .strictObject({
     tickRateHz: z.literal(60),
     lanes,
+    player,
     speed,
     jump,
     fly,
@@ -221,11 +244,23 @@ export const SimTuningSchema = z
     items,
     director,
     world: z.strictObject({ originShiftM: pos() }),
+    traffic,
+    // Vehicle data lives in the tuning so it is validated and covered by tuningHash (invariant 3).
+    vehicles: z
+      .array(vehicle)
+      .min(1)
+      .max(32)
+      .refine((vs) => new Set(vs.map((v) => v.id)).size === vs.length, { message: 'vehicle ids must be unique' }),
   })
   // A survivable path needs at least one free ground lane (invariant 6).
   .refine((s) => s.director.maxBlockedGroundLanes < s.lanes.count, {
     message: 'maxBlockedGroundLanes must leave at least one lane free',
     path: ['director', 'maxBlockedGroundLanes'],
+  })
+  // Traffic must be slower than the slowest player speed (even under a scrape penalty), so nothing hits from behind.
+  .refine((s) => s.vehicles.every((v) => v.maxMps <= s.speed.minMps * (1 - s.speed.scrapePenalty)), {
+    message: 'every vehicle must be slower than minMps × (1 − scrapePenalty)',
+    path: ['vehicles'],
   });
 
 const biome = z.strictObject({ id: z.string().regex(/^[a-z][a-z0-9_]*$/), fromM: fromM() });
