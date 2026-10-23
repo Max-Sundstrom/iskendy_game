@@ -70,5 +70,39 @@ identified the exact URL. Gallery HTML now declares the same `data:,` favicon as
 were suppressed. An intermediate routed-HTML diagnostic caused Chromium Local Network Access errors in
 Vite HMR and was discarded; no network or browser security settings were relaxed to bypass it.
 
-Full 90-second desktop/mobile production-profile reports are pending completion. Cloud Chromium uses
-software rendering; real-device timing, GPU texture bytes, GC pauses and late-game density remain unmeasured.
+## Production smoke measurements
+
+Both 90-second runs completed successfully on clean commit `a16f8ee4af95d1a50f6ed770356671c83690fbaa`
+(`dirty: false`), using Chromium 154.0.8037.57, a fresh production build/preview and the strict CSP from
+`deploy/Caddyfile`. The reports retain their original measured commit and screenshot paths; their PNGs
+are copied alongside the reports here. Both report `passed: true`, `errors: []` and pass the matching
+P0-09 Low-profile baseline comparison as well as the 150 draw / 300,000 triangle hard caps.
+
+| Profile | Wall duration | Active frames | Max draws | Max triangles | Runs / retries | Farthest run |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| [Desktop Low](models-desktop.json) | 90.000 s | 434 | 82 | 93,450 | 19 / 18 | 130 m |
+| [Mobile Low emulator](models-mobile.json) | 90.001 s | 1,429 | 79 | 99,244 | 21 / 20 | 163 m |
+
+Both runs start at seed 5, exercise normal inputs, crashes and Retry, and increment subsequent run seeds.
+No invalid or overflow frames were recorded. Desktop uses 1440×900; mobile uses 390×844 touch emulation
+at DPR 3, unlike the DPR 1 inspection screenshots. The emitted JS is 201,094 bytes gzip (196.4 KB).
+The preserved end-of-run captures are [desktop](models-desktop.png) and [mobile](models-mobile.png).
+
+Commands (with Node 24 / pnpm 12.11.2 on PATH):
+
+```sh
+PW_CHROMIUM_EXECUTABLE=/usr/bin/chromium pnpm perf:smoke --duration 90 --viewport desktop --quality low --baseline docs/reviews/perf-P0-09/desktop.json --output perf-report/models-desktop.json
+PW_CHROMIUM_EXECUTABLE=/usr/bin/chromium pnpm perf:smoke --duration 90 --viewport mobile --quality low --baseline docs/reviews/perf-P0-09/mobile.json --output perf-report/models-mobile.json
+```
+
+The orchestrator independently inspected both complete reports and accepted these bounded results. Cloud
+Chromium uses ANGLE SwiftShader software rendering: observed p50/p95 are 199.9/233.4 ms on desktop and
+66.6/83.3 ms in mobile emulation. These timings are informational and do not prove a phone frame-rate
+budget. Wall-clock input delivery is not a deterministic replay. The short natural runs cover early traffic;
+late-game density, High-profile 90-second timing, physical-device performance, GPU texture bytes and GC
+pauses remain unmeasured. No simulation, golden or cross-engine fixture changes are required for this card.
+
+The measured runtime tree IDs are `7dba25cab43fb330efb313a5b7c415367a7c1cba` for `apps/web/src` and
+`71be3dffae7e4f5f8c1e99446a535bb31741befa` for `packages`. Rebase provenance is recorded below after
+the final perf-base update; these report measurements are not relabelled as a new run.
+
