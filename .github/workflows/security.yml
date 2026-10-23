@@ -1,0 +1,92 @@
+name: Security
+
+on:
+  pull_request:
+  push:
+    # Every branch, so a task branch is green before it is merged (no PR needed).
+    branches: ['**']
+  schedule:
+    - cron: '17 4 * * 1' # weekly, for advisories published after the last push
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  gitleaks:
+    name: secrets (gitleaks)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    env:
+      GITLEAKS_VERSION: 8.30.1
+      # sha256 of gitleaks_8.30.1_linux_x64.tar.gz from the release's checksums file (verified 2026-10-23).
+      GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      # The open-source binary (MIT) instead of gitleaks-action, whose EULA and licence-check call we don't need.
+      - name: Install gitleaks
+        run: |
+          curl -sSfL -o gitleaks.tgz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tgz" | sha256sum --check
+          tar -xzf gitleaks.tgz gitleaks
+      - name: Scan full history
+        run: ./gitleaks git . --redact --verbose --exit-code 1
+
+  semgrep:
+    name: SAST (Semgrep)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    container:
+      image: semgrep/semgrep:1.180.0@sha256:529ee8a277ec8adc5b534d7c74eea0a47e9de21d62852b6ba7ac6ba9566845c3
+    env:
+      SEMGREP_ENABLE_VERSION_CHECK: '0'
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Project rules prove themselves on fixtures
+        run: |
+          semgrep scan --metrics=off --disable-version-check --config tools/semgrep/kometa.yml --json --quiet \
+            tests/fixtures/semgrep/violations.ts tests/fixtures/semgrep/clean.ts > semgrep-fixtures.json
+          python3 tools/semgrep/check_fixtures.py semgrep-fixtures.json
+      - name: Scan sources (project + registry rules)
+        run: |
+          semgrep scan --metrics=off --disable-version-check --error \
+            --config tools/semgrep/kometa.yml --config p/typescript --config p/javascript --config p/secrets \
+            apps packages tools tests e2e
+
+  codeql:
+    name: SAST (CodeQL)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: github/codeql-action/init@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+        with:
+          languages: javascript-typescript
+          build-mode: none
+          queries: security-and-quality
+      - uses: github/codeql-action/analyze@24c54180a607b1449ed407dd24f251e4e9147c8d # v4.38.3
+
+  osv:
+    name: dependencies (OSV-Scanner)
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@a345acffa64b0eaede81a3d9aae6141214d9c8fc # v2.6.0
+    with:
+      runs-on: ubuntu-24.04
+      scan-args: |-
+        --lockfile=pnpm-lock.yaml
