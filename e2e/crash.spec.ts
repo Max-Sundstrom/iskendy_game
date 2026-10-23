@@ -29,6 +29,11 @@ const reachCrash = async (page: Page) => {
   }
   await expect(page.locator('#app')).toHaveAttribute('data-screen', 'crashing');
 };
+const finishCrash = async (page: Page) => {
+  // Keep the same 800 ms horizon with eight real frames below the production 250 ms frame clamp.
+  // The impact/visibility/reduced-motion checks retain their fine-grained animation frames.
+  for (let frame = 0; frame < 8; frame++) await page.clock.fastForward(100);
+};
 const hidden = async (page: Page, value: boolean) => {
   // Exercise the actual visibility adapter; headless browsers do not reliably hide a tab on bringToFront.
   await page.evaluate((hide) => {
@@ -59,7 +64,7 @@ test('crash freezes the run, pauses while hidden and records once across two ret
   page,
   isMobile,
 }, info) => {
-  await start(page, 28);
+  await start(page, 96);
   const app = page.locator('#app');
   for (let run = 0; run < 3; run++) {
     await reachCrash(page);
@@ -71,8 +76,8 @@ test('crash freezes the run, pauses while hidden and records once across two ret
     if (!Array.isArray(runs)) throw new Error('replay list missing');
     expect(runs).toHaveLength(run + 1);
     const replay = parseReplay(JSON.stringify(runs[run]), { maxTicks: 1000, maxDecompressedBytes: 100_000 });
-    expect(replay.seed).toBe(28 + run);
-    expect(replay.ticks).toBe([258, 505, 643][run]);
+    expect(replay.seed).toBe(96 + run);
+    expect(replay.ticks).toBe([339, 324, 313][run]);
     expect(playReplay(replay, simTuning).valid).toBe(true);
     const distance = await app.getAttribute('data-distance');
     if (run === 0) {
@@ -95,7 +100,7 @@ test('crash freezes the run, pauses while hidden and records once across two ret
       await page.keyboard.press('Space');
       await page.keyboard.press('ArrowRight');
     }
-    await page.clock.runFor(800);
+    await finishCrash(page);
     await expect(app).toHaveAttribute('data-screen', 'results');
     await expect(page.locator('.crash-cue')).toBeHidden();
     await expect(page.locator('.results-retry')).toBeFocused();
@@ -125,7 +130,7 @@ test('reduced motion keeps the crash scene static before results', async ({ page
   await page.clock.runFor(125);
   expect(await page.locator('#game').screenshot()).toEqual(before);
   await capture(page, info, 'reduced-impact-settle');
-  await page.clock.runFor(800);
+  await finishCrash(page);
   await expect(page.locator('#app')).toHaveAttribute('data-screen', 'results');
   await capture(page, info, 'reduced-results');
 });
@@ -148,7 +153,7 @@ test('a late real flip shows its bad landing orientation before results', async 
   expect(result.valid).toBe(true);
   expect(readEvents(result.state.events)).toContainEqual({ kind: 'crash', cause: 'landing' });
   await capture(page, info, 'landing-impact');
-  await page.clock.runFor(800);
+  await finishCrash(page);
   await expect(page.locator('#app')).toHaveAttribute('data-screen', 'results');
   await capture(page, info, 'landing-results');
 });
