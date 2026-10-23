@@ -1,7 +1,8 @@
 import { SCHEMA_VERSION } from '@kometa/shared';
 
-/** Bumped on any change to sim outcomes; replays carry it (invariant 10). */
-export const SIM_VERSION = 1;
+import { SIM_VERSION } from './version';
+
+export { SIM_VERSION };
 
 /** Schema version the sim's replays and snapshots are written with. */
 export const SIM_SCHEMA_VERSION = SCHEMA_VERSION;
@@ -18,3 +19,4 @@ export { CrashCause } from './collisions';
 export { difficulty, type DirectorState } from './director';
 export { TRAFFIC_CAPACITY, type Traffic } from './traffic';
 export { FlyStop, jumpPhysics } from './vertical';
+export { createRecorder, playReplay, type Recorder, type ReplayResult } from './replay';

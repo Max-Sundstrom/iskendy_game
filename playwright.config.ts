@@ -3,6 +3,13 @@ import { defineConfig, devices } from '@playwright/test';
 // A container with a different preinstalled Chromium can point at it instead of downloading (see README).
 const executablePath = process.env['PW_CHROMIUM_EXECUTABLE'];
 const launchOptions = executablePath ? { executablePath } : {};
+// CROSS_ENGINE=1 adds WebKit and Firefox for the determinism checks only (ARCHITECTURE §4.4; CI job cross-engine).
+const crossEngine = process.env['CROSS_ENGINE']
+  ? [
+      { name: 'webkit', testMatch: /(determinism|replays)\.spec\.ts/, use: { ...devices['Desktop Safari'] } },
+      { name: 'firefox', testMatch: /(determinism|replays)\.spec\.ts/, use: { ...devices['Desktop Firefox'] } },
+    ]
+  : [];
 
 export default defineConfig({
   testDir: 'e2e',
@@ -10,7 +17,7 @@ export default defineConfig({
   // CI and cloud runners render with SwiftShader (no GPU): shader compiles and frames are slow, so allow time and
   // keep parallelism low enough not to starve each test.
   workers: 2,
-  timeout: 90_000,
+  timeout: 120_000,
   forbidOnly: Boolean(process.env['CI']),
   retries: 0,
   reporter: process.env['CI'] ? [['list'], ['html', { open: 'never' }]] : 'list',
@@ -32,6 +39,7 @@ export default defineConfig({
         launchOptions,
       },
     },
+    ...crossEngine,
   ],
   webServer: process.env['BASE_URL']
     ? undefined

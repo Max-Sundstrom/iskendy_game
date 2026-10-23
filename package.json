@@ -21,10 +21,14 @@
     "assets:check": "tsx tools/assets/check.ts",
     "check:headers": "tsx tools/check-headers.ts",
     "lab": "pnpm --filter @kometa/lab dev",
-    "lab:capture": "tsx tools/lab-capture.ts"
+    "lab:capture": "tsx tools/lab-capture.ts",
+    "replay:verify": "tsx tools/replay-verify.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
+    "@kometa/content": "workspace:*",
+    "@kometa/shared": "workspace:*",
+    "@kometa/sim": "workspace:*",
     "@playwright/test": "1.64.0",
     "@types/node": "26.6.4",
     "dependency-cruiser": "18.5.0",

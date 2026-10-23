@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 // Seed 28 crashes within ~4 s when idle (found by scanning seeds), so the run ends without input.
 
 test('a run ends on a crash, shows the results and retries', async ({ page }) => {
-  await page.goto('/?seed=28');
+  await page.goto('/?seed=28&q=low');
   const app = page.locator('#app');
   await expect(app).toHaveAttribute('data-screen', 'playing');
   await expect(app).toHaveAttribute('data-screen', 'results', { timeout: 60_000 });
@@ -18,7 +18,7 @@ test('a run ends on a crash, shows the results and retries', async ({ page }) =>
 });
 
 test('changes lane from the keyboard or a swipe', async ({ page, isMobile }) => {
-  await page.goto('/?seed=5');
+  await page.goto('/?seed=5&q=low');
   const app = page.locator('#app');
   await expect(app).toHaveAttribute('data-lane', '2');
   if (isMobile) {
