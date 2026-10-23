@@ -56,4 +56,6 @@ export default tseslint.config(
     languageOptions: { globals: { ...globals.node } },
   },
   { files: ['**/packages/sim/**/*.ts'], rules: simRules },
+  // Tests compare the sim against Math.exp & co.; the rules above still apply to sim sources.
+  { files: ['**/packages/sim/**/*.test.ts'], rules: { 'no-restricted-properties': 'off' } },
 );
