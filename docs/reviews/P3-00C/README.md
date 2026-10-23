@@ -4,7 +4,15 @@ The actual simulation crash now leads to a short readable response before result
 stops and records the replay at the original crash tick. No sim outcomes, golden replays or determinism fixtures changed.
 
 Measured source: [`509ee1d7fd1f83ae250b8431d5a09cddd5b05077`](https://github.com/Max-Sundstrom/iskendy_game/commit/509ee1d7fd1f83ae250b8431d5a09cddd5b05077).
-Both performance runs report this exact commit with `dirty: false`. Later commits in this card add evidence/docs only.
+Both performance runs report this exact commit with `dirty: false`. The zero-time vapour correction in `7559c647`
+has [separate follow-up browser evidence](followup/README.md); these older performance runs do not cover that fix.
+
+**Current CI status:** published head `5c5fd2c` fails the repeated-crash browser scenario's 120 s deadline; a separate
+container run also failed hidden-frame PNG equality.
+[Investigation and reviewed fixture](ci-harness.md) record the unsuccessful attempts, actual replay progress,
+public-clock correction, zero-time particle fix and authorized resumption. The local follow-up now passes all six
+production browser cases and 189 unit tests. New performance evidence and exact published-head CI remain pending;
+the card is not fully verified.
 
 ## Actual browser images
 
