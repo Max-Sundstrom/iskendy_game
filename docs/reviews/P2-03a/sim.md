@@ -41,3 +41,16 @@ full physical-state/source-event comparison is a separate QA gate; this author r
 
 Q24–Q26 document proposed passive-credit policies/flags and settlement interpretation without owner sign-off.
 SIM_VERSION remains1 under the pre-release ADR-024; every changed golden/hash has a written rationale.
+
+## Independent checks after the author handoff
+
+Independent QA passed all [23 targeted scenarios](independent-quick.json), including actual 63 CLEAR events
+followed by a slot-63 crash, 127325 points lost, all seven hashed fields and interleaved fresh sessions.
+A separate [tick-by-tick comparison](independent-physics.json) against barrel runtime `e96d8ff` found identical
+physical trajectories, source events and retries for all three goldens and the 10,000-tick fixture.
+The expected new ledger/hash differs while physics remains unchanged. The probe was run independently from
+the scoring author; no failures are omitted from the supplied compact result files.
+
+Subsequent [browser verification](browser-review.md) passed both viewports with fractional banking, hidden
+active-pot timing, two validated replays and Retry; actual screenshots were viewed. This does not replace
+exact-head CI, hosted/physical-phone checks, or the separate crash-particle regression.
