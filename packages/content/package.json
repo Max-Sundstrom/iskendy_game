@@ -5,6 +5,8 @@
   "type": "module",
   "exports": {
     "./tuning.default.json": "./tuning.default.json",
-    "./art.json": "./art.json"
+    "./art.json": "./art.json",
+    "./i18n/ru.json": "./i18n/ru.json",
+    "./i18n/en.json": "./i18n/en.json"
   }
 }

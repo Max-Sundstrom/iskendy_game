@@ -1,4 +1,4 @@
-import { AgXToneMapping, PCFSoftShadowMap, SRGBColorSpace, WebGLRenderer } from 'three';
+import { AgXToneMapping, PCFShadowMap, SRGBColorSpace, WebGLRenderer } from 'three';
 import { lerp, type Session } from '../game/session';
 import { createChaseCamera } from './camera';
 import { createCar } from './car';
@@ -21,7 +21,7 @@ export function createGameRenderer(canvas: HTMLCanvasElement, session: Session):
   renderer.toneMapping = AgXToneMapping; // chosen in the Design Agreement (ADR-023)
   renderer.toneMappingExposure = 1.1;
   renderer.shadowMap.enabled = true;
-  renderer.shadowMap.type = PCFSoftShadowMap;
+  renderer.shadowMap.type = PCFShadowMap; // PCFSoft was removed in three r186
 
   const tuning = session.tuning;
   const { scene, sun } = createWorld(renderer);

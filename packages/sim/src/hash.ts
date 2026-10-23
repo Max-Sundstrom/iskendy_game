@@ -57,6 +57,7 @@ export function stateHash(s: SimState): string {
   h = mixNumber(h, p.penaltyS);
   h = mixNumber(h, p.scrapeTimerS);
   h = mixNumber(h, s.director.nextRowM);
+  h = mixNumber(h, s.score.total);
   const t = s.traffic;
   for (let i = 0; i < t.active.length; i++) {
     if (t.active[i] === 0) continue;

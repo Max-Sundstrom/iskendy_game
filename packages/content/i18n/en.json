@@ -1,0 +1,22 @@
+{
+  "hud": {
+    "score": "Score",
+    "metres": "m",
+    "litres": "L",
+    "air": "AIR",
+    "boost": "BOOST"
+  },
+  "results": {
+    "crash": "The pies will have to wait.",
+    "distance": "distance",
+    "time": "time",
+    "newBest": "NEW BEST",
+    "best": "Best",
+    "promo": "Your promo code",
+    "retry": "Retry"
+  },
+  "controls": {
+    "keyboard": "← → lane · Space jump, hold to fly · ↓ slam · Shift BOOST",
+    "touch": "Swipe left/right — lane · up — jump, keep holding — fly · down — slam"
+  }
+}
