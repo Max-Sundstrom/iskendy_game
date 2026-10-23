@@ -1,3 +1,18 @@
+/** Stable numeric reasons for score credits; append new mechanics without renumbering. */
+export const ScoreReason = {
+  boost: 1,
+  clear: 2,
+  semiCleared: 3,
+  hop: 4,
+  roofRide: 5,
+  frontFlip: 6,
+  barrelRoll: 7,
+  perfectLanding: 8,
+  stuntLanding: 9,
+  slam: 10,
+} as const;
+export type ScoreReason = (typeof ScoreReason)[keyof typeof ScoreReason];
+
 // Sim → presentation event kinds (ARCHITECTURE §4.6). The sim writes them into a preallocated numeric buffer;
 // presentation decodes them. Codes are part of the replay-independent contract: append, never renumber.
 
@@ -31,6 +46,14 @@ export const SimEventKind = {
   rollStart: 20,
   /** a: rolls completed in this jump, b: direction (-1 left, +1 right). */
   rollDone: 21,
+  /** a: ScoreReason, b: actual fractional points added directly to total. */
+  scoreAddedDirect: 22,
+  /** a: ScoreReason, b: actual fractional points added to the pending pot. */
+  scoreAddedToPot: 23,
+  /** a: points banked, b: points lost when the streak closes. */
+  streakSettled: 24,
+  /** a: streak event-count threshold crossed; b unused. */
+  streakMilestone: 25,
 } as const;
 
 export type SimEventKind = (typeof SimEventKind)[keyof typeof SimEventKind];
@@ -57,4 +80,8 @@ export type SimEvent =
   | { kind: 'flipDone'; count: number }
   | { kind: 'rollStart'; index: number; direction: -1 | 1 }
   | { kind: 'rollDone'; count: number; direction: -1 | 1 }
+  | { kind: 'scoreAddedDirect'; reason: ScoreReason; points: number }
+  | { kind: 'scoreAddedToPot'; reason: ScoreReason; points: number }
+  | { kind: 'streakSettled'; banked: number; lost: number }
+  | { kind: 'streakMilestone'; count: number }
   | { kind: 'landingGraded'; grade: 'perfect' | 'stunt' | 'sloppy'; flips: number };
