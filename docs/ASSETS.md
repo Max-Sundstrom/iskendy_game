@@ -65,7 +65,8 @@ high-poly visualisation models that would need full retopology anyway and still 
   structure the game needs (separate wheels, thruster sockets, flip pivot, LODs).
 - **Traffic:** Kenney Car Kit (CC0) restyled + 4 original Soviet-inspired bodies built in Blender with the
   same pipeline + selected CC-BY models above.
-- **Environment:** Kenney kits + Panelka (CC-BY) + custom props (launch gantry, intro ramp, palms/cypresses).
+- **Environment:** Kenney kits + Panelka (CC-BY) + custom props for the biomes in ART_DIRECTION §5–§6 (ski-jump hill,
+  Cosmos Park rocket, arch bridge, ring-road tunnels, kiosks). The v0.1 launch gantry and palms are dropped.
 
 ---
 

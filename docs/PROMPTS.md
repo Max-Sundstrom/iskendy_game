@@ -172,6 +172,8 @@ and attach them. The score odometer is the single signature UI moment — keep e
 
 ## P5 — Online
 
+> v1 (ADR-019): only P5-09 (host embedding) runs now. The prompt below is for when ranking returns.
+
 **Claude Code**
 ```
 Orchestrator: start Phase 5. Read ARCHITECTURE §11 and GDD §17. Freeze the API contract in packages/shared/api
@@ -259,7 +261,7 @@ CPU per run, error rates and CDN egress projection. Report pass/fail per SLO and
 
 ### Night batch for Codex
 ```
-Act as Orchestrator. Select up to 5 cards from the current phase that are independent, have frozen
+Act as Orchestrator. Select up to 3 cards from the current phase that are independent, have frozen
 contracts and non-overlapping write paths. Write docs/tasks/batch-<date>.md listing, per card: goal, scope
 paths, doc sections to read, acceptance criteria and verification commands. Then give me the exact text to
 paste into Codex for each card.

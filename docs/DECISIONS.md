@@ -97,6 +97,8 @@ A public standalone build is deferred; the architecture keeps it possible.
 No promo codes or discounts in v1. Validated runs carry a reward-eligibility flag and identities can later be
 linked to an Iskendi customer id, so rewards can be added without reworking anti-cheat. Legal review of
 promotion mechanics happens before enabling them.
+*Clarified by ADR-019/020 (A-07):* v1 has no run validation, so the reward-eligibility flag arrives with the
+online layer; the v1 promo code is display-only and is not a promo code in the sense of this ADR.
 
 ## ADR-018 · accepted · Owner answers 2026-10-23 (repository, identity, ranking, devices)
 - The game launches from the **"Сыграть" (Play) card** on the Iskendi order screen; no sign-in — guests play while they wait.
@@ -128,6 +130,18 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 - **All bonus mechanics ship in v1:** rings, star token (COSMONAUT), AIR canister, item capsule with RADAR,
   MAGNET, SHIELD and EMP (GDD §8).
 
+## ADR-021 · proposed · v1 hosting: static container behind the shared Caddy (A-04, 2026-10-23)
+The game origin `play.iskendy.ru` is served by a separate static-files container on the existing Iskendi server in
+Russia, behind the shared Caddy (its config lives in the `iskendy_analytic` repository). CI publishes a versioned
+release archive with a SHA-256; the server pulls a pinned version. No CDN in v1: L1 egress is a few GB per month
+(INFRASTRUCTURE §0). Kill switch = the `disabled` build (EMBEDDING §2).
+**Why:** no server-side code in v1 (ADR-019); same region and server as the host keeps latency and cost minimal;
+a different origin still satisfies invariant 12 (no shared origin, storage or credentials).
+**Alternatives:** a Russian CDN/object storage (needed only for a public standalone build or L3); a subpath on
+the host origin (breaks invariant 12 and the host CSP model).
+**Needs:** owner approval (infrastructure change, AGENTS §13); a Caddy block from the server owner; host CSP
+`frame-src` line (front-end Q-34). Note: game ADR numbers are separate from the front-end repository's ADRs.
+
 ## Open questions (owner) — defaults are used until answered
 
 | # | Question | Default |
@@ -138,7 +152,7 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 | 4 | Sign-in providers and backend region | **Answered 2026-10-23: no sign-in, guests only** (ADR-018). Region still open (Q13) |
 | 5 | Portrait only, or landscape too? | Both, portrait first |
 | 6 | LIFTOFF automatic or manual? | Automatic; manual in settings |
-| 7 | Distribution targets | Own site PWA; portal adapters later |
+| 7 | Distribution targets | Iskendi embed only in v1 (ADR-016); own-site PWA and portal adapters later |
 | 8 | Monetisation | None in v1 |
 | 9 | Scope: standalone, embedded in Iskendi order tracking, or both? | **Answered 2026-10-23: Iskendi "play while you wait" (embedded).** Standalone deferred |
 | 10 | Real rewards (promo codes/discounts) for scores or achievements? | **Answered 2026-10-23: later.** v1 keeps hooks only (reward-eligibility flag on validated runs); no issuance |
@@ -147,7 +161,10 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 | 13 | Audience and hosting region | **Answered 2026-10-23: Russia** (ADR-019); provider chosen in A-04 |
 | 14 | How strong is the GTA VI-style saturation vs a calmer palette (or Iskendi brand moderation)? | Full "Moscow Vice" palette; brand only on billboards/livery/UI chrome |
 | 15 | "Ranking is managed on the backend": this game service (ADR-012) or the Iskendi FastAPI backend? | **Answered 2026-10-23: no ranking in v1** (ADR-019). Iskendi FastAPI untouched except one CSP `frame-src` line (front-end Q-34) |
-| 16 | Promo code rules: when it appears, format, whether the host page shows it too | After every finished run; format `ISK-XXXX-XXXX` from a CSPRNG (unambiguous alphabet); shown on the results screen and sent to the host in `game.runEnded.promoCode`; display only, no value until server-issued |
+| 16 | Promo code rules: when it appears, format, whether the host page shows it too | After every finished run; format `ISK-XXXX-XXXX` from a CSPRNG (Crockford Base32, ARCHITECTURE §11); shown on the results screen and sent to the host in `game.runEnded.promoCode`; display only, no value until server-issued |
+| 17 | Telemetry in v1: does the game collect gameplay analytics? | No: no analytics in the game and no third-party scripts on its origin. The host may record its own analytics goals from `game.ready`, `game.runEnded` (without the promo code) and `game.error` |
+| 18 | Error reporting in v1 | No reporting service; fatal errors reach the host as `game.error { code }`; Caddy access logs on the server. Revisit before a public build |
+| 19 | Share button on the results screen in v1 | Hidden: there is no public standalone build for a share link to open, and a share image would spread the promo code. Share returns with the standalone build |
 
 ## Change log
 - 2026-10-23 — Kit created from reference screenshot analysis.
@@ -157,3 +174,4 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 - 2026-10-23 — Owner answers: Play card entry, no sign-in, server-side ranking, separate repo, phones/tablets/desktop (ADR-018); Q15 added.
 - 2026-10-23 — Owner answers: no ranking in v1, car concept left to the orchestrator (B chosen), hosting in Russia (ADR-019).
 - 2026-10-23 — Owner answers: crash ends the run, results with score + Retry, unique promo code shown (meaning later), all bonus mechanics in v1 (ADR-020); Q16 added.
+- 2026-10-23 — A-07 consistency review (`docs/reviews/consistency-A07-2026-10-23.md`): docs aligned to the v1 scope and marked v1.0 RC; ADR-017 clarified; ADR-021 (hosting) proposed; Q7 default updated; Q17–Q19 added; night batch ≤ 3 cards.

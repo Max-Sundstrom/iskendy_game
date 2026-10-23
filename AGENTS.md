@@ -13,8 +13,15 @@ Design Agreement), down a five-lane city highway. It runs standalone and can be 
 (e.g. as a "play while you wait" game in the Iskendi order tracking). Core verbs: switch lanes, jump over cars, hop across car roofs, surf on
 truck trailers, fly on a cold-gas thruster tank ("AIR"), slam down, boost, and chain front flips and barrel
 rolls into score streaks. Filling the LIFTOFF meter triggers a short invincible mode in which the car smashes
-through traffic while a rocket launches on the horizon. Runs last 1–4 minutes; scores go to all-time and
-weekly leaderboards validated by server-side replay. Gameplay reference and derived numbers: `docs/GDD.md §1`.
+through traffic while a rocket launches on the horizon. Runs last 1–4 minutes and end on a crash; the results
+screen shows the score, the personal best (kept on the device) and a display-only promo code.
+Gameplay reference and derived numbers: `docs/GDD.md §1`.
+
+**v1 scope (ADR-016, ADR-019, ADR-020):** the Iskendi "play while you wait" edition — static client in an iframe
+opened from the "Сыграть" card, guests only, no game server, no database, no leaderboards, all items in.
+Everything below that mentions the server, leaderboards, sign-in or rewards describes the **deferred** online
+layer; keep the architecture compatible with it, but don't build it in v1. One-page summary:
+`docs/ARCHITECTURE_V1_SIGNOFF.ru.md`.
 
 ## 2. Read before you write
 
@@ -46,7 +53,7 @@ weekly leaderboards validated by server-side replay. Gameplay reference and deri
 - **Audio:** Web Audio through howler.js.
 - **Simulation:** pure TypeScript package `@kometa/sim`, fixed 60 Hz step, arcade kinematics in lane space, no physics engine.
 - **Schemas:** zod in `@kometa/shared` (API, saves, replays, tuning).
-- **Backend:** Node.js (current LTS) + Fastify + PostgreSQL + Drizzle ORM + Valkey (leaderboards, rate limits);
+- **Backend (deferred — not built in v1, ADR-019):** Node.js (current LTS) + Fastify + PostgreSQL + Drizzle ORM + Valkey (leaderboards, rate limits);
   pg-boss job queue for replay validation; Docker image deployable on any host. Runs as a service separate
   from any host product's backend (e.g. the Iskendi FastAPI stays untouched).
 - **Tests:** Vitest + fast-check (property tests), Playwright (E2E, visual, mobile emulation, cross-engine replay checks).
@@ -64,7 +71,7 @@ apps/
     src/input/            # keyboard / touch / gamepad → abstract actions
     src/audio/            # SFX map, music stems, mixer, haptics
     src/platform/         # PWA, share, visibility, wake lock, storage, portal SDK adapters
-  server/                 # Fastify API: identity, runs, leaderboards, replay validation worker
+  server/                 # Fastify API: identity, runs, leaderboards, replay validation worker (deferred; not created in v1)
 packages/
   sim/                    # deterministic simulation — NO DOM, NO three, NO React, NO clocks, NO Math.random
   shared/                 # types, zod schemas, API contracts, event types, constants
@@ -131,6 +138,8 @@ If a command doesn't exist yet, creating it is part of Phase 0.
     host product, and a game failure must not degrade the host. Every host integration has a kill switch.
 13. **Server authority.** Leaderboard ranks, rewards, unlock sync and achievements that matter are decided by
     the server after replay validation. The client is cosmetic and can be modified without consequence.
+    In v1 there is no server, so nothing of value may depend on the client: personal bests and achievements are
+    local and cosmetic, and the v1 promo code is display-only with no value (ADR-020).
 
 ## 7. Code conventions
 

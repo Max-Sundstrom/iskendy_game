@@ -1,4 +1,4 @@
-# KOMETA — Security, anti-cheat and compliance v0.1
+# KOMETA — Security, anti-cheat and compliance v1.0 RC
 
 Scope: web client, game-service API, replay validators, data stores, CDN, CI/CD, the asset pipeline, the AI
 agents that build the game, and integration with any host product (Iskendi order tracking, web portals).
@@ -6,6 +6,14 @@ Method: STRIDE per component, then mitigations, then tests. Reviewed at every ph
 
 **Principle:** the browser is hostile territory. Anything with value — leaderboard rank, rewards, unlocks,
 achievements that sync — is decided on the server. The client may be modified freely; it can only hurt itself.
+
+**v1 threat review (A-03, done in A-07 on 2026-10-23).** v1 is a static client on its own origin, embedded by the
+Iskendi front-end; no game server, accounts, personal data or rewards (ADR-019, ADR-020). In scope for v1:
+T12, T13, T14, T15, T16, T17, T18, T21, T23, plus the host-availability asset (invariant 12). Deferred with the
+online layer: T1–T11, T19, T22 (they return with the server). T20: the v1 promo code is client-generated and
+display-only, so it is **not** a reward; anyone can produce such a string, and nothing may honour it until a
+server issues and checks codes. New v1 point: the promo code is never put into URLs, analytics or logs by the
+game, and it is sent to the host only in `game.runEnded`.
 
 ---
 
@@ -76,7 +84,7 @@ achievements that sync — is decided on the server. The client may be modified 
   on the standalone site (not on the embed if it breaks hosts), `frame-ancestors` allowlist.
 - CORS: explicit origin allowlist; no wildcard with credentials.
 - Separate origins: game client (`play.` subdomain or own domain), API (`api.`), admin (`admin.`, VPN/allowlist).
-  Never serve the game from the host product's origin.
+  Never serve the game from the host product's origin. v1 has only the client origin (`play.iskendy.ru`, ADR-021).
 - Error responses carry no stack traces; request ids for support.
 
 ---
@@ -99,6 +107,8 @@ Accepted residual risk: a determined TAS author can produce a plausible-looking 
 
 ## 6. Privacy and compliance (confirm with a lawyer before launch)
 
+- **v1:** no personal data, no cookies and no analytics on the game origin; local storage holds only settings,
+  bests, achievements and local runs. The host's privacy notice covers the host page.
 - **Russia, 152-FZ:** if you collect personal data of Russian citizens (e.g. phone/email via sign-in), the
   primary database must be located in Russia, you act as a personal-data operator (registration with
   Roskomnadzor), and you need a privacy policy and consent text. Guest-only play without PII keeps this minimal.
