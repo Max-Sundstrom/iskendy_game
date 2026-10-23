@@ -24,3 +24,9 @@ A subsequent [8.001-second success](short-success.json) exited 0 with 28 active 
 and verified server/browser cleanup. [QA summary](qa-summary.json) records exit codes and cleanup evidence.
 These lifecycle checks used `c67ede4` with the uncommitted scoped fix. Interrupted reports and the short success
 do not replace the full 90-second measurements. See the [task card](../../tasks/P0-09.md) for limits and remaining CI.
+
+A later review identified the signal-during-cleanup race, beyond the earlier measuring-phase OS-signal checks.
+`tools/perf-smoke.test.ts` now covers both SIGTERM/SIGINT callbacks during each deferred browser/server close,
+plus normal cleanup. It loads the actual CLI with mocked resources, and requires failed JSON, one interruption
+error and exit code 1. The old implementation fails all four interruption cases; the fixed implementation passes.
+This is unit lifecycle evidence, with no additional GPU run or replacement of the full reports above.

@@ -199,7 +199,6 @@ async function main(): Promise<void> {
   } catch (error) {
     errors.push(error instanceof Error ? error.message : String(error));
   } finally {
-    if (interrupted && !errors.includes('Performance smoke interrupted')) errors.push('Performance smoke interrupted');
     try {
       if (browser) await browser.close();
     } catch (error) {
@@ -211,6 +210,8 @@ async function main(): Promise<void> {
     } catch (error) {
       errors.push(`Server cleanup: ${String(error)}`);
     }
+    // Signals can arrive during either awaited close. Finalize only after both cleanup operations settle.
+    if (interrupted && !errors.includes('Performance smoke interrupted')) errors.push('Performance smoke interrupted');
     process.removeListener('SIGINT', interrupt);
     process.removeListener('SIGTERM', interrupt);
     report['passed'] = errors.length === 0;
