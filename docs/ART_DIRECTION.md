@@ -164,4 +164,6 @@ Neon Night (black + rose pinstripe) · **Iskendi Courier** (`#DB5D00` + ornament
 | 6 | HUD style frames | Figma frames at 390×844 and 1440×900 (D0-4) | ☐ |
 | 7 | IP guardrails acknowledged | this document §2 and §5 | ☐ |
 
+Evidence for every row (2026-10-23): `docs/reviews/art-D0/` and its README; the boxes are ticked by the owner.
+
 Signed by the owner: ______ · date: ______

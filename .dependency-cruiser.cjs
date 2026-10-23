@@ -26,6 +26,13 @@ module.exports = {
       to: { path: '(^|/)apps/web/src/engine/' },
     },
     {
+      name: 'game-not-lab',
+      severity: 'error',
+      comment: 'apps/lab is D0 exploration; nothing in the game may depend on it.',
+      from: { path: '(^|/)(apps/web|packages)/' },
+      to: { path: '(^|/)apps/lab/' },
+    },
+    {
       name: 'no-circular',
       severity: 'error',
       from: {},

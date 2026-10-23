@@ -1,0 +1,133 @@
+.board {
+  width: 1600px;
+  padding: 40px 48px 56px;
+  background: #15121c;
+}
+.board h1 {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 700;
+  font-size: 30px;
+  margin: 0 0 6px;
+}
+.board h2 {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ff8a3d;
+  margin: 28px 0 12px;
+}
+.board header p,
+.note {
+  color: #cdb2f0;
+  margin: 0;
+}
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+}
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 12px;
+}
+.swatches.small {
+  grid-template-columns: repeat(6, 1fr);
+}
+.swatch {
+  border-radius: 10px;
+  overflow: hidden;
+  background: #1a1c26;
+  font-size: 12px;
+}
+.swatch .chip {
+  height: 86px;
+}
+.swatches.small .swatch .chip {
+  height: 56px;
+}
+.swatch .meta {
+  padding: 6px 8px 8px;
+}
+.swatch b {
+  display: block;
+  font-size: 13px;
+}
+.biomes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.biome {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #1a1c26;
+}
+.biome .sky {
+  height: 170px;
+  position: relative;
+}
+.biome .sun {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  left: 62%;
+  bottom: 18px;
+  filter: blur(2px);
+}
+.biome .road {
+  height: 46px;
+}
+.biome .meta {
+  padding: 10px 12px;
+  font-size: 13px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dot {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+.display {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 800;
+  font-size: 44px;
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+  color: #f3e9d2;
+}
+.display.ru {
+  color: #ff8a3d;
+  font-size: 36px;
+}
+.ui {
+  font-family: 'Golos Text', sans-serif;
+  font-size: 18px;
+}
+table {
+  border-collapse: collapse;
+  font-size: 14px;
+}
+td {
+  padding: 5px 10px 5px 0;
+}
+td.pass {
+  color: #19c2b0;
+}
+td.fail {
+  color: #ff4f9a;
+}
+ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.6;
+}

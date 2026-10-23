@@ -1,0 +1,44 @@
+@font-face {
+  font-family: 'Unbounded';
+  src: url('/fonts/Unbounded-wght.ttf') format('truetype');
+  font-weight: 200 900;
+  font-display: block;
+}
+@font-face {
+  font-family: 'Golos Text';
+  src: url('/fonts/GolosText-wght.ttf') format('truetype');
+  font-weight: 400 900;
+  font-display: block;
+}
+:root {
+  --plum: #3b1752;
+  --asphalt: #1a1c26;
+  --cream: #f3e9d2;
+  --tangerine: #ff8a3d;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--asphalt);
+  color: var(--cream);
+  font-family: 'Golos Text', system-ui, sans-serif;
+}
+body.render {
+  display: inline-block;
+  position: relative;
+}
+body.render canvas {
+  display: block;
+}
+.caption {
+  position: absolute;
+  left: 12px;
+  bottom: 8px;
+  margin: 0;
+  padding: 4px 8px;
+  font-size: 13px;
+  background: rgb(26 28 38 / 70%);
+  border-radius: 4px;
+}
