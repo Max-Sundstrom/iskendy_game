@@ -98,6 +98,14 @@ No promo codes or discounts in v1. Validated runs carry a reward-eligibility fla
 linked to an Iskendi customer id, so rewards can be added without reworking anti-cheat. Legal review of
 promotion mechanics happens before enabling them.
 
+## ADR-018 · accepted · Owner answers 2026-10-23 (repository, identity, ranking, devices)
+- The game launches from the **"Сыграть" (Play) card** on the Iskendi order screen; no sign-in — guests play while they wait.
+- **Ranking is server-side** (invariant 13). Where it lives is open question 15.
+- The game lives in its **own repository** (`Max-Sundstrom/iskendy_game`), developed both in the cloud and locally, then
+  integrated with the Iskendi guest front-end (`Max-Sundstrom/iskendy-frontend`) and backend (`Greatjaaack/iskendy`).
+- Targets: **phones, tablets and desktop**.
+Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-end repository.
+
 ## Open questions (owner) — defaults are used until answered
 
 | # | Question | Default |
@@ -105,7 +113,7 @@ promotion mechanics happens before enabling them.
 | 1 | How does a run end: crash only, or also a Route mode with a destination? | Endless in v1; Route mode in v1.1 |
 | 2 | What does ITEM do (reference shows an eye icon)? | RADAR, MAGNET, SHIELD, EMP |
 | 3 | Final title, premise text and hero car name | KOMETA / pies-to-the-dacha premise / Kometa R |
-| 4 | Sign-in providers and backend region | Guest only in v1.0; providers added in P5-04 once chosen |
+| 4 | Sign-in providers and backend region | **Answered 2026-10-23: no sign-in, guests only** (ADR-018). Region still open (Q13) |
 | 5 | Portrait only, or landscape too? | Both, portrait first |
 | 6 | LIFTOFF automatic or manual? | Automatic; manual in settings |
 | 7 | Distribution targets | Own site PWA; portal adapters later |
@@ -116,9 +124,11 @@ promotion mechanics happens before enabling them.
 | 12 | Fictional city with archetypes, or recognisable real landmarks? | Fictional Kometograd, archetypes only |
 | 13 | Audience and hosting region | Decide in A-04 after Q9 |
 | 14 | How strong is the GTA VI-style saturation vs a calmer palette (or Iskendi brand moderation)? | Full "Moscow Vice" palette; brand only on billboards/livery/UI chrome |
+| 15 | "Ranking is managed on the backend": this game service (ADR-012) or the Iskendi FastAPI backend? | This game service; Iskendi FastAPI untouched except one CSP `frame-src` line (front-end Q-32, Q-34) |
 
 ## Change log
 - 2026-10-23 — Kit created from reference screenshot analysis.
 - 2026-10-23 — v0.2: Moscow × GTA VI-inspired direction (proposed), security/anti-cheat, infrastructure and
   load model, scenario catalogue, host embedding contract, test strategy, multi-agent system, Phases A and D0.
 - 2026-10-23 — Owner answers: Q9 Iskendi embedded edition; Q10 rewards later; Q11 choosing from photos.
+- 2026-10-23 — Owner answers: Play card entry, no sign-in, server-side ranking, separate repo, phones/tablets/desktop (ADR-018); Q15 added.
