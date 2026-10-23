@@ -39,6 +39,8 @@ describe('tuningHash', () => {
   it('ignores presentation and server numbers', () => {
     const raw = structuredClone(defaultTuning);
     raw.presentation.camera.distanceM = 99;
+    raw.presentation.crash.bodyDropM = 0.2;
+    raw.presentation.crash.durationS = 1;
     raw.server.replay.maxTicks = 1;
     expect(tuningHash(parseTuning(raw).sim)).toBe(tuningHash(sim()));
   });

@@ -73,6 +73,18 @@ describe('parseTuning', () => {
     expect(problemsOf(raw)).toEqual([expect.stringMatching(/^presentation\.world\.biomes\[1\]\.id: /)]);
   });
 
+  it('keeps crash presentation durations and cloud opacity bounded by their contract', () => {
+    expect(problemsOf(set(clone(), 'presentation.crash.settleDurationS', 1))).toEqual([
+      'presentation.crash.settleDurationS: settleDurationS must fit in the crash presentation',
+    ]);
+    expect(problemsOf(set(clone(), 'presentation.crash.cloudAlpha', 1.1))).toEqual([
+      expect.stringMatching(/^presentation\.crash\.cloudAlpha: /),
+    ]);
+    expect(problemsOf(set(clone(), 'presentation.crash.settleDurationS', 0))).toEqual([
+      expect.stringMatching(/^presentation\.crash\.settleDurationS: /),
+    ]);
+  });
+
   it('rejects non-object input', () => {
     expect(problemsOf(null)).toEqual([expect.stringMatching(/^\(root\): /)]);
   });

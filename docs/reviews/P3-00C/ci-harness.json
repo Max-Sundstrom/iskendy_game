@@ -1,0 +1,205 @@
+{
+  "sourceHead": "5c5fd2cb6217ec23d5a2c3bf99af79dc0566077d",
+  "browser": "Chromium154.0.8037.57",
+  "playwright": "1.64.0",
+  "workers": 2,
+  "testTimeoutMs": 120000,
+  "server": "Vite development server, exact clean source",
+  "reports": [
+    {
+      "project": "desktop",
+      "outcome": "timeout",
+      "crashObservedTraceMs": [
+        24083,
+        75565,
+        116721
+      ],
+      "completedResultWaits": [
+        {
+          "ticks": {
+            "ticksNumber": 800
+          },
+          "wallMs": 15152,
+          "endMs": 44481
+        },
+        {
+          "ticks": {
+            "ticksNumber": 800
+          },
+          "wallMs": 14428,
+          "endMs": 90691
+        }
+      ],
+      "methods": [
+        {
+          "method": "clockRunFor",
+          "count": 8,
+          "sumMs": 32577,
+          "medianMs": 647
+        },
+        {
+          "method": "getAttribute",
+          "count": 290,
+          "sumMs": 32059,
+          "medianMs": 4
+        },
+        {
+          "method": "clockFastForward",
+          "count": 283,
+          "sumMs": 32051,
+          "medianMs": 4
+        }
+      ],
+      "recordedRuns": [
+        {
+          "seed": 28,
+          "ticks": 258,
+          "finalHash": "0ec6d8a9"
+        },
+        {
+          "seed": 29,
+          "ticks": 505,
+          "finalHash": "c940e801"
+        },
+        {
+          "seed": 30,
+          "ticks": 643,
+          "finalHash": "e90c746c"
+        }
+      ]
+    },
+    {
+      "project": "mobile",
+      "outcome": "passed",
+      "crashObservedTraceMs": [
+        16296,
+        45272,
+        76282
+      ],
+      "completedResultWaits": [
+        {
+          "ticks": {
+            "ticksNumber": 800
+          },
+          "wallMs": 7322,
+          "endMs": 28142
+        },
+        {
+          "ticks": {
+            "ticksNumber": 800
+          },
+          "wallMs": 8140,
+          "endMs": 53462
+        },
+        {
+          "ticks": {
+            "ticksNumber": 800
+          },
+          "wallMs": 8906,
+          "endMs": 85445
+        }
+      ],
+      "methods": [
+        {
+          "method": "clockRunFor",
+          "count": 9,
+          "sumMs": 26830,
+          "medianMs": 873
+        },
+        {
+          "method": "getAttribute",
+          "count": 290,
+          "sumMs": 21381,
+          "medianMs": 6
+        },
+        {
+          "method": "clockFastForward",
+          "count": 283,
+          "sumMs": 19549,
+          "medianMs": 5
+        }
+      ],
+      "recordedRuns": [
+        {
+          "seed": 28,
+          "ticks": 258,
+          "finalHash": "0ec6d8a9"
+        },
+        {
+          "seed": 29,
+          "ticks": 505,
+          "finalHash": "c940e801"
+        },
+        {
+          "seed": 30,
+          "ticks": 643,
+          "finalHash": "e90c746c"
+        }
+      ]
+    }
+  ],
+  "intermediate": {
+    "testBlob": "2ee9fec7df46bf241614b799c8c7b4adc6fd24c9",
+    "change": "replace three runFor(800) sites with eight sequential public fastForward(100) calls",
+    "workers": 2,
+    "testTimeoutMs": 120000,
+    "suiteResults": [
+      {
+        "project": "desktop",
+        "test": "crash.spec.ts:123 \u203a reduced motion keeps the crash scene static before results",
+        "bodyAndSetupWallMs": 39447,
+        "outcome": "passed"
+      },
+      {
+        "project": "desktop",
+        "test": "crash.spec.ts:63 \u203a crash freezes the run, pauses while hidden and records once across two retries",
+        "bodyAndSetupWallMs": 120250,
+        "outcome": "timeout"
+      },
+      {
+        "project": "mobile",
+        "test": "crash.spec.ts:123 \u203a reduced motion keeps the crash scene static before results",
+        "bodyAndSetupWallMs": 15317,
+        "outcome": "passed"
+      },
+      {
+        "project": "mobile",
+        "test": "crash.spec.ts:138 \u203a a late real flip shows its bad landing orientation before results",
+        "bodyAndSetupWallMs": 8928,
+        "outcome": "passed"
+      },
+      {
+        "project": "desktop",
+        "test": "crash.spec.ts:138 \u203a a late real flip shows its bad landing orientation before results",
+        "bodyAndSetupWallMs": 34101,
+        "outcome": "passed"
+      },
+      {
+        "project": "mobile",
+        "test": "crash.spec.ts:63 \u203a crash freezes the run, pauses while hidden and records once across two retries",
+        "bodyAndSetupWallMs": 60020,
+        "outcome": "passed"
+      }
+    ]
+  },
+  "independentVapourProbe": {
+    "head": "5c5fd2cb6217ec23d5a2c3bf99af79dc0566077d",
+    "vapourBlob": "f54541f32fbe989374b4ceda56ffe737608c2b2b",
+    "passed": [
+      {
+        "case": "original one-ULP reproducer now stable;200pausedcalls;resume matches reference",
+        "dt": 0.016
+      },
+      {
+        "case": "original one-ULP reproducer now stable;200pausedcalls;resume matches reference",
+        "dt": 0.016666666666666666
+      },
+      {
+        "case": "below-road birth remains still and uses no randomness until positive delta"
+      },
+      {
+        "case": "full-ring replacement publishes invisible birth;shift/reset survive paused update"
+      }
+    ]
+  }
+}

@@ -383,6 +383,20 @@
     "car": {
       "laneBodyRollDeg": 8
     },
+    "crash": {
+      "durationS": 0.75,
+      "settleDurationS": 0.25,
+      "bodyDropM": 0.06,
+      "bodyPitchDeg": 6,
+      "cameraPullbackM": 0.18,
+      "cloudCountPerNozzle": 8,
+      "cloudLifeS": 0.45,
+      "cloudSpeedMps": 2,
+      "cloudSpreadMps": 1.5,
+      "cloudSizeM": 0.25,
+      "cloudGrowM": 0.8,
+      "cloudAlpha": 0.35
+    },
     "input": {
       "swipeMinPx": 24,
       "swipeMaxMs": 180
