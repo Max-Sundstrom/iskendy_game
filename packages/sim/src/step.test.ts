@@ -118,7 +118,7 @@ describe('properties', () => {
           const p = s.player;
           if (!(p.lane >= 0 && p.lane < T.lanes.count)) return false;
           if (!(p.x >= laneCenterX(0, T) - 1e-9 && p.x <= laneCenterX(T.lanes.count - 1, T) + 1e-9)) return false;
-          if (!(p.speedMps >= T.speed.minMps && p.speedMps <= T.speed.maxMps)) return false;
+          if (!(p.speedMps >= T.speed.minMps && p.speedMps <= T.speed.maxMps * T.speed.boostMultiplier)) return false;
           if (!(p.z >= 0 && p.z < T.world.originShiftM)) return false;
           if (![p.x, p.z, p.distanceM, p.speedMps, p.laneT].every(Number.isFinite)) return false;
         }

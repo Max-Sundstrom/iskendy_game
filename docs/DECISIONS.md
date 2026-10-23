@@ -172,6 +172,18 @@ The owner approved the D0 evidence (`docs/reviews/art-D0/`, review page) in writ
 - Consequence: the hard gate is open; P1 starts. Courier roof ornament: our own placeholder pattern until the
   owner supplies one (open question 20).
 
+## ADR-024 · accepted · SIM_VERSION and goldens before the first release
+`SIM_VERSION` stays 1 until the first build ships (P7). No replays exist outside the repo before then, so a version
+bump would protect nothing. Every change to a golden (the determinism hash, golden replays, the default `tuningHash`)
+is still logged below with its reason, as AGENTS §8 requires. From the first release on, any change to sim outcomes
+bumps `SIM_VERSION` (invariant 10).
+
+### Sim changelog (pre-release)
+| Date | Task | Golden | Reason |
+|---|---|---|---|
+| 2026-10-23 | P1-01 | determinism `eb26e68b` | first sim core (lanes, speed curve, origin shift) |
+| 2026-10-23 | P1-02 | determinism `6ae1d455`; tuningHash `908b5867…` | jump, fly, slam, boost and AIR join the step; new key `sim.fly.glideEaseS` (0.25 s) |
+
 ## Open questions (owner) — defaults are used until answered
 
 Since ADR-022 every default in this table is an accepted decision; a new owner answer supersedes it.

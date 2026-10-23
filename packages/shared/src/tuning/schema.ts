@@ -48,6 +48,8 @@ const jump = z.strictObject({
 const fly = z.strictObject({
   holdThresholdS: nonNeg(),
   glideVyMps: z.number().nonpositive(),
+  /** Time constant with which vertical speed eases toward glideVyMps while thrusting. */
+  glideEaseS: durationS(),
   maxAltitudeM: pos(),
   airCostLps: pos(),
 });

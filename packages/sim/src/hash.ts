@@ -47,6 +47,12 @@ export function stateHash(s: SimState): string {
   h = mixNumber(h, p.z);
   h = mixNumber(h, p.distanceM);
   h = mixNumber(h, p.speedMps);
+  h = mixWord(h, (p.airborne ? 1 : 0) | (p.flying ? 2 : 0) | (p.slamming ? 4 : 0) | (p.boosting ? 8 : 0));
+  h = mixNumber(h, p.y);
+  h = mixNumber(h, p.vy);
+  h = mixNumber(h, p.jumpHeldS);
+  h = mixNumber(h, p.jumpBufferS);
+  h = mixNumber(h, p.airLiters);
   h = mixRng(h, s.rng.director);
   h = mixRng(h, s.rng.pickups);
   return h.toString(16).padStart(8, '0');
