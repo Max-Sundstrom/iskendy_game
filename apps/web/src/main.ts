@@ -8,6 +8,7 @@ import { bindKeyboard, createControls } from './input/controls';
 import { bindTouch } from './input/touch';
 import { submitBest } from './platform/best';
 import { stringsFor } from './platform/i18n';
+import { storeReplay } from './platform/replays';
 import { newPromoCode } from './platform/promo';
 import { createHud } from './ui/hud';
 import { createResults } from './ui/results';
@@ -70,6 +71,7 @@ if (root && canvas) {
     const s = session.state;
     const score = Math.floor(s.score.total);
     const newBest = submitBest(score, s.player.distanceM);
+    storeReplay(session.recorder.finish(s));
     // promoCode goes to the host in game.runEnded once the bridge exists (P5-09).
     results.show({ score, distanceM: s.player.distanceM, timeS: s.tick / 60, newBest, promoCode: newPromoCode() });
     hud.show(false);

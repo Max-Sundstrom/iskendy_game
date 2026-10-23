@@ -80,6 +80,26 @@ jobs:
           path: playwright-report/
           retention-days: 14
 
+  cross-engine:
+    name: determinism in WebKit and Firefox
+    runs-on: ubuntu-24.04
+    # apt mirrors behind `playwright install --with-deps` have taken up to 14 min.
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+      - run: npm install --global pnpm@${{ env.PNPM_VERSION }}
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps webkit firefox
+      - run: pnpm exec playwright test --project webkit --project firefox
+        env:
+          CI: 'true'
+          CROSS_ENGINE: '1'
+
   container:
     name: container · headers · embed e2e
     runs-on: ubuntu-24.04

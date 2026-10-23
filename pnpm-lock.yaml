@@ -169,6 +169,15 @@ importers:
       '@eslint/js':
         specifier: 10.0.1
         version: 10.0.1(eslint@10.12.0(supports-color@7.2.0))
+      '@kometa/content':
+        specifier: workspace:*
+        version: link:packages/content
+      '@kometa/shared':
+        specifier: workspace:*
+        version: link:packages/shared
+      '@kometa/sim':
+        specifier: workspace:*
+        version: link:packages/sim
       '@playwright/test':
         specifier: 1.64.0
         version: 1.64.0

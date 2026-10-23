@@ -3,6 +3,13 @@ import { defineConfig, devices } from '@playwright/test';
 // A container with a different preinstalled Chromium can point at it instead of downloading (see README).
 const executablePath = process.env['PW_CHROMIUM_EXECUTABLE'];
 const launchOptions = executablePath ? { executablePath } : {};
+// CROSS_ENGINE=1 adds WebKit and Firefox for the determinism checks only (ARCHITECTURE §4.4; CI job cross-engine).
+const crossEngine = process.env['CROSS_ENGINE']
+  ? [
+      { name: 'webkit', testMatch: /(determinism|replays)\.spec\.ts/, use: { ...devices['Desktop Safari'] } },
+      { name: 'firefox', testMatch: /(determinism|replays)\.spec\.ts/, use: { ...devices['Desktop Firefox'] } },
+    ]
+  : [];
 
 export default defineConfig({
   testDir: 'e2e',
@@ -32,6 +39,7 @@ export default defineConfig({
         launchOptions,
       },
     },
+    ...crossEngine,
   ],
   webServer: process.env['BASE_URL']
     ? undefined

@@ -3,3 +3,4 @@ export const SCHEMA_VERSION = 1;
 
 export * from './events';
 export * from './tuning';
+export * from './replay';

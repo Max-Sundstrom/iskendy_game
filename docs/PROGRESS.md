@@ -24,3 +24,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · P1-03 · Orchestrator · Traffic SoA, director v0 rows, swept collisions (crash, scrape, roof hop); 100k-step no-tunnelling fuzz; vehicles moved into the hashed tuning.
 - 2026-10-23 · P1-04 · Orchestrator · Grey-box renderer: fixed-step loop with interpolation, chase cam (portrait-aware), road chunks, instanced traffic, floating origin, #perf readout; clean under the strict CSP.
 - 2026-10-23 · P1-05 · Orchestrator · Playable loop: keyboard + swipe input with latch, BOOST button, DOM HUD, results with local best and ISK promo code, Retry; Russian by default; e2e start→crash→retry on both viewports.
+- 2026-10-23 · P1-06 · Orchestrator · Replays: recorder/player, replay:verify, three golden replays, tamper suite, in-game recording; cross-engine CI job for WebKit and Firefox.
