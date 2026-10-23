@@ -1,8 +1,9 @@
 import { DEFAULT_TUNING } from '@kometa/sim';
-import { Box3, Vector3 } from 'three';
+import { Box3, Mesh, MeshBasicMaterial, Raycaster, Vector3 } from 'three';
 import { describe, expect, it } from 'vitest';
 import { vehicleGeometry } from '.';
 import { loft } from './loft';
+import { surfacePatch, wheelParts } from './parts';
 
 const tuning = DEFAULT_TUNING.sim;
 
@@ -15,7 +16,17 @@ describe('vehicle models', () => {
       const g = vehicleGeometry(tuning, i);
       const triangles = g.getAttribute('position').count / 3;
       expect(triangles).toBeLessThanOrEqual(3000); // ARCHITECTURE §12: traffic vehicle ≤ 3k
-      for (const name of ['color', 'paint', 'glow', 'normal']) expect(g.getAttribute(name)).toBeDefined();
+      for (const name of ['color', 'paint', 'glow', 'normal', 'surface']) expect(g.getAttribute(name)).toBeDefined();
+      // Every finish remains part of the same instanced draw, with a complete, bounded shader input.
+      expect(g.groups).toHaveLength(0);
+      const surface = g.getAttribute('surface');
+      expect(surface.itemSize).toBe(2);
+      expect(surface.count).toBe(g.getAttribute('position').count);
+      for (const value of surface.array) {
+        expect(Number.isFinite(value)).toBe(true);
+        expect(value).toBeGreaterThanOrEqual(0);
+        expect(value).toBeLessThanOrEqual(1);
+      }
       const box = new Box3().setFromBufferAttribute(g.getAttribute('position') as never);
       const size = box.getSize(new Vector3());
       // The rear sits at z = 0 and the body runs toward −z (sim +z); the model stays close to the sim's box.
@@ -27,6 +38,50 @@ describe('vehicle models', () => {
       expect(box.min.y).toBeGreaterThanOrEqual(-0.01);
     },
   );
+});
+
+describe('conforming surface finishes', () => {
+  it('keeps every patch vertex just outside the curved hull, including clipped edges', () => {
+    const hull = loft([
+      { z: -1, ys: 0, wb: 1, ysh: 0.5, wsh: 1, yt: 0.85, wt: 0.6 },
+      { z: 1, ys: 0, wb: 1, ysh: 0.5, wsh: 1, yt: 1.15, wt: 0.7 },
+    ]);
+    const patch = surfacePatch(hull, [
+      [1, 0, 0, -0.4],
+      [0, 1, 0, -0.6],
+      [0, 0, 1, 0.25],
+      [0, 0, -1, 0.25],
+    ]);
+    const positions = patch.getAttribute('position');
+    const normals = patch.getAttribute('normal');
+    const mesh = new Mesh(hull, new MeshBasicMaterial());
+    const ray = new Raycaster();
+    ray.far = 0.003;
+    expect(positions.count).toBeGreaterThan(0);
+    for (let i = 0; i < positions.count; i++) {
+      ray.set(
+        new Vector3().fromBufferAttribute(positions, i),
+        new Vector3().fromBufferAttribute(normals, i).negate().normalize(),
+      );
+      const hit = ray.intersectObject(mesh)[0];
+      expect(hit).toBeDefined();
+      expect(hit?.distance).toBeCloseTo(0.002, 5);
+    }
+    mesh.material.dispose();
+    hull.dispose();
+    patch.dispose();
+  });
+});
+
+describe('traffic wheel dishes', () => {
+  it.each([-1, 1])('keeps the visible rim facing out on side %s', (side) => {
+    const rim = wheelParts(side, 0, 0.32, 0.24)[1];
+    if (!rim) throw new Error('missing wheel rim');
+    const normal = rim.getAttribute('normal');
+    let outward = 0;
+    for (let i = 0; i < normal.count; i++) outward += normal.getX(i) * side;
+    expect(outward / normal.count).toBeGreaterThan(0.7);
+  });
 });
 
 describe('loft', () => {

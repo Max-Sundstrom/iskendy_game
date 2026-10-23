@@ -1,0 +1,968 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-23T21:46:36.147Z",
+  "configuration": {
+    "scriptVersion": 1,
+    "seed": 5,
+    "durationS": 90,
+    "viewport": "desktop",
+    "quality": "low"
+  },
+  "budgets": {
+    "maxDrawCalls": 150,
+    "maxTriangles": 300000,
+    "geometryRegressionRatio": 1.1
+  },
+  "passed": true,
+  "errors": [],
+  "environment": {
+    "node": "v24.19.0",
+    "os": "linux",
+    "arch": "x64"
+  },
+  "timing": "Real wall-clock rAF intervals during active play, informational; not a phone performance claim.",
+  "scenario": "Fixed 500 ms keyboard-event script, natural crashes and Retry, incrementing run seeds. No sim bypass.",
+  "limitations": [
+    "Wall-clock inputs may reach different sim ticks on different renderers; this is not a deterministic replay.",
+    "Geometry comparisons require matching profiles and representative run coverage; frame milliseconds are never gated.",
+    "GPU texture bytes, GC pauses and phone/device performance are not measured by this smoke."
+  ],
+  "commit": "a16f8ee4af95d1a50f6ed770356671c83690fbaa",
+  "dirty": false,
+  "bundle": {
+    "jsGzip": 201094,
+    "files": 1
+  },
+  "source": "fresh production build / local Vite preview",
+  "browser": "154.0.8037.57",
+  "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'",
+  "elapsedWallMs": 90000.259778,
+  "measurement": {
+    "schemaVersion": 1,
+    "frames": 463,
+    "activeFrames": 434,
+    "invalidFrames": 0,
+    "storedSamples": 434,
+    "overflowFrames": 0,
+    "activeFrameMs": 84530.2,
+    "totalFrameMs": 90213.1,
+    "frameTimeMs": {
+      "p50": 199.89999999999418,
+      "p95": 233.40000000000873,
+      "max": 466.6000000000058
+    },
+    "maxDrawCalls": 82,
+    "maxTriangles": 93450,
+    "maxGeometries": 69,
+    "maxTextures": 6
+  },
+  "driver": {
+    "retries": 18,
+    "runs": 19,
+    "maxDistanceM": 130,
+    "inputs": [
+      {
+        "elapsedMs": 789,
+        "code": "ArrowRight",
+        "run": 0
+      },
+      {
+        "elapsedMs": 1251.7999999998137,
+        "code": "Space",
+        "run": 0
+      },
+      {
+        "elapsedMs": 1846.8999999999069,
+        "code": "ArrowLeft",
+        "run": 0
+      },
+      {
+        "elapsedMs": 2258.600000000093,
+        "code": "Space",
+        "run": 0
+      },
+      {
+        "elapsedMs": 2841,
+        "code": "Space",
+        "run": 0
+      },
+      {
+        "elapsedMs": 3230.7000000001863,
+        "code": "Retry",
+        "run": 1
+      },
+      {
+        "elapsedMs": 3882.100000000093,
+        "code": "ArrowLeft",
+        "run": 1
+      },
+      {
+        "elapsedMs": 4283.5,
+        "code": "ArrowRight",
+        "run": 1
+      },
+      {
+        "elapsedMs": 4746.799999999814,
+        "code": "Space",
+        "run": 1
+      },
+      {
+        "elapsedMs": 5296.200000000186,
+        "code": "ArrowRight",
+        "run": 1
+      },
+      {
+        "elapsedMs": 5788.100000000093,
+        "code": "Space",
+        "run": 1
+      },
+      {
+        "elapsedMs": 6337.600000000093,
+        "code": "ArrowLeft",
+        "run": 1
+      },
+      {
+        "elapsedMs": 6807.600000000093,
+        "code": "Retry",
+        "run": 2
+      },
+      {
+        "elapsedMs": 7262.799999999814,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 7695.100000000093,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 8294,
+        "code": "ArrowLeft",
+        "run": 2
+      },
+      {
+        "elapsedMs": 8884.100000000093,
+        "code": "ArrowRight",
+        "run": 2
+      },
+      {
+        "elapsedMs": 9250.899999999907,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 9805.200000000186,
+        "code": "ArrowRight",
+        "run": 2
+      },
+      {
+        "elapsedMs": 10249.899999999907,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 10667.899999999907,
+        "code": "ArrowLeft",
+        "run": 2
+      },
+      {
+        "elapsedMs": 11430.799999999814,
+        "code": "Retry",
+        "run": 3
+      },
+      {
+        "elapsedMs": 11840.700000000186,
+        "code": "Space",
+        "run": 3
+      },
+      {
+        "elapsedMs": 12232.200000000186,
+        "code": "Space",
+        "run": 3
+      },
+      {
+        "elapsedMs": 12878.799999999814,
+        "code": "ArrowLeft",
+        "run": 3
+      },
+      {
+        "elapsedMs": 13270.299999999814,
+        "code": "ArrowRight",
+        "run": 3
+      },
+      {
+        "elapsedMs": 13769.5,
+        "code": "Space",
+        "run": 3
+      },
+      {
+        "elapsedMs": 14267.100000000093,
+        "code": "ArrowRight",
+        "run": 3
+      },
+      {
+        "elapsedMs": 14828.299999999814,
+        "code": "Space",
+        "run": 3
+      },
+      {
+        "elapsedMs": 15391.5,
+        "code": "ArrowLeft",
+        "run": 3
+      },
+      {
+        "elapsedMs": 15852.5,
+        "code": "Retry",
+        "run": 4
+      },
+      {
+        "elapsedMs": 16192.100000000093,
+        "code": "Space",
+        "run": 4
+      },
+      {
+        "elapsedMs": 16803.600000000093,
+        "code": "Space",
+        "run": 4
+      },
+      {
+        "elapsedMs": 17382,
+        "code": "ArrowLeft",
+        "run": 4
+      },
+      {
+        "elapsedMs": 17743.899999999907,
+        "code": "ArrowRight",
+        "run": 4
+      },
+      {
+        "elapsedMs": 18347.600000000093,
+        "code": "Space",
+        "run": 4
+      },
+      {
+        "elapsedMs": 18773.100000000093,
+        "code": "ArrowRight",
+        "run": 4
+      },
+      {
+        "elapsedMs": 19261.200000000186,
+        "code": "Space",
+        "run": 4
+      },
+      {
+        "elapsedMs": 19770.200000000186,
+        "code": "ArrowLeft",
+        "run": 4
+      },
+      {
+        "elapsedMs": 20379.899999999907,
+        "code": "Retry",
+        "run": 5
+      },
+      {
+        "elapsedMs": 20780,
+        "code": "Space",
+        "run": 5
+      },
+      {
+        "elapsedMs": 21439.799999999814,
+        "code": "Space",
+        "run": 5
+      },
+      {
+        "elapsedMs": 21776.600000000093,
+        "code": "ArrowLeft",
+        "run": 5
+      },
+      {
+        "elapsedMs": 22389.5,
+        "code": "ArrowRight",
+        "run": 5
+      },
+      {
+        "elapsedMs": 22763,
+        "code": "Space",
+        "run": 5
+      },
+      {
+        "elapsedMs": 23300.899999999907,
+        "code": "ArrowRight",
+        "run": 5
+      },
+      {
+        "elapsedMs": 23847.899999999907,
+        "code": "Space",
+        "run": 5
+      },
+      {
+        "elapsedMs": 24036.200000000186,
+        "code": "ArrowLeft",
+        "run": 5
+      },
+      {
+        "elapsedMs": 24625.600000000093,
+        "code": "Retry",
+        "run": 6
+      },
+      {
+        "elapsedMs": 25457.700000000186,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 25883.899999999907,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 26257,
+        "code": "ArrowLeft",
+        "run": 6
+      },
+      {
+        "elapsedMs": 26967.299999999814,
+        "code": "ArrowRight",
+        "run": 6
+      },
+      {
+        "elapsedMs": 27385.5,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 27830.399999999907,
+        "code": "ArrowRight",
+        "run": 6
+      },
+      {
+        "elapsedMs": 28361.799999999814,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 28692.100000000093,
+        "code": "ArrowLeft",
+        "run": 6
+      },
+      {
+        "elapsedMs": 29268.200000000186,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 29864.399999999907,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 30260.299999999814,
+        "code": "ArrowLeft",
+        "run": 6
+      },
+      {
+        "elapsedMs": 30849.600000000093,
+        "code": "ArrowRight",
+        "run": 6
+      },
+      {
+        "elapsedMs": 31226.200000000186,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 31788.600000000093,
+        "code": "Retry",
+        "run": 7
+      },
+      {
+        "elapsedMs": 32339.899999999907,
+        "code": "ArrowRight",
+        "run": 7
+      },
+      {
+        "elapsedMs": 32986.60000000009,
+        "code": "Space",
+        "run": 7
+      },
+      {
+        "elapsedMs": 33741.200000000186,
+        "code": "ArrowLeft",
+        "run": 7
+      },
+      {
+        "elapsedMs": 34058.60000000009,
+        "code": "Space",
+        "run": 7
+      },
+      {
+        "elapsedMs": 34841.700000000186,
+        "code": "Retry",
+        "run": 8
+      },
+      {
+        "elapsedMs": 35064.10000000009,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 35884.5,
+        "code": "ArrowLeft",
+        "run": 8
+      },
+      {
+        "elapsedMs": 36067.89999999991,
+        "code": "ArrowRight",
+        "run": 8
+      },
+      {
+        "elapsedMs": 36868.799999999814,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 37238.60000000009,
+        "code": "ArrowRight",
+        "run": 8
+      },
+      {
+        "elapsedMs": 37629.10000000009,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 38456,
+        "code": "ArrowLeft",
+        "run": 8
+      },
+      {
+        "elapsedMs": 38855.700000000186,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 39297.799999999814,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 39685.799999999814,
+        "code": "ArrowLeft",
+        "run": 8
+      },
+      {
+        "elapsedMs": 40252,
+        "code": "ArrowRight",
+        "run": 8
+      },
+      {
+        "elapsedMs": 40789.200000000186,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 41171.799999999814,
+        "code": "Retry",
+        "run": 9
+      },
+      {
+        "elapsedMs": 41738.700000000186,
+        "code": "ArrowRight",
+        "run": 9
+      },
+      {
+        "elapsedMs": 42291,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 42862,
+        "code": "ArrowLeft",
+        "run": 9
+      },
+      {
+        "elapsedMs": 43043,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 43573.89999999991,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 44344.60000000009,
+        "code": "ArrowLeft",
+        "run": 9
+      },
+      {
+        "elapsedMs": 44531.200000000186,
+        "code": "ArrowRight",
+        "run": 9
+      },
+      {
+        "elapsedMs": 45289.799999999814,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 45934.700000000186,
+        "code": "ArrowRight",
+        "run": 9
+      },
+      {
+        "elapsedMs": 46347.700000000186,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 46699.700000000186,
+        "code": "ArrowLeft",
+        "run": 9
+      },
+      {
+        "elapsedMs": 47267.39999999991,
+        "code": "Retry",
+        "run": 10
+      },
+      {
+        "elapsedMs": 47798.10000000009,
+        "code": "Space",
+        "run": 10
+      },
+      {
+        "elapsedMs": 48396.10000000009,
+        "code": "Space",
+        "run": 10
+      },
+      {
+        "elapsedMs": 48775.39999999991,
+        "code": "ArrowLeft",
+        "run": 10
+      },
+      {
+        "elapsedMs": 49338.5,
+        "code": "ArrowRight",
+        "run": 10
+      },
+      {
+        "elapsedMs": 49679.799999999814,
+        "code": "Space",
+        "run": 10
+      },
+      {
+        "elapsedMs": 50203.200000000186,
+        "code": "ArrowRight",
+        "run": 10
+      },
+      {
+        "elapsedMs": 50685.200000000186,
+        "code": "Space",
+        "run": 10
+      },
+      {
+        "elapsedMs": 51240.5,
+        "code": "ArrowLeft",
+        "run": 10
+      },
+      {
+        "elapsedMs": 51786.10000000009,
+        "code": "Retry",
+        "run": 11
+      },
+      {
+        "elapsedMs": 52391.200000000186,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 52770,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 53361.5,
+        "code": "ArrowLeft",
+        "run": 11
+      },
+      {
+        "elapsedMs": 53697.299999999814,
+        "code": "ArrowRight",
+        "run": 11
+      },
+      {
+        "elapsedMs": 54275.700000000186,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 54848.299999999814,
+        "code": "ArrowRight",
+        "run": 11
+      },
+      {
+        "elapsedMs": 55176,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 55756.299999999814,
+        "code": "ArrowLeft",
+        "run": 11
+      },
+      {
+        "elapsedMs": 56189.5,
+        "code": "Retry",
+        "run": 12
+      },
+      {
+        "elapsedMs": 56866.89999999991,
+        "code": "Space",
+        "run": 12
+      },
+      {
+        "elapsedMs": 57304.700000000186,
+        "code": "Space",
+        "run": 12
+      },
+      {
+        "elapsedMs": 57881.10000000009,
+        "code": "ArrowLeft",
+        "run": 12
+      },
+      {
+        "elapsedMs": 58303,
+        "code": "ArrowRight",
+        "run": 12
+      },
+      {
+        "elapsedMs": 58865,
+        "code": "Space",
+        "run": 12
+      },
+      {
+        "elapsedMs": 59273.10000000009,
+        "code": "ArrowRight",
+        "run": 12
+      },
+      {
+        "elapsedMs": 59826.10000000009,
+        "code": "Space",
+        "run": 12
+      },
+      {
+        "elapsedMs": 60363.700000000186,
+        "code": "ArrowLeft",
+        "run": 12
+      },
+      {
+        "elapsedMs": 60744.10000000009,
+        "code": "Retry",
+        "run": 13
+      },
+      {
+        "elapsedMs": 61430,
+        "code": "Space",
+        "run": 13
+      },
+      {
+        "elapsedMs": 61838.799999999814,
+        "code": "Space",
+        "run": 13
+      },
+      {
+        "elapsedMs": 62362.799999999814,
+        "code": "ArrowLeft",
+        "run": 13
+      },
+      {
+        "elapsedMs": 62749,
+        "code": "ArrowRight",
+        "run": 13
+      },
+      {
+        "elapsedMs": 63249.799999999814,
+        "code": "Space",
+        "run": 13
+      },
+      {
+        "elapsedMs": 63834.5,
+        "code": "ArrowRight",
+        "run": 13
+      },
+      {
+        "elapsedMs": 64241,
+        "code": "Space",
+        "run": 13
+      },
+      {
+        "elapsedMs": 64832.200000000186,
+        "code": "ArrowLeft",
+        "run": 13
+      },
+      {
+        "elapsedMs": 65227.799999999814,
+        "code": "Retry",
+        "run": 14
+      },
+      {
+        "elapsedMs": 65830.20000000019,
+        "code": "Space",
+        "run": 14
+      },
+      {
+        "elapsedMs": 66380.5,
+        "code": "Space",
+        "run": 14
+      },
+      {
+        "elapsedMs": 66800.20000000019,
+        "code": "ArrowLeft",
+        "run": 14
+      },
+      {
+        "elapsedMs": 67361.6000000001,
+        "code": "ArrowRight",
+        "run": 14
+      },
+      {
+        "elapsedMs": 67741.8999999999,
+        "code": "Space",
+        "run": 14
+      },
+      {
+        "elapsedMs": 68265.70000000019,
+        "code": "ArrowRight",
+        "run": 14
+      },
+      {
+        "elapsedMs": 68777.29999999981,
+        "code": "Space",
+        "run": 14
+      },
+      {
+        "elapsedMs": 69141.6000000001,
+        "code": "ArrowLeft",
+        "run": 14
+      },
+      {
+        "elapsedMs": 69874.6000000001,
+        "code": "Retry",
+        "run": 15
+      },
+      {
+        "elapsedMs": 70238.1000000001,
+        "code": "Space",
+        "run": 15
+      },
+      {
+        "elapsedMs": 70765.8999999999,
+        "code": "Space",
+        "run": 15
+      },
+      {
+        "elapsedMs": 71281.8999999999,
+        "code": "ArrowLeft",
+        "run": 15
+      },
+      {
+        "elapsedMs": 71860.5,
+        "code": "ArrowRight",
+        "run": 15
+      },
+      {
+        "elapsedMs": 72227.79999999981,
+        "code": "Space",
+        "run": 15
+      },
+      {
+        "elapsedMs": 72789.1000000001,
+        "code": "ArrowRight",
+        "run": 15
+      },
+      {
+        "elapsedMs": 73349.29999999981,
+        "code": "Space",
+        "run": 15
+      },
+      {
+        "elapsedMs": 73742.5,
+        "code": "ArrowLeft",
+        "run": 15
+      },
+      {
+        "elapsedMs": 74340,
+        "code": "Retry",
+        "run": 16
+      },
+      {
+        "elapsedMs": 74725.79999999981,
+        "code": "Space",
+        "run": 16
+      },
+      {
+        "elapsedMs": 75295.8999999999,
+        "code": "Space",
+        "run": 16
+      },
+      {
+        "elapsedMs": 75841.79999999981,
+        "code": "ArrowLeft",
+        "run": 16
+      },
+      {
+        "elapsedMs": 76036.79999999981,
+        "code": "ArrowRight",
+        "run": 16
+      },
+      {
+        "elapsedMs": 76628.70000000019,
+        "code": "Space",
+        "run": 16
+      },
+      {
+        "elapsedMs": 77381.70000000019,
+        "code": "ArrowRight",
+        "run": 16
+      },
+      {
+        "elapsedMs": 77724.79999999981,
+        "code": "Space",
+        "run": 16
+      },
+      {
+        "elapsedMs": 78263.1000000001,
+        "code": "ArrowLeft",
+        "run": 16
+      },
+      {
+        "elapsedMs": 78767.70000000019,
+        "code": "Retry",
+        "run": 17
+      },
+      {
+        "elapsedMs": 79151.6000000001,
+        "code": "Space",
+        "run": 17
+      },
+      {
+        "elapsedMs": 79726.6000000001,
+        "code": "Space",
+        "run": 17
+      },
+      {
+        "elapsedMs": 80247.8999999999,
+        "code": "ArrowLeft",
+        "run": 17
+      },
+      {
+        "elapsedMs": 80773.1000000001,
+        "code": "ArrowRight",
+        "run": 17
+      },
+      {
+        "elapsedMs": 81374.70000000019,
+        "code": "Space",
+        "run": 17
+      },
+      {
+        "elapsedMs": 81794.5,
+        "code": "ArrowRight",
+        "run": 17
+      },
+      {
+        "elapsedMs": 82239.20000000019,
+        "code": "Space",
+        "run": 17
+      },
+      {
+        "elapsedMs": 82724.70000000019,
+        "code": "ArrowLeft",
+        "run": 17
+      },
+      {
+        "elapsedMs": 83283.5,
+        "code": "Space",
+        "run": 17
+      },
+      {
+        "elapsedMs": 83873.70000000019,
+        "code": "Space",
+        "run": 17
+      },
+      {
+        "elapsedMs": 84240.29999999981,
+        "code": "ArrowLeft",
+        "run": 17
+      },
+      {
+        "elapsedMs": 84799.6000000001,
+        "code": "ArrowRight",
+        "run": 17
+      },
+      {
+        "elapsedMs": 85252.1000000001,
+        "code": "Space",
+        "run": 17
+      },
+      {
+        "elapsedMs": 85826.79999999981,
+        "code": "ArrowRight",
+        "run": 17
+      },
+      {
+        "elapsedMs": 86382.1000000001,
+        "code": "Space",
+        "run": 17
+      },
+      {
+        "elapsedMs": 86795.29999999981,
+        "code": "ArrowLeft",
+        "run": 17
+      },
+      {
+        "elapsedMs": 87462.6000000001,
+        "code": "Retry",
+        "run": 18
+      },
+      {
+        "elapsedMs": 87959.29999999981,
+        "code": "Space",
+        "run": 18
+      },
+      {
+        "elapsedMs": 88358,
+        "code": "Space",
+        "run": 18
+      },
+      {
+        "elapsedMs": 88734.20000000019,
+        "code": "ArrowLeft",
+        "run": 18
+      },
+      {
+        "elapsedMs": 89337.1000000001,
+        "code": "ArrowRight",
+        "run": 18
+      },
+      {
+        "elapsedMs": 89735.70000000019,
+        "code": "Space",
+        "run": 18
+      }
+    ]
+  },
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "heap": {
+    "usedBytes": 12636392,
+    "totalBytes": 13508608,
+    "scope": "V8 heap; not total tab or GPU memory"
+  },
+  "baseline": "docs/reviews/perf-P0-09/desktop.json",
+  "screenshot": {
+    "path": "/workspace/kometa-models/perf-report/models-desktop.png",
+    "screenAtRead": "playing"
+  }
+}

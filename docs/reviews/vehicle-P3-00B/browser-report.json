@@ -1,0 +1,87 @@
+{
+  "browser": "154.0.8037.57",
+  "note": "Screenshot frames use a paused virtual clock; only real renderer counters are reported, not frame timings. Mobile is Chromium touch emulation, DPR1, not a physical phone. Studio counters include floor, sky and shadow passes.",
+  "errors": [],
+  "metrics": [
+    {
+      "name": "hero-rear",
+      "drawCalls": "20",
+      "triangles": "25716",
+      "ready": "1"
+    },
+    {
+      "name": "hero-front",
+      "drawCalls": "20",
+      "triangles": "25716",
+      "ready": "1"
+    },
+    {
+      "name": "hero-side",
+      "drawCalls": "20",
+      "triangles": "25716",
+      "ready": "1"
+    },
+    {
+      "name": "hero-top",
+      "drawCalls": "20",
+      "triangles": "25716",
+      "ready": "1"
+    },
+    {
+      "name": "sedan-rear",
+      "drawCalls": "4",
+      "triangles": "5242",
+      "ready": "1"
+    },
+    {
+      "name": "compact-side",
+      "drawCalls": "4",
+      "triangles": "5310",
+      "ready": "1"
+    },
+    {
+      "name": "semi-front",
+      "drawCalls": "4",
+      "triangles": "6586",
+      "ready": "1"
+    },
+    {
+      "name": "carrier-side",
+      "drawCalls": "4",
+      "triangles": "6586",
+      "ready": "1"
+    },
+    {
+      "name": "bus-rear",
+      "drawCalls": "4",
+      "triangles": "4074",
+      "ready": "1"
+    },
+    {
+      "name": "van-front",
+      "drawCalls": "4",
+      "triangles": "4254",
+      "ready": "1"
+    },
+    {
+      "name": "game-desktop-high",
+      "measurement": {
+        "frames": 16,
+        "maxDrawCalls": 89,
+        "maxTriangles": 136714,
+        "maxGeometries": 68,
+        "maxTextures": 8
+      }
+    },
+    {
+      "name": "game-mobile-high",
+      "measurement": {
+        "frames": 16,
+        "maxDrawCalls": 87,
+        "maxTriangles": 136690,
+        "maxGeometries": 66,
+        "maxTextures": 8
+      }
+    }
+  ]
+}
