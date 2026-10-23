@@ -1,0 +1,40 @@
+name: Game feel
+description: Controls, pacing, readability or difficulty feel wrong.
+labels: [feel]
+body:
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        [
+          lanes,
+          jump and air,
+          tricks and landing,
+          traffic and fairness,
+          scoring and streaks,
+          modes,
+          items,
+          camera,
+          HUD,
+          audio and haptics,
+          other,
+        ]
+    validations:
+      required: true
+  - type: textarea
+    id: observation
+    attributes:
+      label: What feels off and when
+      description: Distance, speed, what happened just before. Seed or replay if possible.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed tuning delta
+      description: Key in tuning.default.json and the new value, e.g. sim.lanes.changeDurationS 0.16 → 0.14.
+  - type: input
+    id: gdd
+    attributes:
+      label: GDD section or pillar

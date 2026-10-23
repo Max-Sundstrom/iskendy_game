@@ -12,3 +12,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · A · Owner · Architecture v1.0 and hosting approved (ADR-022): docs v1.0, ADR-021 accepted; Phase A signed, P0 ready.
 - 2026-10-23 · P0-01 · Orchestrator · pnpm monorepo (sim, shared, content, web), TS strict, ESLint + Prettier, Vitest, Playwright, dependency-cruiser boundaries proven by failing fixtures; versions pinned (14-day rule enforced by pnpm).
 - 2026-10-23 · P0-03 · Orchestrator · zod tuning schema with path-level errors and cross-field rules; DEFAULT_TUNING loaded in the sim; tuningHash (FNV-1a 64, sim section only) pinned and cross-checked in Python.
+- 2026-10-23 · P0-05 · Orchestrator · PR template (handoff note + DoD) and issue forms for bug, feel and perf.
