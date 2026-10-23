@@ -75,10 +75,19 @@ const fly = z.strictObject({
 
 const slam = z.strictObject({ vyMps: z.number().negative(), shockwaveRadiusM: pos() });
 
-const tricks = z.strictObject({ frontFlipDurationS: durationS(), barrelRollDurationS: durationS() });
+const tricks = z.strictObject({
+  frontFlipDurationS: durationS(),
+  barrelRollDurationS: durationS(),
+  barrelRollQueuedInputs: z.union([z.literal(0), z.literal(1)]),
+});
 
 const landing = z
-  .strictObject({ perfectMaxDeg: pos(), stuntMaxDeg: pos(), sloppyMaxDeg: z.number().positive().max(180) })
+  .strictObject({
+    perfectMaxDeg: pos(),
+    stuntMaxDeg: pos(),
+    sloppyMaxDeg: z.number().positive().max(180),
+    orientationMode: z.enum(['uprightForward', 'upVector']),
+  })
   .refine((l) => l.perfectMaxDeg < l.stuntMaxDeg && l.stuntMaxDeg < l.sloppyMaxDeg, {
     message: 'grades must be ordered: perfectMaxDeg < stuntMaxDeg < sloppyMaxDeg',
     path: ['stuntMaxDeg'],
