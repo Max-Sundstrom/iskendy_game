@@ -1,0 +1,35 @@
+{
+  "name": "kometa",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.11.2",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "pnpm --filter @kometa/web dev",
+    "build": "pnpm --filter @kometa/web build",
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p packages/shared && tsc --noEmit -p packages/sim && tsc --noEmit -p apps/web",
+    "lint": "eslint . && depcruise apps packages --config .dependency-cruiser.cjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:sim": "vitest run --project sim",
+    "test:e2e": "playwright test"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@playwright/test": "1.64.0",
+    "@types/node": "26.6.4",
+    "dependency-cruiser": "18.5.0",
+    "eslint": "10.12.0",
+    "fast-check": "4.10.2",
+    "globals": "17.13.0",
+    "prettier": "3.9.9",
+    "tsx": "4.23.15",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.1",
+    "vite": "8.3.4",
+    "vitest": "5.0.3"
+  }
+}
