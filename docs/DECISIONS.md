@@ -183,6 +183,7 @@ bumps `SIM_VERSION` (invariant 10).
 |---|---|---|---|
 | 2026-10-23 | P1-01 | determinism `eb26e68b` | first sim core (lanes, speed curve, origin shift) |
 | 2026-10-23 | P1-02 | determinism `6ae1d455`; tuningHash `908b5867…` | jump, fly, slam, boost and AIR join the step; new key `sim.fly.glideEaseS` (0.25 s) |
+| 2026-10-23 | P1-05 | determinism `cb0aae87-91cfb58f` | `score.total` (1 point per metre, GDD §9) joins the state; events, streaks and the pot follow in P2-03 |
 | 2026-10-23 | P1-03 | determinism `7083bcea-3e3cf928` (now a session with restarts after crashes); tuningHash `38343d24…` | traffic, director v0, collisions; new keys `sim.player`, `sim.traffic`, `sim.vehicles`, `sim.director.firstRowM/spawnAheadM/despawnBehindM` |
 
 ## Open questions (owner) — defaults are used until answered

@@ -59,6 +59,7 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   const dz = p.speedMps * dt;
   p.distanceM += dz;
   p.z += dz;
+  state.score.total += dz * tuning.score.perMeter;
 
   moveTraffic(state.traffic, tuning, dt);
   resolveCollisions(state, tuning, start, dt);

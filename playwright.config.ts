@@ -7,6 +7,10 @@ const launchOptions = executablePath ? { executablePath } : {};
 export default defineConfig({
   testDir: 'e2e',
   fullyParallel: true,
+  // CI and cloud runners render with SwiftShader (no GPU): shader compiles and frames are slow, so allow time and
+  // keep parallelism low enough not to starve each test.
+  workers: 2,
+  timeout: 90_000,
   forbidOnly: Boolean(process.env['CI']),
   retries: 0,
   reporter: process.env['CI'] ? [['list'], ['html', { open: 'never' }]] : 'list',

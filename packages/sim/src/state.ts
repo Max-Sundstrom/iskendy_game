@@ -52,6 +52,8 @@ export type SimState = {
   readonly rng: { readonly director: RngState; readonly pickups: RngState };
   readonly traffic: Traffic;
   readonly director: DirectorState;
+  /** Score so far; P1 counts distance only, P2-03 adds events, streaks and the pot (GDD §9). */
+  readonly score: { total: number };
   readonly events: EventBuffer;
 };
 
@@ -97,6 +99,7 @@ export function createSimState(seed: number, tuning: SimTuning): SimState {
     rng: { director: createRng(seed, 1), pickups: createRng(seed, 2) },
     traffic: createTraffic(),
     director: { nextRowM: tuning.director.firstRowM },
+    score: { total: 0 },
     events: createEventBuffer(),
   };
 }
