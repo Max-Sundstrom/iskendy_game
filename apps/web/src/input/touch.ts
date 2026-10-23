@@ -2,9 +2,15 @@ import { Action } from '@kometa/sim';
 import type { Controls } from './controls';
 
 // Touch per GDD §4: a swipe is ≥ swipeMinPx within swipeMaxMs on the dominant axis. Left/right/down are taps;
-// an up-swipe holds Jump until the finger lifts, so keeping the finger down after it flies.
+// an up-swipe holds Jump until the finger lifts, so keeping the finger down after it flies. A quick tap that doesn't
+// move is a Jump press too, so a double tap jumps and flips (owner request 2026-10-23; in the air a press flips).
 
 export type SwipeTuning = { swipeMinPx: number; swipeMaxMs: number };
+
+/** A tap: short and nearly still. Pure, for tests. */
+export function isTap(dx: number, dy: number, ms: number, t: SwipeTuning): boolean {
+  return ms <= t.swipeMaxMs * 1.25 && Math.hypot(dx, dy) < t.swipeMinPx / 2;
+}
 
 export type Swipe = 'left' | 'right' | 'up' | 'down';
 
@@ -18,7 +24,17 @@ export function classifySwipe(dx: number, dy: number, ms: number, t: SwipeTuning
   return dy < 0 ? 'up' : 'down';
 }
 
-type Gesture = { id: number; x: number; y: number; t: number; done: boolean; jumpHeld: boolean };
+type Gesture = {
+  id: number;
+  x: number;
+  y: number;
+  t: number;
+  x0: number;
+  y0: number;
+  t0: number;
+  done: boolean;
+  jumpHeld: boolean;
+};
 
 export function bindTouch(surface: HTMLElement, controls: Controls, tuning: SwipeTuning, enabled: () => boolean): void {
   const gestures = new Map<number, Gesture>();
@@ -29,6 +45,9 @@ export function bindTouch(surface: HTMLElement, controls: Controls, tuning: Swip
       x: e.clientX,
       y: e.clientY,
       t: e.timeStamp,
+      x0: e.clientX,
+      y0: e.clientY,
+      t0: e.timeStamp,
       done: false,
       jumpHeld: false,
     });
@@ -58,6 +77,14 @@ export function bindTouch(surface: HTMLElement, controls: Controls, tuning: Swip
   const end = (e: PointerEvent) => {
     const g = gestures.get(e.pointerId);
     if (g?.jumpHeld) controls.hold(Action.jump, false);
+    if (
+      g &&
+      !g.done &&
+      e.type === 'pointerup' &&
+      enabled() &&
+      isTap(e.clientX - g.x0, e.clientY - g.y0, e.timeStamp - g.t0, tuning)
+    )
+      controls.press(Action.jump);
     gestures.delete(e.pointerId);
   };
   surface.addEventListener('pointerup', end);

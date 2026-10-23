@@ -18,5 +18,6 @@ export { DEFAULT_TUNING, DEFAULT_TUNING_HASH } from './tuning';
 export { CrashCause } from './collisions';
 export { difficulty, type DirectorState } from './director';
 export { TRAFFIC_CAPACITY, type Traffic } from './traffic';
-export { FlyStop, jumpPhysics } from './vertical';
+export { FlyStop, jumpPhysics } from './jump';
+export { RideEnd } from './roofs';
 export { createRecorder, playReplay, type Recorder, type ReplayResult } from './replay';

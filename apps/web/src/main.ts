@@ -138,8 +138,7 @@ if (root && canvas) {
     }
     if (!paused && screen === 'playing') {
       const steps = stepsForFrame(acc, frameS);
-      advance(session, steps, controls.held());
-      if (steps > 0) controls.consume();
+      advance(session, steps, controls.sample);
       if (session.state.status === SimStatus.crashed) finish();
     }
     const s = session.state;
@@ -153,6 +152,8 @@ if (root && canvas) {
     });
     root.dataset['distance'] = String(Math.floor(s.player.distanceM));
     root.dataset['lane'] = String(s.player.lane);
+    root.dataset['flip'] = s.player.flipTurns.toFixed(2); // e2e: the flip is visible in the sim state
+    root.dataset['air'] = s.player.airborne ? '1' : '0';
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);

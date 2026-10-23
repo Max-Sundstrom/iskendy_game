@@ -66,3 +66,71 @@ test('the launch intro counts down and hands over to the run', async ({ page }) 
     .poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 15_000 })
     .toBeGreaterThan(5);
 });
+
+test('a double tap or double Space jumps and flips', async ({ page, isMobile }) => {
+  // Keep input timing and the brief rotation observable even when software-rendered frames and tracing are slow.
+  // Only the browser clock is controlled: the real device adapters, fixed-step sim and renderer still execute.
+  await page.clock.install({ time: 1_000_000 });
+  await page.clock.pauseAt(1_001_000);
+  await page.goto('/?seed=5&q=low&intro=0');
+  await page.clock.runFor(250);
+  const app = page.locator('#app');
+  await expect(app).toHaveAttribute('data-screen', 'playing');
+  await expect(page.locator('.results-retry')).not.toBeFocused();
+  if (!isMobile) {
+    // Observe actual keyboard delivery and default prevention, without calling the input mapper or sim.
+    await page.evaluate(() => {
+      const root = document.getElementById('app');
+      window.addEventListener('keydown', (event) => {
+        if (event.code !== 'Space' || !root) return;
+        root.dataset['testSpacePresses'] = String(Number(root.dataset['testSpacePresses'] ?? 0) + 1);
+        root.dataset['testSpacePrevented'] = String(event.defaultPrevented);
+        root.dataset['testSpaceTrusted'] = String(event.isTrusted);
+        root.dataset['testSpaceTarget'] = event.target instanceof HTMLElement ? event.target.tagName : '';
+      });
+    });
+  }
+  await expect
+    .poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 15_000 })
+    .toBeGreaterThan(5);
+  const press = async () => {
+    if (!isMobile) return page.keyboard.press('Space');
+    // A tap: down and up on the same spot within one task, so a slow software frame can't stretch it.
+    await page.evaluate(() => {
+      const canvas = document.getElementById('game');
+      if (!canvas) throw new Error('no canvas');
+      const r = canvas.getBoundingClientRect();
+      const init = {
+        pointerId: 9,
+        pointerType: 'touch',
+        clientX: r.width / 2,
+        clientY: r.height / 2,
+        isPrimary: true,
+        bubbles: true,
+      };
+      canvas.dispatchEvent(new PointerEvent('pointerdown', init));
+      canvas.dispatchEvent(new PointerEvent('pointerup', init));
+    });
+  };
+  await press();
+  await page.clock.runFor(50);
+  // A first press must only jump. The second real press, while airborne, must produce the rotation.
+  await expect(app).toHaveAttribute('data-air', '1', { timeout: 10_000 });
+  await expect(app).toHaveAttribute('data-flip', '0.00');
+  await press();
+  await page.clock.runFor(100);
+  await expect
+    .poll(async () => Number(await app.getAttribute('data-flip')), { timeout: 10_000, intervals: [16] })
+    .toBeGreaterThan(0);
+  // A timely committed flip finishes before this jump's touchdown; it must not become a landing crash.
+  await page.clock.runFor(800);
+  await expect(app).toHaveAttribute('data-air', '0', { timeout: 10_000 });
+  await expect(app).toHaveAttribute('data-flip', '0.00');
+  await expect(app).toHaveAttribute('data-screen', 'playing');
+  if (!isMobile) {
+    await expect(app).toHaveAttribute('data-test-space-presses', '2');
+    await expect(app).toHaveAttribute('data-test-space-prevented', 'true');
+    await expect(app).toHaveAttribute('data-test-space-trusted', 'true');
+    await expect(app).toHaveAttribute('data-test-space-target', 'BODY');
+  }
+});

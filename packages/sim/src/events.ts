@@ -6,6 +6,8 @@ const CAPACITY = 32;
 
 /** Index = FlyStop code from vertical.ts. */
 const FLY_STOP_REASONS = [undefined, 'released', 'airEmpty', 'slam', 'landed'] as const;
+/** Index = RideEnd code from roofs.ts. */
+const RIDE_END_REASONS = [undefined, 'droveOff', 'sideways', 'jumped', 'gone'] as const;
 
 export type EventBuffer = {
   count: number;
@@ -65,13 +67,31 @@ export function readEvents(buf: EventBuffer): SimEvent[] {
         out.push({ kind: 'airEmpty' });
         break;
       case SimEventKind.hop:
-        out.push({ kind: 'hop' });
+        out.push({ kind: 'hop', chain: a, slam: b === 1 });
         break;
       case SimEventKind.scrape:
         out.push({ kind: 'scrape' });
         break;
       case SimEventKind.crash:
-        out.push({ kind: 'crash', cause: a === 2 ? 'secondScrape' : 'rear' });
+        out.push({ kind: 'crash', cause: a === 3 ? 'landing' : a === 2 ? 'secondScrape' : 'rear' });
+        break;
+      case SimEventKind.rideStart:
+        out.push({ kind: 'rideStart', slot: a, slam: b === 1 });
+        break;
+      case SimEventKind.rideEnd:
+        out.push({ kind: 'rideEnd', reason: RIDE_END_REASONS[a] ?? 'droveOff' });
+        break;
+      case SimEventKind.clear:
+        out.push({ kind: 'clear', vehicleType: a, semi: b === 1 });
+        break;
+      case SimEventKind.flipStart:
+        out.push({ kind: 'flipStart', index: a });
+        break;
+      case SimEventKind.flipDone:
+        out.push({ kind: 'flipDone', count: a });
+        break;
+      case SimEventKind.landingGraded:
+        out.push({ kind: 'landingGraded', grade: a === 1 ? 'perfect' : a === 2 ? 'stunt' : 'sloppy', flips: b });
         break;
     }
   }

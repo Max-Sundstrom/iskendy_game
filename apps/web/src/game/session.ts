@@ -17,6 +17,8 @@ export type Snapshot = {
   x: number;
   y: number;
   z: number;
+  /** Front-flip rotation in turns (PlayerState.flipTurns). */
+  flip: number;
   readonly trafficZ: Float64Array;
 };
 
@@ -34,20 +36,22 @@ function snapshot(s: SimState, into: Snapshot): void {
   into.x = s.player.x;
   into.y = s.player.y;
   into.z = s.player.z;
+  into.flip = s.player.flipTurns;
   into.trafficZ.set(s.traffic.z);
 }
 
 export function createSession(seed: number, tuning: SimTuning = DEFAULT_TUNING.sim): Session {
   const state = createSimState(seed, tuning);
-  const prev: Snapshot = { x: 0, y: 0, z: 0, trafficZ: new Float64Array(TRAFFIC_CAPACITY) };
+  const prev: Snapshot = { x: 0, y: 0, z: 0, flip: 0, trafficZ: new Float64Array(TRAFFIC_CAPACITY) };
   snapshot(state, prev);
   return { tuning, state, prev, frameEvents: [], recorder: createRecorder(seed, tuning) };
 }
 
-/** Runs `steps` sim steps with the held input; keeps the snapshot before the last one for interpolation. */
-export function advance(session: Session, steps: number, held: number): void {
+/** Samples input once per actual sim tick, recording that mask; keeps the preceding snapshot for interpolation. */
+export function advance(session: Session, steps: number, input: number | (() => number)): void {
   session.frameEvents.length = 0;
   for (let i = 0; i < steps && session.state.status === SimStatus.running; i++) {
+    const held = typeof input === 'number' ? input : input();
     snapshot(session.state, session.prev);
     session.recorder.record(held);
     step(session.state, held, session.tuning);

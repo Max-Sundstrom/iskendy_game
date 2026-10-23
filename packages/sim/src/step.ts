@@ -3,6 +3,7 @@ import { emit } from './events';
 import { Action, pressed } from './input';
 import { resolveCollisions, type StepStart } from './collisions';
 import { runDirector } from './director';
+import { updateRide } from './roofs';
 import { advanceLaneChange, requestLaneChange } from './lateral';
 import { saturatingExp } from './math';
 import { SimStatus, type SimState } from './state';
@@ -13,7 +14,7 @@ import { updateAir, verticalInput, verticalIntegrate } from './vertical';
 const start: StepStart = { x: 0, y: 0, z: 0 };
 
 // One fixed 60 Hz step (ARCHITECTURE §4.3). Order so far:
-// input → lateral → AIR → vertical → forward → traffic → collisions → director → origin shift.
+// input → lateral → AIR → vertical → forward → traffic → ride → collisions → director → origin shift.
 // Mutates `state` in place and allocates nothing (invariant 5).
 
 /** Forward speed from distance (GDD §5.2): vMin + (vMax − vMin) · (1 − e^(−d / dScale)). */
@@ -54,7 +55,7 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   updateAir(state, tuning, (held & Action.boost) !== 0, dt);
   verticalIntegrate(state, tuning, dt);
 
-  const penalty = p.penaltyS > 0 ? 1 - tuning.speed.scrapePenalty : 1;
+  const penalty = p.penaltyS > 0 ? 1 - p.penaltyFactor : 1;
   p.speedMps = speedAtDistance(p.distanceM, tuning) * (p.boosting ? tuning.speed.boostMultiplier : 1) * penalty;
   const dz = p.speedMps * dt;
   p.distanceM += dz;
@@ -62,6 +63,7 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   state.score.total += dz * tuning.score.perMeter;
 
   moveTraffic(state.traffic, tuning, dt);
+  updateRide(state, tuning);
   resolveCollisions(state, tuning, start, dt);
   runDirector(state, tuning);
 

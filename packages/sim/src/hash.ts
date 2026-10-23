@@ -56,6 +56,12 @@ export function stateHash(s: SimState): string {
   h = mixNumber(h, p.laneStartX);
   h = mixNumber(h, p.penaltyS);
   h = mixNumber(h, p.scrapeTimerS);
+  h = mixWord(h, (p.rideSlot + 1) | (p.hopChain << 8));
+  h = mixNumber(h, p.coyoteS);
+  h = mixWord(h, p.touchSeq);
+  h = mixNumber(h, p.penaltyFactor);
+  h = mixNumber(h, p.flipTurns);
+  h = mixWord(h, (p.flipping ? 1 : 0) | (p.flipQueued ? 2 : 0) | (p.flipsDone << 2));
   h = mixNumber(h, s.director.nextRowM);
   h = mixNumber(h, s.score.total);
   const t = s.traffic;
@@ -64,6 +70,7 @@ export function stateHash(s: SimState): string {
     h = mixWord(h, i | ((t.type[i] ?? 0) << 8) | ((t.lane[i] ?? 0) << 16));
     h = mixNumber(h, t.z[i] ?? 0);
     h = mixNumber(h, t.speed[i] ?? 0);
+    h = mixWord(h, t.over[i] === p.touchSeq + 1 ? 1 : 0); // only whether a CLEAR is still open matters
   }
   h = mixRng(h, s.rng.director);
   h = mixRng(h, s.rng.pickups);

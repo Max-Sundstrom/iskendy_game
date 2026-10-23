@@ -112,7 +112,7 @@ function cargoCar(z: number, y: number, colour: string): Part[] {
     { z: z + 0.6, ys: y + 0.2, wb: 0.78, ysh: y + 0.7, wsh: 0.87, yt: y + 1.25, wt: 0.62, crown: 0.04 },
     { z: z + 2.0, ys: y + 0.25, wb: 0.72, ysh: y + 0.5, wsh: 0.82, yt: y + 0.7, wt: 0.66 },
   ];
-  return [tag(loft(st), colour)];
+  return [tag(loft(st, { side: 6, between: 0 }), colour)]; // small and far up: coarse is enough
 }
 
 export function carCarrier({ L, W, H }: Size): Part[] {

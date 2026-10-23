@@ -16,8 +16,8 @@
     "retry": "Retry"
   },
   "controls": {
-    "keyboard": "← → lane · Space jump, hold to fly · ↓ slam · Shift BOOST",
-    "touch": "Swipe left/right — lane · up — jump, keep holding — fly · down — slam"
+    "keyboard": "← → lane · Space jump, again — flip, hold — fly · ↓ slam · Shift BOOST",
+    "touch": "Swipe left/right — lane · tap or swipe up — jump, again in the air — flip · hold — fly · down — slam"
   },
   "intro": {
     "go": "Go!",
