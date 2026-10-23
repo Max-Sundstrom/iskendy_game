@@ -83,7 +83,7 @@ Working city name: **Kometograd** (placeholder; fictional on purpose, the way GT
 
 | Distance | Biome | Archetypes and set pieces |
 |---|---|---|
-| intro | **Ski-jump hill** | the run starts with the car rolling down a ski-jump-style ramp on a wooded hill overlooking the city — replaces the steel gantry from v0.1 |
+| intro | **Launch gantry** (ADR-026) | the run starts with the car dropping down a curved ramp from a rust-red steel truss gantry above the embankment; the owner chose it over the ski-jump hill after the P1 playtest |
 | 0–2.5 km | **Embankment Gold** | riverside multi-lane embankment; a stepped "wedding-cake" high-rise archetype on the far bank; steel arch bridge; river barges; linden trees; "Cosmos Park" with a rocket on a pedestal that **launches when LIFTOFF triggers** |
 | 2.5–5 km | **Ring Road Dusk** | elevated ring road; glass business-tower cluster reflecting the pink sky; tunnels (light change, echo audio); giant LED billboards (sponsor/brand slots); overhead gantry signs with fictional place names |
 | 5–8 km | **Spalny Neon Night** | panel-block districts with window mosaics; kiosks with neon; sodium lamps; light rain and puddle reflections; trolleybus wires overhead |

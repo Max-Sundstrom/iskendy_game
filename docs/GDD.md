@@ -70,7 +70,7 @@ Full direction, palette, world archetypes and IP guardrails: **ART_DIRECTION.md*
 | Reference | KOMETA |
 |---|---|
 | Tesla Roadster | **Kometa R** — original roadster; concept A/B/C chosen in D0-2 (ART_DIRECTION §8) |
-| Steel launch gantry intro | **Ski-jump hill** overlooking the city |
+| Steel launch gantry intro | **Steel launch gantry** with a curved ramp over the embankment (ADR-026; the ski-jump hill was dropped) |
 | Rocket tower on the horizon | **Cosmos Park rocket** on a pedestal that launches on LIFTOFF |
 | Rocket Mode | **LIFTOFF** — meter-triggered invincibility, "Poekhali!" callout |
 | Starman Invincible | **COSMONAUT** — star-token invincibility |
@@ -264,7 +264,7 @@ lighting targets live in **ART_DIRECTION.md §4–§7**; gameplay-relevant facts
 
 | Distance | Biome | Gameplay notes |
 |---|---|---|
-| intro | Ski-jump hill | 3-2-1 countdown synced to the descent; input unlocks in buffered mode at "1" |
+| intro | Launch gantry (ADR-026) | 3-2-1 countdown synced to the descent; input unlocks in buffered mode at "1" |
 | 0–2.5 km | Embankment Gold | widest sight lines; teaches roofs and hops; Cosmos Park rocket launches on LIFTOFF |
 | 2.5–5 km | Ring Road Dusk | tunnels (short light change, no hazards inside the first 50 m of a tunnel), billboards, denser semis |
 | 5–8 km | Spalny Neon Night | rain gloss, trolleybuses, construction zones; optional top-down "drone cam" finale [REF / OPEN] |

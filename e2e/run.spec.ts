@@ -6,19 +6,22 @@ import { expect, test } from '@playwright/test';
 test('a run ends on a crash, shows the results and retries', async ({ page }) => {
   await page.goto('/?seed=28&q=low');
   const app = page.locator('#app');
-  await expect(app).toHaveAttribute('data-screen', 'playing');
+  await expect(app).toHaveAttribute('data-screen', 'intro');
+  await expect(app).toHaveAttribute('data-screen', 'playing', { timeout: 20_000 });
   await expect(app).toHaveAttribute('data-screen', 'results', { timeout: 60_000 });
   await expect(page.locator('.results-score')).toHaveText(/^\d[\d\s]*$/); // digits grouped by narrow no-break spaces
   await expect(page.locator('.results-code')).toHaveText(/^ISK-[0-9A-HJKMNP-TV-Z]{4}-[0-9A-HJKMNP-TV-Z]{4}$/);
   const retry = page.locator('.results-retry');
   await expect(retry).toBeFocused();
   await retry.click();
-  await expect(app).toHaveAttribute('data-screen', 'playing');
+  // Retry replays the short end of the launch ramp (GDD §3) before the run.
+  await expect(app).toHaveAttribute('data-screen', /intro|playing/);
+  await expect(app).toHaveAttribute('data-screen', 'playing', { timeout: 20_000 });
   await expect.poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 10_000 }).toBeLessThan(200);
 });
 
 test('changes lane from the keyboard or a swipe', async ({ page, isMobile }) => {
-  await page.goto('/?seed=5&q=low');
+  await page.goto('/?seed=5&q=low&intro=0');
   const app = page.locator('#app');
   await expect(app).toHaveAttribute('data-lane', '2');
   if (isMobile) {
@@ -47,4 +50,19 @@ test('changes lane from the keyboard or a swipe', async ({ page, isMobile }) => 
     await page.keyboard.press('ArrowRight');
   }
   await expect(app).toHaveAttribute('data-lane', '3');
+});
+
+test('the launch intro counts down and hands over to the run', async ({ page }) => {
+  await page.goto('/?seed=5&q=low');
+  const app = page.locator('#app');
+  const count = page.locator('.intro-count');
+  await expect(app).toHaveAttribute('data-screen', 'intro');
+  await expect(count).toHaveText(/^[321]$/);
+  await expect(page.locator('.intro-toast')).toBeVisible();
+  await expect(app).toHaveAttribute('data-screen', 'playing', { timeout: 20_000 });
+  await expect(count).toHaveText(/\S/); // "Старт!" lingers for a moment, then the overlay goes
+  await expect(page.locator('.intro')).toBeHidden({ timeout: 5_000 });
+  await expect
+    .poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 15_000 })
+    .toBeGreaterThan(5);
 });

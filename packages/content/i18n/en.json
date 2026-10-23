@@ -18,5 +18,9 @@
   "controls": {
     "keyboard": "← → lane · Space jump, hold to fly · ↓ slam · Shift BOOST",
     "touch": "Swipe left/right — lane · up — jump, keep holding — fly · down — slam"
+  },
+  "intro": {
+    "go": "Go!",
+    "premise": "Your dürüm is getting cold — race it home."
   }
 }

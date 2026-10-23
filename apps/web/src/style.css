@@ -7,6 +7,11 @@ body {
   background: #1a1c26;
   overscroll-behavior: none;
   touch-action: none;
+  /* A long press must not open the iOS callout or select text: either cancels the held pointer. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 #app,
 #game {
@@ -102,8 +107,10 @@ body {
   pointer-events: auto;
   touch-action: none;
 }
-.hud-boost:active {
-  background: rgb(26 28 38 / 80%);
+.hud-boost.on {
+  background: rgb(25 194 176 / 55%);
+  border-color: #19c2b0;
+  box-shadow: 0 0 18px rgb(25 194 176 / 60%);
 }
 .hud-hint {
   position: absolute;
@@ -118,7 +125,8 @@ body {
   opacity: 0.9;
   transition: opacity 0.6s;
 }
-.hud-hint-gone {
+.hud-hint-gone,
+#app[data-screen='intro'] .hud-hint {
   opacity: 0;
 }
 .results {
@@ -206,4 +214,57 @@ body {
 .results-retry:focus-visible {
   outline: 3px solid #cdb2f0;
   outline-offset: 3px;
+}
+.intro {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  color: #f3e9d2;
+  font-family:
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    Roboto,
+    sans-serif;
+}
+.intro-count {
+  position: absolute;
+  top: 34%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(72px, 22vw, 160px);
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+  text-shadow:
+    0 4px 0 rgb(26 28 38 / 55%),
+    0 0 24px rgb(255 138 61 / 55%);
+}
+.intro-count.pop {
+  animation: intro-pop 0.35s ease-out;
+}
+@keyframes intro-pop {
+  from {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-count.pop {
+    animation: none;
+  }
+}
+.intro-toast {
+  position: absolute;
+  left: 50%;
+  bottom: calc(150px + env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: min(88vw, 460px);
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgb(26 28 38 / 82%);
+  border: 1px solid rgb(243 233 210 / 18%);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
 }

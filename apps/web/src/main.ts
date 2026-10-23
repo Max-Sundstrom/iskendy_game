@@ -1,5 +1,6 @@
 import './style.css';
 import { Action, DEFAULT_TUNING, SIM_VERSION, SimStatus } from '@kometa/sim';
+import { countdownDigit, INTRO_S, RETRY_START_S } from './engine/intro';
 import { createGameRenderer } from './engine/renderer';
 import { createPerfMeter } from './engine/perf';
 import { alpha, stepsForFrame, type Accumulator } from './game/loop';
@@ -11,9 +12,11 @@ import { stringsFor } from './platform/i18n';
 import { storeReplay } from './platform/replays';
 import { newPromoCode } from './platform/promo';
 import { createHud } from './ui/hud';
+import { createIntroOverlay } from './ui/intro';
 import { createResults } from './ui/results';
 
-// Boot: session, fixed-step loop, renderer, input, HUD and results (P1-05). Menus, pause and the host bridge come later.
+// Boot: session, launch intro, fixed-step loop, renderer, input, HUD and results. Menus, pause and the host bridge
+// come later. The intro is presentation only: the sim's tick 0 is the moment the car meets the road.
 
 const root = document.querySelector<HTMLElement>('#app');
 const canvas = document.querySelector<HTMLCanvasElement>('#game');
@@ -33,31 +36,50 @@ if (root && canvas) {
   const touch = matchMedia('(pointer: coarse)').matches;
   const hud = createHud(root, t, touch);
   const results = createResults(root, t);
+  const overlay = createIntroOverlay(root, t);
   const controls = createControls();
-  let screen: 'playing' | 'results' = 'playing';
-  const playing = () => screen === 'playing';
+  // ?intro=0 skips the launch ramp (test pages and quick checks).
+  const withIntro = query.get('intro') !== '0';
+  let screen: 'intro' | 'playing' | 'results' = 'playing';
+  let introT = 0;
+  // Input is buffered from "1" on (GDD §12), so a swipe during the last second lands on the first step.
+  const playing = () => screen === 'playing' || (screen === 'intro' && countdownDigit(introT) <= 1);
   bindKeyboard(window, controls, playing);
   bindTouch(canvas, controls, DEFAULT_TUNING.presentation.input, playing);
   const boost = hud.boostButton;
   boost.addEventListener('pointerdown', (e) => {
     e.preventDefault();
+    // Captured, so a thumb drifting off the 72 px button keeps boosting until it lifts.
+    boost.setPointerCapture(e.pointerId);
     controls.hold(Action.boost, true);
   });
-  for (const type of ['pointerup', 'pointercancel', 'pointerleave'] as const)
+  for (const type of ['pointerup', 'pointercancel'] as const)
     boost.addEventListener(type, () => controls.hold(Action.boost, false));
+  boost.addEventListener('contextmenu', (e) => e.preventDefault());
 
   const acc: Accumulator = { carry: 0 };
   let last = performance.now();
   let paused = false;
 
+  const startIntro = (fromS: number, premise: boolean) => {
+    if (!withIntro) {
+      screen = 'playing';
+      root.dataset['screen'] = 'playing';
+      return;
+    }
+    introT = fromS;
+    overlay.show(premise);
+    screen = 'intro';
+    root.dataset['screen'] = 'intro';
+  };
   const retry = () => {
     session = createSession(nextSeed());
+    gfx.reset();
     controls.releaseAll();
     acc.carry = 0;
     results.hide();
     hud.show(true);
-    screen = 'playing';
-    root.dataset['screen'] = 'playing';
+    startIntro(RETRY_START_S, false);
   };
   results.retry.addEventListener('click', retry);
   window.addEventListener('keydown', (e) => {
@@ -86,11 +108,34 @@ if (root && canvas) {
     last = performance.now();
   });
 
-  root.dataset['screen'] = 'playing';
+  startIntro(0, true);
   const frame = (now: number) => {
-    const frameS = (now - last) / 1000;
+    // rAF timestamps can precede the performance.now() taken at boot, so the first delta may be negative.
+    const frameS = Math.min(0.25, Math.max(0, (now - last) / 1000));
     perf.frame(now - last);
     last = now;
+    if (screen === 'intro') {
+      if (!paused) introT += frameS;
+      if (countdownDigit(introT) > 1) controls.releaseAll();
+      overlay.update(countdownDigit(introT));
+      if (introT >= INTRO_S) {
+        overlay.hide();
+        acc.carry = 0;
+        screen = 'playing';
+        root.dataset['screen'] = 'playing';
+      } else {
+        gfx.renderIntro(session, introT, frameS);
+        hud.update({
+          score: 0,
+          distanceM: 0,
+          airLiters: session.state.player.airLiters,
+          airCapacity: session.tuning.air.capacityL,
+          boosting: false,
+        });
+        requestAnimationFrame(frame);
+        return;
+      }
+    }
     if (!paused && screen === 'playing') {
       const steps = stepsForFrame(acc, frameS);
       advance(session, steps, controls.held());
@@ -104,6 +149,7 @@ if (root && canvas) {
       distanceM: s.player.distanceM,
       airLiters: s.player.airLiters,
       airCapacity: session.tuning.air.capacityL,
+      boosting: s.player.boosting,
     });
     root.dataset['distance'] = String(Math.floor(s.player.distanceM));
     root.dataset['lane'] = String(s.player.lane);

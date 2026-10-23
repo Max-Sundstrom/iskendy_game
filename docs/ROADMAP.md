@@ -109,13 +109,14 @@ score from style.
 
 | ID | Owner | Task | Acceptance |
 |---|---|---|---|
+| P3-00 | Orchestrator | Visual slice pulled forward (ADR-026): procedural hero car and 13 traffic models, roadside and horizon, thruster vapour, launch gantry intro with 3-2-1, BOOST feedback | done 2026-10-23 — see `docs/tasks/P3-00.md` |
 | P3-01 | Tech artist | Hero car Kometa R: blockout → owner review → final mesh, LODs, node hierarchy (ASSETS §5) | budget check passes; review sign-off |
 | P3-02 | Tech artist | Traffic: Kenney Car Kit restyled to the palette atlas + 4 original Soviet-inspired bodies | ≤ 3k tris each; ledger entries with proof |
-| P3-03 | Tech artist | Environment kits per ART_DIRECTION §5–§6: ski-jump hill intro, embankment with steel arch bridge, river and linden trees, Cosmos Park rocket on a pedestal, elevated ring road with tunnels, glass towers and billboards, panel-block districts with kiosks and sodium lamps, construction props | chunk prefabs per biome |
+| P3-03 | Tech artist | Environment kits per ART_DIRECTION §5–§6: launch gantry intro (ADR-026), embankment with steel arch bridge, river and linden trees, Cosmos Park rocket on a pedestal, elevated ring road with tunnels, glass towers and billboards, panel-block districts with kiosks and sodium lamps, construction props | chunk prefabs per biome |
 | P3-04 | Render | biome streaming, sky dome + fog per time of day, 300 m blends | no frame > 8 ms extra at biome swap |
 | P3-05 | Render | VFX: thrusters, dust, sparks, debris, fireworks, speed lines, mode grades | reduced-motion variant |
 | P3-06 | Render | post-processing, quality tiers, dynamic resolution | budgets met on Low / Mid / High |
-| P3-07 | Render | ski-jump intro cinematic with countdown; rocket launch on LIFTOFF | timing synced to sim events |
+| P3-07 | Render | intro cinematic polish (P3-00 has the gantry and countdown); rocket launch on LIFTOFF | timing synced to sim events |
 | P3-08 | Audio | SFX set, three music stems, mixer, haptics | every cue mapped; ledger entries |
 | P3-09 | Perf | full audit + prioritised fix list | report with before/after |
 | P3-10 | Critic | art and feel review against GDD §19 | sign-off or fix list |
@@ -193,7 +194,7 @@ paints · daily missions · Route mode with a destination and story endings · g
 | P0 | **done** (2026-10-23) | P0-01…P0-08; P0-06 table keeps filling as libraries arrive; server setup is an owner action (`docs/runbooks/deploy-game-origin.md`); P1+ waits for D0 |
 | P1 | in progress | P1-01…P1-06 done — playable loop, replays across engines (phone p95 readout pending); next P1-08 bots, P1-07 feel review |
 | P2 | not started | |
-| P3 | not started | |
+| P3 | P3-00 done (ADR-026) | visual slice ahead of P2 on the owner's request; Blender assets P3-01…03 later |
 | P4 | not started | |
 | P5 | not started | v1: P5-09 only; P5-01…08 deferred (no ranking) |
 | P6 | later | v1.1 |

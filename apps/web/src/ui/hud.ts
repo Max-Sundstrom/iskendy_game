@@ -4,7 +4,7 @@ import { el } from './dom';
 // Minimal HUD (P1-05, GDD §14): score odometer, distance, AIR bar. Values are written straight to DOM nodes once per
 // frame and only when they change (invariant 9); no framework renders on the hot path.
 
-export type HudValues = { score: number; distanceM: number; airLiters: number; airCapacity: number };
+export type HudValues = { score: number; distanceM: number; airLiters: number; airCapacity: number; boosting: boolean };
 
 export type Hud = {
   root: HTMLElement;
@@ -33,9 +33,9 @@ export function createHud(parent: HTMLElement, t: Strings, touch: boolean): Hud 
   const hint = el('p', 'hud-hint', touch ? t.controls.touch : t.controls.keyboard);
   root.append(score, distance, air, boostButton, hint);
   parent.append(root);
-  setTimeout(() => hint.classList.add('hud-hint-gone'), 6000);
+  setTimeout(() => hint.classList.add('hud-hint-gone'), 10000); // ~6 s after the intro
 
-  let last = { score: -1, distance: -1, air: -1 };
+  let last = { score: -1, distance: -1, air: -1, boosting: false };
   return {
     root,
     boostButton,
@@ -54,7 +54,8 @@ export function createHud(parent: HTMLElement, t: Strings, touch: boolean): Hud 
         segs.forEach((seg, i) => seg.classList.toggle('empty', i >= lit));
         air.classList.toggle('low', v.airLiters / v.airCapacity < 0.15);
       }
-      last = { score: s, distance: d, air: a };
+      if (v.boosting !== last.boosting) boostButton.classList.toggle('on', v.boosting);
+      last = { score: s, distance: d, air: a, boosting: v.boosting };
     },
   };
 }
