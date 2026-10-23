@@ -1,0 +1,105 @@
+{
+  "createdAt": "2026-10-23T22:30:49.662Z",
+  "sourceCommit": "f775e3a43d546ff5c720f0e75b88502426ebc757",
+  "sourceStatus": "?? docs/reviews/P2-03a/browser-plan.md\n?? e2e/scoring.spec.ts\n",
+  "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'",
+  "node": "v24.19.0",
+  "command": "playwright test e2e/scoring.spec.ts --workers=2",
+  "testTimeoutMs": 120000,
+  "exitCode": 0,
+  "closedAt": "2026-10-23T22:31:50.639Z",
+  "tests": [
+    {
+      "viewport": "desktop",
+      "status": "passed",
+      "durationMs": 58946,
+      "screenshots": [
+        {
+          "path": "browser-desktop-fractional-bank-hud.png",
+          "bytes": 459559
+        },
+        {
+          "path": "browser-desktop-fractional-bank-results.png",
+          "bytes": 359685
+        },
+        {
+          "path": "browser-desktop-retry-fresh-score.png",
+          "bytes": 475390
+        }
+      ],
+      "score-ledger": {
+        "first": {
+          "total": 267.87045680500904,
+          "display": 267,
+          "slams": [
+            6,
+            18
+          ],
+          "settlements": [
+            {
+              "tick": 168,
+              "banked": 112.5,
+              "lost": 0
+            }
+          ]
+        },
+        "second": {
+          "total": 313.42881941505215,
+          "display": 313,
+          "slams": [],
+          "settlements": []
+        }
+      },
+      "browser-diagnostics": {
+        "errors": [],
+        "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'"
+      }
+    },
+    {
+      "viewport": "mobile",
+      "status": "passed",
+      "durationMs": 39388,
+      "screenshots": [
+        {
+          "path": "browser-mobile-fractional-bank-hud.png",
+          "bytes": 522077
+        },
+        {
+          "path": "browser-mobile-fractional-bank-results.png",
+          "bytes": 372766
+        },
+        {
+          "path": "browser-mobile-retry-fresh-score.png",
+          "bytes": 461320
+        }
+      ],
+      "score-ledger": {
+        "first": {
+          "total": 267.87045680500904,
+          "display": 267,
+          "slams": [
+            6,
+            18
+          ],
+          "settlements": [
+            {
+              "tick": 168,
+              "banked": 112.5,
+              "lost": 0
+            }
+          ]
+        },
+        "second": {
+          "total": 313.42881941505215,
+          "display": 313,
+          "slams": [],
+          "settlements": []
+        }
+      },
+      "browser-diagnostics": {
+        "errors": [],
+        "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'"
+      }
+    }
+  ]
+}
