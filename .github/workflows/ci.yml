@@ -58,7 +58,8 @@ jobs:
   e2e:
     name: e2e smoke (1440×900, 390×844)
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    # apt mirrors behind `playwright install --with-deps` have taken up to 14 min.
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -82,7 +83,8 @@ jobs:
   container:
     name: container · headers · embed e2e
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    # apt mirrors behind `playwright install --with-deps` have taken up to 14 min.
+    timeout-minutes: 25
     env:
       # Same digest as deploy/Dockerfile, pulled from Google's Docker Hub mirror to avoid Hub rate limits.
       CADDY_IMAGE: mirror.gcr.io/library/caddy:2.11.6-alpine@sha256:d44355d3c2149dc580ce2cac735955d1c08d3d00882c30489c241aa51a5c10d9
