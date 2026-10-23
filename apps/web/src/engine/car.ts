@@ -17,7 +17,7 @@ import {
   Material,
 } from 'three';
 import { loft, type Station } from './models/loft';
-import { archBody, bevelBox as rbox, mergeByMaterial } from './hero/geometry';
+import { archBody, bevelBox as rbox, canopyFrame, mergeByMaterial } from './hero/geometry';
 import { finishGeometry, heroSurface, type Finish } from './hero/surfaces';
 
 type Coating = Finish & { material: Material };
@@ -46,8 +46,9 @@ const BODY: Station[] = [
 ];
 
 /** The lowest 0.2 m of the body, a hair proud of the paint, for the two-tone sill band. */
-const SILL: Station[] = BODY.map((b) => ({
-  z: b.z,
+const SILL: Station[] = BODY.map((b, index) => ({
+  // Closed lofts need separate end planes: shared caps visibly fight in the straight chase view.
+  z: b.z + (index === 0 ? -0.016 : index === BODY.length - 1 ? 0.016 : 0),
   ys: b.ys - 0.005,
   wb: b.wb + 0.008,
   ysh: b.ys + 0.1,
@@ -216,7 +217,8 @@ export function createCar(): CarRig {
   });
 
   body.add(mesh(archBody(BODY), paint));
-  body.add(mesh(loft(CANOPY, { side: 12, between: 3 }), glass));
+  const canopy = loft(CANOPY, { side: 12, between: 3 });
+  body.add(mesh(canopy, glass));
   // The dark sill follows the wheel openings and keeps the two-tone body visually light.
   body.add(mesh(archBody(SILL, true), satin));
   body.add(mesh(rbox(1.02, 0.03, 0.8), roof, 0, 1.14, -0.43));
@@ -245,9 +247,7 @@ export function createCar(): CarRig {
     const pillar = mesh(rbox(0.045, 0.29, 0.085), trim, side * 0.61, 0.99, -0.88);
     pillar.rotation.z = side * 0.3;
     body.add(pillar);
-    const frontPillar = mesh(rbox(0.035, 0.035, 0.94), paint, side * 0.615, 0.95, 0.43);
-    frontPillar.lookAt(side * 0.69, 0.745, 0.86);
-    body.add(frontPillar);
+    body.add(mesh(canopyFrame(canopy, side), paint));
     const rail = mesh(rbox(0.035, 0.025, 1.48), dark, side * 0.7, 0.81, -0.18);
     rail.rotation.x = 0.075;
     body.add(rail);

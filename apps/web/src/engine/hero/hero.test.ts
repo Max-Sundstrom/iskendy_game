@@ -1,4 +1,4 @@
-import { Box3, Mesh, MeshPhysicalMaterial, Object3D, Vector3, type Material } from 'three';
+import { Box3, Mesh, MeshPhysicalMaterial, Object3D, Raycaster, Vector3, type Material } from 'three';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { createCar } from '../car';
 
@@ -29,6 +29,15 @@ describe('Kometa hero presentation contract', () => {
     expect(size.y).toBeLessThanOrEqual(1.2);
     expect(size.z).toBeLessThanOrEqual(4.6);
     expect(bounds.min.y).toBeCloseTo(0, 5);
+  });
+
+  it('keeps the satin rear cap in front of the paint cap in the actual chase direction', () => {
+    const rig = car();
+    rig.group.updateMatrixWorld(true);
+    const ray = new Raycaster(new Vector3(0, 0.44, 5), new Vector3(0, 0, -1));
+    const hits = ray.intersectObject(rig.body, true);
+    expect(hits[0]?.point.z).toBeGreaterThan(2.21);
+    expect(hits.some((hit) => Math.abs(hit.point.z - 2.2) < 0.001)).toBe(true);
   });
 
   it('retains complete finish and atlas inputs when opaque parts are merged', () => {

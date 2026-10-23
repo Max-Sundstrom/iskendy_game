@@ -6,7 +6,6 @@ import {
   Float32BufferAttribute,
   LatheGeometry,
   MeshStandardMaterial,
-  Quaternion,
   Vector2,
   Vector3,
 } from 'three';
@@ -17,7 +16,8 @@ import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js
 // for lamps and arrow boards), plus `surface` (roughness/metalness). Glass, rubber and paint share a draw call.
 
 export type Part = BufferGeometry;
-type Point = readonly [number, number, number];
+type ClipPlane = readonly [number, number, number, number];
+type SurfaceVertex = { position: Vector3; normal: Vector3 };
 
 export const Surface = {
   paint: [0.34, 0.16],
@@ -58,23 +58,61 @@ export function box(w: number, h: number, d: number, x: number, y: number, z: nu
   return new BoxGeometry(w, h, d).translate(x, y, z);
 }
 
-/** A narrow structural member between two anchors, used for the glazing pillars. */
-export function strut(from: Point, to: Point, widthM: number): BufferGeometry {
-  const a = new Vector3(...from);
-  const b = new Vector3(...to);
-  const direction = b.clone().sub(a);
-  const g = new BoxGeometry(widthM, direction.length(), widthM);
-  g.applyQuaternion(new Quaternion().setFromUnitVectors(new Vector3(0, 1, 0), direction.normalize()));
-  const centre = a.add(b).multiplyScalar(0.5);
-  return g.translate(centre.x, centre.y, centre.z);
-}
-
-/** A four-corner surface, wound counterclockwise from the visible side; two triangles, no hidden box faces. */
-export function panel(a: Point, b: Point, c: Point, d: Point): BufferGeometry {
+/** Clips a thin finish from the actual hull, so curved glass and trim cannot intersect a guessed flat panel. */
+export function surfacePatch(hull: BufferGeometry, planes: readonly ClipPlane[]): BufferGeometry {
+  const position = hull.getAttribute('position');
+  const normal = hull.getAttribute('normal');
+  const index = hull.getIndex();
+  const positions: number[] = [];
+  const normals: number[] = [];
+  const vertex = (i: number): SurfaceVertex => {
+    const n = index?.getX(i) ?? i;
+    return {
+      position: new Vector3(position.getX(n), position.getY(n), position.getZ(n)),
+      normal: new Vector3(normal.getX(n), normal.getY(n), normal.getZ(n)),
+    };
+  };
+  for (let i = 0; i < (index?.count ?? position.count); i += 3) {
+    let polygon = [vertex(i), vertex(i + 1), vertex(i + 2)];
+    for (const [x, y, z, constant] of planes) {
+      const clipped: SurfaceVertex[] = [];
+      for (let k = 0; k < polygon.length; k++) {
+        const a = polygon[k];
+        const b = polygon[(k + 1) % polygon.length];
+        if (!a || !b) continue;
+        const da = x * a.position.x + y * a.position.y + z * a.position.z + constant;
+        const db = x * b.position.x + y * b.position.y + z * b.position.z + constant;
+        if (da >= 0) clipped.push(a);
+        if (da >= 0 !== db >= 0) {
+          const t = da / (da - db);
+          clipped.push({
+            position: a.position.clone().lerp(b.position, t),
+            normal: a.normal.clone().lerp(b.normal, t),
+          });
+        }
+      }
+      polygon = clipped;
+    }
+    const first = polygon[0];
+    if (!first) continue;
+    for (let k = 1; k + 1 < polygon.length; k++) {
+      const b = polygon[k];
+      const c = polygon[k + 1];
+      if (!b || !c) continue;
+      const area = b.position.clone().sub(first.position).cross(c.position.clone().sub(first.position));
+      if (area.lengthSq() < 1e-16) continue;
+      for (const v of [first, b, c]) {
+        const n = v.normal.clone().normalize();
+        // Two millimetres prevent coplanar fighting without making a separate raised frame.
+        const p = v.position.clone().addScaledVector(n, 0.002);
+        positions.push(p.x, p.y, p.z);
+        normals.push(n.x, n.y, n.z);
+      }
+    }
+  }
   const g = new BufferGeometry();
-  g.setAttribute('position', new Float32BufferAttribute([...a, ...b, ...c, ...d], 3));
-  g.setIndex([0, 1, 2, 0, 2, 3]);
-  g.computeVertexNormals();
+  g.setAttribute('position', new Float32BufferAttribute(positions, 3));
+  g.setAttribute('normal', new Float32BufferAttribute(normals, 3));
   return g;
 }
 

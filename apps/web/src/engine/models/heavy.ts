@@ -1,7 +1,7 @@
 import { ConeGeometry, CylinderGeometry } from 'three';
 import { type Size } from './cars';
 import { loft, type Station } from './loft';
-import { axle, box, panel, Surface, tag, type Part } from './parts';
+import { axle, box, Surface, tag, type Part } from './parts';
 
 // Heavy traffic and road works (GDD §7): bus, trolleybus, semi, car-carrier, street-sweeper, road-works truck, cones
 // and a concrete barrier. Front = +z, centred, metres.
@@ -139,15 +139,7 @@ function cargoCar(z: number, y: number, colour: string): Part[] {
     { z: z + 0.6, ys: y + 0.2, wb: 0.78, ysh: y + 0.7, wsh: 0.87, yt: y + 1.25, wt: 0.62, crown: 0.04 },
     { z: z + 2.0, ys: y + 0.25, wb: 0.72, ysh: y + 0.5, wsh: 0.82, yt: y + 0.7, wt: 0.66 },
   ];
-  const parts: Part[] = [tag(loft(st, { side: 6, between: 0 }), colour)]; // same coarse hull; glass defines the cabin
-  for (const side of [-1, 1]) {
-    const a = [side * 0.85, y + 0.76, z - 0.62] as const;
-    const b = [side * 0.63, y + 1.27, z - 0.58] as const;
-    const c = [side * 0.63, y + 1.22, z + 0.58] as const;
-    const d = [side * 0.85, y + 0.76, z + 0.62] as const;
-    parts.push(tag(side > 0 ? panel(a, b, c, d) : panel(d, c, b, a), GLASS, 0, 0, Surface.glass));
-  }
-  return parts;
+  return [tag(loft(st, { side: 6, between: 0 }), colour)]; // distant cargo keeps its coherent coarse silhouette
 }
 
 export function carCarrier({ L, W, H }: Size): Part[] {

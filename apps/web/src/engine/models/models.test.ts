@@ -1,9 +1,9 @@
 import { DEFAULT_TUNING } from '@kometa/sim';
-import { Box3, Vector3 } from 'three';
+import { Box3, Mesh, MeshBasicMaterial, Raycaster, Vector3 } from 'three';
 import { describe, expect, it } from 'vitest';
 import { vehicleGeometry } from '.';
 import { loft } from './loft';
-import { wheelParts } from './parts';
+import { surfacePatch, wheelParts } from './parts';
 
 const tuning = DEFAULT_TUNING.sim;
 
@@ -38,6 +38,39 @@ describe('vehicle models', () => {
       expect(box.min.y).toBeGreaterThanOrEqual(-0.01);
     },
   );
+});
+
+describe('conforming surface finishes', () => {
+  it('keeps every patch vertex just outside the curved hull, including clipped edges', () => {
+    const hull = loft([
+      { z: -1, ys: 0, wb: 1, ysh: 0.5, wsh: 1, yt: 0.85, wt: 0.6 },
+      { z: 1, ys: 0, wb: 1, ysh: 0.5, wsh: 1, yt: 1.15, wt: 0.7 },
+    ]);
+    const patch = surfacePatch(hull, [
+      [1, 0, 0, -0.4],
+      [0, 1, 0, -0.6],
+      [0, 0, 1, 0.25],
+      [0, 0, -1, 0.25],
+    ]);
+    const positions = patch.getAttribute('position');
+    const normals = patch.getAttribute('normal');
+    const mesh = new Mesh(hull, new MeshBasicMaterial());
+    const ray = new Raycaster();
+    ray.far = 0.003;
+    expect(positions.count).toBeGreaterThan(0);
+    for (let i = 0; i < positions.count; i++) {
+      ray.set(
+        new Vector3().fromBufferAttribute(positions, i),
+        new Vector3().fromBufferAttribute(normals, i).negate().normalize(),
+      );
+      const hit = ray.intersectObject(mesh)[0];
+      expect(hit).toBeDefined();
+      expect(hit?.distance).toBeCloseTo(0.002, 5);
+    }
+    mesh.material.dispose();
+    hull.dispose();
+    patch.dispose();
+  });
 });
 
 describe('traffic wheel dishes', () => {

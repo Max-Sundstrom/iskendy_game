@@ -1,4 +1,12 @@
-import { Mesh, type BufferGeometry, type Material, type Object3D } from 'three';
+import {
+  CatmullRomCurve3,
+  Mesh,
+  TubeGeometry,
+  Vector3,
+  type BufferGeometry,
+  type Material,
+  type Object3D,
+} from 'three';
 import { RoundedBoxGeometry } from 'three/examples/jsm/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { loft, type Station } from '../models/loft';
@@ -25,6 +33,36 @@ export function archBody(stations: readonly Station[], sill = false): BufferGeom
   }
   geometry.computeVertexNormals();
   return geometry;
+}
+
+/** Follow the actual upper glass edge, so the front frame cannot float above a guessed straight rake. */
+export function canopyFrame(glass: BufferGeometry, side: number): BufferGeometry {
+  const rings = new Map<number, Vector3[]>();
+  const positions = glass.getAttribute('position');
+  for (let i = 0; i < positions.count; i++) {
+    const x = positions.getX(i);
+    const z = positions.getZ(i);
+    if (x < 0 || z < 0) continue;
+    const points = rings.get(z) ?? [];
+    points.push(new Vector3(x, positions.getY(i), z));
+    rings.set(z, points);
+  }
+  const path = [...rings.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([, points]) => {
+      const top = Math.max(...points.map((point) => point.y));
+      const bottom = Math.min(...points.map((point) => point.y));
+      const corner = Math.max(...points.map((point) => point.x)) * 0.8;
+      const upper = points.filter((point) => point.y >= top - (top - bottom) * 0.3);
+      upper.sort((a, b) => Math.abs(a.x - corner) - Math.abs(b.x - corner));
+      const point = upper[0]?.clone();
+      if (!point) throw new Error('Canopy ring has no upper edge');
+      return point.set(side * (point.x + 0.004), point.y + 0.006, point.z);
+    });
+  const start = path[0];
+  if (!start) throw new Error('Canopy has no front frame');
+  path.unshift(new Vector3(side * 0.525, 1.135, -0.04));
+  return new TubeGeometry(new CatmullRomCurve3(path), 12, 0.014, 4, false);
 }
 
 /** Bake static parts per material while retaining anchors and every finish attribute. */

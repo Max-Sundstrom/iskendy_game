@@ -1,5 +1,16 @@
 import { DEFAULT_TUNING } from '@kometa/sim';
-import { AgXToneMapping, InstancedMesh, Matrix4, PerspectiveCamera, SRGBColorSpace, WebGLRenderer, Color } from 'three';
+import {
+  AgXToneMapping,
+  InstancedMesh,
+  Matrix4,
+  Mesh,
+  MeshStandardMaterial,
+  PerspectiveCamera,
+  PlaneGeometry,
+  SRGBColorSpace,
+  WebGLRenderer,
+  Color,
+} from 'three';
 import { createCar } from '../src/engine/car';
 import { vehicleGeometry } from '../src/engine/models';
 import { vehicleMaterial } from '../src/engine/models/parts';
@@ -18,13 +29,22 @@ if (canvas) {
   renderer.toneMapping = AgXToneMapping;
   renderer.toneMappingExposure = 1.1;
   renderer.shadowMap.enabled = true;
+  const params = new URLSearchParams(location.search);
   const { scene, sun } = createWorld(renderer);
-  const road = createRoad(tuning);
-  road.update(0, 0);
-  scene.add(road.group);
+  if (params.get('studio') === '1') {
+    // Long trucks need a side camera beyond the road barrier; a plain floor keeps that inspection unobstructed.
+    const floor = new Mesh(new PlaneGeometry(300, 300), new MeshStandardMaterial({ color: '#3b404a', roughness: 0.9 }));
+    floor.rotation.x = -Math.PI / 2;
+    floor.position.y = -0.01;
+    floor.receiveShadow = true;
+    scene.add(floor);
+  } else {
+    const road = createRoad(tuning);
+    road.update(0, 0);
+    scene.add(road.group);
+  }
   const material = vehicleMaterial();
   const colors = ['#8E1F2C', '#E9E6DF', '#1F4B3A', '#6FA8D6', '#16171C', '#C9B48E'];
-  const params = new URLSearchParams(location.search);
   const selected = params.get('model');
   const selectedType = tuning.vehicles.find((vehicle) => vehicle.id === selected);
   const focused = selected === 'hero' || selectedType !== undefined;
