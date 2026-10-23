@@ -15,3 +15,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · P0-05 · Orchestrator · PR template (handoff note + DoD) and issue forms for bug, feel and perf.
 - 2026-10-23 · P0-02 · Orchestrator · GitHub Actions CI: checks, build with bundle-size and no-source-map gate, Playwright smoke on two viewports; actions pinned by SHA.
 - 2026-10-23 · P0-04 · Orchestrator · assets/ structure, LICENSES.json schema and validator, brand-name scan, assets:check in CI, assets:build stub.
+- 2026-10-23 · P0-07 · Orchestrator · Security workflow (gitleaks, Semgrep with proven project rules, CodeQL, OSV), Renovate config, Caddyfile header skeleton checked against a local Caddy, owner settings runbook.
