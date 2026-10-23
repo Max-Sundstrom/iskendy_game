@@ -183,6 +183,7 @@ if (root && canvas) {
     root.dataset['distance'] = String(Math.floor(s.player.distanceM));
     root.dataset['lane'] = String(s.player.lane);
     root.dataset['flip'] = s.player.flipTurns.toFixed(2); // e2e: the flip is visible in the sim state
+    root.dataset['roll'] = s.player.rollTurns.toFixed(2); // signed observation only; never drives presentation
     root.dataset['air'] = s.player.airborne ? '1' : '0';
     requestAnimationFrame(frame);
   };

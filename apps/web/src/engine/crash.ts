@@ -8,11 +8,8 @@ import type { Vapour } from './vapour';
 
 export type CrashView = { begin(): void; update(frame: CrashFrame): void; reset(): void };
 
-/** Landing resets the sim's flip angle; preserve its preceding tick's real orientation for the frozen impact. */
+/** The sim preserves the exact terminal rotation, including a failed landing's final integrated tick. */
 export function crashFlipTurns(session: Session): number {
-  for (const event of session.frameEvents) {
-    if (event.kind === 'crash' && event.cause === 'landing') return session.prev.flip;
-  }
   return session.state.player.flipTurns;
 }
 
