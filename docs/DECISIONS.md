@@ -130,7 +130,7 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 - **All bonus mechanics ship in v1:** rings, star token (COSMONAUT), AIR canister, item capsule with RADAR,
   MAGNET, SHIELD and EMP (GDD §8).
 
-## ADR-021 · proposed · v1 hosting: static container behind the shared Caddy (A-04, 2026-10-23)
+## ADR-021 · accepted · v1 hosting: static container behind the shared Caddy (A-04, 2026-10-23)
 The game origin `play.iskendy.ru` is served by a separate static-files container on the existing Iskendi server in
 Russia, behind the shared Caddy (its config lives in the `iskendy_analytic` repository). CI publishes a versioned
 release archive with a SHA-256; the server pulls a pinned version. No CDN in v1: L1 egress is a few GB per month
@@ -141,8 +141,20 @@ a different origin still satisfies invariant 12 (no shared origin, storage or cr
 the host origin (breaks invariant 12 and the host CSP model).
 **Needs:** owner approval (infrastructure change, AGENTS §13); a Caddy block from the server owner; host CSP
 `frame-src` line (front-end Q-34). Note: game ADR numbers are separate from the front-end repository's ADRs.
+**Accepted by the owner** 2026-10-23 (ADR-022). The Caddy block and the server container are still set up together
+with the server owner at the first deploy (P7); agents get no server credentials.
+
+## ADR-022 · accepted · Phase A signed: Architecture v1.0 (owner, 2026-10-23)
+The owner approved Architecture v1.0 and the hosting proposal in writing: "утверждаю Архитектуру v1.0 и хостинг,
+вливай в main" (summary: `docs/ARCHITECTURE_V1_SIGNOFF.ru.md`). Consequences:
+- Docs are v1.0; the Phase A exit gate is passed. P0 tooling may start; gameplay code (P1+) still waits for D0.
+- ADR-021 (hosting) is accepted.
+- The defaults of open questions 3, 5, 6, 7, 8, 12, 14, 16, 17, 18 and 19, listed on the signed page, become
+  decisions. Any of them can be reopened by the owner with a new ADR.
 
 ## Open questions (owner) — defaults are used until answered
+
+Since ADR-022 every default in this table is an accepted decision; a new owner answer supersedes it.
 
 | # | Question | Default |
 |---|---|---|
@@ -175,3 +187,4 @@ the host origin (breaks invariant 12 and the host CSP model).
 - 2026-10-23 — Owner answers: no ranking in v1, car concept left to the orchestrator (B chosen), hosting in Russia (ADR-019).
 - 2026-10-23 — Owner answers: crash ends the run, results with score + Retry, unique promo code shown (meaning later), all bonus mechanics in v1 (ADR-020); Q16 added.
 - 2026-10-23 — A-07 consistency review (`docs/reviews/consistency-A07-2026-10-23.md`): docs aligned to the v1 scope and marked v1.0 RC; ADR-017 clarified; ADR-021 (hosting) proposed; Q7 default updated; Q17–Q19 added; night batch ≤ 3 cards.
+- 2026-10-23 — Owner signed Architecture v1.0 and the hosting (ADR-022): docs v1.0, ADR-021 accepted, open-question defaults accepted.

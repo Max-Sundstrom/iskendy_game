@@ -1,4 +1,4 @@
-# KOMETA — Security, anti-cheat and compliance v1.0 RC
+# KOMETA — Security, anti-cheat and compliance v1.0
 
 Scope: web client, game-service API, replay validators, data stores, CDN, CI/CD, the asset pipeline, the AI
 agents that build the game, and integration with any host product (Iskendi order tracking, web portals).

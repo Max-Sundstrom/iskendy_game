@@ -1,4 +1,4 @@
-# KOMETA — Multi-agent development system v1.0 RC
+# KOMETA — Multi-agent development system v1.0
 
 How AI agents and the owner build KOMETA together. Builds on AGENTS.md §9 (roles) and mirrors the owner's
 current workflow: Codex implements (including overnight cloud runs), Claude Code orchestrates, reviews,

@@ -1,4 +1,4 @@
-# KOMETA — Test strategy v1.0 RC
+# KOMETA — Test strategy v1.0
 
 Every scenario in SCENARIOS.md maps to at least one automated test or a named manual check. CI blocks merges
 on red. Flaky tests are quarantined within 24 h with an owner and a fix-by date — never silently retried.

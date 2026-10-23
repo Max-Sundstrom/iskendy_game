@@ -1,4 +1,4 @@
-# KOMETA — Host embedding contract v1.0 RC
+# KOMETA — Host embedding contract v1.0
 
 How the game runs inside another product (the Iskendi order-tracking page, a future Iskendi app, web portals,
 Telegram Mini App) without risking that product. Status: **Iskendi profile confirmed as v1 scope (Q9, 2026-10-23).**

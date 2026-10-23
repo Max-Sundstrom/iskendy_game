@@ -1,4 +1,4 @@
-# KOMETA — Scenario catalogue v1.0 RC
+# KOMETA — Scenario catalogue v1.0
 
 Every scenario has an ID, the expected behaviour, and the test that proves it. QA keeps the "Test" column in
 sync with real test names. New scenarios are added here before code is written. Prefixes:

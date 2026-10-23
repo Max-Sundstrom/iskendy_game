@@ -1,4 +1,4 @@
-# KOMETA — Infrastructure, load and operations v1.0 RC
+# KOMETA — Infrastructure, load and operations v1.0
 
 Goal: survive a viral spike without a large bill, and never degrade a host product (Iskendi order tracking)
 that embeds the game.

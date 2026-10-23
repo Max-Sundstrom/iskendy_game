@@ -1,4 +1,4 @@
-# KOMETA — Technical Architecture v1.0 RC
+# KOMETA — Technical Architecture v1.0
 
 Companion to `docs/GDD.md`. Invariants live in AGENTS.md §6; this document explains how to satisfy them.
 Related: SECURITY.md (threats, anti-cheat), INFRASTRUCTURE.md (topology, load, ops), EMBEDDING.md (host

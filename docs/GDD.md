@@ -1,4 +1,4 @@
-# KOMETA — Game Design Document v1.0 RC
+# KOMETA — Game Design Document v1.0
 
 Derived from 20 reference screenshots (two short videos of a browser runner, mobile and desktop) plus design
 proposals. v0.2 adds the Moscow × GTA VI-inspired direction (pending agreement, see ART_DIRECTION.md),
