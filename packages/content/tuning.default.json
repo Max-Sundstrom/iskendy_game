@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "simVersion": 1,
+  "sim": {
+    "tickRateHz": 60,
+    "lanes": {
+      "count": 5,
+      "widthM": 3.6,
+      "changeDurationS": 0.16,
+      "queuedInputs": 1
+    },
+    "speed": {
+      "minMps": 35,
+      "maxMps": 95,
+      "distanceScaleM": 4000,
+      "boostMultiplier": 1.25,
+      "liftoffMultiplier": 1.15,
+      "scrapePenalty": 0.2,
+      "scrapePenaltyDurationS": 1.0,
+      "sloppyPenalty": 0.15,
+      "sloppyPenaltyDurationS": 0.8,
+      "conePenalty": 0.05
+    },
+    "jump": {
+      "apexHeightM": 4.2,
+      "timeToApexS": 0.45,
+      "fallGravityMultiplier": 1.6,
+      "bufferS": 0.12,
+      "coyoteS": 0.09
+    },
+    "fly": {
+      "holdThresholdS": 0.15,
+      "glideVyMps": -1.0,
+      "maxAltitudeM": 9.0,
+      "airCostLps": 60
+    },
+    "slam": {
+      "vyMps": -30,
+      "shockwaveRadiusM": 4.0
+    },
+    "tricks": {
+      "frontFlipDurationS": 0.55,
+      "barrelRollDurationS": 0.45
+    },
+    "landing": {
+      "perfectMaxDeg": 12,
+      "stuntMaxDeg": 35,
+      "sloppyMaxDeg": 75
+    },
+    "roofs": {
+      "hopHeightM": 3.0,
+      "slamHopHeightM": 4.5,
+      "landingToleranceM": 0.25,
+      "hatTrickCount": 3
+    },
+    "collision": {
+      "nearMissLateralM": 0.6,
+      "secondScrapeWindowS": 4.0,
+      "scrapeAirLossL": 40
+    },
+    "air": {
+      "capacityL": 600,
+      "startL": 600,
+      "regenLps": 30,
+      "boostCostLps": 40,
+      "canisterL": 200,
+      "lowWarningRatio": 0.15
+    },
+    "meter": {
+      "capacity": 1000,
+      "autoTrigger": true
+    },
+    "modes": {
+      "liftoff": {
+        "durationS": 5.0
+      },
+      "cosmonaut": {
+        "durationS": 6.5,
+        "magnetLanes": 2
+      },
+      "overdrive": {
+        "extensionS": 4.0,
+        "pointsMultiplier": 1.5
+      },
+      "graceS": 1.0
+    },
+    "streak": {
+      "windowS": 2.5,
+      "multiplierStep": 0.25,
+      "multiplierCap": 8,
+      "sloppyBankRatio": 0.5,
+      "fireworksEvery": 10
+    },
+    "score": {
+      "perMeter": 1,
+      "boostPerQuarterSecond": 10,
+      "nearMiss": 50,
+      "clear": 300,
+      "semiCleared": 3000,
+      "hop": 150,
+      "roofRidePer10m": 20,
+      "frontFlip": 360,
+      "extraFlipBonus": 0.2,
+      "barrelRoll": 120,
+      "stuntLanding": 20,
+      "perfectLanding": 120,
+      "slam": 50,
+      "smashBase": 100,
+      "smashChainStep": 5,
+      "smashCap": 200,
+      "ring": 10,
+      "coneBowling": 10
+    },
+    "meterGain": {
+      "boostPerQuarterSecond": 1,
+      "nearMiss": 10,
+      "clear": 60,
+      "semiCleared": 200,
+      "hop": 40,
+      "roofRidePer10m": 5,
+      "frontFlip": 80,
+      "barrelRoll": 40,
+      "stuntLanding": 10,
+      "perfectLanding": 30,
+      "slam": 10,
+      "ring": 2
+    },
+    "pickups": {
+      "ringLineMin": 5,
+      "ringLineMax": 8,
+      "starFirstAfterM": 1000,
+      "starGuaranteeEveryM": 1500,
+      "itemCapsuleEveryM": 900
+    },
+    "items": {
+      "radar": {
+        "durationS": 6.0,
+        "lookaheadM": 300,
+        "slowmoFactor": 0.85,
+        "slowmoS": 1.0
+      },
+      "magnet": {
+        "durationS": 8.0,
+        "lanes": 2
+      },
+      "shield": {
+        "charges": 1
+      },
+      "emp": {
+        "targets": 3,
+        "pointsFactor": 0.5
+      }
+    },
+    "director": {
+      "rowSpacingStartM": 18,
+      "rowSpacingEndM": 11,
+      "difficultyRampM": 8000,
+      "waveLengthMinS": 30,
+      "waveLengthMaxS": 45,
+      "maxBlockedGroundLanes": 4,
+      "solverLookaheadRows": 3,
+      "solverMaxRetries": 3,
+      "laneChangerFromM": 1500,
+      "busFromM": 800,
+      "semiFromM": 500,
+      "carCarrierFromM": 3000,
+      "conesFromM": 1000,
+      "barriersFromM": 2000,
+      "laneChangeTelegraphS": 0.8,
+      "marshrutkaFromM": 1000,
+      "trolleybusFromM": 800,
+      "sweeperFromM": 2500,
+      "worksTruckFromM": 1500
+    },
+    "world": {
+      "originShiftM": 2000
+    }
+  },
+  "presentation": {
+    "world": {
+      "chunkLengthM": 200,
+      "biomeBlendM": 300,
+      "loopFromM": 8000,
+      "biomes": [
+        {
+          "id": "embankment_gold",
+          "fromM": 0
+        },
+        {
+          "id": "ringroad_dusk",
+          "fromM": 2500
+        },
+        {
+          "id": "spalny_night",
+          "fromM": 5000
+        }
+      ]
+    },
+    "camera": {
+      "distanceM": 6.5,
+      "heightM": 2.8,
+      "lookAheadM": 12,
+      "fovMinDeg": 62,
+      "fovMaxDeg": 74,
+      "boostFovKickDeg": 6,
+      "laneRollDeg": 4,
+      "airPullbackM": 1.5,
+      "airRaiseM": 1.0,
+      "platformRaiseM": 1.2,
+      "modeShake": 0.15
+    },
+    "car": {
+      "laneBodyRollDeg": 8
+    },
+    "input": {
+      "swipeMinPx": 24,
+      "swipeMaxMs": 180
+    },
+    "hud": {
+      "eventFeedLines": 3,
+      "eventFadeS": 0.9,
+      "toastS": 2.5,
+      "airSegments": 12,
+      "buttonSizePx": 72
+    },
+    "quality": {
+      "p95DowngradeMs": 20,
+      "downgradeWindowS": 3,
+      "upgradeHeadroomS": 10,
+      "pixelRatioSteps": [
+        1.0,
+        0.85,
+        0.7
+      ]
+    }
+  },
+  "server": {
+    "replay": {
+      "maxTicks": 108000,
+      "maxCompressedBytes": 65536,
+      "maxDecompressedBytes": 262144,
+      "maxPauses": 20,
+      "maxPauseTotalS": 600
+    }
+  }
+}
