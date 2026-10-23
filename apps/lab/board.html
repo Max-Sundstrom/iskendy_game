@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>KOMETA lab — art-direction board</title>
+    <link rel="stylesheet" href="./src/lab.css" />
+    <link rel="stylesheet" href="./src/board.css" />
+  </head>
+  <body>
+    <main class="board">
+      <header>
+        <h1>KOMETA · “Moscow Vice” · D0-1 art-direction board</h1>
+        <p>
+          Proposal for the Design Agreement (ART_DIRECTION §4–§8). Fictional Kometograd; archetypes, never replicas.
+        </p>
+      </header>
+      <section>
+        <h2>Palette</h2>
+        <div id="palette" class="swatches"></div>
+      </section>
+      <section>
+        <h2>Per-biome grading</h2>
+        <div id="biomes" class="biomes"></div>
+      </section>
+      <section class="two">
+        <div>
+          <h2>City traffic sub-palette</h2>
+          <div id="traffic" class="swatches small"></div>
+        </div>
+        <div>
+          <h2>Hero liveries — B “Samodelka”</h2>
+          <div id="liveries" class="swatches small"></div>
+        </div>
+      </section>
+      <section class="two">
+        <div>
+          <h2>Type</h2>
+          <p class="display">KOMETA 112 126</p>
+          <p class="display ru">ПОЕХАЛИ! 6 692 м</p>
+          <p class="ui">Golos Text — Заказ №247 готовится · Front flip +1 200 · AIR 597 L</p>
+          <p class="note">
+            Unbounded (display) + Golos Text (UI), Latin + Cyrillic, OFL 1.1; tabular figures for the odometer.
+          </p>
+        </div>
+        <div>
+          <h2>Text contrast (WCAG 2.2)</h2>
+          <table id="contrast"></table>
+        </div>
+      </section>
+      <section class="two">
+        <div>
+          <h2>World archetypes</h2>
+          <ul id="archetypes"></ul>
+        </div>
+        <div>
+          <h2>Guardrails</h2>
+          <ul>
+            <li>No GTA/Rockstar names, logos, typefaces, key art or HUD imitation (§2).</li>
+            <li>No real makes, badges or ornaments; “KOMETA” script only.</li>
+            <li>No replicas of named landmarks; no state symbols, flags, political or religious buildings (§3, §5).</li>
+            <li>Colour never the only carrier of meaning; no flicker above 3 Hz.</li>
+            <li>Iskendi brand only on billboards, pickups, the courier livery and embed screens — not in the sky.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+    <script type="module" src="./src/board-page.ts"></script>
+  </body>
+</html>

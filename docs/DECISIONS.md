@@ -22,8 +22,8 @@ Rule: the newest stable release published at least 14 days before pinning (SECUR
 | pnpm | 12.11.2 (`packageManager`) | 2026-10-23 |
 | typescript | 6.0.3 — not 7.x: typescript-eslint 8.71 supports TypeScript < 6.1 | 2026-10-23 |
 | vite | 8.3.4 | 2026-10-23 |
-| three | | |
-| postprocessing | | |
+| three | 0.186.1 (lab now; game in P1-04) | 2026-10-23 |
+| postprocessing | 6.39.5 | 2026-10-23 |
 | react / react-dom | | |
 | zustand | | |
 | howler | | |
