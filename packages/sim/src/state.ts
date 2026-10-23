@@ -1,6 +1,8 @@
 import type { SimTuning } from '@kometa/shared';
 import { createEventBuffer, type EventBuffer } from './events';
+import { laneCenterX } from './lanes';
 import { createRng, type RngState } from './rng';
+import { createTraffic, type Traffic } from './traffic';
 
 // Sim state (ARCHITECTURE §4.2), grown task by task. Lane space: x is lateral metres, positive to the driver's
 // right; lane 0 is the leftmost lane; z is forward distance since the last origin shift; units m, s, L.
@@ -12,6 +14,8 @@ export type PlayerState = {
   lane: number;
   laneFrom: number;
   laneTo: number;
+  /** x when the current lane change started; the change eases from here to laneTo's centre. */
+  laneStartX: number;
   /** Progress of the current lane change in [0, 1); meaningful only while `changing`. */
   laneT: number;
   changing: boolean;
@@ -32,6 +36,10 @@ export type PlayerState = {
   /** Remaining jump-buffer time from a press made in the air (GDD §4, scenario G3). */
   jumpBufferS: number;
   airLiters: number;
+  /** Remaining speed-penalty time after a scrape (GDD §5.2). */
+  penaltyS: number;
+  /** A second scrape while this is above 0 is a crash (GDD §5.9). */
+  scrapeTimerS: number;
 };
 
 export type SimState = {
@@ -42,13 +50,17 @@ export type SimState = {
   prevHeld: number;
   readonly player: PlayerState;
   readonly rng: { readonly director: RngState; readonly pickups: RngState };
+  readonly traffic: Traffic;
+  readonly director: DirectorState;
   readonly events: EventBuffer;
 };
 
-/** Lateral centre of a lane in metres. */
-export function laneCenterX(lane: number, tuning: SimTuning): number {
-  return (lane - (tuning.lanes.count - 1) / 2) * tuning.lanes.widthM;
-}
+export { laneCenterX };
+
+export type DirectorState = {
+  /** Run distance at which the next row will be placed. */
+  nextRowM: number;
+};
 
 /** A fresh run: centre lane, start speed, distance 0. */
 export function createSimState(seed: number, tuning: SimTuning): SimState {
@@ -62,6 +74,7 @@ export function createSimState(seed: number, tuning: SimTuning): SimState {
       lane,
       laneFrom: lane,
       laneTo: lane,
+      laneStartX: laneCenterX(lane, tuning),
       laneT: 0,
       changing: false,
       queuedDir: 0,
@@ -78,8 +91,12 @@ export function createSimState(seed: number, tuning: SimTuning): SimState {
       jumpHeldS: 0,
       jumpBufferS: 0,
       airLiters: tuning.air.startL,
+      penaltyS: 0,
+      scrapeTimerS: 0,
     },
     rng: { director: createRng(seed, 1), pickups: createRng(seed, 2) },
+    traffic: createTraffic(),
+    director: { nextRowM: tuning.director.firstRowM },
     events: createEventBuffer(),
   };
 }

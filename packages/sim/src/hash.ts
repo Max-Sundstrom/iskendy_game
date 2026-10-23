@@ -53,6 +53,17 @@ export function stateHash(s: SimState): string {
   h = mixNumber(h, p.jumpHeldS);
   h = mixNumber(h, p.jumpBufferS);
   h = mixNumber(h, p.airLiters);
+  h = mixNumber(h, p.laneStartX);
+  h = mixNumber(h, p.penaltyS);
+  h = mixNumber(h, p.scrapeTimerS);
+  h = mixNumber(h, s.director.nextRowM);
+  const t = s.traffic;
+  for (let i = 0; i < t.active.length; i++) {
+    if (t.active[i] === 0) continue;
+    h = mixWord(h, i | ((t.type[i] ?? 0) << 8) | ((t.lane[i] ?? 0) << 16));
+    h = mixNumber(h, t.z[i] ?? 0);
+    h = mixNumber(h, t.speed[i] ?? 0);
+  }
   h = mixRng(h, s.rng.director);
   h = mixRng(h, s.rng.pickups);
   return h.toString(16).padStart(8, '0');

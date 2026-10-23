@@ -14,6 +14,7 @@ function startLaneChange(state: SimState, tuning: SimTuning, dir: number): void 
   }
   p.laneFrom = p.lane;
   p.laneTo = target;
+  p.laneStartX = p.x;
   p.laneT = 0;
   p.changing = true;
   emit(state.events, SimEventKind.laneChangeStarted, p.laneFrom, p.laneTo);
@@ -46,7 +47,6 @@ export function advanceLaneChange(state: SimState, tuning: SimTuning, dt: number
     }
     return;
   }
-  const from = laneCenterX(p.laneFrom, tuning);
   const to = laneCenterX(p.laneTo, tuning);
-  p.x = from + (to - from) * easeOutCubic(p.laneT);
+  p.x = p.laneStartX + (to - p.laneStartX) * easeOutCubic(p.laneT);
 }

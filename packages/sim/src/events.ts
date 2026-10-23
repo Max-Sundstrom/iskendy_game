@@ -64,6 +64,15 @@ export function readEvents(buf: EventBuffer): SimEvent[] {
       case SimEventKind.airEmpty:
         out.push({ kind: 'airEmpty' });
         break;
+      case SimEventKind.hop:
+        out.push({ kind: 'hop' });
+        break;
+      case SimEventKind.scrape:
+        out.push({ kind: 'scrape' });
+        break;
+      case SimEventKind.crash:
+        out.push({ kind: 'crash', cause: a === 2 ? 'secondScrape' : 'rear' });
+        break;
     }
   }
   return out;

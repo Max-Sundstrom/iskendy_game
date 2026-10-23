@@ -101,7 +101,8 @@ triggers → director (despawn/spawn, fairness) → achievements → stats → o
   Firefox (Playwright runs a headless page that loads the sim bundle).
 
 ### 4.5 Collisions
-AABB in lane space with per-vehicle boxes from `packages/content/vehicles.json`. Forward motion at 95 m/s is ~1.6 m per
+AABB in lane space with per-vehicle boxes from `sim.vehicles` in `packages/content/tuning.default.json` (kept in the
+tuning so it is validated and covered by `tuningHash`, invariant 3). Forward motion at 95 m/s is ~1.6 m per
 step, so collisions are **swept on z** (segment vs box) to prevent tunnelling. Roof/platform tests use the top
 face with a 0.25 m landing tolerance. Lateral contact during lane change = scrape; rear contact = crash.
 
