@@ -60,7 +60,7 @@ Goal: a repository where any agent can work safely and every check runs in CI.
 | P0-06 | Orchestrator | Record pinned versions and confirmed defaults in DECISIONS.md | ADR-001 version table filled |
 | P0-07 | Security engineer | Security baseline: gitleaks, Semgrep, CodeQL, OSV-Scanner, Renovate (14-day minimum release age), branch protection, Actions pinned by SHA, CSP/headers skeleton | CI shows all security checks |
 | P0-08 | Release engineer | Environments (preview/staging/prod), IaC skeleton, error reporting, metrics stack. **v1:** per-PR static preview + release archive (INFRASTRUCTURE §0); no error-reporting or metrics stack (Q17, Q18) | v1: a PR shows a preview URL; the release archive builds with a checksum |
-| P0-09 | Perf / QA | Restore the documented `perf:smoke`: seeded 90 s browser run, actual renderer counters and frame-time report | both viewports, geometry gates, CSP, failure/cleanup checks; see task card |
+| P0-09 | Perf / QA | Restore the documented `perf:smoke`: seeded 90 s browser run, actual renderer counters and frame-time report | draft PR #2; both exact-head CI runs green, both 90 s viewports and interruption regressions passed |
 
 **Exit gate:** CI green; an agent can create a task card and complete the DoD checklist end to end.
 
@@ -112,8 +112,8 @@ score from style.
 | ID | Owner | Task | Acceptance |
 |---|---|---|---|
 | P3-00 | Orchestrator | Visual slice pulled forward (ADR-026): procedural hero car and 13 traffic models, roadside and horizon, thruster vapour, launch gantry intro with 3-2-1, BOOST feedback | done 2026-10-23 — see `docs/tasks/P3-00.md` |
-| P3-00B | Render / technical artist | Owner priority: refine original hero and traffic shapes/materials | in progress; real mobile/desktop visual review, hero <=15k tris /3 materials, traffic <=3k |
-| P3-00C | Render / UI | Owner priority: readable actual crash, reduced motion and clean Retry | carded after P0-09; no sim outcome changes |
+| P3-00B | Render / technical artist | Owner priority: refine original hero and traffic shapes/materials | draft PR #3; exact-head CI green, real viewport review; hero 12760 tris /3 materials, traffic <=2812 |
+| P3-00C | Render / UI | Owner priority: readable actual crash, reduced motion and clean Retry | draft PR #4; local visuals/perf passed; CI three-run timeout under diagnosis, no sim outcome changes |
 | P3-01 | Tech artist | Hero car Kometa R: blockout → owner review → final mesh, LODs, node hierarchy (ASSETS §5) | budget check passes; review sign-off |
 | P3-02 | Tech artist | Traffic: Kenney Car Kit restyled to the palette atlas + 4 original Soviet-inspired bodies | ≤ 3k tris each; ledger entries with proof |
 | P3-03 | Tech artist | Environment kits per ART_DIRECTION §5–§6: launch gantry intro (ADR-026), embankment with steel arch bridge, river and linden trees, Cosmos Park rocket on a pedestal, elevated ring road with tunnels, glass towers and billboards, panel-block districts with kiosks and sodium lamps, construction props | chunk prefabs per biome |
@@ -197,7 +197,7 @@ paints · daily missions · Route mode with a destination and story endings · g
 | D0 | **signed 2026-10-23** (ADR-023) | evidence in `docs/reviews/art-D0/`; phone p95 measured in P1-04 |
 | P0 | **done** (2026-10-23) | P0-01…P0-08; P0-06 table keeps filling as libraries arrive; server setup is an owner action (`docs/runbooks/deploy-game-origin.md`); P1+ waits for D0 |
 | P1 | **awaiting playtest** | P1-01…P1-08 done; exit gate needs the owner playtest (checklist in the P1-07 review) and the phone p95 readout |
-| P2 | in progress | P2-01 done; P2-02 part 1 (front flips, landing grades) done, barrel rolls next; then P2-03 scoring |
+| P2 | in progress | P2-01 and P2-02 part 1 integrated; P2-02b barrels locally verified, draft pending base CI fix; P2-03a contract frozen |
 | P3 | P3-00 done (ADR-026) | visual slice ahead of P2 on the owner's request; Blender assets P3-01…03 later |
 | P4 | not started | |
 | P5 | not started | v1: P5-09 only; P5-01…08 deferred (no ranking) |

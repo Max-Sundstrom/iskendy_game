@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-23T22:15:13.141508+00:00",
+  "commit": "e96d8ffa03ddd59cd21256a61288e93e0ad41985",
+  "dirty": false,
+  "runtimeTrees": {
+    "apps/web/src": "28aea6c2398b1c40417aa3de9fe9b82e9e4120f4",
+    "packages": "14518d555e5bc9002aa09f9d48743289f569d390"
+  },
+  "browser": "154.0.8037.57",
+  "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'",
+  "profiles": {
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "deviceScaleFactor": 3,
+      "isMobile": true,
+      "hasTouch": true
+    }
+  },
+  "quality": "low",
+  "source": "fresh production build / local strict-CSP preview on 127.0.0.1:5176",
+  "command": "PW_CHROMIUM_EXECUTABLE=/usr/bin/chromium BASE_URL=http://127.0.0.1:5176 pnpm exec playwright test e2e/barrels.spec.ts e2e/crash.spec.ts --workers=1 --output=/workspace/scratch/kometa-barrels-browser",
+  "results": {
+    "passed": 14,
+    "failed": 0,
+    "retries": 0,
+    "elapsedSummary": "5.6m",
+    "newBarrelCases": 8,
+    "existingCrashCases": 6,
+    "barrelBrowserErrors": []
+  },
+  "clock": "Playwright clock controls observation; real input adapters, fixed-step simulation and renderer execute. Screenshot times are not performance measurements.",
+  "independentReview": "Root inspected actual desktop signed phases, mixed landing and Retry, plus mobile inversion and mixed landing. Accepted bounded visible rotation/pose proof; not numeric pixel-angle measurement.",
+  "limitations": [
+    "Mobile is Chromium touch emulation, not a physical phone.",
+    "Firefox/WebKit not run locally for this card; cross-engine CI is separate.",
+    "Low-profile screenshots show the earlier model; vehicle-refinement PR3 is separate.",
+    "No claim of late-game density, High-profile sustained timing or phone FPS."
+  ],
+  "captures": [
+    {
+      "file": "desktop-left-quarter.png",
+      "viewport": "desktop",
+      "direction": -1,
+      "phase": "quarter",
+      "sha256": "a21ec7568ef4bd2f017a35c02ed98c52ebb88524e85707713779bb813305271c"
+    },
+    {
+      "file": "desktop-left-inverted.png",
+      "viewport": "desktop",
+      "direction": -1,
+      "phase": "inverted",
+      "sha256": "2a8b3caadd539a68bbfa8f908693bb058cd8ba2f5313e1cce446c06840fdea00"
+    },
+    {
+      "file": "desktop-left-complete.png",
+      "viewport": "desktop",
+      "direction": -1,
+      "phase": "complete",
+      "sha256": "4cb77cc834b972df6fb122d3576a894986b1264d3534944bae06efdff6ac844d"
+    },
+    {
+      "file": "desktop-left-safe-landing.png",
+      "viewport": "desktop",
+      "direction": -1,
+      "phase": "safe-landing",
+      "sha256": "438f9313d8e2793d64515ffe307e40dd95bf085622a91cbdacc63e999a88a979"
+    },
+    {
+      "file": "desktop-left-mixed-impact.png",
+      "viewport": "desktop",
+      "direction": -1,
+      "phase": "mixed-impact",
+      "sha256": "956f44c979b74778698c023963196bfa1c1e4d0fb4c5df9c5beba322ffaa5a95"
+    },
+    {
+      "file": "desktop-left-retry-upright.png",
+      "viewport": "desktop",
+      "direction": -1,
+      "phase": "retry-upright",
+      "sha256": "2d71d7993ae17c5908ef9e939f464f732acbb6f239e1e2779346569530e0936e"
+    },
+    {
+      "file": "desktop-left-retry-opposite-roll.png",
+      "viewport": "desktop",
+      "direction": -1,
+      "phase": "retry-opposite-roll",
+      "sha256": "b624a22288aa4ba5bf7376008bb9812b1b9d6da9b27fe6ba5f6fb6603d8ece5d"
+    },
+    {
+      "file": "desktop-right-quarter.png",
+      "viewport": "desktop",
+      "direction": 1,
+      "phase": "quarter",
+      "sha256": "d57e27f54bf4d60c33f1233694f471993b6b7a248c4b4eb6e60822c3a139e1c2"
+    },
+    {
+      "file": "desktop-right-inverted.png",
+      "viewport": "desktop",
+      "direction": 1,
+      "phase": "inverted",
+      "sha256": "4bf1e8a046df922375a9148e5a60f5128c88dcd2b614f6a3c8339aff2945c50e"
+    },
+    {
+      "file": "desktop-right-complete.png",
+      "viewport": "desktop",
+      "direction": 1,
+      "phase": "complete",
+      "sha256": "4597471ff46ae3f62b180a9caf67a5dfac3367fdfe448418d76d9702224f4cf1"
+    },
+    {
+      "file": "desktop-right-safe-landing.png",
+      "viewport": "desktop",
+      "direction": 1,
+      "phase": "safe-landing",
+      "sha256": "0352cd7024f599619ddabccfc59d6c6c571fa94ec48e31875229df7da6be89c9"
+    },
+    {
+      "file": "desktop-right-mixed-impact.png",
+      "viewport": "desktop",
+      "direction": 1,
+      "phase": "mixed-impact",
+      "sha256": "ecd3b676ae1d1bc2e62aa3dfe886757480db9e67a17a3e25594cdae87491aa0b"
+    },
+    {
+      "file": "desktop-right-retry-upright.png",
+      "viewport": "desktop",
+      "direction": 1,
+      "phase": "retry-upright",
+      "sha256": "2d71d7993ae17c5908ef9e939f464f732acbb6f239e1e2779346569530e0936e"
+    },
+    {
+      "file": "desktop-right-retry-opposite-roll.png",
+      "viewport": "desktop",
+      "direction": 1,
+      "phase": "retry-opposite-roll",
+      "sha256": "a943bb5c027ad4d5acf1ceafebb828e93067984103dc1ac1ad90ad4b6cdaf138"
+    },
+    {
+      "file": "desktop-landing-impact.png",
+      "viewport": "desktop",
+      "phase": "landing-impact",
+      "sha256": "7490eb357cd4518a4963c428da2410847965906342bf28ad70e983a92af4dac8"
+    },
+    {
+      "file": "desktop-reduced-impact-start.png",
+      "viewport": "desktop",
+      "phase": "reduced-impact-start",
+      "sha256": "0dd818ebdb0bc5509350c37f61c43eaa6ec89112a599264591731d4dee502a4e"
+    },
+    {
+      "file": "mobile-left-quarter.png",
+      "viewport": "mobile",
+      "direction": -1,
+      "phase": "quarter",
+      "sha256": "a21cc7b47d7f2435d63c872085c80c4535f5815c60280d280b5779c2294ff640"
+    },
+    {
+      "file": "mobile-left-inverted.png",
+      "viewport": "mobile",
+      "direction": -1,
+      "phase": "inverted",
+      "sha256": "f422db1e63115861d84d94e044b50f5eb68e088843f13fd204f52f79af95d27c"
+    },
+    {
+      "file": "mobile-left-complete.png",
+      "viewport": "mobile",
+      "direction": -1,
+      "phase": "complete",
+      "sha256": "53fa219863d19a9a7329ee69759c27d3a370c23220d29e1576b486b63813c712"
+    },
+    {
+      "file": "mobile-left-safe-landing.png",
+      "viewport": "mobile",
+      "direction": -1,
+      "phase": "safe-landing",
+      "sha256": "bbfb0aff924bc13d7ac8c1382ad598c17257d2af16ae0738b3c5a1280ea841e1"
+    },
+    {
+      "file": "mobile-left-mixed-impact.png",
+      "viewport": "mobile",
+      "direction": -1,
+      "phase": "mixed-impact",
+      "sha256": "0f7501136ee2603b63596fa6393bca3f49d18ece68e846278f0b791936a31ff7"
+    },
+    {
+      "file": "mobile-left-retry-upright.png",
+      "viewport": "mobile",
+      "direction": -1,
+      "phase": "retry-upright",
+      "sha256": "b25ab213d91946a86824db3f1c28f9e1a03ab9c458db8f4d467f334b8c394990"
+    },
+    {
+      "file": "mobile-left-retry-opposite-roll.png",
+      "viewport": "mobile",
+      "direction": -1,
+      "phase": "retry-opposite-roll",
+      "sha256": "ab064bc8fb7fc3751a97e5b87f67e236db22e66a790876e4fb4fd2b59f08ccd5"
+    },
+    {
+      "file": "mobile-right-quarter.png",
+      "viewport": "mobile",
+      "direction": 1,
+      "phase": "quarter",
+      "sha256": "0cf2dabfe42815e3f9709742c1bd34451e5c7f98ecfbd0138409d531167b9894"
+    },
+    {
+      "file": "mobile-right-inverted.png",
+      "viewport": "mobile",
+      "direction": 1,
+      "phase": "inverted",
+      "sha256": "03c4b830acf4737cb39ea1caa3672c46898bc36706568bb9e29739e20701471a"
+    },
+    {
+      "file": "mobile-right-complete.png",
+      "viewport": "mobile",
+      "direction": 1,
+      "phase": "complete",
+      "sha256": "d3088f6361656e49215c9140b16b21fd39aa8d45c135a5b4abfcfb8d988be30d"
+    },
+    {
+      "file": "mobile-right-safe-landing.png",
+      "viewport": "mobile",
+      "direction": 1,
+      "phase": "safe-landing",
+      "sha256": "7010a059809a7240f9caa0f3bc4f86879c211ad822643f4334c466bffafb766b"
+    },
+    {
+      "file": "mobile-right-mixed-impact.png",
+      "viewport": "mobile",
+      "direction": 1,
+      "phase": "mixed-impact",
+      "sha256": "22797d1ff9db7233ca71b324cf6263f150fb9da8c5ad3bf5b36a95e37c579555"
+    },
+    {
+      "file": "mobile-right-retry-upright.png",
+      "viewport": "mobile",
+      "direction": 1,
+      "phase": "retry-upright",
+      "sha256": "b25ab213d91946a86824db3f1c28f9e1a03ab9c458db8f4d467f334b8c394990"
+    },
+    {
+      "file": "mobile-right-retry-opposite-roll.png",
+      "viewport": "mobile",
+      "direction": 1,
+      "phase": "retry-opposite-roll",
+      "sha256": "ac2f0c8e614c8aec251c993f39d4342c2385d232b44e777363e675a5aec3f2c1"
+    },
+    {
+      "file": "mobile-landing-impact.png",
+      "viewport": "mobile",
+      "phase": "landing-impact",
+      "sha256": "5e279fce3e9b18e2a54cef5f033992ca8ecd4d6f927e4d046dca16347c7f708e"
+    },
+    {
+      "file": "mobile-reduced-impact-start.png",
+      "viewport": "mobile",
+      "phase": "reduced-impact-start",
+      "sha256": "432ba2474602ddc67d55cfc0e8dd2753178eb831d574c56fb6e1b450bed76fc9"
+    }
+  ]
+}
