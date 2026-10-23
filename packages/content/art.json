@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "palette": {
+    "sodiumTangerine": "#FF8A3D",
+    "hotRose": "#FF4F9A",
+    "lagoonTeal": "#19C2B0",
+    "sunflower": "#FFD23F",
+    "brickRed": "#B8392F",
+    "duskPlum": "#3B1752",
+    "hazeLilac": "#CDB2F0",
+    "wetAsphalt": "#1A1C26",
+    "enamelCream": "#F3E9D2",
+    "iskendiOrange": "#DB5D00"
+  },
+  "traffic": ["#F2C230", "#16171C", "#E9E6DF", "#A9ADB4", "#8E1F2C", "#1F4B3A", "#1E7F7A", "#6FA8D6", "#C9B48E", "#E86A1C", "#5A2A62", "#5E6168"],
+  "grading": {
+    "embankment_gold": { "skyTop": "#3B1752", "horizon": "#FF8A3D", "sun": "#FFB07A", "fog": "#CDB2F0", "fogMix": 0.35, "shadow": "#19C2B0" },
+    "ringroad_dusk": { "skyTop": "#3B1752", "horizon": "#FF4F9A", "sun": "#FF9A8A", "fog": "#FF4F9A", "fogMix": 0.25, "shadow": "#2A0F3A" },
+    "spalny_night": { "skyTop": "#120818", "horizon": "#3B1752", "sun": "#FFB45A", "fog": "#1A1C26", "fogMix": 0.4, "shadow": "#123A4A" }
+  }
+}

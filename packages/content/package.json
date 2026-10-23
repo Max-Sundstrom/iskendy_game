@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./tuning.default.json": "./tuning.default.json"
+    "./tuning.default.json": "./tuning.default.json",
+    "./art.json": "./art.json"
   }
 }

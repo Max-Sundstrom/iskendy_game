@@ -11,7 +11,7 @@ test.skip(!hostUrl || !gameUrl || !disabledUrl, 'needs HOST_URL, BASE_URL and DI
 
 test('the Iskendi host can frame the game', async ({ page }) => {
   await page.goto(`${hostUrl}/?game=${encodeURIComponent(`${gameUrl}/`)}`);
-  await expect(page.frameLocator('#game').locator('#app')).toHaveText('KOMETA');
+  await expect(page.frameLocator('#game').locator('#app')).toHaveAttribute('data-sim-version', /^[1-9]\d*$/);
 });
 
 test('the kill switch tells the host the game is disabled', async ({ page }) => {

@@ -236,7 +236,13 @@ importers:
       '@kometa/sim':
         specifier: workspace:*
         version: link:../../packages/sim
+      three:
+        specifier: 0.186.1
+        version: 0.186.1
     devDependencies:
+      '@types/three':
+        specifier: 0.186.0
+        version: 0.186.0
       vite:
         specifier: 8.3.4
         version: 8.3.4(@types/node@26.6.4)(esbuild@0.28.2)(tsx@4.23.15)

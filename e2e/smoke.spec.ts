@@ -6,7 +6,7 @@ declare global {
   }
 }
 
-test('the web app boots against the workspace packages', async ({ page }) => {
+test('the game boots, renders and drives forward', async ({ page }) => {
   // Report-only violations (Trusted Types) fire this event too, so the container run proves the CSP holds.
   await page.addInitScript(() => {
     window.__cspViolations = [];
@@ -17,9 +17,14 @@ test('the web app boots against the workspace packages', async ({ page }) => {
   const errors: string[] = [];
   page.on('pageerror', (e) => errors.push(e.message));
 
-  await page.goto('/');
+  await page.goto('/?seed=1');
   await expect(page).toHaveTitle('KOMETA');
-  await expect(page.locator('#app')).toHaveAttribute('data-sim-version', /^[1-9]\d*$/);
+  const app = page.locator('#app');
+  await expect(app).toHaveAttribute('data-sim-version', /^[1-9]\d*$/);
+  await expect(page.locator('#game')).toBeVisible();
+  await expect
+    .poll(async () => Number(await app.getAttribute('data-distance')), { timeout: 15_000 })
+    .toBeGreaterThan(20);
   expect(await page.evaluate(() => window.__cspViolations)).toEqual([]);
   expect(errors).toEqual([]);
 });
