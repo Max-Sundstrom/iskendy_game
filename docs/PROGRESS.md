@@ -22,3 +22,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · P1-01 · Orchestrator · Sim core: seeded RNG, LUT speed curve, lanes and lane change (G1/G2), origin shift, state hash; 10 000-tick hash identical in Node and Chromium.
 - 2026-10-23 · P1-02 · Orchestrator · Jump (exact kinematics), fly with glide easing and ceiling, slam, boost, AIR costs/regen; G3, G5; goldens logged under ADR-024.
 - 2026-10-23 · P1-03 · Orchestrator · Traffic SoA, director v0 rows, swept collisions (crash, scrape, roof hop); 100k-step no-tunnelling fuzz; vehicles moved into the hashed tuning.
+- 2026-10-23 · P1-04 · Orchestrator · Grey-box renderer: fixed-step loop with interpolation, chase cam (portrait-aware), road chunks, instanced traffic, floating origin, #perf readout; clean under the strict CSP.

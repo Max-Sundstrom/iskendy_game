@@ -4,6 +4,6 @@
     "lib": ["ES2022"],
     "types": ["node"]
   },
-  "include": ["*.ts", "tests/**/*.ts", "tools/**/*.ts", "packages/*/src/**/*.test.ts"],
+  "include": ["*.ts", "tests/**/*.ts", "tools/**/*.ts", "packages/*/src/**/*.test.ts", "apps/web/src/**/*.test.ts"],
   "exclude": ["tests/fixtures/**"]
 }

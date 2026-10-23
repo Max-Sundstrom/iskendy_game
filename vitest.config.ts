@@ -5,6 +5,7 @@ export default defineConfig({
     projects: [
       { test: { name: 'sim', include: ['packages/sim/**/*.test.ts'], environment: 'node' } },
       { test: { name: 'shared', include: ['packages/shared/**/*.test.ts'], environment: 'node' } },
+      { test: { name: 'web', include: ['apps/web/src/**/*.test.ts'], environment: 'node' } },
       {
         test: {
           name: 'repo',
