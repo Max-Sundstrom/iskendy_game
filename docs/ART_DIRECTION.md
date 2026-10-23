@@ -141,7 +141,7 @@ So the **rear light signature and the top-view shape** carry the car's identity 
 | Gameplay fit | fine | best (flat roof/tail make flips and rolls readable) | weaker: 5 m length crowds lanes and roofs |
 | Low-poly risk | higher (compound curves) | low (planar surfaces) | medium (chrome, fins) |
 
-**Recommendation: B "Samodelka"**, carrying two A-details — the soft pontoon line along the doors and two-tone
+**Chosen 2026-10-23 (ADR-019): B "Samodelka"**, carrying two A-details — the soft pontoon line along the doors and two-tone
 enamel — so it stays unmistakably Soviet-retro rather than generic 80s.
 
 Fixed for any concept: length 4.2–4.6 m; no badges or real names (a fictional "KOMETA" script is fine);

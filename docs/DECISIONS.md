@@ -106,6 +106,18 @@ promotion mechanics happens before enabling them.
 - Targets: **phones, tablets and desktop**.
 Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-end repository.
 
+## ADR-019 · accepted · v1 without leaderboards; car concept B; hosting in Russia (owner, 2026-10-23)
+- **No ranking in v1.** No leaderboards, no game service, no database and no player accounts. Personal bests stay
+  on the device (IndexedDB). The game ships as static files plus the host embed (EMBEDDING.md), so P5-01…P5-08 are
+  deferred; P5-09 (host embedding) stays in v1. The sim stays deterministic and replays keep being recorded locally
+  (ADR-002), so server-validated leaderboards can be added later without reworking the core. Supersedes the
+  leaderboard parts of ADR-010, ADR-011 and ADR-015 for v1; they apply again when ranking returns.
+- **Vehicle concept B "Samodelka"** with two A details (pontoon line along the doors, two-tone enamel), as
+  recommended in ART_DIRECTION §8 — chosen by the orchestrator at the owner's request. Blockouts (D0-2) still go
+  to the owner for a look before detailing.
+- **Hosting in Russia** (Q13). Static client on a Russian host/CDN next to the Iskendi server; no personal data is
+  collected in v1, so 152-FZ obligations stay minimal (SECURITY §6).
+
 ## Open questions (owner) — defaults are used until answered
 
 | # | Question | Default |
@@ -120,11 +132,11 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 | 8 | Monetisation | None in v1 |
 | 9 | Scope: standalone, embedded in Iskendi order tracking, or both? | **Answered 2026-10-23: Iskendi "play while you wait" (embedded).** Standalone deferred |
 | 10 | Real rewards (promo codes/discounts) for scores or achievements? | **Answered 2026-10-23: later.** v1 keeps hooks only (reward-eligibility flag on validated runs); no issuance |
-| 11 | Vehicle concept A / B / C (ART_DIRECTION §8) | Owner is choosing from reference photos of real Soviet/modern cars; blockouts follow the choice |
+| 11 | Vehicle concept A / B / C (ART_DIRECTION §8) | **Answered 2026-10-23: B "Samodelka"** with two A details (ADR-019) |
 | 12 | Fictional city with archetypes, or recognisable real landmarks? | Fictional Kometograd, archetypes only |
-| 13 | Audience and hosting region | Decide in A-04 after Q9 |
+| 13 | Audience and hosting region | **Answered 2026-10-23: Russia** (ADR-019); provider chosen in A-04 |
 | 14 | How strong is the GTA VI-style saturation vs a calmer palette (or Iskendi brand moderation)? | Full "Moscow Vice" palette; brand only on billboards/livery/UI chrome |
-| 15 | "Ranking is managed on the backend": this game service (ADR-012) or the Iskendi FastAPI backend? | This game service; Iskendi FastAPI untouched except one CSP `frame-src` line (front-end Q-32, Q-34) |
+| 15 | "Ranking is managed on the backend": this game service (ADR-012) or the Iskendi FastAPI backend? | **Answered 2026-10-23: no ranking in v1** (ADR-019). Iskendi FastAPI untouched except one CSP `frame-src` line (front-end Q-34) |
 
 ## Change log
 - 2026-10-23 — Kit created from reference screenshot analysis.
@@ -132,3 +144,4 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
   load model, scenario catalogue, host embedding contract, test strategy, multi-agent system, Phases A and D0.
 - 2026-10-23 — Owner answers: Q9 Iskendi embedded edition; Q10 rewards later; Q11 choosing from photos.
 - 2026-10-23 — Owner answers: Play card entry, no sign-in, server-side ranking, separate repo, phones/tablets/desktop (ADR-018); Q15 added.
+- 2026-10-23 — Owner answers: no ranking in v1, car concept left to the orchestrator (B chosen), hosting in Russia (ADR-019).

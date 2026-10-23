@@ -140,6 +140,9 @@ score from style.
 
 ## Phase 5 — Online
 
+> **v1 (ADR-019):** only P5-09 (host embedding) ships in v1. P5-01…P5-08 (server, replay validation,
+> leaderboards) are deferred until ranking returns.
+
 | ID | Owner | Task | Acceptance |
 |---|---|---|---|
 | P5-01 | Backend | server skeleton, DB schema, migrations, guest sessions | integration tests green |
@@ -185,12 +188,12 @@ paints · daily missions · Route mode with a destination and story endings · g
 | Phase | Status | Notes |
 |---|---|---|
 | A | in progress | Q9 = Iskendi embedded edition; Q10 = rewards later; remaining questions open |
-| D0 | in progress | owner choosing the car from reference photos |
+| D0 | in progress | car concept B "Samodelka" chosen (ADR-019); blockouts next |
 | P0 | not started | |
 | P1 | not started | |
 | P2 | not started | |
 | P3 | not started | |
 | P4 | not started | |
-| P5 | not started | |
+| P5 | not started | v1: P5-09 only; P5-01…08 deferred (no ranking) |
 | P6 | later | v1.1 |
 | P7 | not started | |
