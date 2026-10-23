@@ -118,12 +118,22 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 - **Hosting in Russia** (Q13). Static client on a Russian host/CDN next to the Iskendi server; no personal data is
   collected in v1, so 152-FZ obligations stay minimal (SECURITY §6).
 
+## ADR-020 · accepted · Run end, results screen and promo code; all items in v1 (owner, 2026-10-23)
+- **Run end as in the reference:** endless, a run ends on a crash. The results screen shows the score and a
+  Retry button (plus distance, time, NEW BEST and Menu). No Ranking button in v1 (ADR-019).
+- **Promo code:** after a run the player sees a **unique generated promo code**. Its meaning, value, redemption
+  and visual treatment are defined later by the owner; v1 only generates and displays it. Until a server issues
+  and checks codes (ADR-017, SECURITY T20) the code is generated on the client, carries no value and must not be
+  treated as a reward. Details and defaults: open question 16.
+- **All bonus mechanics ship in v1:** rings, star token (COSMONAUT), AIR canister, item capsule with RADAR,
+  MAGNET, SHIELD and EMP (GDD §8).
+
 ## Open questions (owner) — defaults are used until answered
 
 | # | Question | Default |
 |---|---|---|
-| 1 | How does a run end: crash only, or also a Route mode with a destination? | Endless in v1; Route mode in v1.1 |
-| 2 | What does ITEM do (reference shows an eye icon)? | RADAR, MAGNET, SHIELD, EMP |
+| 1 | How does a run end: crash only, or also a Route mode with a destination? | **Answered 2026-10-23: endless, crash ends the run; results show score + Retry** (ADR-020). Route mode stays a v1.1 idea |
+| 2 | What does ITEM do (reference shows an eye icon)? | **Answered 2026-10-23: all of them ship in v1** — RADAR, MAGNET, SHIELD, EMP (ADR-020) |
 | 3 | Final title, premise text and hero car name | KOMETA / pies-to-the-dacha premise / Kometa R |
 | 4 | Sign-in providers and backend region | **Answered 2026-10-23: no sign-in, guests only** (ADR-018). Region still open (Q13) |
 | 5 | Portrait only, or landscape too? | Both, portrait first |
@@ -137,6 +147,7 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 | 13 | Audience and hosting region | **Answered 2026-10-23: Russia** (ADR-019); provider chosen in A-04 |
 | 14 | How strong is the GTA VI-style saturation vs a calmer palette (or Iskendi brand moderation)? | Full "Moscow Vice" palette; brand only on billboards/livery/UI chrome |
 | 15 | "Ranking is managed on the backend": this game service (ADR-012) or the Iskendi FastAPI backend? | **Answered 2026-10-23: no ranking in v1** (ADR-019). Iskendi FastAPI untouched except one CSP `frame-src` line (front-end Q-34) |
+| 16 | Promo code rules: when it appears, format, whether the host page shows it too | After every finished run; format `ISK-XXXX-XXXX` from a CSPRNG (unambiguous alphabet); shown on the results screen and sent to the host in `game.runEnded.promoCode`; display only, no value until server-issued |
 
 ## Change log
 - 2026-10-23 — Kit created from reference screenshot analysis.
@@ -145,3 +156,4 @@ Host-side integration plan: `docs/53-game-kometa.md` and ADR-021 in the front-en
 - 2026-10-23 — Owner answers: Q9 Iskendi embedded edition; Q10 rewards later; Q11 choosing from photos.
 - 2026-10-23 — Owner answers: Play card entry, no sign-in, server-side ranking, separate repo, phones/tablets/desktop (ADR-018); Q15 added.
 - 2026-10-23 — Owner answers: no ranking in v1, car concept left to the orchestrator (B chosen), hosting in Russia (ADR-019).
+- 2026-10-23 — Owner answers: crash ends the run, results with score + Retry, unique promo code shown (meaning later), all bonus mechanics in v1 (ADR-020); Q16 added.

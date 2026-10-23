@@ -21,6 +21,7 @@ sync with real test names. New scenarios are added here before code is written. 
 | J10 | Opens a friend's shared link | Lands on menu with "Beat 112 126" banner; no auto-start | E2E |
 | J11 | Changes language mid-session | UI switches instantly; no reload; RU plurals correct | unit + visual |
 | J12 | Accessibility settings on | Reduced motion removes shake/FOV kick; colour-blind mode bars; toggle-fly works | E2E + visual |
+| J14 | Run ends (crash) | Results show score and Retry; a unique promo code is displayed and sent to the host in `game.runEnded`; Retry starts a new run in ≤ 2 s (ADR-020) | E2E |
 | J13 | Plays the weekly road | Same layout for everyone; weekly board shows rank; resets Monday 00:00 UTC (server time) | API + sim |
 
 ## G — Gameplay edge cases

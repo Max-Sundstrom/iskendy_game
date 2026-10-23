@@ -40,7 +40,7 @@ Game → host
 |---|---|---|
 | `game.ready` | `{ v: 1, version }` | iframe booted |
 | `game.loading` | `{ progress }` | host may show its own spinner |
-| `game.runEnded` | `{ score, distanceM, isBest }` | no personal data |
+| `game.runEnded` | `{ score, distanceM, isBest, promoCode? }` | no personal data; `promoCode` per ADR-020 / Q16 (display only) |
 | `game.requestClose` | — | player tapped close |
 | `game.error` | `{ code }` | host shows fallback |
 

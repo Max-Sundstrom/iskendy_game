@@ -7,3 +7,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · A-01 (partial) · Orchestrator · Recorded answers: Iskendi embedded edition, rewards later; car choice from photos in progress.
 - 2026-10-23 · REPO · Orchestrator · Kit imported into Max-Sundstrom/iskendy_game; owner answers recorded as ADR-018 (Q4 answered, Q15 added).
 - 2026-10-23 · A-01 · Orchestrator · Owner answers: no ranking in v1, hosting in Russia, car concept B chosen (ADR-019).
+- 2026-10-23 · A-01 · Orchestrator · Owner answers: run end and results, promo code display, all bonus mechanics (ADR-020); Q16 added.

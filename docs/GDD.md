@@ -314,7 +314,7 @@ safe-area insets respected; nothing interactive in the top 44 px on iOS.
 2. **Pause:** Resume, Restart, Settings, Quit to menu.
 3. **Settings:** music, SFX, haptics, graphics (Auto / Low / Medium / High), reduced motion, colour-blind-safe
    mode bars, left-handed buttons, key hints, language (EN / RU), auto-LIFTOFF, toggle-fly.
-4. **Results:** end line by cause, score, distance, time, NEW BEST markers, max streak, collapsible trick
+4. **Results** (v1 per ADR-020: score + Retry, no Ranking; a unique promo code is displayed — DECISIONS Q16): end line by cause, score, distance, time, NEW BEST markers, max streak, collapsible trick
    breakdown, Retry (primary), Ranking, Menu, Share. Submit states: "Saving…" → "Saved · #rank" → offline
    "Will upload when you're online".
    End lines (with the suggested premise): crash — *"The pies will have to wait."*; destination (Route mode,
