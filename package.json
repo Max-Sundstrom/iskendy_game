@@ -16,7 +16,9 @@
     "test": "vitest run",
     "test:sim": "vitest run --project sim",
     "test:e2e": "playwright test",
-    "check:size": "tsx tools/check-size.ts"
+    "check:size": "tsx tools/check-size.ts",
+    "assets:build": "tsx tools/assets/build.ts",
+    "assets:check": "tsx tools/assets/check.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
@@ -31,6 +33,7 @@
     "typescript": "6.0.3",
     "typescript-eslint": "8.71.1",
     "vite": "8.3.4",
-    "vitest": "5.0.3"
+    "vitest": "5.0.3",
+    "zod": "4.6.5"
   }
 }

@@ -106,6 +106,17 @@ high-poly visualisation models that would need full retopology anyway and still 
 The validator fails CI when: a file in `assets/build` has no entry; `license` is outside the allow-list;
 `licenseProof` is missing; or a CC-BY asset lacks `attributionText`. The Credits screen is generated from this file.
 
+**As implemented (P0-04, `tools/assets/ledger.ts`, `pnpm assets:check`):**
+- **Allowed `license` ids:** `CC0-1.0`, `CC-BY-3.0`, `CC-BY-4.0`, `OFL-1.1` (the UI fonts),
+  `LicenseRef-Royalty-Free` (paid, terms checked per item) and `LicenseRef-Kometa-Original` (made by us).
+- **Third-party assets** need `sourceUrl` (https), `downloadedAt` and a `licenseProof` file that exists.
+- **Attribution:** CC-BY and OFL need `attributionText`.
+- **Modifications:** `modified: true` needs `modifications`.
+- **One owner per file:** each file belongs to exactly one entry, and every listed file must exist.
+- **Brand names** from AGENTS §12 fail in shipped file names and in `packages/content/i18n` strings. Matching
+  is by whole word, so "gazebo" passes and "GAZ-24" fails.
+- **Budgets:** the triangle and texture checks join `assets:check` with the first GLB (P3-01).
+
 ---
 
 ## 5. Hero car spec — "Kometa R" (original design)
