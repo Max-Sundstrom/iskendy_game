@@ -13,3 +13,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · P0-01 · Orchestrator · pnpm monorepo (sim, shared, content, web), TS strict, ESLint + Prettier, Vitest, Playwright, dependency-cruiser boundaries proven by failing fixtures; versions pinned (14-day rule enforced by pnpm).
 - 2026-10-23 · P0-03 · Orchestrator · zod tuning schema with path-level errors and cross-field rules; DEFAULT_TUNING loaded in the sim; tuningHash (FNV-1a 64, sim section only) pinned and cross-checked in Python.
 - 2026-10-23 · P0-05 · Orchestrator · PR template (handoff note + DoD) and issue forms for bug, feel and perf.
+- 2026-10-23 · P0-02 · Orchestrator · GitHub Actions CI: checks, build with bundle-size and no-source-map gate, Playwright smoke on two viewports; actions pinned by SHA.

@@ -15,7 +15,8 @@
     "format:check": "prettier --check .",
     "test": "vitest run",
     "test:sim": "vitest run --project sim",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "check:size": "tsx tools/check-size.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
