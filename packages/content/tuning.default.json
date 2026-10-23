@@ -46,12 +46,14 @@
     },
     "tricks": {
       "frontFlipDurationS": 0.55,
-      "barrelRollDurationS": 0.45
+      "barrelRollDurationS": 0.45,
+      "barrelRollQueuedInputs": 1
     },
     "landing": {
       "perfectMaxDeg": 12,
       "stuntMaxDeg": 35,
-      "sloppyMaxDeg": 75
+      "sloppyMaxDeg": 75,
+      "orientationMode": "uprightForward"
     },
     "roofs": {
       "hopHeightM": 3.0,

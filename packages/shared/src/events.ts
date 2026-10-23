@@ -27,6 +27,10 @@ export const SimEventKind = {
   flipDone: 18,
   /** a: LandingGrade (1 perfect, 2 stunt, 3 sloppy), b: flips in the jump (GDD §5.7). */
   landingGraded: 19,
+  /** a: roll index in this jump, b: direction (-1 left, +1 right). */
+  rollStart: 20,
+  /** a: rolls completed in this jump, b: direction (-1 left, +1 right). */
+  rollDone: 21,
 } as const;
 
 export type SimEventKind = (typeof SimEventKind)[keyof typeof SimEventKind];
@@ -51,4 +55,6 @@ export type SimEvent =
   | { kind: 'clear'; vehicleType: number; semi: boolean }
   | { kind: 'flipStart'; index: number }
   | { kind: 'flipDone'; count: number }
+  | { kind: 'rollStart'; index: number; direction: -1 | 1 }
+  | { kind: 'rollDone'; count: number; direction: -1 | 1 }
   | { kind: 'landingGraded'; grade: 'perfect' | 'stunt' | 'sloppy'; flips: number };
