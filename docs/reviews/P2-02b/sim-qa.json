@@ -1,0 +1,215 @@
+{
+  "createdAt": "2026-10-23T22:01:42.956Z",
+  "commit": "bf584e22ddca1d0d105cec9f80172c8c2e2256a4",
+  "dirty": true,
+  "passed": true,
+  "evidence": [
+    {
+      "name": "same-direction complete chain",
+      "direction": -1,
+      "completions": [
+        {
+          "tick": 27,
+          "kind": "rollDone",
+          "count": 1,
+          "direction": -1
+        },
+        {
+          "tick": 54,
+          "kind": "rollDone",
+          "count": 2,
+          "direction": -1
+        }
+      ],
+      "starts": [
+        {
+          "tick": 1,
+          "kind": "rollStart",
+          "index": 1,
+          "direction": -1
+        },
+        {
+          "tick": 27,
+          "kind": "rollStart",
+          "index": 2,
+          "direction": -1
+        }
+      ]
+    },
+    {
+      "name": "same-direction complete chain",
+      "direction": 1,
+      "completions": [
+        {
+          "tick": 27,
+          "kind": "rollDone",
+          "count": 1,
+          "direction": 1
+        },
+        {
+          "tick": 54,
+          "kind": "rollDone",
+          "count": 2,
+          "direction": 1
+        }
+      ],
+      "starts": [
+        {
+          "tick": 1,
+          "kind": "rollStart",
+          "index": 1,
+          "direction": 1
+        },
+        {
+          "tick": 27,
+          "kind": "rollStart",
+          "index": 2,
+          "direction": 1
+        }
+      ]
+    },
+    {
+      "name": "airborne queued lane begins grounded",
+      "landing": {
+        "tick": 3,
+        "kind": "landingGraded",
+        "grade": "sloppy",
+        "flips": 0
+      },
+      "starts": [
+        {
+          "tick": 1,
+          "kind": "laneChangeStarted",
+          "fromLane": 2,
+          "toLane": 3
+        },
+        {
+          "tick": 1,
+          "kind": "rollStart",
+          "index": 1,
+          "direction": 1
+        },
+        {
+          "tick": 10,
+          "kind": "laneChangeStarted",
+          "fromLane": 3,
+          "toLane": 2
+        }
+      ]
+    },
+    {
+      "name": "completion plus touchdown clears queued roll",
+      "surface": "road-buffered",
+      "events": [
+        {
+          "kind": "rollDone",
+          "count": 1,
+          "direction": 1
+        },
+        {
+          "kind": "rollStart",
+          "index": 2,
+          "direction": -1
+        },
+        {
+          "kind": "land",
+          "slam": false
+        },
+        {
+          "kind": "landingGraded",
+          "grade": "perfect",
+          "flips": 1
+        },
+        {
+          "kind": "jump"
+        }
+      ]
+    },
+    {
+      "name": "completion plus touchdown clears queued roll",
+      "surface": "sedan-hop",
+      "events": [
+        {
+          "kind": "rollDone",
+          "count": 1,
+          "direction": 1
+        },
+        {
+          "kind": "rollStart",
+          "index": 2,
+          "direction": -1
+        },
+        {
+          "kind": "landingGraded",
+          "grade": "perfect",
+          "flips": 1
+        },
+        {
+          "kind": "hop",
+          "chain": 1,
+          "slam": false
+        }
+      ]
+    },
+    {
+      "name": "completion plus touchdown clears queued roll",
+      "surface": "bus-platform",
+      "events": [
+        {
+          "kind": "rollDone",
+          "count": 1,
+          "direction": 1
+        },
+        {
+          "kind": "rollStart",
+          "index": 2,
+          "direction": -1
+        },
+        {
+          "kind": "landingGraded",
+          "grade": "perfect",
+          "flips": 1
+        },
+        {
+          "kind": "land",
+          "slam": false
+        },
+        {
+          "kind": "rideStart",
+          "slot": 0,
+          "slam": false
+        }
+      ]
+    },
+    {
+      "name": "frozen actual terminal rotation",
+      "pitch": 0.3403030303030303,
+      "roll": -0.24703703703703703,
+      "events": [
+        {
+          "kind": "land",
+          "slam": false
+        },
+        {
+          "kind": "crash",
+          "cause": "landing"
+        }
+      ],
+      "hash": "f37364e0"
+    },
+    {
+      "name": "independent Three.js orientation oracle",
+      "comparisons": 18894,
+      "excludedThresholdBandDeg": 0.001,
+      "maxCosError": 9.518610954994955e-8,
+      "declaredCosErrorBound": 9.519294368334644e-8
+    }
+  ],
+  "sourceSha256": {
+    "packages/sim/src/roll.ts": "8733d4b5b61acac01bc06a6a0d7fee9ee93a11533c8f8698d2df68f9e5499fbb",
+    "packages/sim/src/tricks.ts": "c42cfec899ff2adf1820e7d1ca6094f632226efaabf111085224d40262c1bdf3",
+    "packages/sim/src/math.ts": "bfcffe9148bb549f1cb7bf31767ff461e9ad6d33adf651af7f6117aea033a1ef",
+    "packages/sim/src/tables.ts": "34c0ab6935b5016097030837d8f508575c74eed9b149ac2fa900c4f6bf866155",
+    "packages/sim/src/outcome.ts": "a404bac43163f10c7f9c3036308afc64b90c0ab5ce44284f05bd885396370389"
+  }
+}

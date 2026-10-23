@@ -134,9 +134,26 @@ scatters cones/barrels within 4 m. Slam onto a car roof: hop with extra height (
 Lane change while airborne = barrel roll toward that lane (360° in 0.45 s). Rotations are committed once
 started, so landing mid-rotation grades poorly.
 
+P2-02b proposed default (DECISIONS Q22): only an accepted lane-change **start** while already airborne
+starts a roll. A queued lane input waits until that movement begins; edge bumps, scrape auto-return and a
+simultaneous ground Jump+lane do not roll. While rolling, the first further accepted airborne lane change
+queues one committed roll; later requests leave that pending direction unchanged. Normal lane movement
+continues independently. `sim.tricks.barrelRollQueuedInputs: 1` enables this queue; `0` disables it. Opposite
+rolls count separately even when their signed net angle returns to zero. At 60 Hz, the default roll lasts
+exactly 27 ticks; a queued roll starts on completion but first advances on the following tick.
+
 **5.7 Landing grades** (angle from upright at touchdown):
 ≤ 12° **PERFECT LANDING** · ≤ 35° **STUNT LANDING** · ≤ 75° **SLOPPY** (streak pot banks at 50 %, speed
 penalty, wobble) · > 75° **CRASH**. During invincible modes the car auto-rights and any landing counts as stunt.
+
+P2-02b proposed default (DECISIONS Q23): `sim.landing.orientationMode: "uprightForward"` measures the
+shortest quaternion rotation to upright **and forward**, combining both axes through
+`abs(cos(pitch/2) * cos(roll/2))`. Thus 180° pitch + 180° roll crashes even though the wheels point down:
+the nose faces backward. The explicit alternate `"upVector"` measures only the tilt of the car's up vector
+(`cos(pitch) * cos(roll)`), accepting that pose. Both modes preserve the inclusive pure-axis bounds.
+Road, hop roofs and platforms use the same grading. A safe touchdown clears trick angles/counts/queues;
+a crash clears active/queued work but retains the actual terminal angles and completed counts for its visual.
+These two product defaults remain owner questions; scoring/streak effects follow in P2-03.
 
 **5.8 Roofs and platforms.** Landing on a car, taxi or van roof triggers an automatic bounce (3 m) = **HOP**.
 Consecutive hops without touching the road chain; 3 in a row = Hat-trick. Buses, semi trailers and

@@ -90,6 +90,12 @@ export function readEvents(buf: EventBuffer): SimEvent[] {
       case SimEventKind.flipDone:
         out.push({ kind: 'flipDone', count: a });
         break;
+      case SimEventKind.rollStart:
+        out.push({ kind: 'rollStart', index: a, direction: b < 0 ? -1 : 1 });
+        break;
+      case SimEventKind.rollDone:
+        out.push({ kind: 'rollDone', count: a, direction: b < 0 ? -1 : 1 });
+        break;
       case SimEventKind.landingGraded:
         out.push({ kind: 'landingGraded', grade: a === 1 ? 'perfect' : a === 2 ? 'stunt' : 'sloppy', flips: b });
         break;

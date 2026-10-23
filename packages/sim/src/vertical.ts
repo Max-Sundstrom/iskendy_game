@@ -3,6 +3,7 @@ import { emit } from './events';
 import { FlyStop, jumpPhysics } from './jump';
 import { endRide, RideEnd, touch } from './roofs';
 import type { SimState } from './state';
+import { advanceRoll } from './roll';
 import { advanceFlip, airJumpPress, gradeLanding } from './tricks';
 
 // Jump, fly, slam and gravity (GDD §5.3–5.5). Jumps integrate constant gravity exactly within each step, so the apex
@@ -69,6 +70,7 @@ export function verticalIntegrate(state: SimState, tuning: SimTuning, dt: number
   if (p.coyoteS > 0) p.coyoteS = Math.max(0, p.coyoteS - dt);
   if (!p.airborne) return;
   advanceFlip(state, tuning, dt);
+  advanceRoll(state, tuning, dt);
 
   if (p.flying) {
     // Thrusters: gravity is off and vertical speed eases toward the glide speed.

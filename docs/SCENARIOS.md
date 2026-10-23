@@ -49,7 +49,7 @@ for v1:
 | G8 | LIFTOFF fills during COSMONAUT | OVERDRIVE: +4 s and ×1.5; no double-stacking beyond one extension per mode | sim |
 | G9 | Mode ends while overlapping a vehicle | 1 s grace; car phases out; no instant crash | sim |
 | G10 | Slam onto a bus roof | Lands on platform; SLAM + ride; no crash | sim |
-| G11 | Barrel roll into a lane occupied by a car at roof height | Lands on roof → HOP | sim |
+| G11 | Barrel roll into a lane occupied by a car at roof height | Safe orientation lands on roof → HOP; unsafe mixed orientation crashes with its terminal angles preserved | sim `orientation.test.ts` touchdown integration |
 | G12 | Lane-changing taxi moves into the player | Telegraph ≥ 0.8 s; contact = scrape rules | sim |
 | G13 | Traffic spawns overlapping each other | Impossible by construction; property test asserts no overlap | property |
 | G14 | Unwinnable row generated | Solver removes a blocker; property test over 10 000 seeds | property |
@@ -58,6 +58,9 @@ for v1:
 | G17 | Item picked while slot full | Ignored, small feedback; ring value granted instead | sim |
 | G18 | Two achievements unlock on the same tick | Both recorded; toasts queued | sim + UI |
 | G19 | Score overflows display width | Odometer adds digits; layout holds to 9 digits | visual |
+| G20 | Accepted airborne lane changes during a committed roll | Signed 360° in 27 default ticks; first pending direction wins, overflow affects no lane motion; disabled-queue flag tested | sim `roll.test.ts` |
+| G21 | Mixed flip+roll landing | Quaternion default cannot cancel signed axes; both modes have inclusive pure-axis bounds, periodicity and an independent quaternion oracle | sim `orientation.test.ts` |
+| G22 | Landing crash, interrupted tricks and Retry | Store same-tick terminal pitch/roll; clear active/queued tricks; safe road/hop/platform reset all; Retry starts fresh | sim `roll.test.ts`, `orientation.test.ts`; browser acceptance pending |
 
 ## P — Platform and device
 

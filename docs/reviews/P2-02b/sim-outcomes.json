@@ -1,0 +1,159 @@
+{
+  "beforeFixture": {
+    "hash": "9685154f-ea4436ea",
+    "runs": 21
+  },
+  "afterFixture": {
+    "hash": "5d224451-353277e8",
+    "runs": 25
+  },
+  "beforeTuningHash": "38343d240df13aa3",
+  "afterTuningHash": "9e2e6e03faddfbea",
+  "cosineHash": "2b04aa6753db261b",
+  "replays": {
+    "early-crash": {
+      "before": {
+        "ticks": 258,
+        "score": 155,
+        "distance": 155.37045680500898,
+        "hash": "0ec6d8a9",
+        "pose": {
+          "pitch": 0
+        },
+        "events": [
+          {
+            "tick": 258,
+            "kind": "crash",
+            "cause": "rear"
+          }
+        ]
+      },
+      "after": {
+        "ticks": 258,
+        "score": 155,
+        "distance": 155.37045680500898,
+        "hash": "538c5a99",
+        "pose": {
+          "pitch": 0,
+          "roll": 0,
+          "rollsDone": 0
+        },
+        "events": [
+          {
+            "tick": 258,
+            "kind": "crash",
+            "cause": "rear"
+          }
+        ]
+      }
+    },
+    "busy-inputs": {
+      "before": {
+        "ticks": 106,
+        "score": 62,
+        "distance": 62.645557488526215,
+        "hash": "950f5632",
+        "pose": {
+          "pitch": 0
+        },
+        "events": [
+          {
+            "tick": 106,
+            "kind": "crash",
+            "cause": "landing"
+          }
+        ]
+      },
+      "after": {
+        "ticks": 106,
+        "score": 62,
+        "distance": 62.645557488526215,
+        "hash": "923a1653",
+        "pose": {
+          "pitch": 0.7272727272727268,
+          "roll": 0.8148148148148151,
+          "rollsDone": 1
+        },
+        "events": [
+          {
+            "tick": 16,
+            "kind": "rollStart",
+            "index": 1,
+            "direction": -1
+          },
+          {
+            "tick": 42,
+            "kind": "rollDone",
+            "count": 1,
+            "direction": -1
+          },
+          {
+            "tick": 48,
+            "kind": "landingGraded",
+            "grade": "perfect",
+            "flips": 0
+          },
+          {
+            "tick": 75,
+            "kind": "rollStart",
+            "index": 1,
+            "direction": 1
+          },
+          {
+            "tick": 101,
+            "kind": "rollDone",
+            "count": 1,
+            "direction": 1
+          },
+          {
+            "tick": 101,
+            "kind": "rollStart",
+            "index": 2,
+            "direction": -1
+          },
+          {
+            "tick": 106,
+            "kind": "crash",
+            "cause": "landing"
+          }
+        ]
+      }
+    },
+    "long-run": {
+      "before": {
+        "ticks": 2070,
+        "score": 1531,
+        "distance": 1531.9897301506035,
+        "hash": "a6039b65",
+        "pose": {
+          "pitch": 0
+        },
+        "events": [
+          {
+            "tick": 2070,
+            "kind": "crash",
+            "cause": "secondScrape"
+          }
+        ]
+      },
+      "after": {
+        "ticks": 2070,
+        "score": 1531,
+        "distance": 1531.9897301506035,
+        "hash": "c82fb955",
+        "pose": {
+          "pitch": 0,
+          "roll": 0,
+          "rollsDone": 0
+        },
+        "events": [
+          {
+            "tick": 2070,
+            "kind": "crash",
+            "cause": "secondScrape"
+          }
+        ]
+      }
+    }
+  }
+}
