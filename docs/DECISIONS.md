@@ -27,7 +27,7 @@ Rule: the newest stable release published at least 14 days before pinning (SECUR
 | react / react-dom | | |
 | zustand | | |
 | howler | | |
-| zod | | |
+| zod | 4.6.5 | 2026-10-23 |
 | vitest / fast-check | 5.0.3 / 4.10.2 | 2026-10-23 |
 | @playwright/test | 1.64.0 | 2026-10-23 |
 | eslint / @eslint/js / typescript-eslint / globals | 10.12.0 / 10.0.1 / 8.71.1 / 17.13.0 | 2026-10-23 |

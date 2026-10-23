@@ -11,3 +11,4 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-23 · A-07 · Orchestrator · Consistency review: 29 contradictions fixed, docs marked v1.0 RC, ADR-021 hosting proposed, Q17–Q19 added; Architecture v1.0 sign-off page ready (`docs/ARCHITECTURE_V1_SIGNOFF.ru.md`).
 - 2026-10-23 · A · Owner · Architecture v1.0 and hosting approved (ADR-022): docs v1.0, ADR-021 accepted; Phase A signed, P0 ready.
 - 2026-10-23 · P0-01 · Orchestrator · pnpm monorepo (sim, shared, content, web), TS strict, ESLint + Prettier, Vitest, Playwright, dependency-cruiser boundaries proven by failing fixtures; versions pinned (14-day rule enforced by pnpm).
+- 2026-10-23 · P0-03 · Orchestrator · zod tuning schema with path-level errors and cross-field rules; DEFAULT_TUNING loaded in the sim; tuningHash (FNV-1a 64, sim section only) pinned and cross-checked in Python.

@@ -118,6 +118,8 @@ Presentation subscribes; the sim never knows who listens.
 ```
 Inputs are stored only on change (run-length); typical size 2–10 KB. Client keeps the last 20 runs for
 debugging and the best run for ghosts (v1.2).
+`tuningHash` = FNV-1a 64 (16 hex digits) over canonical JSON (keys sorted) of the `sim` section only; presentation
+and server numbers don't change it (`packages/shared/src/tuning/hash.ts`, P0-03).
 
 ---
 
