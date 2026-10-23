@@ -190,7 +190,7 @@ paints · daily missions · Route mode with a destination and story endings · g
 |---|---|---|
 | A | **signed 2026-10-23** (ADR-022) | Architecture v1.0; defaults accepted; A-04 = ADR-021; A-06 moved into P1-01 |
 | D0 | in progress | car concept B "Samodelka" chosen (ADR-019); blockouts next |
-| P0 | in progress | P0-01, P0-02, P0-03, P0-05 done; next P0-04, P0-06, P0-07, P0-08; P1+ waits for D0 |
+| P0 | in progress | P0-01…P0-05 done, P0-07 in review; next P0-06 (versions as libraries arrive), P0-08; P1+ waits for D0 |
 | P1 | not started | |
 | P2 | not started | |
 | P3 | not started | |

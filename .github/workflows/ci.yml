@@ -36,6 +36,7 @@ jobs:
       - run: pnpm format:check
       - run: pnpm test
       - run: pnpm test:sim
+      - run: pnpm assets:check
 
   build:
     name: build · bundle size
