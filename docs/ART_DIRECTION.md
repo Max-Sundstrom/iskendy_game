@@ -1,4 +1,4 @@
-# KOMETA — Art Direction v0.2 · PENDING DESIGN AGREEMENT
+# KOMETA — Art Direction v1.0 · Design Agreement signed 2026-10-23 (ADR-023)
 
 Status: **proposal**. Nothing here is final until the owner signs the Design Agreement (§9). Phase D0 in
 ROADMAP produces the evidence (boards, blockouts, style-test chunk). Supersedes the palette in GDD v0.1 §19.
@@ -166,4 +166,4 @@ Neon Night (black + rose pinstripe) · **Iskendi Courier** (`#DB5D00` + ornament
 
 Evidence for every row (2026-10-23): `docs/reviews/art-D0/` and its README; the boxes are ticked by the owner.
 
-Signed by the owner: ______ · date: ______
+Signed by the owner: Максим («Давай подтверждаю продолжай») · date: 2026-10-23 · item 5 measured in P1-04 (ADR-023)
