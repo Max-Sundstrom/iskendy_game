@@ -9,3 +9,4 @@ test-results/
 .DS_Store
 release/
 bots-report/
+perf-report/

@@ -39,6 +39,29 @@ Node ≥ 22.12 (CI uses 24) and pnpm 12.11.2. Corepack 0.34 cannot run pnpm 12 y
 Chromium that doesn't match Playwright, run E2E with `PW_CHROMIUM_EXECUTABLE=<path to chrome> pnpm test:e2e`
 instead of downloading browsers.
 
+## Performance smoke
+
+`PW_CHROMIUM_EXECUTABLE=/path/to/chromium pnpm perf:smoke` builds the game, serves an isolated local production
+preview, drives a fixed keyboard script for **90 seconds of real wall time**, retries naturally after crashes,
+and writes `perf-report/desktop.json` plus a screenshot. The command owns and closes its browser/server.
+Use `--viewport mobile` for 390×844 (desktop is 1440×900), `--quality high`, `--seed 5`, `--output <file.json>`
+or `--url http://localhost:8080` to measure an already running build. `--duration 5` is only a quick harness check;
+it does not replace the full run. No new dependencies or browser downloads are performed by the command.
+
+The JSON includes active-play frame p50/p95, max draw calls/triangles, coverage, input/retry counts, browser/GPU,
+V8 heap and local JS gzip bytes. It fails on empty/inactive samples, browser errors, or geometry above
+150 draws / 300k triangles. Frame milliseconds on headless software rendering are **informational**, not phone
+performance. Wall-timed inputs can land on different simulation ticks across machines, so this smoke is not a
+determinism replay or a complete late-game/device profile. `--baseline <previous.json>` additionally rejects
+geometry growth over 10% for the same seed/duration/viewport/quality; it never gates timing. CI artifact upload
+and a maintained main-branch baseline are separate integration work; this command does not claim either exists.
+
+The existing `#perf` overlay now uses CSP-compatible stylesheet rules. Its internal snapshot/reset events change
+diagnostic counters only; they never change the simulation or disable collisions. The owned preview applies the
+deployment CSP from `deploy/Caddyfile` with standalone `frame-ancestors 'none'`; enforced and report-only CSP
+violations, WebGL context loss and page crashes fail the command. An external URL retains its own policy, which
+is recorded in the report. The smoke does not replace the container's response-header tests.
+
 ## How to start
 
 1. Phase A: answer the open questions in `docs/DECISIONS.md` and sign off the architecture (prompt "Phase A").

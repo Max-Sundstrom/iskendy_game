@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-23T21:21:54.858Z",
+  "configuration": {
+    "scriptVersion": 1,
+    "seed": 5,
+    "durationS": 8,
+    "viewport": "desktop",
+    "quality": "low"
+  },
+  "budgets": {
+    "maxDrawCalls": 150,
+    "maxTriangles": 300000,
+    "geometryRegressionRatio": 1.1
+  },
+  "passed": false,
+  "errors": [
+    "Console: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-XeYlw2NVzOfB1UCIJqCyGr+0n7bA4fFslFpvKu84IAw='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+    "Console: CSP enforce: style-src-elem",
+    "Browser reported errors during performance measurement"
+  ],
+  "environment": {
+    "node": "v24.19.0",
+    "os": "linux",
+    "arch": "x64"
+  },
+  "timing": "Real wall-clock rAF intervals during active play, informational; not a phone performance claim.",
+  "scenario": "Fixed 500 ms keyboard-event script, natural crashes and Retry, incrementing run seeds. No sim bypass.",
+  "limitations": [
+    "Wall-clock inputs may reach different sim ticks on different renderers; this is not a deterministic replay.",
+    "Geometry comparisons require matching profiles and representative run coverage; frame milliseconds are never gated.",
+    "GPU texture bytes, GC pauses and phone/device performance are not measured by this smoke."
+  ],
+  "commit": "0a721d629967815c210ec739d39122917e11520f",
+  "dirty": true,
+  "bundle": null,
+  "bundleOmission": "External URL: a local build would not establish the bytes served by this origin.",
+  "source": "external URL",
+  "browser": "154.0.8037.57",
+  "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'"
+}

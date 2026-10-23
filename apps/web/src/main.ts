@@ -111,8 +111,8 @@ if (root && canvas) {
   startIntro(0, true);
   const frame = (now: number) => {
     // rAF timestamps can precede the performance.now() taken at boot, so the first delta may be negative.
-    const frameS = Math.min(0.25, Math.max(0, (now - last) / 1000));
-    perf.frame(now - last);
+    const frameMs = Math.max(0, now - last);
+    const frameS = Math.min(0.25, frameMs / 1000);
     last = now;
     if (screen === 'intro') {
       if (!paused) introT += frameS;
@@ -125,6 +125,7 @@ if (root && canvas) {
         root.dataset['screen'] = 'playing';
       } else {
         gfx.renderIntro(session, introT, frameS);
+        perf.frame(frameMs, false);
         hud.update({
           score: 0,
           distanceM: 0,
@@ -143,6 +144,7 @@ if (root && canvas) {
     }
     const s = session.state;
     gfx.render(session, alpha(acc), frameS);
+    perf.frame(frameMs, !paused && screen === 'playing');
     hud.update({
       score: s.score.total,
       distanceM: s.player.distanceM,
