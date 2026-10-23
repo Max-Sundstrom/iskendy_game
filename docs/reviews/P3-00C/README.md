@@ -11,8 +11,8 @@ has [separate follow-up browser evidence](followup/README.md); these older perfo
 container run also failed hidden-frame PNG equality.
 [Investigation and reviewed fixture](ci-harness.md) record the unsuccessful attempts, actual replay progress,
 public-clock correction, zero-time particle fix and authorized resumption. The local follow-up now passes all six
-production browser cases and 189 unit tests. New performance evidence and exact published-head CI remain pending;
-the card is not fully verified.
+production browser cases, 189 unit tests and both full 90 s performance profiles at clean `c7bdbf6`.
+Exact published-head CI remains pending; the card is not fully verified.
 
 ## Actual browser images
 

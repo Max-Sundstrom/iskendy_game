@@ -101,7 +101,8 @@ sites publish their own changes: `emit` initializes the reused slot's age-zero s
 attributes dirty; `shift` marks positions dirty. This avoids stale visible slots or missing origin-shift uploads
 when the next update is paused. No new allocation, particle capacity, random draw during a pause or tuning change
 is introduced. Emission increments attribute versions before rendering; Three uploads the latest buffer version
-when rendering rather than issuing a GL upload at each version increment. GPU impact has not been remeasured.
+when rendering rather than issuing a GL upload at each version increment. The full performance smoke below checks
+geometry budgets; GPU texture bytes and GC pauses remain unmeasured.
 
 Focused green evidence: **29/29 tests across five files** (vapour, thrusters, crash view, crash controller and
 camera) passed. The corresponding log is `/workspace/scratch/kometa-crash/vapour-zero-delta-green.log`.
@@ -110,7 +111,9 @@ Independent QA accepted runtime blob `f54541f32fbe989374b4ceda56ffe737608c2b2b` 
 both 0.016 and 1/60 s initial ages remained stable across 200 paused/nonpositive updates, with no random draws,
 attribute/array changes or altered resumed evolution. Projection, below-road birth, full-ring overwrite,
 origin shift and reset passed. Its compact result is included in [the JSON evidence](ci-harness.json).
-The resumed production browser run now passes hidden PNG equality in both viewports; both 90 s performance runs
-remain pending at this checkpoint. This confirms the local scenario, not the exact cause of unavailable earlier CI
-images or a green final-head CI run. Simulation,
+The resumed production browser run passes hidden PNG equality in both viewports. Both subsequent full 90 s
+performance runs passed at clean `c7bdbf682ccc77db6d724b976d70594dd8f18ab1`, with deployment CSP, matching
+P0-09 baseline gates and no errors. Desktop maximum: 97 draws / 92,558 triangles; mobile: 94 / 97,094.
+[Final reports and timing limits](followup/README.md). This confirms the local scenario and measured budgets,
+not the exact cause of unavailable earlier CI images or a green final-head CI run. Simulation,
 tuning, dependencies, scanner, security exceptions, merges and deployment remain unchanged.

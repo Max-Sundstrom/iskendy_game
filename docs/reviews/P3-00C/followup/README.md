@@ -37,13 +37,28 @@ the existing bumper bands are not introduced by the vapour fix.
 | Desktop | [start](desktop-start.png) | [peak](desktop-peak.png) | [static](desktop-reduced.png) | [landing](desktop-landing.png) | [results](desktop-results.png) |
 | Mobile | [start](mobile-start.png) | [peak](mobile-peak.png) | [static](mobile-reduced.png) | [landing](mobile-landing.png) | [results](mobile-results.png) |
 
-## Remaining gates
+## Full performance runs and remaining gates
+
+Both full **90 s** runs passed at clean checkpoint
+`c7bdbf682ccc77db6d724b976d70594dd8f18ab1` (`dirty: false`). This contains the same runtime and test blob used
+for the browser evidence above. Both used a fresh production build with deployment CSP and the matching
+P0-09 seed/quality/viewport baselines. Absolute draw/triangle budgets and the 10% geometry regression gate passed;
+runtime/CSP errors, invalid samples and sample overflow were zero. Each report includes 17 real runs / 16 Retry.
+
+| Profile | Active / rendered frames | Max draws | Max triangles | p50 / p95 ms | Report |
+| --- | --- | --- | --- | --- | --- |
+| Desktop | 366 / 468 | 97 | 92,558 | 183.3 / 233.3 | [JSON](perf-desktop.json) |
+| Mobile | 1,186 / 1,510 | 94 | 97,094 | 66.6 / 83.3 | [JSON](perf-mobile.json) |
+
+Wall-clock inputs can reach different sim ticks on different renderers; these are not deterministic replays.
+Timing is informational software-renderer evidence, not phone performance. GPU texture bytes, GC pauses and
+physical-device performance were not measured. Reports were written outside the worktree; only documentation
+and evidence were added after this measured checkpoint.
 
 Full local suite: **189/189 tests passed**, including the unchanged sim/golden tests; workspace typecheck,
 lint/boundaries, format, assets, production build and size passed. Initial JS gzip is 193.8 KiB, below 400 KiB.
 Vite's informational >500 kB uncompressed-chunk warning remains. Independent QA accepted the runtime correction,
-exact test diff, manifest/trace evidence and both viewports' peak/reduced/landing images. New full 90 s perf reports
-at a clean source checkpoint and exact published-head CI are still
-pending; earlier `509ee1d` performance results do not verify this runtime fix.
+exact test diff, manifest/trace evidence and both viewports' peak/reduced/landing images. Exact published-head CI
+remains pending; the earlier `509ee1d` performance results are historical, with this runtime fix measured above.
 
 No simulation, tuning, dependency, scanner, security exception, merge, deployment or private-preview change.
