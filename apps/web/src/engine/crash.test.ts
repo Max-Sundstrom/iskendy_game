@@ -1,5 +1,5 @@
 import { Action, DEFAULT_TUNING, SimStatus, stateHash } from '@kometa/sim';
-import { Group, Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera } from 'three';
+import { Group, Mesh, MeshStandardMaterial, Object3D, PerspectiveCamera, Vector3 } from 'three';
 import { describe, expect, it, vi } from 'vitest';
 import { advance, createSession } from '../game/session';
 import type { CarRig } from './car';
@@ -28,6 +28,27 @@ const setup = () => {
 };
 
 describe('crash presentation', () => {
+  it('tips the actual local +z nose down relative to the rear through the model transform', () => {
+    const { rig, view } = setup();
+    const model = new Group();
+    model.rotation.y = Math.PI; // frozen CarRig contract: model front +z becomes world forward -z
+    rig.group.add(model);
+    model.add(rig.body);
+    rig.body.rotation.set(0, 0, 0);
+    rig.group.updateMatrixWorld(true);
+    const noseBefore = new Vector3(0, 0, 2).applyMatrix4(rig.body.matrixWorld);
+    const rearBefore = new Vector3(0, 0, -2).applyMatrix4(rig.body.matrixWorld);
+    expect(noseBefore.z).toBeLessThan(rearBefore.z);
+    view.begin();
+    view.update({ elapsedS: tuning.settleDurationS / 2, deltaS: tuning.settleDurationS / 2, reducedMotion: false });
+    rig.group.updateMatrixWorld(true);
+    const noseAfter = new Vector3(0, 0, 2).applyMatrix4(rig.body.matrixWorld);
+    const rearAfter = new Vector3(0, 0, -2).applyMatrix4(rig.body.matrixWorld);
+    expect(noseAfter.y).toBeLessThan(noseBefore.y);
+    expect(rearAfter.y).toBeGreaterThan(rearBefore.y);
+    expect(noseAfter.y - rearAfter.y).toBeLessThan(noseBefore.y - rearBefore.y);
+  });
+
   it('settles once around the captured pose without accumulating offsets on repeated frames', () => {
     const { rig, camera, thrusters, reset, view } = setup();
     view.begin();
@@ -36,11 +57,11 @@ describe('crash presentation', () => {
     const peak = { elapsedS: tuning.settleDurationS / 2, deltaS: 0.125, reducedMotion: false };
     view.update(peak);
     expect(rig.body.position.y).toBeCloseTo(2 - tuning.bodyDropM);
-    expect(rig.body.rotation.x).toBeCloseTo(0.2 - (tuning.bodyPitchDeg * Math.PI) / 180);
+    expect(rig.body.rotation.x).toBeCloseTo(0.2 + (tuning.bodyPitchDeg * Math.PI) / 180);
     expect(camera.position.z).toBeCloseTo(6 + tuning.cameraPullbackM);
     view.update({ ...peak, deltaS: 0 });
     expect(rig.body.position.y).toBeCloseTo(2 - tuning.bodyDropM);
-    expect(rig.body.rotation.x).toBeCloseTo(0.2 - (tuning.bodyPitchDeg * Math.PI) / 180);
+    expect(rig.body.rotation.x).toBeCloseTo(0.2 + (tuning.bodyPitchDeg * Math.PI) / 180);
     expect(camera.position.z).toBeCloseTo(6 + tuning.cameraPullbackM);
     expect(thrusters.crash).toHaveBeenCalledExactlyOnceWith(tuning);
     view.update({ ...peak, elapsedS: tuning.durationS });

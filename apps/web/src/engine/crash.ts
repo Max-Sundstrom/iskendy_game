@@ -64,7 +64,8 @@ export function createCrashView(
       // One compression and settle, no repeated shake or flash. Zero at either end of the interval.
       const amount = 4 * t * (1 - t);
       rig.body.position.y -= tuning.bodyDropM * amount;
-      rig.body.rotation.x -= MathUtils.degToRad(tuning.bodyPitchDeg) * amount;
+      // CarRig body faces local +z (its model parent turns it toward world -z), so +x tips the nose down.
+      rig.body.rotation.x += MathUtils.degToRad(tuning.bodyPitchDeg) * amount;
       camera.position.addScaledVector(backwards, tuning.cameraPullbackM * amount);
     },
     reset() {
