@@ -22,7 +22,8 @@
     "check:headers": "tsx tools/check-headers.ts",
     "lab": "pnpm --filter @kometa/lab dev",
     "lab:capture": "tsx tools/lab-capture.ts",
-    "replay:verify": "tsx tools/replay-verify.ts"
+    "replay:verify": "tsx tools/replay-verify.ts",
+    "bots": "tsx tools/bots/cli.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",
