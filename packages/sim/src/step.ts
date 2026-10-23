@@ -3,6 +3,7 @@ import { emit } from './events';
 import { Action, pressed } from './input';
 import { resolveCollisions, type StepStart } from './collisions';
 import { runDirector } from './director';
+import { scoreTick } from './score';
 import { updateRide } from './roofs';
 import { advanceLaneChange, requestLaneChange } from './lateral';
 import { saturatingExp } from './math';
@@ -14,7 +15,7 @@ import { updateAir, verticalInput, verticalIntegrate } from './vertical';
 const start: StepStart = { x: 0, y: 0, z: 0 };
 
 // One fixed 60 Hz step (ARCHITECTURE §4.3). Order so far:
-// input → lateral → AIR → vertical → forward → traffic → ride → collisions → director → origin shift.
+// input → lateral → AIR → vertical → forward → traffic → ride → collisions → score/streak → director → origin shift.
 // Mutates `state` in place and allocates nothing (invariant 5).
 
 /** Forward speed from distance (GDD §5.2): vMin + (vMax − vMin) · (1 − e^(−d / dScale)). */
@@ -30,6 +31,7 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   const dt = 1 / tuning.tickRateHz;
   const p = state.player;
 
+  const startRideSlot = p.rideSlot;
   start.x = p.x;
   start.y = p.y;
   start.z = p.z;
@@ -65,6 +67,7 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   moveTraffic(state.traffic, tuning, dt);
   updateRide(state, tuning);
   resolveCollisions(state, tuning, start, dt);
+  scoreTick(state, tuning, startRideSlot, dz, (state.traffic.speed[startRideSlot] ?? 0) * dt);
   runDirector(state, tuning);
 
   // Floating origin (invariant 7): nothing in the sim depends on absolute z.

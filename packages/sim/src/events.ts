@@ -1,8 +1,11 @@
-import { SimEventKind, type SimEvent } from '@kometa/shared';
+import { SimEventKind, type SimEvent, type ScoreReason } from '@kometa/shared';
 
 // Preallocated per-step event buffer (invariants 4–5): no objects are created while stepping.
 
-const CAPACITY = 32;
+// Current producers: <=8 raw events + scoring milestones per traffic slot (64 slots),
+// <=20 non-traffic events/milestones, <=20 aggregated credits, one settlement and one origin shift:
+// <=554 outputs even at fireworksEvery=1. Keep headroom; new producers must update this bound/tests.
+const CAPACITY = 1024;
 
 /** Index = FlyStop code from vertical.ts. */
 const FLY_STOP_REASONS = [undefined, 'released', 'airEmpty', 'slam', 'landed'] as const;
@@ -20,7 +23,7 @@ export function createEventBuffer(): EventBuffer {
   return { count: 0, kind: new Uint8Array(CAPACITY), a: new Float64Array(CAPACITY), b: new Float64Array(CAPACITY) };
 }
 
-/** Records an event; drops it if the buffer is full (it is cleared every step, so 32 is far above real use). */
+/** Records an event; the producer bound above guarantees room for every current gameplay event. */
 export function emit(buf: EventBuffer, kind: SimEventKind, a = 0, b = 0): void {
   if (buf.count >= CAPACITY) return;
   buf.kind[buf.count] = kind;
@@ -95,6 +98,18 @@ export function readEvents(buf: EventBuffer): SimEvent[] {
         break;
       case SimEventKind.rollDone:
         out.push({ kind: 'rollDone', count: a, direction: b < 0 ? -1 : 1 });
+        break;
+      case SimEventKind.scoreAddedDirect:
+        out.push({ kind: 'scoreAddedDirect', reason: a as ScoreReason, points: b });
+        break;
+      case SimEventKind.scoreAddedToPot:
+        out.push({ kind: 'scoreAddedToPot', reason: a as ScoreReason, points: b });
+        break;
+      case SimEventKind.streakSettled:
+        out.push({ kind: 'streakSettled', banked: a, lost: b });
+        break;
+      case SimEventKind.streakMilestone:
+        out.push({ kind: 'streakMilestone', count: a });
         break;
       case SimEventKind.landingGraded:
         out.push({ kind: 'landingGraded', grade: a === 1 ? 'perfect' : a === 2 ? 'stunt' : 'sloppy', flips: b });

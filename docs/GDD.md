@@ -245,6 +245,28 @@ Traffic only travels forward. Relative speed = player speed − traffic speed.
 - CRASH loses the pot. SLOPPY landing banks 50 % and resets the streak.
 - Fireworks over the road at n = 10, 20, 30…
 
+**P2-03a implementation slice:** distance, actual BOOST intervals, CLEAR/SEMI, HOP, ROOF RIDE,
+completed flips/rolls, graded landings and landing SLAM now feed deterministic ledgers. NEAR MISS,
+SMASH, RING and cone bowling remain pending their own gameplay triggers. The meter saturates but mode
+activation is P2-04; full streak/meter/feed UI is P2-07, so the current HUD/results show banked total only.
+Fractional points remain in the ledger; only displayed/replay claimed score is floored. Extra flips use the
+linear points bonus `frontFlip × (1 + extraFlipBonus × (count − 1))`, with unchanged meter per completed flip.
+
+The following are **proposed defaults behind tuning policies**, not new owner approvals (DECISIONS Q24–Q26):
+BOOST credits total by default (`scoring.boostTarget`); `activePot` uses the current multiplier only while a
+series exists. Actual boosting must complete `ceil(boostIntervalS × tickRateHz)` consecutive ticks; stopping
+or AIR exhaustion discards a partial interval. Neither policy increases or refreshes a series.
+ROOF RIDE uses world distance by default (`roofRideDistanceBasis`), with `relative` measuring positive player
+travel minus actual platform travel. Only a full tick on the same valid platform counts; exit/change/re-entry
+resets the fractional distance. A pulse credits `activePot` by default or `total` by flag, refreshing an existing
+series without increasing N or starting one. SCRAPE banks `scrapeBankRatio=0` by default.
+
+Physics awards retain producer order: only adjacent road SLAM/grade events are normalized to grade-first;
+roof HOP then SLAM remains that order. After all awards, one settlement resolves CRASH before SCRAPE before
+SLOPPY before timeout. Thus a late collision cannot bank points through an earlier same-tick landing, and
+late awards cannot reopen a series broken on that tick. A style award exactly on tick150 refreshes the series;
+without an award that tick banks it. All score intervals use integer ticks.
+
 ---
 
 ## 10. Invincible modes

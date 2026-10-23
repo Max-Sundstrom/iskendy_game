@@ -188,6 +188,22 @@ bumps `SIM_VERSION` (invariant 10).
 | 2026-10-23 | P2-01 + P2-02 (flips) | determinism `9685154f-ea4436ea`; golden replays `early-crash` `0ec6d8a9`, `busy-inputs` `950f5632`, `long-run` `a6039b65` | platforms ridden with coyote time, hop chains and slam hops, CLEAR tracking; front flips, landing grades and the sloppy penalty; new state joins the hash |
 | 2026-10-23 | P1-03 | determinism `7083bcea-3e3cf928` (now a session with restarts after crashes); tuningHash `38343d24…` | traffic, director v0, collisions; new keys `sim.player`, `sim.traffic`, `sim.vehicles`, `sim.director.firstRowM/spawnAheadM/despawnBehindM` |
 | 2026-10-23 | P2-02b | determinism `9685154f-ea4436ea` → `5d224451-353277e8` (both Node/browser fixtures); tuningHash `38343d240df13aa3` → `9e2e6e03faddfbea`; replays `early-crash` `0ec6d8a9` → `538c5a99`, `busy-inputs` `950f5632` → `923a1653`, `long-run` `a6039b65` → `c82fb955`; cosine table/spacing/error pin `2b04aa6753db261b` | Accepted airborne lane changes now commit signed barrel rolls; five new fields join the hash. Q22/Q23 add queue and orientation flags. All three replays retain exact duration, score, distance and crash cause. The 10k retry session changes from 21 to 25 runs because actual roll landings affect penalties/crashes. Terminal crash pitch/roll are preserved instead of erased; renderer consumes that same-tick pose. SIM_VERSION remains 1 under ADR-024. |
+| 2026-10-23 | P2-03a | determinism `5d224451-353277e8` → `8be91f5c-6f883e35` (both Node/browser fixtures); tuningHash `9e2e6e03faddfbea` → `cc1f730496d3c9cc`; replays `early-crash` `538c5a99` → `a73a2af9`, `busy-inputs` `923a1653` → `9fe5fb3b`, `long-run` `c82fb955` → `d101ad75` | Scoring/streak ledger and interval counters now join the hash. New Q24–Q26 passive-credit policies and SCRAPE ratio are in tuning. No physics changes: all three replay inputs/ticks/distances/causes and final displayed scores remain identical; 10k retry count remains25. The busy replay earns pot120+150+180 then loses450 on its landing crash, retaining meter110. SIM_VERSION remains1 under ADR-024. |
+
+P2-03a outcome evidence is in `docs/reviews/P2-03a/sim-outcomes.json`. Early crash still has no style events;
+the long-run dodger also earns no style points. Their final hash differences reflect the expanded state layout.
+The busy replay completes rolls on ticks42/101 and lands perfectly on48: its pending pot reaches450, then
+its existing tick106 landing crash loses all450 before any bank. Therefore all three claimed scores remain
+155/62/1531 despite the intentional scoring implementation. New actual-input regression separately performs
+two SLAM landings, banks112.5 after150 ticks and validates final total = distance +112.5 through record/play.
+Fractional points, final-tick priorities, event order and all seven hashed fields have explicit regressions.
+
+Numerical roof interval comparison allows `32*Number.EPSILON*max(interval,remainder)` (approximately
+7.1e-14m at the default10m threshold), then clamps a tiny negative remainder to0. It accepts100×0.1m
+without waiting an extra tick, while10m−1e-10m and zero travel stay incomplete. This is a bounded local
+roundoff allowance, not gameplay grace or a claim of exact arbitrary-length decimal accumulation. Relative
+platform movement uses its actual post-follow-slowdown velocity ×dt, before origin shift, not subtraction of
+large coordinates. No gameplay speed, collision or rotation values changed.
 
 P2-02b outcome evidence: `early-crash` still ends on tick 258, rear collision, score 155 and distance
 155.37045680500898 m; only the expanded state layout changes its hash. `long-run` still ends on tick 2070,
@@ -292,6 +308,24 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
   upright/forward orientation. This rejects pitch180°+roll180° (wheels down but facing backward). Alternate
   `"upVector"` ignores heading and accepts that pose. The default avoids silently accepting a reversed car;
   owner confirmation remains open. Both options use deterministic lookup interpolation, not runtime trig.
+
+- **Q24 (proposed default implemented behind flags, P2-03a): passive BOOST ledger.**
+  `sim.scoring.boostTarget="total"` credits the base pulse directly; `"activePot"` uses the current series
+  multiplier only if N>0, falling back to total otherwise. `boostIntervalS=0.25` means15 actual consecutive
+  boosting ticks at60Hz; partial intervals reset on stop/AIR exhaustion. BOOST neither extends nor increments
+  the streak. Fractional ledger points are kept, with flooring only at existing HUD/replay boundaries.
+- **Q25 (proposed default implemented behind flags, P2-03a): ROOF RIDE distance and ledger.**
+  `roofRideDistanceBasis="world"` measures player travel; `"relative"` subtracts actual platform travel,
+  clamped at0. Post-follow-slowdown speed ×dt is the exact movement used by traffic, avoiding cancellation
+  from subtracting large origin-relative positions. `roofRideIntervalM=10`; target `"activePot"` by default
+  or `"total"`. With no current series, points go directly to total. Only a full tick on the same active
+  platform counts; exit/change/same-slot re-entry resets the remainder. A pulse refreshes an existing timer,
+  without increasing N or creating a series. Owner confirmation of these policies remains open.
+- **Q26 (proposed default implemented behind flag, P2-03a): SCRAPE and same-tick loss policy.**
+  `sim.streak.scrapeBankRatio=0` loses the pot when SCRAPE breaks a series; the ratio is explicit and tested
+  at0.25 as an alternative. Settlement priority after all staged credits is CRASH → SCRAPE → SLOPPY → timeout.
+  Previously banked score/direct distance remain. The linear extra-flip bonus adds20% of base points per
+  extra flip, not compounded points and not multiplied meter. No four deferred tuning proposals are applied.
 
 ## Change log
 - 2026-10-23 — Kit created from reference screenshot analysis.
