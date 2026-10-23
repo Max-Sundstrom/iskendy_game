@@ -32,6 +32,13 @@ v1 is the Iskendi "play while you wait" edition: a static client embedded from t
 no game server and no leaderboards (ADR-016, ADR-019, ADR-020 in `docs/DECISIONS.md`). Owner sign-off page:
 `docs/ARCHITECTURE_V1_SIGNOFF.ru.md`.
 
+## Developer setup
+
+Node ≥ 22.12 (CI uses 24) and pnpm 12.11.2. Corepack 0.34 cannot run pnpm 12 yet, so install it with
+`npm i -g pnpm@12.11.2`. Then `pnpm i` and the commands in `AGENTS.md §5`. In a container with a preinstalled
+Chromium that doesn't match Playwright, run E2E with `PW_CHROMIUM_EXECUTABLE=<path to chrome> pnpm test:e2e`
+instead of downloading browsers.
+
 ## How to start
 
 1. Phase A: answer the open questions in `docs/DECISIONS.md` and sign off the architecture (prompt "Phase A").

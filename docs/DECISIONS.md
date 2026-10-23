@@ -13,20 +13,27 @@ Babylon.js (solid; three.js picked for ecosystem and smaller core); PlayCanvas (
 React Three Fiber for gameplay (reconciler overhead and indirection in a 60 Hz loop — unnecessary here).
 
 ### Pinned versions (fill in at P0-06)
+Rule: the newest stable release published at least 14 days before pinning (SECURITY T15); pnpm enforces it with
+`minimumReleaseAge` in `pnpm-workspace.yaml`. Rows filled in P0-01; the rest arrive with the task that adds them.
+
 | Package | Version | Date pinned |
 |---|---|---|
-| node (LTS) | | |
-| pnpm | | |
-| typescript | | |
-| vite | | |
+| node (LTS) | 24 in CI (`.node-version`); ≥ 22.12 supported (`engines`) | 2026-10-23 |
+| pnpm | 12.11.2 (`packageManager`) | 2026-10-23 |
+| typescript | 6.0.3 — not 7.x: typescript-eslint 8.71 supports TypeScript < 6.1 | 2026-10-23 |
+| vite | 8.3.4 | 2026-10-23 |
 | three | | |
 | postprocessing | | |
 | react / react-dom | | |
 | zustand | | |
 | howler | | |
 | zod | | |
-| vitest / fast-check | | |
-| @playwright/test | | |
+| vitest / fast-check | 5.0.3 / 4.10.2 | 2026-10-23 |
+| @playwright/test | 1.64.0 | 2026-10-23 |
+| eslint / @eslint/js / typescript-eslint / globals | 10.12.0 / 10.0.1 / 8.71.1 / 17.13.0 | 2026-10-23 |
+| prettier | 3.9.9 | 2026-10-23 |
+| dependency-cruiser | 18.5.0 | 2026-10-23 |
+| tsx / @types/node | 4.23.15 / 26.6.4 | 2026-10-23 |
 | fastify / drizzle-orm / pg-boss | | |
 | @gltf-transform/cli | | |
 | Blender | | |

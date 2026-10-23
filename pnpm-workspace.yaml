@@ -1,0 +1,11 @@
+packages:
+  - apps/*
+  - packages/*
+
+# Supply-chain rule (SECURITY T15): only versions published at least 14 days ago (value in minutes).
+minimumReleaseAge: 20160
+
+# Install scripts are denied unless listed here (SECURITY T15). esbuild ships its binary as an optional
+# dependency, so its postinstall check is not needed.
+allowBuilds:
+  esbuild: false

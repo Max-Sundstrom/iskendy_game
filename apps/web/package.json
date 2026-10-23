@@ -1,0 +1,19 @@
+{
+  "name": "@kometa/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@kometa/content": "workspace:*",
+    "@kometa/shared": "workspace:*",
+    "@kometa/sim": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "8.3.4"
+  }
+}
