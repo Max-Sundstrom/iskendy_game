@@ -1,15 +1,26 @@
-# KOMETA — Scenario catalogue v0.1
+# KOMETA — Scenario catalogue v1.0
 
 Every scenario has an ID, the expected behaviour, and the test that proves it. QA keeps the "Test" column in
 sync with real test names. New scenarios are added here before code is written. Prefixes:
 **J** journeys · **G** gameplay edge cases · **P** platform/device · **N** network/online · **A** abuse ·
 **O** operations · **H** host embedding · **R** rewards (only if Q10 = yes) · **D** data/privacy.
 
+### v1 scope (A-02, reviewed in A-07 on 2026-10-23)
+
+v1 has no game server (ADR-019). Rows stay in the catalogue as the spec for later, but only these are tested
+for v1:
+
+| Status | Rows |
+|---|---|
+| **v1** | J1, J2, J4, J5, J11, J12, J14 · all G · P1–P9, P13–P16 · N6, N7 · A9, A10 · O2, O6, O7, O8 · all H · D3 |
+| **v1, reduced** | J3 (no weekly board) · J6 (nothing to queue) · P10, P11 (local data may be lost; no server fallback) · D1 (nothing stored server-side at all) |
+| **deferred** (online layer or later) | J7, J8, J9, J10 (Share, Q19), J13 · P12 · N1–N5, N8 · A1–A8 · O1, O3, O4, O5 · all R · D2, D4 |
+
 ## J — Player journeys
 
 | ID | Scenario | Expected behaviour | Test |
 |---|---|---|---|
-| J1 | First launch on a phone from a shared link | Lite assets load ≤ 5 s on 4G; menu → tutorial offered; guest created lazily (only when online features are first needed) | E2E `first-launch` |
+| J1 | First launch on a phone from a shared link (v1: from the "Сыграть" card) | Lite assets load ≤ 5 s on 4G; menu → tutorial offered; guest created lazily (only when online features are first needed; none in v1) | E2E `first-launch` |
 | J2 | First run, skips tutorial | Run starts after intro ramp; controls card shown during countdown | E2E |
 | J3 | Returning player | Settings, bests, achievements restored from IndexedDB; weekly board refreshed | E2E |
 | J4 | Desktop keyboard player | Key hints visible; all menus keyboard-navigable | E2E + axe |
@@ -21,8 +32,8 @@ sync with real test names. New scenarios are added here before code is written. 
 | J10 | Opens a friend's shared link | Lands on menu with "Beat 112 126" banner; no auto-start | E2E |
 | J11 | Changes language mid-session | UI switches instantly; no reload; RU plurals correct | unit + visual |
 | J12 | Accessibility settings on | Reduced motion removes shake/FOV kick; colour-blind mode bars; toggle-fly works | E2E + visual |
-| J14 | Run ends (crash) | Results show score and Retry; a unique promo code is displayed and sent to the host in `game.runEnded`; Retry starts a new run in ≤ 2 s (ADR-020) | E2E |
 | J13 | Plays the weekly road | Same layout for everyone; weekly board shows rank; resets Monday 00:00 UTC (server time) | API + sim |
+| J14 | Run ends (crash) | Results show score and Retry; a unique promo code is displayed and sent to the host in `game.runEnded`; Retry starts a new run in ≤ 2 s (ADR-020) | E2E |
 
 ## G — Gameplay edge cases
 
@@ -116,7 +127,7 @@ sync with real test names. New scenarios are added here before code is written. 
 |---|---|---|---|
 | H1 | Tracking page loads | No game code/assets loaded; page metrics unchanged | Lighthouse diff |
 | H2 | Taps "Play while you wait" | Iframe created; Lite set loads; order chip visible in HUD | E2E |
-| H3 | **Order becomes ready mid-run** | Host posts `order.ready`; game pauses immediately, full-screen "Your order #N is ready" with Pick-up CTA; run can be resumed later or ended and submitted | E2E with mock host |
+| H3 | **Order becomes ready mid-run** | Host posts `order.ready`; game pauses immediately, full-screen "Your order #N is ready" with Pick-up CTA; run can be resumed later or ended (results screen; submitted only once the online layer exists) | E2E with mock host |
 | H4 | Order cancelled or delayed | Chip updates; no interruption unless ready | E2E |
 | H5 | Player closes the game | Host regains full page; run saved for resume (replay + snapshot) | E2E |
 | H6 | Game crashes inside the iframe | Host unaffected; entry point shows "Game unavailable" | E2E fault injection |

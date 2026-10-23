@@ -1,14 +1,16 @@
-# KOMETA — Host embedding contract v0.1
+# KOMETA — Host embedding contract v1.0
 
 How the game runs inside another product (the Iskendi order-tracking page, a future Iskendi app, web portals,
 Telegram Mini App) without risking that product. Status: **Iskendi profile confirmed as v1 scope (Q9, 2026-10-23).**
+Host side of this contract: `docs/53-game-kometa.md` in `Max-Sundstrom/iskendy-frontend` (A-05: both sides
+agree; signed together with Architecture v1.0). v1 builds only the "Embedded web" mode for Iskendi.
 
 ## 1. Modes
 
 | Mode | Container | Identity | Storage |
 |---|---|---|---|
 | Standalone | own domain, PWA | guest → optional sign-in | first-party IndexedDB |
-| Embedded web | sandboxed iframe on the game's own origin inside the host page | guest; optionally a host-signed token (rewards) | may be partitioned/ephemeral (Safari/Firefox) → server profile is the backup |
+| Embedded web | sandboxed iframe on the game's own origin inside the host page | guest; optionally a host-signed token (rewards, deferred) | may be partitioned/ephemeral (Safari/Firefox); v1 accepts the loss — a server profile arrives with the online layer |
 | Telegram Mini App | Telegram WebView | Telegram init data verified server-side | first-party in WebView |
 | Portal (Yandex Games, CrazyGames…) | portal iframe + SDK adapter | portal player id where offered | per portal rules |
 
@@ -20,7 +22,10 @@ Telegram Mini App) without risking that product. Status: **Iskendi profile confi
   game's own origin, which differs from the host's), `allow="fullscreen; gamepad; screen-wake-lock"`,
   `loading="lazy"`, created only after the player taps.
 - Host CSP adds the game origin to `frame-src` only. Game CSP lists the host in `frame-ancestors`.
-- Kill switch: a host-side feature flag hides the entry point without a host deploy.
+- Kill switch: hide or disable the game without a host deploy. The Iskendi front-end has no remote config, so in
+  v1 the fast path is on the game origin: the build is replaced by a `disabled` page that immediately sends
+  `game.error { code: 'disabled' }`, and the host shows "Игра недоступна". The host flag `features.gameTile`
+  plus a host PATCH release is the slower full path (host docs/53 §10).
 - The game never calls the host's backend directly. If rewards are enabled, server-to-server calls go through
   a narrow, authenticated endpoint agreed with the host team (this would be the only change to the host backend).
 
@@ -29,7 +34,7 @@ Telegram Mini App) without risking that product. Status: **Iskendi profile confi
 Host → game
 | Type | Payload | Notes |
 |---|---|---|
-| `host.init` | `{ v: 1, locale, theme: 'light'|'dark', safeArea, order?: { publicNo, status, etaS? }, token? }` | sent once after `game.ready`; `token` only for rewards mode |
+| `host.init` | `{ v: 1, locale, theme: 'light'|'dark', safeArea, order?: { publicNo, status, etaS? }, token? }` | sent once after `game.ready`; `token` only for rewards mode — never sent in v1 |
 | `order.status` | `{ publicNo, status, etaS? }` | cosmetic chip update |
 | `order.ready` | `{ publicNo }` | **interrupts**: game pauses and shows the pick-up screen |
 | `host.pause` / `host.resume` | — | e.g., host modal opened |
@@ -64,4 +69,7 @@ contract tests run in both repos (a shared JSON Schema published from `packages/
 - Branding options: Iskendi courier livery, dürüm/halva pickups replacing rings, billboards in the city,
   premise "deliver the dürüm while it's hot". All optional and swappable via a content pack.
 - Rewards are deferred (Q10 = later). When enabled, they are the only feature that needs a small,
-  authenticated addition to the FastAPI backend; v1 already flags reward-eligible validated runs.
+  authenticated addition to the FastAPI backend. v1 has no run validation (ADR-019), so nothing is flagged as
+  reward-eligible yet; the display-only promo code (ADR-020) is not a reward.
+- The only v1 change on the host backend is one origin in the CSP `frame-src` (host Q-34), plus a Caddy
+  block for `play.iskendy.ru` in the server config.

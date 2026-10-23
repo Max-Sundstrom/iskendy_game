@@ -1,4 +1,4 @@
-# KOMETA — Multi-agent development system v0.1
+# KOMETA — Multi-agent development system v1.0
 
 How AI agents and the owner build KOMETA together. Builds on AGENTS.md §9 (roles) and mirrors the owner's
 current workflow: Codex implements (including overnight cloud runs), Claude Code orchestrates, reviews,
@@ -49,7 +49,7 @@ Each transition is recorded in the card. A card can't reach "Merged" without QA'
 
 ## 4. Night batch protocol (Codex cloud)
 
-Evening (Orchestrator): select ≤ 5 independent cards with frozen contracts and no overlapping paths; attach
+Evening (Orchestrator): select ≤ 3 independent cards (the WIP limit in §2) with frozen contracts and no overlapping paths; attach
 the doc sections each card needs; generate the batch file `docs/tasks/batch-<date>.md`.
 Night (Codex): one PR per card, handoff note filled, all local checks run.
 Morning (Claude Code): `code-reviewer` + `qa-engineer` on each PR; security/perf/license reviewers when

@@ -1,9 +1,36 @@
-# KOMETA — Infrastructure, load and operations v0.1
+# KOMETA — Infrastructure, load and operations v1.0
 
 Goal: survive a viral spike without a large bill, and never degrade a host product (Iskendi order tracking)
 that embeds the game.
 
 ---
+
+## 0. v1 deployment (ADR-019; hosting proposal ADR-021, A-04)
+
+v1 has no game service: the client is static files. Proposed topology (needs the owner's approval — it is an
+infrastructure change):
+
+```
+ guest phone ──HTTPS──► shared Caddy on the Iskendi server (Russia; config in the iskendy_analytic repo)
+                          ├─ iskendy host  → Iskendi container (FastAPI + guest front-end)   — unchanged
+                          └─ play.iskendy.ru → iskendy-game container (static files only, no app server)
+```
+
+- **Origin:** `play.iskendy.ru` (front-end Q-33): a different origin from the host, same server, TLS by Caddy.
+- **Container:** a minimal static web server image that serves the release archive with the cache headers of
+  §4 and the game CSP (`frame-ancestors` = the Iskendi host origin). No secrets, no database, no writes.
+- **Delivery:** CI builds `kometa-web-X.Y.Z.tar.gz` + SHA-256 as a GitHub Release; the server pulls a pinned
+  version. Rollback = pin the previous version (O2).
+- **Kill switch:** replace the build with the `disabled` page, which answers with `game.error { code: 'disabled' }`
+  (EMBEDDING §2); the host's own flag is the slower path.
+- **Egress (L1):** ≈ 3 MB per first play, cached for returning guests. At an assumed 200 orders/day × 30 %
+  opt-in ≈ 180 MB/day ≈ 5–6 GB/month; even 1 000 orders/day ≈ 27 GB/month — well inside a VPS traffic
+  allowance, so no CDN in v1. Replace the assumption with real order numbers after launch.
+- **When this stops being enough:** a public standalone build (L2 ≈ 0.9 TB/month, L3 ≈ 3 TB in 48 h) needs a
+  Russian CDN in front of the same files before launch; the online layer (§1) needs its own hosting decision.
+
+Everything from §1 on describes the full online design and the standalone/viral profiles; it is deferred
+until ranking or a public build returns.
 
 ## 1. Topology
 
@@ -42,7 +69,7 @@ Valkey (open-source Redis fork) holds sorted sets for all-time and weekly ranks 
 
 | ID | Scenario | Assumptions (tune with real data) |
 |---|---|---|
-| L1 | **In-store only** (embedded in Iskendi tracking) — **v1 primary profile** | orders/day × 30 % opt-in × 3 runs; tiny — a single small instance is enough |
+| L1 | **In-store only** (embedded in Iskendi tracking) — **v1 profile, the only one in scope** | orders/day × 30 % opt-in × 3 runs; tiny — static files on the existing server are enough (§0) |
 | L2 | Organic web | 5 000 DAU, 4 runs each, 2 sessions/day |
 | L3 | **Viral spike** | 500 000 sessions in 48 h; peak hour = 15 % of the day; 4 runs/session. The reference reel had ~58.5k likes and ~36.5k shares — this is a realistic upper planning case, not fantasy |
 | L4 | Weekly reset burst | everyone fetches the new weekly seed/board within minutes of Monday 00:00 UTC |
@@ -107,7 +134,8 @@ is hidden rather than offering a broken game.
 ## 6. Observability and SLOs
 
 - **Errors:** Sentry-compatible reporting (self-hosted GlitchTip is an option) for client and server; source
-  maps uploaded privately.
+  maps uploaded privately. **v1 (Q18):** no reporting service; fatal errors reach the host as `game.error`,
+  and Caddy access logs on the server show 4xx/5xx for the game origin.
 - **Metrics/traces:** OpenTelemetry → Prometheus/Grafana (or the host cloud's equivalent). Key metrics: RPS,
   p95 latency, 4xx/5xx, queue depth and wait, validation CPU per run, rejection reasons, CDN egress/day,
   client fps buckets, WebGL context losses, load-time percentiles.
@@ -128,6 +156,9 @@ Database migrations are forward-only, run before code that needs them, and teste
 
 ## 8. Hosting choices (decide with Q4/Q13)
 
+**Decided:** Russia (Q13, ADR-019). **Proposed for v1:** static container on the Iskendi server behind the shared
+Caddy (§0, ADR-021). The options below apply when the standalone build or the online layer arrives.
+
 Pick the region nearest the target audience and compare **egress pricing** first.
 - Mostly Russian audience: Russian cloud/hosting with a local CDN and DDoS protection; this also covers
   152-FZ data localisation if you store personal data.
@@ -139,6 +170,8 @@ Keep everything in Docker + infrastructure-as-code (OpenTofu/Terraform or the pr
 
 ## 9. Backups and disaster recovery
 
+v1 stores nothing on the server: the release archives on GitHub are the backup, and recovery is a re-pull of a
+pinned version. The rest of this section applies to the online layer.
 Postgres point-in-time recovery (7–14 days) + nightly logical dumps to separate storage; Valkey rebuildable;
 assets reproducible from the repo. **RPO ≤ 15 min, RTO ≤ 2 h.** A restore drill before launch (P7-08) and
 quarterly after.

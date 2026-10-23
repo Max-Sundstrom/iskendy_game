@@ -1,9 +1,13 @@
-# KOMETA — Game Design Document v0.2
+# KOMETA — Game Design Document v1.0
 
 Derived from 20 reference screenshots (two short videos of a browser runner, mobile and desktop) plus design
 proposals. v0.2 adds the Moscow × GTA VI-inspired direction (pending agreement, see ART_DIRECTION.md),
 host embedding (EMBEDDING.md) and the scenario catalogue (SCENARIOS.md). Tags: **[REF]** observed in the reference · **[PROPOSED]** our design · **[OPEN]** needs an owner
 decision (collected in §22 and in DECISIONS.md). All numbers are starting values in `packages/content/tuning.default.json`.
+
+**v1 scope (ADR-019, ADR-020):** embedded Iskendi edition, guests only, no server. Sign-in, leaderboards, the weekly
+road, cloud saves and the Ranking screen are deferred; they stay in this document as the spec for later and are
+marked *(deferred)* where they appear.
 
 ---
 
@@ -83,8 +87,8 @@ Full direction, palette, world archetypes and IP guardrails: **ART_DIRECTION.md*
 Menu ──► (first run only) Tutorial ──► Intro: launch ramp + 3-2-1 ──► Run
   ▲                                                                   │
   │                                         crash / destination ◄─────┘
-  └──── Menu ◄── Results (async save) ──► Retry (short 1.5 s ramp) ──► Run
-                         └──► Ranking · Share
+  └──── Menu ◄── Results (local save, promo code) ──► Retry (short 1.5 s ramp) ──► Run
+                         └──► Ranking · Share   (deferred: ADR-019, DECISIONS Q19)
 ```
 
 ---
@@ -188,7 +192,7 @@ Traffic only travels forward. Relative speed = player speed − traffic speed.
 - **AIR canister** — +200 L.
 - **Item capsule** — fills the single ITEM slot (ignored if the slot is occupied).
 
-**Items** [PROPOSED; the reference shows only a red eye icon — OPEN]
+**Items** [accepted for v1 — all four ship (ADR-020); the reference shows only a red eye icon]
 | Item | Effect |
 |---|---|
 | RADAR (eye icon) | 6 s: highlights traffic in the next 300 m and lane-change intentions; 1 s of 0.85× slow-motion on activation |
@@ -249,7 +253,7 @@ All modes end with a 1 s grace period (car blinks, collisions still forgiven).
 - **Fairness** (hard rule): a solver verifies that at least one survivable path exists through the next 3 rows
   using current speed, lane-change time, jump/fly and current AIR; otherwise the least valuable blocker is
   removed. Never more than 4 of 5 lanes blocked at ground height unless a roof/platform path exists.
-- **Seeds:** every run has a seed. The weekly leaderboard uses one shared weekly seed so everyone drives the same road.
+- **Seeds:** every run has a seed. The weekly leaderboard (deferred, ADR-019) uses one shared weekly seed so everyone drives the same road.
 
 ---
 
@@ -310,16 +314,17 @@ safe-area insets respected; nothing interactive in the top 44 px on iOS.
 
 1. **Main menu:** title, pilot name (tap to edit), optional sign-in, best distance and score, PLAY (primary),
    Achievements, Garage (v1: view the car; v1.1: unlocks), Ranking, Settings, Controls, collapsible Top 100
-   (All-time | Weekly), Credits.
+   (All-time | Weekly), Credits. **v1:** no sign-in, no Ranking, no Top 100 (ADR-019); the pilot name is local only.
 2. **Pause:** Resume, Restart, Settings, Quit to menu.
 3. **Settings:** music, SFX, haptics, graphics (Auto / Low / Medium / High), reduced motion, colour-blind-safe
    mode bars, left-handed buttons, key hints, language (EN / RU), auto-LIFTOFF, toggle-fly.
 4. **Results** (v1 per ADR-020: score + Retry, no Ranking; a unique promo code is displayed — DECISIONS Q16): end line by cause, score, distance, time, NEW BEST markers, max streak, collapsible trick
    breakdown, Retry (primary), Ranking, Menu, Share. Submit states: "Saving…" → "Saved · #rank" → offline
-   "Will upload when you're online".
+   "Will upload when you're online". **v1:** no Ranking button and no submit states (nothing is uploaded);
+   Share is hidden by default (Q19); the run and its promo code are saved locally.
    End lines (with the suggested premise): crash — *"The pies will have to wait."*; destination (Route mode,
    v1.1) — *"Made it to the dacha! The neighbours ate the pies."*
-5. **Achievements** grid · **Ranking** (tabs, your row pinned) · **Controls** (illustrated per device) ·
+5. **Achievements** grid · **Ranking** (tabs, your row pinned; deferred) · **Controls** (illustrated per device) ·
    **Credits** (generated from `assets/LICENSES.json`).
 6. **Tutorial** (first run, skippable): empty road, four gated prompts — change lanes, jump a car, hold to
    fly through rings, flip and land. Ghost-hand animations; time runs at 0.6× until the correct input.
@@ -327,6 +332,8 @@ safe-area insets respected; nothing interactive in the top 44 px on iOS.
 ---
 
 ## 16. Achievements v1 [PROPOSED]
+
+v1 ships 19 achievements: "Weekly Pilot" needs the weekly board and is deferred with it (ADR-019).
 
 | Name | Condition |
 |---|---|
@@ -347,13 +354,17 @@ safe-area insets respected; nothing interactive in the top 44 px on iOS.
 | Long Haul | 10 km in one run |
 | Big Pot | Bank a pot of 20 000+ |
 | Six Figures | Score 100 000+ |
-| Weekly Pilot | Finish in the weekly top 100 |
+| Weekly Pilot *(deferred)* | Finish in the weekly top 100 |
 | Night Shift | Reach the night city |
 | Ring Collector | 1 000 rings lifetime |
 
 ---
 
 ## 17. Meta and online
+
+> **v1 (ADR-019):** identity is a local pilot name only; no sign-in, no leaderboards, no weekly road; saves
+> stay in IndexedDB on the device (may be ephemeral in a partitioned iframe — accepted). The bullets below are
+> the deferred online design.
 
 - **Identity:** guest by default with a generated name `PILOT_####` and a 4-digit tag; editable (3–16 chars,
   EN/RU profanity filter). Optional sign-in to sync devices — providers [OPEN].
@@ -392,11 +403,15 @@ no flashing above 3 Hz.
 ## 21. Out of scope for v1
 
 Upgrades and shop, extra car bodies and paints, daily missions, Route mode with a destination (all v1.1);
-ghost races (v1.2); multiplayer; ads/IAP (decide later).
+ghost races (v1.2); multiplayer; ads/IAP (decide later). Also out of v1 (ADR-019): sign-in, leaderboards, the
+weekly road, cloud saves, server-side replay validation and real rewards (the promo code is display-only).
 
 ---
 
 ## 22. Open questions for the owner
+
+The live list is DECISIONS.md → Open questions. Answered on 2026-10-23: 1 (endless, crash ends the run),
+2 (all four items), 4 (no sign-in), 11 (concept B), 13 (Russia).
 
 1. How does a run end — crash only (endless), or also a Route mode with a destination like the reference's
    "made it home" ending? Default: endless in v1, Route mode in v1.1.

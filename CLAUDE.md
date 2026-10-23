@@ -24,7 +24,7 @@ The import above is the canonical rule set. This file adds only how Claude Code 
 | screens, HUD binder, touch/keyboard/gamepad input, settings, i18n, accessibility | `ui-engineer` |
 | Blender models, LODs, atlas, glTF pipeline, license ledger entries | `tech-artist` |
 | SFX, music stems, mixing, haptics | `audio-designer` |
-| API, identity, leaderboards, replay validation, weekly seed | `backend-engineer` |
+| API, identity, leaderboards, replay validation, weekly seed (deferred in v1, ADR-019) | `backend-engineer` |
 | test plans, golden replays, E2E, property tests, device matrix | `qa-engineer` |
 | CI/CD, PWA, deploy, error reporting, portal adapters | `release-engineer` |
 | "Does this feel good? Does it match the GDD?" | `game-design-critic` (read-only) |
@@ -43,7 +43,7 @@ start P1+ earlier, point to ROADMAP's hard gate and ask the owner to confirm the
 
 ## Night batches with Codex
 
-Follow AGENT_SYSTEM.md §4: prepare ≤ 5 independent cards with frozen contracts in the evening; in the morning,
+Follow AGENT_SYSTEM.md §4: prepare ≤ 3 independent cards (the WIP limit) with frozen contracts in the evening; in the morning,
 review each Codex PR with `code-reviewer` + `qa-engineer` (+ security/perf/license when the card lists them).
 
 ## Context hygiene

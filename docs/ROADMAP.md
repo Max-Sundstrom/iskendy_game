@@ -5,7 +5,8 @@ A phase starts only after the previous exit gate passes, except rows marked ∥ 
 
 Rough effort for one director + AI agents, part-time: A 3–4 days · D0 1–1.5 weeks (overlaps A) · P0 2–3 days ·
 P1 1 week · P2 1–1.5 weeks · P3 2 weeks · P4 1 week · P5 1.5 weeks · P7 1.5 weeks → **v1 in ≈ 10–12 weeks**.
-P6 is v1.1.
+P6 is v1.1. With ADR-019 (no server in v1) P5 shrinks to P5-09 (≈ 0.5 week) and P7 loses the load, chaos and
+backup work, so **v1 ≈ 9–10 weeks**.
 
 **Hard gate:** no gameplay code (P1+) before Phase A and Phase D0 are signed off. P0 tooling may start once A is signed.
 
@@ -17,12 +18,12 @@ Goal: every architectural question answered and every scenario mapped before dev
 
 | ID | Owner | Task | Acceptance |
 |---|---|---|---|
-| A-01 | Orchestrator | Owner answers open questions Q1–Q13 (DECISIONS.md); update affected docs | no blocking question left open |
+| A-01 | Orchestrator | Owner answers open questions Q1–Q19 (DECISIONS.md); update affected docs | no blocking question left open |
 | A-02 | Orchestrator | Walk through SCENARIOS.md with the owner; add missing scenarios; assign test types | every row has expected behaviour + test reference |
 | A-03 | Security engineer | Threat-model review of SECURITY.md against final scope (embedded? rewards?) | signed threat register |
 | A-04 | Release engineer | Choose hosting/CDN/region (INFRASTRUCTURE §8) with an egress cost estimate for L1–L3 | ADR recorded |
 | A-05 | Backend + host owner | If embedded: agree the postMessage contract and the kill switch with the host front-end; if rewards: agree the server-to-server endpoint | EMBEDDING.md v1.0 signed |
-| A-06 | Sim engineer | Spike: measure sim step cost in Node with 60 vehicles (validation budget ≤ 100 ms per 2-min run) | benchmark in DECISIONS |
+| A-06 | Sim engineer | Spike: measure sim step cost in Node with 60 vehicles (validation budget ≤ 100 ms per 2-min run). **Re-scoped by A-07:** no server validation in v1, so the client-side number is measured in P1-01 instead (sim step ≤ 1 ms on Low) | benchmark in DECISIONS |
 | A-07 | Orchestrator | Final review of all docs for consistency; bump versions to 1.0 | docs v1.0 |
 
 **Exit gate:** owner signs "Architecture v1.0".
@@ -58,7 +59,7 @@ Goal: a repository where any agent can work safely and every check runs in CI.
 | P0-05 | Orchestrator | `docs/tasks/`, `docs/PROGRESS.md`, PR template, issue templates (bug, feel, perf) | templates in place |
 | P0-06 | Orchestrator | Record pinned versions and confirmed defaults in DECISIONS.md | ADR-001 version table filled |
 | P0-07 | Security engineer | Security baseline: gitleaks, Semgrep, CodeQL, OSV-Scanner, Renovate (14-day minimum release age), branch protection, Actions pinned by SHA, CSP/headers skeleton | CI shows all security checks |
-| P0-08 | Release engineer | Environments (preview/staging/prod), IaC skeleton, error reporting, metrics stack | staging reachable; a test error appears in reporting |
+| P0-08 | Release engineer | Environments (preview/staging/prod), IaC skeleton, error reporting, metrics stack. **v1:** per-PR static preview + release archive (INFRASTRUCTURE §0); no error-reporting or metrics stack (Q17, Q18) | v1: a PR shows a preview URL; the release archive builds with a checksum |
 
 **Exit gate:** CI green; an agent can create a task card and complete the DoD checklist end to end.
 
@@ -110,11 +111,11 @@ score from style.
 |---|---|---|---|
 | P3-01 | Tech artist | Hero car Kometa R: blockout → owner review → final mesh, LODs, node hierarchy (ASSETS §5) | budget check passes; review sign-off |
 | P3-02 | Tech artist | Traffic: Kenney Car Kit restyled to the palette atlas + 4 original Soviet-inspired bodies | ≤ 3k tris each; ledger entries with proof |
-| P3-03 | Tech artist | Environment kits: bridge, coast, palms/cypresses, steppe layers, panel-block city, lamps, construction props, launch gantry + rocket, intro ramp | chunk prefabs per biome |
+| P3-03 | Tech artist | Environment kits per ART_DIRECTION §5–§6: ski-jump hill intro, embankment with steel arch bridge, river and linden trees, Cosmos Park rocket on a pedestal, elevated ring road with tunnels, glass towers and billboards, panel-block districts with kiosks and sodium lamps, construction props | chunk prefabs per biome |
 | P3-04 | Render | biome streaming, sky dome + fog per time of day, 300 m blends | no frame > 8 ms extra at biome swap |
 | P3-05 | Render | VFX: thrusters, dust, sparks, debris, fireworks, speed lines, mode grades | reduced-motion variant |
 | P3-06 | Render | post-processing, quality tiers, dynamic resolution | budgets met on Low / Mid / High |
-| P3-07 | Render | intro ramp cinematic with countdown; rocket launch on LIFTOFF | timing synced to sim events |
+| P3-07 | Render | ski-jump intro cinematic with countdown; rocket launch on LIFTOFF | timing synced to sim events |
 | P3-08 | Audio | SFX set, three music stems, mixer, haptics | every cue mapped; ledger entries |
 | P3-09 | Perf | full audit + prioritised fix list | report with before/after |
 | P3-10 | Critic | art and feel review against GDD §19 | sign-off or fix list |
@@ -127,10 +128,10 @@ score from style.
 
 | ID | Owner | Task | Acceptance |
 |---|---|---|---|
-| P4-01 | UI | main menu, pause, settings, controls, credits (generated from the ledger) | visual snapshots approved |
-| P4-02 | UI | results screen + share-card generator (1080×1920) | Web Share works on iOS and Android; fallback copy-link |
+| P4-01 | UI | main menu (v1: without sign-in, Ranking and Top 100), pause, settings, controls, credits (generated from the ledger) | visual snapshots approved |
+| P4-02 | UI | results screen with score, Retry and the promo code (ADR-020); share-card generator (1080×1920) only if Q19 says so | J14 passes; with Share: Web Share works on iOS and Android, fallback copy-link |
 | P4-03 | UI | first-run tutorial (GDD §15.6) | 5 of 5 hallway testers finish it in < 60 s |
-| P4-04 | Sim + UI | achievements: data, sim checks, toasts, grid screen | all 20 unlockable in scripted tests |
+| P4-04 | Sim + UI | achievements: data, sim checks, toasts, grid screen | all 19 v1 achievements unlockable in scripted tests (Weekly Pilot deferred) |
 | P4-05 | UI | i18n EN/RU, accessibility settings, left-handed layout, key remapping | axe scan clean; keyboard-only pass |
 | P4-06 | QA | visual regression baselines, a11y audit report | baselines committed |
 
@@ -170,14 +171,14 @@ paints · daily missions · Route mode with a destination and story endings · g
 
 | ID | Owner | Task | Acceptance |
 |---|---|---|---|
-| P7-01 | Release | PWA manifest and service worker, CDN headers, error reporting, staging/prod pipelines | offline restart works; source maps private |
+| P7-01 | Release | PWA manifest and service worker, CDN headers, error reporting, staging/prod pipelines (v1: Caddy-served static origin, release archive, no error reporting — INFRASTRUCTURE §0) | offline restart works; source maps private |
 | P7-02 | QA | device matrix pass (iPhone SE-class, iPhone 11-class, recent iPhone, Pixel 6a-class, low-end Android, iPad, desktop Chrome/Safari/Firefox); 30-run soak with no memory growth | checklist 100 % |
 | P7-03 | License auditor | final ledger audit, attribution screen, brand-name scan of assets and strings | zero findings |
 | P7-04 | Release | analytics consent, privacy policy, terms | pages live |
 | P7-05 | Orchestrator | launch checklist; portal adapters if chosen | sign-off |
 | P7-06 | Security engineer | OWASP ZAP baseline, ASVS L1 checklist (L2 for auth/rewards), external pen test if rewards | no high findings open |
-| P7-07 | QA + Release | Viral-spike load test (INFRASTRUCTURE L3–L5) + chaos drills | SLOs hold; degradation ladder verified |
-| P7-08 | Release | Backup restore drill; runbooks for every O* scenario | RTO/RPO met |
+| P7-07 | QA + Release | Viral-spike load test (INFRASTRUCTURE L3–L5) + chaos drills. **Deferred** (ADR-019); v1 runs the static-origin smoke (TEST_STRATEGY §6) | SLOs hold; degradation ladder verified |
+| P7-08 | Release | Backup restore drill; runbooks for every O* scenario. **v1:** runbooks for O2, O6, O7, O8 only; no database to restore | RTO/RPO met |
 
 **Exit gate:** release checklist complete.
 
@@ -187,9 +188,9 @@ paints · daily missions · Route mode with a destination and story endings · g
 
 | Phase | Status | Notes |
 |---|---|---|
-| A | in progress | Q9 = Iskendi embedded edition; Q10 = rewards later; remaining questions open |
+| A | **signed 2026-10-23** (ADR-022) | Architecture v1.0; defaults accepted; A-04 = ADR-021; A-06 moved into P1-01 |
 | D0 | in progress | car concept B "Samodelka" chosen (ADR-019); blockouts next |
-| P0 | not started | |
+| P0 | ready | may start (Phase A signed); P1+ waits for D0 |
 | P1 | not started | |
 | P2 | not started | |
 | P3 | not started | |

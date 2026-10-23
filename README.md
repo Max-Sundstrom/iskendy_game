@@ -26,6 +26,12 @@ reads these files and works as one small studio.
 | `docs/AGENT_SYSTEM.md` | Multi-agent workflow: Claude Code orchestration, Codex night batches, cross-model review. |
 | `packages/content/tuning.default.json` | Every gameplay number in one place (starting values derived from the screenshots). |
 
+## Current scope
+
+v1 is the Iskendi "play while you wait" edition: a static client embedded from the "Сыграть" card, guests only,
+no game server and no leaderboards (ADR-016, ADR-019, ADR-020 in `docs/DECISIONS.md`). Owner sign-off page:
+`docs/ARCHITECTURE_V1_SIGNOFF.ru.md`.
+
 ## How to start
 
 1. Phase A: answer the open questions in `docs/DECISIONS.md` and sign off the architecture (prompt "Phase A").

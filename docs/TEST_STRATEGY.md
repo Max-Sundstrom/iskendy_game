@@ -1,7 +1,11 @@
-# KOMETA — Test strategy v0.1
+# KOMETA — Test strategy v1.0
 
 Every scenario in SCENARIOS.md maps to at least one automated test or a named manual check. CI blocks merges
 on red. Flaky tests are quarantined within 24 h with an owner and a fix-by date — never silently retried.
+
+**v1 (ADR-019):** no server, so the server integration, load (k6), chaos and tamper layers are deferred with the
+online layer, and `apps/server` has no coverage target. Contract tests cover the host ↔ game protocol only.
+The scenario rows in scope for v1 are listed at the top of SCENARIOS.md.
 
 ## 1. Test layers
 
@@ -64,3 +68,7 @@ runs · locale/plural/font fallback issues · double-tap and duplicate submissio
 A release ships only if: all CI green · nightly bots within targets · perf budgets met on Low/Mid/High ·
 k6 L3 passes with SLOs · ZAP baseline has no high findings · license audit clean · device-lab checklist 100 % ·
 runbooks exist for every O* scenario.
+
+**v1 gates:** the same, except that k6 L3 is replaced by a static-origin smoke (cache headers, CSP, `disabled`
+page, archive checksum), runbooks are required only for the v1 O* rows (O2, O6, O7, O8), and the device lab
+includes the Iskendi embed in iPhone Safari, Android Chrome and the Telegram in-app browser.
