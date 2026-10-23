@@ -18,6 +18,10 @@ export function canonicalJson(value: unknown): string {
     return `{${entries.join(',')}}`;
   }
   if (typeof value === 'number' && !Number.isFinite(value)) throw new Error('canonicalJson: non-finite number');
+  // JSON.stringify(undefined) is not JSON; failing beats hashing the text "undefined".
+  if (value === undefined || typeof value === 'function' || typeof value === 'symbol' || typeof value === 'bigint') {
+    throw new Error(`canonicalJson: ${typeof value} is not JSON`);
+  }
   return JSON.stringify(value);
 }
 

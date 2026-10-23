@@ -66,8 +66,10 @@ describe('canonicalJson', () => {
     expect(canonicalJson({ b: [3, { y: 1, x: 2 }], a: true })).toBe('{"a":true,"b":[3,{"x":2,"y":1}]}');
   });
 
-  it('refuses non-finite numbers', () => {
+  it('refuses non-finite numbers and non-JSON values', () => {
     expect(() => canonicalJson({ a: Number.NaN })).toThrow(/non-finite/);
+    expect(() => canonicalJson({ a: undefined })).toThrow(/undefined is not JSON/);
+    expect(() => canonicalJson([1n])).toThrow(/bigint is not JSON/);
   });
 });
 
