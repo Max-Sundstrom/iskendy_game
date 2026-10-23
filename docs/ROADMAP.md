@@ -60,6 +60,7 @@ Goal: a repository where any agent can work safely and every check runs in CI.
 | P0-06 | Orchestrator | Record pinned versions and confirmed defaults in DECISIONS.md | ADR-001 version table filled |
 | P0-07 | Security engineer | Security baseline: gitleaks, Semgrep, CodeQL, OSV-Scanner, Renovate (14-day minimum release age), branch protection, Actions pinned by SHA, CSP/headers skeleton | CI shows all security checks |
 | P0-08 | Release engineer | Environments (preview/staging/prod), IaC skeleton, error reporting, metrics stack. **v1:** per-PR static preview + release archive (INFRASTRUCTURE §0); no error-reporting or metrics stack (Q17, Q18) | v1: a PR shows a preview URL; the release archive builds with a checksum |
+| P0-09 | Perf / QA | Restore the documented `perf:smoke`: seeded 90 s browser run, actual renderer counters and frame-time report | both viewports, geometry gates, CSP, failure/cleanup checks; see task card |
 
 **Exit gate:** CI green; an agent can create a task card and complete the DoD checklist end to end.
 
@@ -79,6 +80,7 @@ Goal: the core loop with primitive shapes, playable on a phone and on desktop.
 | P1-06 | QA | replay recorder/player, `replay:verify`, first 3 golden replays | goldens reproduce in Node + Chromium + WebKit |
 | P1-07 | Critic | feel review #1: lane snappiness, jump arc, speed perception | review with concrete tuning deltas |
 | P1-08 | QA + Sim | Synthetic players v0 (Novice, Chaos) running nightly | dashboard with distance distribution |
+| P1-09 | UI + QA | Preserve quick presses per sim tick and record exact replay input | done in [PR #1](https://github.com/Max-Sundstrom/iskendy_game/pull/1); CI all five jobs green |
 
 **Exit gate:** a first-time player understands what to do within two attempts; determinism holds across engines.
 
@@ -110,6 +112,8 @@ score from style.
 | ID | Owner | Task | Acceptance |
 |---|---|---|---|
 | P3-00 | Orchestrator | Visual slice pulled forward (ADR-026): procedural hero car and 13 traffic models, roadside and horizon, thruster vapour, launch gantry intro with 3-2-1, BOOST feedback | done 2026-10-23 — see `docs/tasks/P3-00.md` |
+| P3-00B | Render / technical artist | Owner priority: refine original hero and traffic shapes/materials | in progress; real mobile/desktop visual review, hero <=15k tris /3 materials, traffic <=3k |
+| P3-00C | Render / UI | Owner priority: readable actual crash, reduced motion and clean Retry | carded after P0-09; no sim outcome changes |
 | P3-01 | Tech artist | Hero car Kometa R: blockout → owner review → final mesh, LODs, node hierarchy (ASSETS §5) | budget check passes; review sign-off |
 | P3-02 | Tech artist | Traffic: Kenney Car Kit restyled to the palette atlas + 4 original Soviet-inspired bodies | ≤ 3k tris each; ledger entries with proof |
 | P3-03 | Tech artist | Environment kits per ART_DIRECTION §5–§6: launch gantry intro (ADR-026), embankment with steel arch bridge, river and linden trees, Cosmos Park rocket on a pedestal, elevated ring road with tunnels, glass towers and billboards, panel-block districts with kiosks and sodium lamps, construction props | chunk prefabs per biome |

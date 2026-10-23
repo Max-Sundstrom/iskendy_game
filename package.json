@@ -23,7 +23,8 @@
     "lab": "pnpm --filter @kometa/lab dev",
     "lab:capture": "tsx tools/lab-capture.ts",
     "replay:verify": "tsx tools/replay-verify.ts",
-    "bots": "tsx tools/bots/cli.ts"
+    "bots": "tsx tools/bots/cli.ts",
+    "perf:smoke": "tsx tools/perf-smoke.ts"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

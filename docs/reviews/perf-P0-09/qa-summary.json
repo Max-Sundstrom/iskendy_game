@@ -1,0 +1,112 @@
+[
+  {
+    "name": "pageerror",
+    "code": 1,
+    "signal": null,
+    "errors": [
+      "Page: QA intentional page failure",
+      "Browser reported errors during performance measurement"
+    ],
+    "report": "/tmp/kometa-perf-review/pageerror.json"
+  },
+  {
+    "name": "csp",
+    "code": 1,
+    "signal": null,
+    "errors": [
+      "Console: Applying inline style violates the following Content Security Policy directive 'style-src 'self''. Either the 'unsafe-inline' keyword, a hash ('sha256-XeYlw2NVzOfB1UCIJqCyGr+0n7bA4fFslFpvKu84IAw='), or a nonce ('nonce-...') is required to enable inline execution. The action has been blocked.",
+      "Console: CSP enforce: style-src-elem",
+      "Browser reported errors during performance measurement"
+    ],
+    "report": "/tmp/kometa-perf-review/csp.json"
+  },
+  {
+    "name": "context-loss",
+    "code": 1,
+    "signal": null,
+    "errors": [
+      "Console: WebGL context lost",
+      "Browser reported errors during performance measurement"
+    ],
+    "report": "/tmp/kometa-perf-review/context-loss.json"
+  },
+  {
+    "name": "sigterm",
+    "code": 1,
+    "signal": null,
+    "errors": [
+      "Performance smoke interrupted"
+    ],
+    "ports": [
+      35985
+    ],
+    "children": [
+      15736,
+      15765,
+      15782,
+      15783,
+      15802,
+      15804,
+      15826,
+      15849,
+      15858,
+      15859
+    ],
+    "closed": [
+      true
+    ],
+    "live": [],
+    "report": "/tmp/kometa-perf-review/sigterm.json"
+  },
+  {
+    "name": "sigint",
+    "code": 1,
+    "signal": null,
+    "errors": [
+      "Performance smoke interrupted"
+    ],
+    "ports": [
+      36445
+    ],
+    "children": [
+      15967,
+      15984,
+      15985,
+      16004,
+      16007,
+      16021,
+      16046,
+      16055,
+      16056
+    ],
+    "closed": [
+      true
+    ],
+    "live": [],
+    "report": "/tmp/kometa-perf-review/sigint.json"
+  },
+  {
+    "name": "short-success",
+    "code": 0,
+    "signal": null,
+    "ports": [
+      37521
+    ],
+    "children": [
+      16171,
+      16188,
+      16189,
+      16208,
+      16211,
+      16232,
+      16251,
+      16260,
+      16262
+    ],
+    "closed": [
+      true
+    ],
+    "live": [],
+    "report": "/tmp/kometa-perf-review/short-success.json"
+  }
+]
