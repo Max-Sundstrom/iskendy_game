@@ -5,15 +5,18 @@ import { createGameRenderer } from './engine/renderer';
 import { createPerfMeter } from './engine/perf';
 import { alpha, stepsForFrame, type Accumulator } from './game/loop';
 import { advance, createSession, type Session } from './game/session';
+import { createCrashSequence, type RunScreen } from './game/crash-sequence';
 import { bindKeyboard, createControls } from './input/controls';
 import { bindTouch } from './input/touch';
 import { submitBest } from './platform/best';
 import { stringsFor } from './platform/i18n';
 import { storeReplay } from './platform/replays';
 import { newPromoCode } from './platform/promo';
+import { createMotionPreference } from './platform/motion';
+import { createCrashCue } from './ui/crash';
 import { createHud } from './ui/hud';
 import { createIntroOverlay } from './ui/intro';
-import { createResults } from './ui/results';
+import { createResults, type RunResult } from './ui/results';
 
 // Boot: session, launch intro, fixed-step loop, renderer, input, HUD and results. Menus, pause and the host bridge
 // come later. The intro is presentation only: the sim's tick 0 is the moment the car meets the road.
@@ -31,16 +34,18 @@ if (root && canvas) {
     fixedSeed !== undefined ? fixedSeed + run++ : (crypto.getRandomValues(new Uint32Array(1))[0] ?? 1);
 
   let session: Session = createSession(nextSeed());
-  const gfx = createGameRenderer(canvas, session, query.get('q') === 'low' ? 'low' : 'high');
+  const reducedMotion = createMotionPreference(matchMedia('(prefers-reduced-motion: reduce)'));
+  const gfx = createGameRenderer(canvas, session, query.get('q') === 'low' ? 'low' : 'high', reducedMotion);
   const perf = createPerfMeter(gfx.info);
   const touch = matchMedia('(pointer: coarse)').matches;
   const hud = createHud(root, t, touch);
   const results = createResults(root, t);
+  const crashCue = createCrashCue(root, t);
   const overlay = createIntroOverlay(root, t);
   const controls = createControls();
   // ?intro=0 skips the launch ramp (test pages and quick checks).
   const withIntro = query.get('intro') !== '0';
-  let screen: 'intro' | 'playing' | 'results' = 'playing';
+  let screen: RunScreen = 'playing';
   let introT = 0;
   // Input is buffered from "1" on (GDD §12), so a swipe during the last second lands on the first step.
   const playing = () => screen === 'playing' || (screen === 'intro' && countdownDigit(introT) <= 1);
@@ -49,6 +54,7 @@ if (root && canvas) {
   const boost = hud.boostButton;
   boost.addEventListener('pointerdown', (e) => {
     e.preventDefault();
+    if (!playing()) return;
     // Captured, so a thumb drifting off the 72 px button keeps boosting until it lifts.
     boost.setPointerCapture(e.pointerId);
     controls.hold(Action.boost, true);
@@ -59,7 +65,7 @@ if (root && canvas) {
 
   const acc: Accumulator = { carry: 0 };
   let last = performance.now();
-  let paused = false;
+  let paused = document.hidden;
 
   const startIntro = (fromS: number, premise: boolean) => {
     if (!withIntro) {
@@ -74,7 +80,9 @@ if (root && canvas) {
   };
   const retry = () => {
     session = createSession(nextSeed());
-    gfx.reset();
+    gfx.reset(session);
+    crash.reset();
+    crashCue.show(false);
     controls.releaseAll();
     acc.carry = 0;
     results.hide();
@@ -89,16 +97,23 @@ if (root && canvas) {
     }
   });
 
-  const finish = () => {
+  const crash = createCrashSequence<RunResult>(DEFAULT_TUNING.presentation.crash.durationS, () => {
     const s = session.state;
     const score = Math.floor(s.score.total);
     const newBest = submitBest(score, s.player.distanceM);
     storeReplay(session.recorder.finish(s));
     // promoCode goes to the host in game.runEnded once the bridge exists (P5-09).
-    results.show({ score, distanceM: s.player.distanceM, timeS: s.tick / 60, newBest, promoCode: newPromoCode() });
+    return { score, distanceM: s.player.distanceM, timeS: s.tick / 60, newBest, promoCode: newPromoCode() };
+  });
+  const beginCrash = () => {
+    if (!crash.begin()) return;
+    controls.releaseAll();
+    acc.carry = 0;
+    gfx.beginCrash(session);
     hud.show(false);
-    screen = 'results';
-    root.dataset['screen'] = 'results';
+    crashCue.show(true);
+    screen = 'crashing';
+    root.dataset['screen'] = screen;
   };
 
   window.addEventListener('resize', () => gfx.resize());
@@ -124,7 +139,7 @@ if (root && canvas) {
         screen = 'playing';
         root.dataset['screen'] = 'playing';
       } else {
-        gfx.renderIntro(session, introT, frameS);
+        if (!paused) gfx.renderIntro(session, introT, frameS);
         perf.frame(frameMs, false);
         hud.update({
           score: 0,
@@ -137,13 +152,26 @@ if (root && canvas) {
         return;
       }
     }
+    if (screen === 'crashing' || screen === 'results') {
+      if (crash.advance(frameS, paused, reducedMotion())) {
+        const result = crash.result();
+        if (result) results.show(result);
+        crashCue.show(false);
+        screen = 'results';
+        root.dataset['screen'] = screen;
+      }
+    }
     if (!paused && screen === 'playing') {
       const steps = stepsForFrame(acc, frameS);
       advance(session, steps, controls.sample);
-      if (session.state.status === SimStatus.crashed) finish();
+      if (session.state.status === SimStatus.crashed) {
+        beginCrash();
+        crash.advance(0, paused, reducedMotion());
+      }
     }
     const s = session.state;
-    gfx.render(session, alpha(acc), frameS);
+    if (screen === 'crashing' || screen === 'results') gfx.renderCrash(crash.frame);
+    else if (!paused) gfx.render(session, alpha(acc), frameS);
     perf.frame(frameMs, !paused && screen === 'playing');
     hud.update({
       score: s.score.total,

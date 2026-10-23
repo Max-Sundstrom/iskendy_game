@@ -6,6 +6,7 @@
     "air": "AIR",
     "boost": "BOOST"
   },
+  "crash": { "title": "Crash" },
   "results": {
     "crash": "The pies will have to wait.",
     "distance": "distance",

@@ -6,6 +6,7 @@
     "air": "AIR",
     "boost": "BOOST"
   },
+  "crash": { "title": "Авария" },
   "results": {
     "crash": "Пироги подождут.",
     "distance": "дистанция",

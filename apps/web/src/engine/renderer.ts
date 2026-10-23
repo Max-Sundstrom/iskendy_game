@@ -11,6 +11,8 @@ import {
 } from 'three';
 import { DEFAULT_TUNING, SimStatus } from '@kometa/sim';
 import { lerp, type Session } from '../game/session';
+import type { CrashFrame } from '../game/crash-sequence';
+import { crashFlipTurns, createCrashView } from './crash';
 import { createChaseCamera, fovForAspect } from './camera';
 import { createCar } from './car';
 import { createHorizon } from './horizon';
@@ -28,8 +30,10 @@ export type GameRenderer = {
   render(session: Session, alpha: number, frameS: number): void;
   /** Intro frame at intro time t (0 … INTRO_S); the session is still at tick 0. */
   renderIntro(session: Session, t: number, frameS: number): void;
+  beginCrash(session: Session): void;
+  renderCrash(frame: CrashFrame): void;
   /** Call when a new session starts (retry), so effects don't carry over. */
-  reset(): void;
+  reset(session: Session): void;
   resize(): void;
   readonly info: WebGLRenderer['info'];
 };
@@ -55,6 +59,7 @@ export function createGameRenderer(
   canvas: HTMLCanvasElement,
   session: Session,
   quality: Quality = 'high',
+  reducedMotion: () => boolean = () => false,
 ): GameRenderer {
   const low = quality === 'low';
   const renderer = new WebGLRenderer({ canvas, antialias: !low, powerPreference: 'high-performance' });
@@ -78,6 +83,7 @@ export function createGameRenderer(
   scene.add(road.group, traffic.group, rig.group, rig.shadow, vapour.points, horizon.group, intro.group);
   sun.target = rig.group;
   const chase = createChaseCamera(tuning);
+  const crash = createCrashView(rig, chase.camera, thrusters, vapour, DEFAULT_TUNING.presentation.crash);
   const introCam = new PerspectiveCamera(50, 1, 0.1, 1200);
   let aspect = 1;
 
@@ -103,6 +109,7 @@ export function createGameRenderer(
   let lastY = 0;
   let spin = 0;
   let launched = false;
+  let firstIntroFrame = true;
 
   /** Pixels per metre at 1 m from the camera, for the vapour's point sizes. */
   const pointScale = (fovDeg: number) => {
@@ -124,25 +131,100 @@ export function createGameRenderer(
     }
   };
 
+  const renderRun = (s: Session, alpha: number, frameS: number) => {
+    const p = s.state.player;
+    const crashed = s.state.status === SimStatus.crashed;
+    const x = lerp(s.prev.x, p.x, alpha);
+    const y = lerp(s.prev.y, p.y, alpha);
+    const z = lerp(s.prev.z, p.z, alpha);
+    if (Math.abs(-z - lastZ) > 100) {
+      vapour.shift(-z - lastZ); // floating-origin shift: carry the vapour with the world
+      lastZ = -z;
+    }
+    const dt = Math.max(frameS, 1e-3);
+    // The terminal pose is placed at dt=0. Its lean comes from the actual final tick, not a fictitious 1 ms frame.
+    const vx = crashed ? (p.x - s.prev.x) * tuning.tickRateHz : (x - lastX) / dt;
+    const vy = crashed ? (p.y - s.prev.y) * tuning.tickRateHz : (y - lastY) / dt;
+    // Front flip: the whole car turns nose-over about its centre of mass (GDD §5.6). Don't interpolate across the
+    // reset to 0 at touchdown.
+    const f = crashed
+      ? crashFlipTurns(s)
+      : Math.abs(p.flipTurns - s.prev.flip) > 0.5
+        ? p.flipTurns
+        : lerp(s.prev.flip, p.flipTurns, alpha);
+    flipQ.setFromAxisAngle(xAxis, -2 * Math.PI * f);
+    rig.group.quaternion.copy(flipQ);
+    com.set(0, COM_M, 0).applyQuaternion(flipQ);
+    placeCar(x, y + COM_M - com.y, -z - com.z, p.speedMps, crashed ? 0 : frameS, groundUnder(s));
+    // Lean outward and nose into the lane change; pitch with vertical speed in the air.
+    const laneSpeed = tuning.lanes.widthM / Math.max(0.05, tuning.lanes.changeDurationS);
+    const k = MathUtils.clamp(vx / laneSpeed, -1, 1);
+    const pitch = p.airborne ? MathUtils.clamp(-p.vy * 0.012, -0.25, 0.2) : 0;
+    rig.body.rotation.set(pitch, -k * 0.07, -k * LANE_ROLL);
+    road.update(z, p.distanceM);
+    traffic.update(s.state.traffic, s.prev.trafficZ, alpha);
+    chase.update(x, y, z, p.speedMps, p.boosting, frameS, reducedMotion());
+    thrusters.update({
+      dt: frameS,
+      vx,
+      vy: p.airborne ? vy : 0,
+      vz: -p.speedMps,
+      boosting: p.boosting,
+      flying: p.flying,
+      airborne: p.airborne,
+      lane: p.lane,
+      crashed,
+    });
+    vapour.update(frameS, pointScale(chase.camera.fov));
+    horizon.update(chase.camera.position.z);
+    lastX = x;
+    lastY = y;
+    lastZ = -z;
+    renderer.render(scene, chase.camera);
+  };
+
   return {
+    render: renderRun,
     info: renderer.info,
     resize,
-    reset() {
+    beginCrash(s) {
+      renderRun(s, 1, 0);
+      crash.begin();
+    },
+    renderCrash(frame) {
+      if (frame.reducedMotion) chase.reduceMotion();
+      crash.update(frame);
+      vapour.update(frame.deltaS, pointScale(chase.camera.fov));
+      renderer.render(scene, chase.camera);
+    },
+    reset(s) {
+      crash.reset();
       launched = false;
+      firstIntroFrame = true;
+      spin = 0;
+      lastX = s.state.player.x;
+      lastY = s.state.player.y;
+      lastZ = -s.state.player.z;
+      rig.group.quaternion.identity();
+      rig.body.rotation.set(0, 0, 0);
+      placeCar(lastX, lastY, lastZ, 0, 0);
+      chase.reset(lastX, lastY, -lastZ);
       thrusters.reset();
+      vapour.reset();
     },
     renderIntro(s, t, frameS) {
       intro.pose(t, pose);
       const { position: c, quaternion } = pose;
-      const vx = (c.x - lastX) / Math.max(frameS, 1e-3);
-      const vy = (c.y - lastY) / Math.max(frameS, 1e-3);
-      const vz = (c.z - lastZ) / Math.max(frameS, 1e-3);
+      const vx = firstIntroFrame ? 0 : (c.x - lastX) / Math.max(frameS, 1e-3);
+      const vy = firstIntroFrame ? 0 : (c.y - lastY) / Math.max(frameS, 1e-3);
+      const vz = firstIntroFrame ? 0 : (c.z - lastZ) / Math.max(frameS, 1e-3);
+      firstIntroFrame = false;
       placeCar(c.x, c.y, c.z, pose.speed, frameS, 0, pose.phase !== 'ramp');
       rig.group.quaternion.copy(quaternion);
       rig.body.rotation.set(0, 0, 0);
       road.update(Math.min(-c.z, 0), 0);
       traffic.update(s.state.traffic, s.prev.trafficZ, 1);
-      chase.update(c.x, Math.max(0, c.y), -c.z, pose.speed, false, frameS);
+      chase.update(c.x, Math.max(0, c.y), -c.z, pose.speed, false, frameS, reducedMotion());
       // A wide side shot of the C and its tower that pans with the car (cf. the reference photos), easing into the
       // chase camera for the last 0.9 s of the flight.
       const fly = MathUtils.clamp((t - (INTRO_S - FLIGHT_S)) / FLIGHT_S, 0, 1);
@@ -176,51 +258,6 @@ export function createGameRenderer(
       lastY = c.y;
       lastZ = c.z;
       renderer.render(scene, introCam);
-    },
-    render(s, alpha, frameS) {
-      const p = s.state.player;
-      const x = lerp(s.prev.x, p.x, alpha);
-      const y = lerp(s.prev.y, p.y, alpha);
-      const z = lerp(s.prev.z, p.z, alpha);
-      if (Math.abs(-z - lastZ) > 100) {
-        vapour.shift(-z - lastZ); // floating-origin shift: carry the vapour with the world
-        lastZ = -z;
-      }
-      const dt = Math.max(frameS, 1e-3);
-      const vx = (x - lastX) / dt;
-      const vy = (y - lastY) / dt;
-      // Front flip: the whole car turns nose-over about its centre of mass (GDD §5.6). Don't interpolate across the
-      // reset to 0 at touchdown.
-      const f = Math.abs(p.flipTurns - s.prev.flip) > 0.5 ? p.flipTurns : lerp(s.prev.flip, p.flipTurns, alpha);
-      flipQ.setFromAxisAngle(xAxis, -2 * Math.PI * f);
-      rig.group.quaternion.copy(flipQ);
-      com.set(0, COM_M, 0).applyQuaternion(flipQ);
-      placeCar(x, y + COM_M - com.y, -z - com.z, p.speedMps, frameS, groundUnder(s));
-      // Lean outward and nose into the lane change; pitch with vertical speed in the air.
-      const laneSpeed = tuning.lanes.widthM / Math.max(0.05, tuning.lanes.changeDurationS);
-      const k = MathUtils.clamp(vx / laneSpeed, -1, 1);
-      const pitch = p.airborne ? MathUtils.clamp(-p.vy * 0.012, -0.25, 0.2) : 0;
-      rig.body.rotation.set(pitch, -k * 0.07, -k * LANE_ROLL);
-      road.update(z, p.distanceM);
-      traffic.update(s.state.traffic, s.prev.trafficZ, alpha);
-      chase.update(x, y, z, p.speedMps, p.boosting, frameS);
-      thrusters.update({
-        dt: frameS,
-        vx,
-        vy: p.airborne ? vy : 0,
-        vz: -p.speedMps,
-        boosting: p.boosting,
-        flying: p.flying,
-        airborne: p.airborne,
-        lane: p.lane,
-        crashed: s.state.status === SimStatus.crashed,
-      });
-      vapour.update(frameS, pointScale(chase.camera.fov));
-      horizon.update(chase.camera.position.z);
-      lastX = x;
-      lastY = y;
-      lastZ = -z;
-      renderer.render(scene, chase.camera);
     },
   };
 }

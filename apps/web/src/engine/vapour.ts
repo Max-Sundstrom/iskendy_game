@@ -37,6 +37,7 @@ export type Vapour = {
   update(dt: number, pixelsPerUnitAtOneMetre: number): void;
   /** Moves every particle along three z, for the sim's floating-origin shift. */
   shift(dz: number): void;
+  reset(): void;
 };
 
 export function createVapour(): Vapour {
@@ -90,6 +91,18 @@ export function createVapour(): Vapour {
 
   return {
     points,
+    reset() {
+      next = 0;
+      pos.fill(0);
+      vel.fill(0);
+      age.fill(1);
+      life.fill(1);
+      size.fill(0);
+      alpha.fill(0);
+      posAttr.needsUpdate = true;
+      sizeAttr.needsUpdate = true;
+      alphaAttr.needsUpdate = true;
+    },
     emit(b, count) {
       const smear = b.smearS ?? 0;
       for (let k = 0; k < count; k++) {

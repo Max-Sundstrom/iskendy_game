@@ -38,4 +38,49 @@ describe('vapour pool', () => {
     v.shift(2000);
     expect(pos.getZ(1)).toBeCloseTo(before + 2000);
   });
+
+  it('clears visible particles immediately on retry and cannot resurrect them on later updates', () => {
+    const v = createVapour();
+    v.emit(burst, 10);
+    v.update(0.05, 500);
+    const alpha = v.points.geometry.getAttribute('aAlpha');
+    const size = v.points.geometry.getAttribute('aSize');
+    expect(alpha.getX(0)).toBeGreaterThan(0);
+
+    v.reset();
+    for (let i = 0; i < alpha.count; i++) {
+      expect(alpha.getX(i)).toBe(0);
+      expect(size.getX(i)).toBe(0);
+    }
+    v.update(0.1, 500);
+    v.update(0.05, 500);
+    for (let i = 0; i < alpha.count; i++) expect(alpha.getX(i)).toBe(0);
+  });
+
+  it('reuses the fixed pool and restarts emission from a clean ring across two retries', () => {
+    const v = createVapour();
+    const geometry = v.points.geometry;
+    const pos = geometry.getAttribute('position');
+    const alpha = geometry.getAttribute('aAlpha');
+    const size = geometry.getAttribute('aSize');
+    const capacity = pos.count;
+
+    for (let run = 0; run < 3; run++) {
+      v.emit({ ...burst, x: 10 + run, vx: 0 }, 1);
+      v.update(0.05, 500);
+      expect(alpha.getX(0)).toBeGreaterThan(0);
+      expect(pos.getX(0)).toBe(10 + run);
+      for (let i = 1; i < capacity; i++) expect(alpha.getX(i)).toBe(0);
+
+      // More emissions than capacity must overwrite the ring, never allocate another geometry or grow it.
+      v.emit(burst, capacity + 7);
+      v.update(0.05, 500);
+      expect(v.points.geometry).toBe(geometry);
+      expect(geometry.getAttribute('position')).toBe(pos);
+      expect(geometry.getAttribute('aAlpha')).toBe(alpha);
+      expect(geometry.getAttribute('aSize')).toBe(size);
+      expect(pos.count).toBe(capacity);
+      if (run < 2) v.reset();
+    }
+  });
 });
