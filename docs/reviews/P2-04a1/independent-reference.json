@@ -1,0 +1,125 @@
+{
+  "passed": true,
+  "base": "01921e1928cd108764efa19c526f142252d5edf6",
+  "sourceSha256": "53ed6eb02bb72721fa4d551a541f5e5951f06d20d52bd8117cd94025708b3bb9",
+  "reference": "Independent labelled-tick tape; integer rational conversion for dyadic duration grid; seeded operation streams; BigInt boundary spot checks",
+  "durationPairs": 70,
+  "completeAdvances": 8104,
+  "stateComparisons": 166278,
+  "randomizedTraces": 100,
+  "actionsPerTrace": 500,
+  "actionSeed": "0x2404a1",
+  "actionCounts": {
+    "start": 12544,
+    "advance": 25055,
+    "reset": 6235,
+    "pause": 6166
+  },
+  "defaultBoundaries": [
+    {
+      "advance": 300,
+      "transition": 1
+    },
+    {
+      "advance": 360,
+      "transition": 2
+    }
+  ],
+  "rejectedConversions": 10,
+  "largeSafeTicks": "8444249301319680",
+  "unchanged": [
+    {
+      "path": "pnpm-lock.yaml",
+      "sha256": "a9adab6e57086834041fe0d5527bb772d48fd16416ad6ab504e93a839b4f5396"
+    },
+    {
+      "path": "packages/content/tuning.default.json",
+      "sha256": "99240e8f2f59a5eb49f3f552406343e1450778ba5366cc9dd01217f94c2e0ae9"
+    },
+    {
+      "path": "packages/shared/src/tuning/schema.ts",
+      "sha256": "599a5cd3a18617173ceac6bee4c2dbcef699740b94a83f051c70e5fdf766f142"
+    },
+    {
+      "path": "packages/sim/src/index.ts",
+      "sha256": "24ebd09505a5f5339362fc4fa70592fb88b924ce7a887740964251e2c0697b52"
+    },
+    {
+      "path": "packages/sim/src/state.ts",
+      "sha256": "d57a56d1e72da9f22d991ce268435e958c2b8e4dc14439622a5cccb300d19a88"
+    },
+    {
+      "path": "packages/sim/src/step.ts",
+      "sha256": "c7d133e57447d6f83550bf8dba1e7cb839e577967d31edd7dc9748c0068cc586"
+    },
+    {
+      "path": "packages/sim/src/hash.ts",
+      "sha256": "c5ccdde8973e43710c2b0661fb6bb089434b551872f41c8773c5106dce521363"
+    },
+    {
+      "path": "packages/sim/src/version.ts",
+      "sha256": "59d331515aac9f96b9a57338a067e271958382c6d9961a10ee3651c2b1fcdda4"
+    },
+    {
+      "path": "packages/sim/src/determinism.test.ts",
+      "sha256": "5ea86609748d6db6aec79f30fd38760b77895e87d4f3d4fbba2dcebb20146275"
+    },
+    {
+      "path": "e2e/determinism.spec.ts",
+      "sha256": "9c33915af418d3f92e20307395d9bb9c7d71b69b9ab60caa93a48a981ebd2330"
+    },
+    {
+      "path": "tests/replays/busy-inputs.json",
+      "sha256": "0626ba0f3415c6fdd8abcdd60d01ce621cec5c8395b4b00971d36874b7f4af20"
+    },
+    {
+      "path": "tests/replays/early-crash.json",
+      "sha256": "8b0ad9eb1593b5fe9074b7e83c37bf317e5c90aea654a0e364db8d42776c0f57"
+    },
+    {
+      "path": "tests/replays/long-run.json",
+      "sha256": "57254ab97832eba4a690d31377e7842221610454d9e0c6afaf59920a600bb547"
+    }
+  ],
+  "productionCallers": [],
+  "testCallers": [
+    "packages/sim/src/mode-clock.test.ts"
+  ],
+  "pins": [
+    "5e81a89c-04c562d2",
+    "5e81a89c-04c562d2"
+  ],
+  "deterministic": {
+    "hash": "5e81a89c-04c562d2",
+    "runs": 25
+  },
+  "replays": [
+    {
+      "name": "busy-inputs.json",
+      "valid": true,
+      "ticks": 106,
+      "claimedScore": 62,
+      "finalHash": "3e19786b"
+    },
+    {
+      "name": "early-crash.json",
+      "valid": true,
+      "ticks": 258,
+      "claimedScore": 155,
+      "finalHash": "93946362"
+    },
+    {
+      "name": "long-run.json",
+      "valid": true,
+      "ticks": 2070,
+      "claimedScore": 1531,
+      "finalHash": "04f57e5b"
+    }
+  ],
+  "limitations": [
+    "Internal helper only; no playable mode or R1–R11 policy approval",
+    "No browser/cross-engine execution of helper",
+    "Source frozen but not committed at QA time"
+  ],
+  "priorAttempt": "First reference run incorrectly assumed MAX_SAFE_INTEGER/60 would multiply back safely; actual rounded product is9007199254740992. Helper correctly rejected it. Added that exact rejection case and used exact2^47 seconds for the safe large-count check; production code/tests were unchanged."
+}
