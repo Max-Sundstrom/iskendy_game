@@ -47,7 +47,7 @@ for v1:
 | G6 | Lands mid-flip exactly at 35.0° | STUNT (inclusive bound); 35.01° SLOPPY | sim boundary |
 | G7 | Crashes while a streak pot is open | Pot lost; results show it as "lost" | sim |
 | G8 | LIFTOFF fills during COSMONAUT | OVERDRIVE: +4 s and ×1.5; no double-stacking beyond one extension per mode | sim |
-| G9 | Mode ends while overlapping a vehicle | 1 s grace; car phases out; no instant crash | sim |
+| G9 | Mode ends while overlapping a vehicle | Exactly 1 s grace; final closed overlaps retire without reward before ordinary collisions return; no indefinite object immunity | P2-04a2 sim, acceptance pending |
 | G10 | Slam onto a bus roof | Lands on platform; SLAM + ride; no crash | sim |
 | G11 | Barrel roll into a lane occupied by a car at roof height | Safe orientation lands on roof → HOP; unsafe mixed orientation crashes with its terminal angles preserved | sim `orientation.test.ts` touchdown integration |
 | G12 | Lane-changing taxi moves into the player | Telegraph ≥ 0.8 s; contact = scrape rules | sim |
@@ -62,6 +62,9 @@ for v1:
 | G21 | Mixed flip+roll landing | Quaternion default cannot cancel signed axes; both modes have inclusive pure-axis bounds, periodicity and an independent quaternion oracle | sim `orientation.test.ts` |
 | G22 | Landing crash, interrupted tricks and Retry | Store same-tick terminal pitch/roll; clear active/queued tricks; safe road/hop/platform reset all; Retry starts fresh | sim `roll.test.ts`, `orientation.test.ts`; browser acceptance pending |
 | G23 | Completed untouched close pass | Exact swept side gap0…0.6m during simultaneous body overlap; one award per vehicle lifetime, contact/roof/CLEAR excluded, flag-off preserves physics | sim near-miss tests; seed1 Right350 → near352 → bank502 → crash509 actual-input replay; browser evidence pending |
+| G24 | Full meter, mode expiry and later refill | Trigger after a surviving tick that started idle; exactly 300 active/60 grace ticks, no-step pause preserves counters, no retroactive crash rescue; one ordinary tick before another mode | P2-04a2 sim/replay/cross-engine, acceptance pending |
+| G25 | Protected rear/side/roof contact and slot reuse | Common-time closed sweep; one SMASH per destroyed lifetime, no duplicate roof/CLEAR/NEAR reward; support detach without coyote; reused slot has fresh tracking | P2-04a2 independent geometry/lifecycle QA, acceptance pending |
+| G26 | Protected flight with stored AIR=0, then grace expiry | Active flight/BOOST free with finite tank preserved; ordinary grace costs; actual protected touchdown is STUNT; post-grace unsafe landing still crashes | P2-04a2 boundary tests, acceptance pending |
 
 ## P — Platform and device
 

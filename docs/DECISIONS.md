@@ -346,7 +346,28 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
   Disabling the flag removes near events/points without changing previous physical outcomes. The 50 base
   points and 10 meter already come from GDD tuning; this policy bundle is proposed, not owner-approved.
 
+- **Q28 (selected under delegated gameplay authority, 2026-10-26): finite LIFTOFF episode.**
+  The owner delegated gameplay-rule choices to the orchestrator; the wait for R1–R11 is lifted. This does
+  not authorize dependency updates, main merges or deployments. The new phone-preview request was cancelled.
+  P2-04a2 implements the first slice using existing tuning: auto-start from full meter after a surviving
+  ordinary tick, effects on the next tick, 300 active ticks then 60 grace ticks. A full meter earned during
+  active/grace is retained; activation requires a tick that started idle, so continuous protection is finite.
+  R1 preserves finite AIR during active without drain/regen; zero stored AIR permits flight and BOOST.
+  R2 destroys actual contacted traffic once, including support, without extra HOP/landing/SLAM/coyote.
+  R3 gives STUNT alignment to actual protected touchdowns; ordinary grading returns after grace.
+  R4 replaces the earlier proposed until-exit tail: final protected-tick closed end-overlaps are retired
+  without rewards, before contact-free awards/director reuse. Actual last-active-tick SMASH has priority.
+  R5 resets SMASH chain per episode; base/step/cap come from tuning, award uses the existing pot/N exactly
+  once, meter +0. Active speed multiplies existing BOOST and penalty factors. Protected contact is closed
+  swept AABB on one common x/y/relative-z time interval, with no substeps/epsilon; ordinary collisions stay
+  unchanged. No indefinite per-object immunity or safety-until-landing promise is introduced.
+  These choices prevent repeat rewards and expiry inside a trapped object; they do not prove full-route
+  fairness or balance. Independent outcome/replay/geometry checks are required before completion.
+  COSMONAUT/OVERDRIVE/pickup choices remain subsequent implementation cards under the same authority,
+  not questions awaiting a further owner response. The four unrelated deferred tuning proposals remain untouched.
+
 ## Change log
+- 2026-10-26 — Q28: delegated gameplay choices; finite LIFTOFF contract P2-04a2, no preview publication.
 - 2026-10-23 — Kit created from reference screenshot analysis.
 - 2026-10-23 — v0.2: Moscow × GTA VI-inspired direction (proposed), security/anti-cheat, infrastructure and
   load model, scenario catalogue, host embedding contract, test strategy, multi-agent system, Phases A and D0.

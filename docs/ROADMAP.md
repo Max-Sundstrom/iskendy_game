@@ -94,6 +94,8 @@ Goal: the core loop with primitive shapes, playable on a phone and on desktop.
 | P2-02 | Sim | front flips, barrel rolls, landing grades | grade boundaries tested at ±1° |
 | P2-03 | Sim | full event table (GDD §9), streak window, multiplier, pot banking | scripted scenario produces the exact expected score |
 | P2-04 | Sim | LIFTOFF meter; LIFTOFF / COSMONAUT / OVERDRIVE; smash; grace | mode timings and stacking tests |
+| P2-04a1 | Sim | Unwired deterministic active/grace clock | draft [PR #10](https://github.com/Max-Sundstrom/iskendy_game/pull/10), both exact-head CI green; 166278 independent state comparisons; no playable-mode claim |
+| P2-04a2 | Sim | First playable LIFTOFF core, SMASH and finite grace under delegated Q28 choices | contract frozen; implementation/independent QA in progress; HUD follows separately |
 | P2-05 | Sim | rings, star, AIR canister, item capsule; RADAR / MAGNET / SHIELD / EMP | per-item tests |
 | P2-06 | Sim | director v2: patterns, difficulty curve, waves, fairness solver | fairness property test: 10 000 seeds × 10 km, zero unsolvable rows |
 | P2-07 | UI | full HUD (GDD §14) with the binder; mode bar; streak; event feed; mobile buttons | no React renders per frame (profiler screenshot) |
@@ -113,7 +115,7 @@ score from style.
 |---|---|---|---|
 | P3-00 | Orchestrator | Visual slice pulled forward (ADR-026): procedural hero car and 13 traffic models, roadside and horizon, thruster vapour, launch gantry intro with 3-2-1, BOOST feedback | done 2026-10-23 — see `docs/tasks/P3-00.md` |
 | P3-00B | Render / technical artist | Owner priority: refine original hero and traffic shapes/materials | draft PR #3; exact-head CI green, real viewport review; hero 12760 tris /3 materials, traffic <=2812 |
-| P3-00C | Render / UI | Owner priority: readable actual crash, reduced motion and clean Retry | draft PR #4; local visuals/perf passed; CI three-run timeout under diagnosis, no sim outcome changes |
+| P3-00C | Render / UI | Owner priority: readable actual crash, reduced motion and clean Retry | draft PR #4 head 958ab89; full exact-head PR CI green after unchanged-scenario single-worker diagnosis; local visuals/perf passed |
 | P3-01 | Tech artist | Hero car Kometa R: blockout → owner review → final mesh, LODs, node hierarchy (ASSETS §5) | budget check passes; review sign-off |
 | P3-02 | Tech artist | Traffic: Kenney Car Kit restyled to the palette atlas + 4 original Soviet-inspired bodies | ≤ 3k tris each; ledger entries with proof |
 | P3-03 | Tech artist | Environment kits per ART_DIRECTION §5–§6: launch gantry intro (ADR-026), embankment with steel arch bridge, river and linden trees, Cosmos Park rocket on a pedestal, elevated ring road with tunnels, glass towers and billboards, panel-block districts with kiosks and sodium lamps, construction props | chunk prefabs per biome |
@@ -197,7 +199,7 @@ paints · daily missions · Route mode with a destination and story endings · g
 | D0 | **signed 2026-10-23** (ADR-023) | evidence in `docs/reviews/art-D0/`; phone p95 measured in P1-04 |
 | P0 | **done** (2026-10-23) | P0-01…P0-08; P0-06 table keeps filling as libraries arrive; server setup is an owner action (`docs/runbooks/deploy-game-origin.md`); P1+ waits for D0 |
 | P1 | **awaiting playtest** | P1-01…P1-08 done; exit gate needs the owner playtest (checklist in the P1-07 review) and the phone p95 readout |
-| P2 | in progress | P2-01 and P2-02 part 1 integrated; P2-02b barrels locally verified, draft pending base CI fix; P2-03a contract frozen |
+| P2 | in progress | Barrels, score and near miss in draft PR #5/#6/#8 with exact-head CI green; P2-04a1 clock verified in PR #10; playable LIFTOFF core P2-04a2 in progress |
 | P3 | P3-00 done (ADR-026) | visual slice ahead of P2 on the owner's request; Blender assets P3-01…03 later |
 | P4 | not started | |
 | P5 | not started | v1: P5-09 only; P5-01…08 deferred (no ranking) |
