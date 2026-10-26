@@ -1,0 +1,413 @@
+{
+  "passed": true,
+  "createdAt": "2026-10-26T15:13:46.788Z",
+  "sourceHead": "8e19074c484a8bb17d65e6d64b3b79d6233efd8f",
+  "sourceStatus": "clean",
+  "method": "Fresh state, only saved held masks passed to step; independent physical-event meter ledger at every tick; recorder/parse/play round-trip.",
+  "firstFullMeter": {
+    "stateTick": 525,
+    "inputTick": 524,
+    "seconds": 8.75
+  },
+  "final": {
+    "status": "running",
+    "hash": "9b81eab9",
+    "airLiters": 219,
+    "score": 326.63152298384904,
+    "pot": 14865,
+    "distanceM": 326.63152298384904,
+    "airborne": true,
+    "rollTurns": -0.7777777777777775,
+    "rolling": true,
+    "rollQueuedDir": 1
+  },
+  "grossMeter": 1060,
+  "clampedMeter": 1000,
+  "minimumAir": 219,
+  "highestAltitude": 4.736298353696234,
+  "counts": {
+    "landings": 4,
+    "laneStarts": 14,
+    "rollStarts": 13,
+    "rollCompletions": 12
+  },
+  "ledger": [
+    {
+      "tick": 37,
+      "inputTick": 36,
+      "kind": "flipDone",
+      "gain": 80,
+      "before": 0,
+      "after": 80
+    },
+    {
+      "tick": 43,
+      "inputTick": 42,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 80,
+      "after": 120
+    },
+    {
+      "tick": 70,
+      "inputTick": 69,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 120,
+      "after": 160
+    },
+    {
+      "tick": 97,
+      "inputTick": 96,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 160,
+      "after": 200
+    },
+    {
+      "tick": 122,
+      "inputTick": 121,
+      "kind": "perfectLanding",
+      "gain": 30,
+      "before": 200,
+      "after": 230
+    },
+    {
+      "tick": 159,
+      "inputTick": 158,
+      "kind": "flipDone",
+      "gain": 80,
+      "before": 230,
+      "after": 310
+    },
+    {
+      "tick": 165,
+      "inputTick": 164,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 310,
+      "after": 350
+    },
+    {
+      "tick": 192,
+      "inputTick": 191,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 350,
+      "after": 390
+    },
+    {
+      "tick": 219,
+      "inputTick": 218,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 390,
+      "after": 430
+    },
+    {
+      "tick": 244,
+      "inputTick": 243,
+      "kind": "perfectLanding",
+      "gain": 30,
+      "before": 430,
+      "after": 460
+    },
+    {
+      "tick": 281,
+      "inputTick": 280,
+      "kind": "flipDone",
+      "gain": 80,
+      "before": 460,
+      "after": 540
+    },
+    {
+      "tick": 287,
+      "inputTick": 286,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 540,
+      "after": 580
+    },
+    {
+      "tick": 314,
+      "inputTick": 313,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 580,
+      "after": 620
+    },
+    {
+      "tick": 341,
+      "inputTick": 340,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 620,
+      "after": 660
+    },
+    {
+      "tick": 366,
+      "inputTick": 365,
+      "kind": "perfectLanding",
+      "gain": 30,
+      "before": 660,
+      "after": 690
+    },
+    {
+      "tick": 403,
+      "inputTick": 402,
+      "kind": "flipDone",
+      "gain": 80,
+      "before": 690,
+      "after": 770
+    },
+    {
+      "tick": 409,
+      "inputTick": 408,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 770,
+      "after": 810
+    },
+    {
+      "tick": 436,
+      "inputTick": 435,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 810,
+      "after": 850
+    },
+    {
+      "tick": 463,
+      "inputTick": 462,
+      "kind": "rollDone",
+      "gain": 40,
+      "before": 850,
+      "after": 890
+    },
+    {
+      "tick": 467,
+      "inputTick": 466,
+      "kind": "clear",
+      "gain": 60,
+      "before": 890,
+      "after": 950
+    },
+    {
+      "tick": 488,
+      "inputTick": 487,
+      "kind": "perfectLanding",
+      "gain": 30,
+      "before": 950,
+      "after": 980
+    },
+    {
+      "tick": 525,
+      "inputTick": 524,
+      "kind": "flipDone",
+      "gain": 80,
+      "before": 980,
+      "after": 1000
+    }
+  ],
+  "landings": [
+    {
+      "tick": 122,
+      "grade": 1,
+      "flips": 1,
+      "air": 511
+    },
+    {
+      "tick": 244,
+      "grade": 1,
+      "flips": 1,
+      "air": 422
+    },
+    {
+      "tick": 366,
+      "grade": 1,
+      "flips": 1,
+      "air": 333
+    },
+    {
+      "tick": 488,
+      "grade": 1,
+      "flips": 1,
+      "air": 244
+    }
+  ],
+  "lanes": [
+    {
+      "tick": 17,
+      "from": 2,
+      "to": 1
+    },
+    {
+      "tick": 28,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "tick": 51,
+      "from": 2,
+      "to": 1
+    },
+    {
+      "tick": 139,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "tick": 150,
+      "from": 2,
+      "to": 1
+    },
+    {
+      "tick": 173,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "tick": 261,
+      "from": 2,
+      "to": 1
+    },
+    {
+      "tick": 272,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "tick": 295,
+      "from": 2,
+      "to": 1
+    },
+    {
+      "tick": 383,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "tick": 394,
+      "from": 2,
+      "to": 1
+    },
+    {
+      "tick": 417,
+      "from": 1,
+      "to": 2
+    },
+    {
+      "tick": 505,
+      "from": 2,
+      "to": 1
+    },
+    {
+      "tick": 516,
+      "from": 1,
+      "to": 2
+    }
+  ],
+  "rolls": [
+    {
+      "startTick": 17,
+      "doneTick": 43,
+      "count": 1,
+      "direction": -1,
+      "queuedStart": false
+    },
+    {
+      "startTick": 43,
+      "doneTick": 70,
+      "count": 2,
+      "direction": 1,
+      "queuedStart": true
+    },
+    {
+      "startTick": 70,
+      "doneTick": 97,
+      "count": 3,
+      "direction": -1,
+      "queuedStart": true
+    },
+    {
+      "startTick": 139,
+      "doneTick": 165,
+      "count": 1,
+      "direction": 1,
+      "queuedStart": false
+    },
+    {
+      "startTick": 165,
+      "doneTick": 192,
+      "count": 2,
+      "direction": -1,
+      "queuedStart": true
+    },
+    {
+      "startTick": 192,
+      "doneTick": 219,
+      "count": 3,
+      "direction": 1,
+      "queuedStart": true
+    },
+    {
+      "startTick": 261,
+      "doneTick": 287,
+      "count": 1,
+      "direction": -1,
+      "queuedStart": false
+    },
+    {
+      "startTick": 287,
+      "doneTick": 314,
+      "count": 2,
+      "direction": 1,
+      "queuedStart": true
+    },
+    {
+      "startTick": 314,
+      "doneTick": 341,
+      "count": 3,
+      "direction": -1,
+      "queuedStart": true
+    },
+    {
+      "startTick": 383,
+      "doneTick": 409,
+      "count": 1,
+      "direction": 1,
+      "queuedStart": false
+    },
+    {
+      "startTick": 409,
+      "doneTick": 436,
+      "count": 2,
+      "direction": -1,
+      "queuedStart": true
+    },
+    {
+      "startTick": 436,
+      "doneTick": 463,
+      "count": 3,
+      "direction": 1,
+      "queuedStart": true
+    }
+  ],
+  "incompleteRollAtEndpoint": {
+    "tick": 505,
+    "index": 1,
+    "direction": -1,
+    "queued": false
+  },
+  "replayRoundTripIdentical": true,
+  "replayValid": true,
+  "initialTuningHash": "9e91b7802bf1b6b1",
+  "finalTuningHash": "9e91b7802bf1b6b1",
+  "tuningFileSha256": "99240e8f2f59a5eb49f3f552406343e1450778ba5366cc9dd01217f94c2e0ae9",
+  "replayFileSha256": "1890f4e8afc54b84092c3d6136cebc6cd8df98da100e02be2956bb028b8aa784",
+  "limits": [
+    "Node-only default-tuning reachability, not browser/controller delivery or LIFTOFF acceptance.",
+    "Endpoint remains airborne in the fifth sortie; its remaining roll and landing are not covered.",
+    "No modes implemented or activated by this verification."
+  ]
+}
