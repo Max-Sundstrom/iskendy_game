@@ -7,12 +7,18 @@ Measured source: [`509ee1d7fd1f83ae250b8431d5a09cddd5b05077`](https://github.com
 Both performance runs report this exact commit with `dirty: false`. The zero-time vapour correction in `7559c647`
 has [separate follow-up browser evidence](followup/README.md); these older performance runs do not cover that fix.
 
-**Current CI status:** published head `5c5fd2c` fails the repeated-crash browser scenario's 120 s deadline; a separate
-container run also failed hidden-frame PNG equality.
+**Current CI status:** published head `a1a05d3` fails the repeated-crash browser scenario's 120 s deadline in both
+CI runs' browser/container jobs. The earlier `5c5fd2c` container failure also included hidden-frame PNG equality.
 [Investigation and reviewed fixture](ci-harness.md) record the unsuccessful attempts, actual replay progress,
-public-clock correction, zero-time particle fix and authorized resumption. The local follow-up now passes all six
-production browser cases, 189 unit tests and both full 90 s performance profiles at clean `c7bdbf6`.
-Exact published-head CI remains pending; the card is not fully verified.
+public-clock correction, zero-time particle fix and authorized resumption. The historical October 23 local follow-up
+passed all six production browser cases, 189 unit tests and both full 90 s performance profiles at clean `c7bdbf6`.
+The [October 26 investigation](ci-horizon.md) retains the new CI failures and a test-only protocol-read correction.
+Its DOM regression suite passed 12/12, but the authorized production run passed only 5/6: the desktop repeated case
+again exceeded 120 s. No additional browser retry was made. The card is not fully verified.
+After that escalation, the parent authorized [one controlled single-worker run](one-worker.md): all six cases
+passed, including the desktop repeated case in 64.995 s, with unchanged scenarios/assertions/deadline. Resource
+samples show average 3.622 CPU equivalents under a four-CPU quota; there are no paired two-worker resource samples.
+The orchestrator subsequently selected one Playwright worker. Full CI on the new published head is still pending.
 
 ## Actual browser images
 
