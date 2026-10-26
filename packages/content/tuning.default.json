@@ -121,6 +121,7 @@
       "coneBowling": 10
     },
     "scoring": {
+      "nearMissEnabled": true,
       "boostIntervalS": 0.25,
       "roofRideIntervalM": 10,
       "boostTarget": "total",

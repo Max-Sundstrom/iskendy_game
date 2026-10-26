@@ -4,6 +4,7 @@ import { Action, pressed } from './input';
 import { resolveCollisions, type StepStart } from './collisions';
 import { runDirector } from './director';
 import { scoreTick } from './score';
+import { finishNearMisses, prepareNearMisses } from './near-miss';
 import { updateRide } from './roofs';
 import { advanceLaneChange, requestLaneChange } from './lateral';
 import { saturatingExp } from './math';
@@ -66,7 +67,9 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
 
   moveTraffic(state.traffic, tuning, dt);
   updateRide(state, tuning);
+  prepareNearMisses(state, tuning, start, startRideSlot, dt);
   resolveCollisions(state, tuning, start, dt);
+  finishNearMisses(state, tuning);
   scoreTick(state, tuning, startRideSlot, dz, (state.traffic.speed[startRideSlot] ?? 0) * dt);
   runDirector(state, tuning);
 

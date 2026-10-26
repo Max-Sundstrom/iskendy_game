@@ -1,0 +1,200 @@
+{
+  "runtime": {
+    "createdAt": "2026-10-26T13:38:13.593Z",
+    "sourceCommit": "6f8b142696b221c6a4c7a3fbeb024b807b2e3b64",
+    "sourceStatus": "?? e2e/near-miss.spec.ts\n",
+    "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'",
+    "node": "v24.19.0",
+    "command": "playwright test e2e/near-miss.spec.ts --workers=2",
+    "testTimeoutMs": 120000,
+    "exitCode": 0,
+    "closedAt": "2026-10-26T13:39:21.564Z"
+  },
+  "testSpecSha256": "5d48570075bd85570366f711ffdecb282f9b1948244caefd96799f6d3d458ff0",
+  "stats": {
+    "startTime": "2026-10-26T13:38:14.279Z",
+    "duration": 67235.644,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "runs": [
+    {
+      "project": "desktop",
+      "status": "passed",
+      "durationMs": 65665,
+      "screenshots": [
+        {
+          "file": "browser-desktop-approach-before-completion.png",
+          "sha256": "2d161cb5b61a1f98935571d6147abcd5dce4250a1b1557fc717635edbc23575a"
+        },
+        {
+          "file": "browser-desktop-near-miss-pending.png",
+          "sha256": "6628c7716205af63e0d19961345062dd2036d0c1c99bd24c02cd0d379d287064"
+        },
+        {
+          "file": "browser-desktop-near-miss-banked-hud.png",
+          "sha256": "ef7dd6c9a2232ee51080b1e04036a2c393f981f10f00aff7a859c49858403ace"
+        },
+        {
+          "file": "browser-desktop-near-miss-results.png",
+          "sha256": "4888a40e5187f9d6862b22a992f327951fbaed3aafdadd51e9e947d8bf782c4c"
+        },
+        {
+          "file": "browser-desktop-near-miss-retry-fresh.png",
+          "sha256": "83201f46d2f0d82ef180bec371e2d7cf207714570618d5d31ac6e2f52a589daa"
+        }
+      ],
+      "near-miss-ledger": {
+        "near": [
+          {
+            "tick": 352,
+            "vehicleType": 3,
+            "slot": 0
+          }
+        ],
+        "credits": [
+          {
+            "tick": 352,
+            "reason": 11,
+            "points": 50
+          }
+        ],
+        "settlements": [
+          {
+            "tick": 502,
+            "banked": 50,
+            "lost": 0
+          }
+        ],
+        "sweptWitness": {
+          "entry": 0.016358839050132145,
+          "exit": 0.09210444133087464,
+          "penetration": 0.7645626141668364,
+          "gap": 0.5696290216115545,
+          "rearToFront": -0.010382064901182719
+        },
+        "total": 366.06451666705124,
+        "display": 366,
+        "replay": {
+          "schemaVersion": 1,
+          "simVersion": 1,
+          "seed": 1,
+          "tuningHash": "9e91b7802bf1b6b1",
+          "mode": "endless",
+          "ticks": 509,
+          "inputs": [
+            [350, 2],
+            [351, 0]
+          ],
+          "claimedScore": 366,
+          "claimedDistanceM": 316.06451666705124,
+          "finalHash": "fc2ed824"
+        },
+        "hiddenVirtualMs": 5000,
+        "bankObservationTick": 506,
+        "retryOldWindowPassed": true
+      },
+      "browser-diagnostics": {
+        "errors": [],
+        "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'"
+      }
+    },
+    {
+      "project": "mobile",
+      "status": "passed",
+      "durationMs": 48862,
+      "screenshots": [
+        {
+          "file": "browser-mobile-approach-before-completion.png",
+          "sha256": "22ae85eac390fab63a706748366ef8a0454771a40cb9b51caf22abbdd3ed3a2d"
+        },
+        {
+          "file": "browser-mobile-near-miss-pending.png",
+          "sha256": "b4809003c8f2b641ecb343cac1701ca89247d7924c30ab2e2753be3d1718dd6f"
+        },
+        {
+          "file": "browser-mobile-near-miss-banked-hud.png",
+          "sha256": "276b871ebd52063a5180d8612f6cd016d794d91b839c4e4bec459d7a354824a6"
+        },
+        {
+          "file": "browser-mobile-near-miss-results.png",
+          "sha256": "13dcc26f938c00c92f2f16d1672c5b9f64287cdd7b245de6978293bf615377f3"
+        },
+        {
+          "file": "browser-mobile-near-miss-retry-fresh.png",
+          "sha256": "875e253bfc55e2e2a67ec875101895378124976baf05549213555ff3c032d292"
+        }
+      ],
+      "near-miss-ledger": {
+        "near": [
+          {
+            "tick": 352,
+            "vehicleType": 3,
+            "slot": 0
+          }
+        ],
+        "credits": [
+          {
+            "tick": 352,
+            "reason": 11,
+            "points": 50
+          }
+        ],
+        "settlements": [
+          {
+            "tick": 502,
+            "banked": 50,
+            "lost": 0
+          }
+        ],
+        "sweptWitness": {
+          "entry": 0.016358839050132145,
+          "exit": 0.09210444133087464,
+          "penetration": 0.7645626141668364,
+          "gap": 0.5696290216115545,
+          "rearToFront": -0.010382064901182719
+        },
+        "total": 366.06451666705124,
+        "display": 366,
+        "replay": {
+          "schemaVersion": 1,
+          "simVersion": 1,
+          "seed": 1,
+          "tuningHash": "9e91b7802bf1b6b1",
+          "mode": "endless",
+          "ticks": 509,
+          "inputs": [
+            [350, 2],
+            [351, 0]
+          ],
+          "claimedScore": 366,
+          "claimedDistanceM": 316.06451666705124,
+          "finalHash": "fc2ed824"
+        },
+        "hiddenVirtualMs": 5000,
+        "bankObservationTick": 506,
+        "retryOldWindowPassed": true
+      },
+      "browser-diagnostics": {
+        "errors": [],
+        "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'"
+      }
+    }
+  ],
+  "initialAttempt": {
+    "stage": "Node expectedRun precheck before page.goto",
+    "result": "both cases failed",
+    "error": "Expected <=0.6, received0.6131184895833335 at state.tick351",
+    "archive": "/workspace/scratch/P2-03b-browser-attempt1",
+    "correction": "Independently interpolate the351\u2192352 sweep; prove corridor entry before forward exit before lateral penetration, with a simultaneous midpoint witness. Preserve exact input/replay/ledger/hash assertions."
+  },
+  "limits": [
+    "Chromium mobile emulation with synthetic complete pointer gestures; not a physical phone.",
+    "Local production strict-CSP build, not hosted preview verification.",
+    "Current HUD exposes banked total/distance, not pot/meter/N: those are independently audited from input/replay.",
+    "Desktop shows the adjacent van; mobile crops almost all of that van at the right edge. The exact geometry is not established from mobile pixels.",
+    "No new full-suite, cross-engine or performance run; existing simulation QA is separate."
+  ]
+}

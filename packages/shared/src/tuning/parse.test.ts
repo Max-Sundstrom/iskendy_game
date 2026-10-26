@@ -27,6 +27,14 @@ describe('parseTuning', () => {
     expect(parseTuning(defaultTuning).sim.air.capacityL).toBe(600);
   });
 
+  it('requires an explicit boolean for the proposed near-miss policy', () => {
+    expect(parseTuning(defaultTuning).sim.scoring.nearMissEnabled).toBe(true);
+    expect(parseTuning(set(clone(), 'sim.scoring.nearMissEnabled', false)).sim.scoring.nearMissEnabled).toBe(false);
+    expect(problemsOf(set(clone(), 'sim.scoring.nearMissEnabled', 'false'))).toEqual([
+      expect.stringMatching(/^sim\.scoring\.nearMissEnabled: /),
+    ]);
+  });
+
   it('names the exact path of a bad number', () => {
     // -5 is also below minMps, so the cross-field rule fires too; both point into sim.speed.
     const problems = problemsOf(set(clone(), 'sim.speed.maxMps', -5));

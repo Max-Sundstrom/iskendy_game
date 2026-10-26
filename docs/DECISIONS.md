@@ -189,6 +189,12 @@ bumps `SIM_VERSION` (invariant 10).
 | 2026-10-23 | P1-03 | determinism `7083bcea-3e3cf928` (now a session with restarts after crashes); tuningHash `38343d24…` | traffic, director v0, collisions; new keys `sim.player`, `sim.traffic`, `sim.vehicles`, `sim.director.firstRowM/spawnAheadM/despawnBehindM` |
 | 2026-10-23 | P2-02b | determinism `9685154f-ea4436ea` → `5d224451-353277e8` (both Node/browser fixtures); tuningHash `38343d240df13aa3` → `9e2e6e03faddfbea`; replays `early-crash` `0ec6d8a9` → `538c5a99`, `busy-inputs` `950f5632` → `923a1653`, `long-run` `a6039b65` → `c82fb955`; cosine table/spacing/error pin `2b04aa6753db261b` | Accepted airborne lane changes now commit signed barrel rolls; five new fields join the hash. Q22/Q23 add queue and orientation flags. All three replays retain exact duration, score, distance and crash cause. The 10k retry session changes from 21 to 25 runs because actual roll landings affect penalties/crashes. Terminal crash pitch/roll are preserved instead of erased; renderer consumes that same-tick pose. SIM_VERSION remains 1 under ADR-024. |
 | 2026-10-23 | P2-03a | determinism `5d224451-353277e8` → `8be91f5c-6f883e35` (both Node/browser fixtures); tuningHash `9e2e6e03faddfbea` → `cc1f730496d3c9cc`; replays `early-crash` `538c5a99` → `a73a2af9`, `busy-inputs` `923a1653` → `9fe5fb3b`, `long-run` `c82fb955` → `d101ad75` | Scoring/streak ledger and interval counters now join the hash. New Q24–Q26 passive-credit policies and SCRAPE ratio are in tuning. No physics changes: all three replay inputs/ticks/distances/causes and final displayed scores remain identical; 10k retry count remains25. The busy replay earns pot120+150+180 then loses450 on its landing crash, retaining meter110. SIM_VERSION remains1 under ADR-024. |
+| 2026-10-26 | P2-03b | determinism `8be91f5c-6f883e35` → `5e81a89c-04c562d2` (both Node/browser fixtures); tuningHash `cc1f730496d3c9cc` → `9e91b7802bf1b6b1`; replays `early-crash` `a73a2af9` → `93946362`, `busy-inputs` `9fe5fb3b` → `3e19786b`, `long-run` `d101ad75` → `04f57e5b` | Q27 adds the near-miss flag and persistent active-slot pass states to hashing. Independent comparison before regeneration proved all three physical trajectories, old raw event order, scores, inputs, ticks and distances unchanged, plus 10k scripted ticks across the same 25 runs. Those fixtures earn no near awards. Separate default-input seed1 Right350 now earns 50 on tick352, banks on502 and crashes on509 with score366; flag-off has identical physics and score316. SIM_VERSION remains 1 under ADR-024. |
+
+P2-03b independent lifecycle and physical comparison evidence is in `docs/reviews/P2-03b/`; the default-input
+replay records a completed close pass without retuning or state injection. The new hash layout stores all
+five future-affecting encounter states, rather than a boolean "already awarded" approximation. See Q27 for
+the proposed product policy and its disable flag. No accepted physical behaviour was altered to force awards.
 
 P2-03a outcome evidence is in `docs/reviews/P2-03a/sim-outcomes.json`. Early crash still has no style events;
 the long-run dodger also earns no style points. Their final hash differences reflect the expanded state layout.
@@ -326,6 +332,19 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
   at0.25 as an alternative. Settlement priority after all staged credits is CRASH → SCRAPE → SLOPPY → timeout.
   Previously banked score/direct distance remain. The linear extra-flip bonus adds20% of base points per
   extra flip, not compounded points and not multiplied meter. No four deferred tuning proposals are applied.
+- **Q27 (proposed default implemented behind flag, P2-03b): completed untouched NEAR MISS.**
+  `sim.scoring.nearMissEnabled=true` requires a fresh forward front-entry crossing, then rear-exit completion;
+  a vehicle initialized alongside never arms. Remember an interval with simultaneous strictly positive
+  longitudinal/vertical body overlap and an inclusive lateral surface gap of 0…`nearMissLateralM` (0.6 m).
+  Use unrotated lane-space boxes and exact linear interval clipping, without substeps or an epsilon grace.
+  Entry uses `r0<=-halfL && r1>-halfL`; completion uses `r0<length+halfL && r1>=length+halfL`.
+  Swept penetration, exact-slot contact, HOP, starting/current ride or CLEAR excludes that encounter;
+  an unrelated road touchdown does not. A failed encounter may retry after separation, while an awarded
+  vehicle remains spent until removal/reuse. Current motor content uses `vehicle.top !== 'none'`, which
+  excludes cones/barriers; future vehicle taxonomy requires review. Finalize in slot order after every
+  collision: terminal crash suppresses new near events, unrelated SCRAPE may lose an otherwise valid pot.
+  Disabling the flag removes near events/points without changing previous physical outcomes. The 50 base
+  points and 10 meter already come from GDD tuning; this policy bundle is proposed, not owner-approved.
 
 ## Change log
 - 2026-10-23 — Kit created from reference screenshot analysis.

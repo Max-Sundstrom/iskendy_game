@@ -1,0 +1,17 @@
+# Scoring one-worker diagnostic — 26 October 2026
+
+The unchanged scoring test passed both projects on measured head `6f2a84a7e13bbaea56850ed32af903e8cea6044f`: desktop **53.072 s**, mobile **18.914 s**. The 120 s timeout, retries 0, real inputs, hidden/resume checks, ledger/replay assertions and viewports were preserved. This is a local diagnostic result, not an exact-head CI result for a later configuration change.
+
+The run used one worker, traces enabled, system Chromium and the existing production build under strict CSP. The build originated at `6f8b142696b221c6a4c7a3fbeb024b807b2e3b64`; `apps/`, `packages/` and `deploy/` were identical to the measured head. Both browser diagnostics contained `errors: []`. Preflight and final test/config SHA-256 values match, and the source tree remained clean. The owned preview was closed and port 5186 refused connections afterward.
+
+The replay assertions retain seed 28's first crash at tick 258, two slams at ticks 6 and 18, and the 112.5-point bank at tick 168. Its total is 267.87045680500904, displayed as 267. Seed 29's input-free Retry crashes at **tick 505**, with total 313.42881941505215, displayed as **313**. The earlier “313” was a score, not a tick count. No replay or outcome mismatch was found.
+
+Both traces contain exactly 168 `fastForward(100)` calls in blocks of 32, 24 and 112; one hidden `fastForward(5000)`; and six `runFor` calls with virtual durations 32, 50, 150, 50, 150 and 32 ms. The final 112-call block took 24.772 s on desktop and 7.331 s on mobile. Individual desktop FF100 calls had p50 6.361 ms and p95 697.019 ms, compared with mobile p50 6.071 ms and p95 207.830 ms. Thus the repeated clock progression is materially expensive; extra calls are not responsible.
+
+In [CI run 40333793849](https://github.com/Max-Sundstrom/iskendy_game/actions/runs/40333793849), the smoke and container desktop scoring tests timed out at 120 s inside that final `frames(112)` block (`scoring.spec.ts:199`, `fastForward(100)` at line 53). Both mobile scoring cases passed. The local diagnostic completed all assertions without changing the test or its schedule.
+
+The one-second resource sampler observed a four-core cgroup quota, mean cgroup CPU use of 3.673 cores, and throttling in 622 of 753 periods. The throttled counter increased by 43.629329 s; **this is not 43.6 s of lost test wall time**. Peak sampled cgroup memory was 2.017 GB against a 17.180 GB cap. Cgroup counters include other processes, summed process RSS double-counts shared mappings, and sampling can miss peaks.
+
+Resource contention is a plausible contributor, but this run does not prove the CI root cause or a causal one-versus-two-worker speedup: there is no paired same-host two-worker resource measurement, and runner/test mix/cache/server differences remain. One pass does not establish flake frequency. An independent reviewer checked the raw report, hashes, ledgers and these limitations. The next verification belongs to the exact new CI head if the coordinator changes only worker concurrency; the 120 s timeout and assertions should remain intact.
+
+The companion [compact JSON](scoring-one-worker.json) retains provenance, timings, hashes, ledgers and resource counters. Full traces, screenshots and raw samples remain under `/workspace/scratch/scoring-ci-oct26/one-worker/`; they are omitted from this small repository evidence bundle. This is local Chromium desktop/mobile emulation, not physical-phone or other-engine acceptance. No additional browser run was performed for this report.

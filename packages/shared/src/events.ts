@@ -10,6 +10,7 @@ export const ScoreReason = {
   perfectLanding: 8,
   stuntLanding: 9,
   slam: 10,
+  nearMiss: 11,
 } as const;
 export type ScoreReason = (typeof ScoreReason)[keyof typeof ScoreReason];
 
@@ -54,6 +55,8 @@ export const SimEventKind = {
   streakSettled: 24,
   /** a: streak event-count threshold crossed; b unused. */
   streakMilestone: 25,
+  /** a: vehicle type index, b: traffic slot at event time (do not dereference after director reuse). */
+  nearMiss: 26,
 } as const;
 
 export type SimEventKind = (typeof SimEventKind)[keyof typeof SimEventKind];
@@ -84,4 +87,5 @@ export type SimEvent =
   | { kind: 'scoreAddedToPot'; reason: ScoreReason; points: number }
   | { kind: 'streakSettled'; banked: number; lost: number }
   | { kind: 'streakMilestone'; count: number }
+  | { kind: 'nearMiss'; vehicleType: number; slot: number }
   | { kind: 'landingGraded'; grade: 'perfect' | 'stunt' | 'sloppy'; flips: number };
