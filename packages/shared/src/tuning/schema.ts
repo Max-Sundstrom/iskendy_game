@@ -295,6 +295,25 @@ export const PresentationTuningSchema = z.strictObject({
     })
     .refine((c) => c.fovMinDeg <= c.fovMaxDeg, { message: 'fovMinDeg must not exceed fovMaxDeg', path: ['fovMinDeg'] }),
   car: z.strictObject({ laneBodyRollDeg: nonNeg() }),
+  crash: z
+    .strictObject({
+      durationS: durationS(),
+      settleDurationS: durationS(),
+      bodyDropM: nonNeg(),
+      bodyPitchDeg: z.number().min(0).max(15),
+      cameraPullbackM: nonNeg(),
+      cloudCountPerNozzle: nonNegInt(),
+      cloudLifeS: durationS(),
+      cloudSpeedMps: nonNeg(),
+      cloudSpreadMps: nonNeg(),
+      cloudSizeM: pos(),
+      cloudGrowM: nonNeg(),
+      cloudAlpha: ratio(),
+    })
+    .refine((c) => c.settleDurationS <= c.durationS, {
+      message: 'settleDurationS must fit in the crash presentation',
+      path: ['settleDurationS'],
+    }),
   input: z.strictObject({ swipeMinPx: pos(), swipeMaxMs: pos() }),
   hud: z.strictObject({
     eventFeedLines: posInt(),

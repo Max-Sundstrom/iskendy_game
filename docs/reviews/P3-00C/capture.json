@@ -1,0 +1,27 @@
+{
+  "commit": "509ee1d7fd1f83ae250b8431d5a09cddd5b05077",
+  "browser": "154.0.8037.57",
+  "errors": [],
+  "profiles": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "deviceScaleFactor": 1,
+      "quality": "low",
+      "reducedFramePixelIdentical": true
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "deviceScaleFactor": 3,
+      "quality": "low",
+      "reducedFramePixelIdentical": true
+    }
+  ]
+}

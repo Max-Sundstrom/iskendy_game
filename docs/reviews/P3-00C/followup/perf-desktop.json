@@ -1,0 +1,813 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-10-23T22:53:16.973Z",
+  "configuration": {
+    "scriptVersion": 1,
+    "seed": 5,
+    "durationS": 90,
+    "viewport": "desktop",
+    "quality": "low"
+  },
+  "budgets": {
+    "maxDrawCalls": 150,
+    "maxTriangles": 300000,
+    "geometryRegressionRatio": 1.1
+  },
+  "passed": true,
+  "errors": [],
+  "environment": {
+    "node": "v24.19.0",
+    "os": "linux",
+    "arch": "x64"
+  },
+  "timing": "Real wall-clock rAF intervals during active play, informational; not a phone performance claim.",
+  "scenario": "Fixed 500 ms keyboard-event script, natural crashes and Retry, incrementing run seeds. No sim bypass.",
+  "limitations": [
+    "Wall-clock inputs may reach different sim ticks on different renderers; this is not a deterministic replay.",
+    "Geometry comparisons require matching profiles and representative run coverage; frame milliseconds are never gated.",
+    "GPU texture bytes, GC pauses and phone/device performance are not measured by this smoke."
+  ],
+  "commit": "c7bdbf682ccc77db6d724b976d70594dd8f18ab1",
+  "dirty": false,
+  "bundle": {
+    "jsGzip": 198444,
+    "files": 1
+  },
+  "source": "fresh production build / local Vite preview",
+  "browser": "154.0.8037.57",
+  "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'",
+  "elapsedWallMs": 90000.549902,
+  "measurement": {
+    "schemaVersion": 1,
+    "frames": 468,
+    "activeFrames": 366,
+    "invalidFrames": 0,
+    "storedSamples": 366,
+    "overflowFrames": 0,
+    "activeFrameMs": 68680.49999999999,
+    "totalFrameMs": 90013.1,
+    "frameTimeMs": {
+      "p50": 183.3000000000029,
+      "p95": 233.3000000000029,
+      "max": 300.09999999999854
+    },
+    "maxDrawCalls": 97,
+    "maxTriangles": 92558,
+    "maxGeometries": 84,
+    "maxTextures": 6
+  },
+  "driver": {
+    "retries": 16,
+    "runs": 17,
+    "maxDistanceM": 133,
+    "inputs": [
+      {
+        "elapsedMs": 819.2000000001863,
+        "code": "ArrowRight",
+        "run": 0
+      },
+      {
+        "elapsedMs": 1354.2000000001863,
+        "code": "Space",
+        "run": 0
+      },
+      {
+        "elapsedMs": 1693.2000000001863,
+        "code": "ArrowLeft",
+        "run": 0
+      },
+      {
+        "elapsedMs": 2199.5,
+        "code": "Space",
+        "run": 0
+      },
+      {
+        "elapsedMs": 2785.300000000745,
+        "code": "Space",
+        "run": 0
+      },
+      {
+        "elapsedMs": 4273.200000000186,
+        "code": "Retry",
+        "run": 1
+      },
+      {
+        "elapsedMs": 4861.100000000559,
+        "code": "ArrowLeft",
+        "run": 1
+      },
+      {
+        "elapsedMs": 5351.5,
+        "code": "ArrowRight",
+        "run": 1
+      },
+      {
+        "elapsedMs": 5704.9000000003725,
+        "code": "Space",
+        "run": 1
+      },
+      {
+        "elapsedMs": 6379,
+        "code": "ArrowRight",
+        "run": 1
+      },
+      {
+        "elapsedMs": 6746.700000000186,
+        "code": "Space",
+        "run": 1
+      },
+      {
+        "elapsedMs": 7489.4000000003725,
+        "code": "ArrowLeft",
+        "run": 1
+      },
+      {
+        "elapsedMs": 9248.800000000745,
+        "code": "Retry",
+        "run": 2
+      },
+      {
+        "elapsedMs": 9920,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 10412,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 10908,
+        "code": "ArrowLeft",
+        "run": 2
+      },
+      {
+        "elapsedMs": 11300,
+        "code": "ArrowRight",
+        "run": 2
+      },
+      {
+        "elapsedMs": 11698.5,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 12312.100000000559,
+        "code": "ArrowRight",
+        "run": 2
+      },
+      {
+        "elapsedMs": 12716.600000000559,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 13317.600000000559,
+        "code": "ArrowLeft",
+        "run": 2
+      },
+      {
+        "elapsedMs": 13812.5,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 14358.700000000186,
+        "code": "Space",
+        "run": 2
+      },
+      {
+        "elapsedMs": 15716.300000000745,
+        "code": "Retry",
+        "run": 3
+      },
+      {
+        "elapsedMs": 16349.600000000559,
+        "code": "ArrowLeft",
+        "run": 3
+      },
+      {
+        "elapsedMs": 16717,
+        "code": "ArrowRight",
+        "run": 3
+      },
+      {
+        "elapsedMs": 17285,
+        "code": "Space",
+        "run": 3
+      },
+      {
+        "elapsedMs": 17815.300000000745,
+        "code": "ArrowRight",
+        "run": 3
+      },
+      {
+        "elapsedMs": 18287.5,
+        "code": "Space",
+        "run": 3
+      },
+      {
+        "elapsedMs": 18778.5,
+        "code": "ArrowLeft",
+        "run": 3
+      },
+      {
+        "elapsedMs": 20207.400000000373,
+        "code": "Retry",
+        "run": 4
+      },
+      {
+        "elapsedMs": 20803.200000000186,
+        "code": "Space",
+        "run": 4
+      },
+      {
+        "elapsedMs": 21245.10000000056,
+        "code": "Space",
+        "run": 4
+      },
+      {
+        "elapsedMs": 21802.800000000745,
+        "code": "ArrowLeft",
+        "run": 4
+      },
+      {
+        "elapsedMs": 22384.400000000373,
+        "code": "ArrowRight",
+        "run": 4
+      },
+      {
+        "elapsedMs": 22751,
+        "code": "Space",
+        "run": 4
+      },
+      {
+        "elapsedMs": 23194.5,
+        "code": "ArrowRight",
+        "run": 4
+      },
+      {
+        "elapsedMs": 23750.300000000745,
+        "code": "Space",
+        "run": 4
+      },
+      {
+        "elapsedMs": 24275,
+        "code": "ArrowLeft",
+        "run": 4
+      },
+      {
+        "elapsedMs": 25960.200000000186,
+        "code": "Retry",
+        "run": 5
+      },
+      {
+        "elapsedMs": 26497.800000000745,
+        "code": "Space",
+        "run": 5
+      },
+      {
+        "elapsedMs": 27380.400000000373,
+        "code": "Space",
+        "run": 5
+      },
+      {
+        "elapsedMs": 27717,
+        "code": "ArrowLeft",
+        "run": 5
+      },
+      {
+        "elapsedMs": 28250.60000000056,
+        "code": "ArrowRight",
+        "run": 5
+      },
+      {
+        "elapsedMs": 28753.900000000373,
+        "code": "Space",
+        "run": 5
+      },
+      {
+        "elapsedMs": 29271.900000000373,
+        "code": "ArrowRight",
+        "run": 5
+      },
+      {
+        "elapsedMs": 29795.300000000745,
+        "code": "Space",
+        "run": 5
+      },
+      {
+        "elapsedMs": 30363.700000000186,
+        "code": "ArrowLeft",
+        "run": 5
+      },
+      {
+        "elapsedMs": 31662.5,
+        "code": "Retry",
+        "run": 6
+      },
+      {
+        "elapsedMs": 32354.5,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 32711,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 33244.200000000186,
+        "code": "ArrowLeft",
+        "run": 6
+      },
+      {
+        "elapsedMs": 33773.300000000745,
+        "code": "ArrowRight",
+        "run": 6
+      },
+      {
+        "elapsedMs": 34305.60000000056,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 34851.90000000037,
+        "code": "ArrowRight",
+        "run": 6
+      },
+      {
+        "elapsedMs": 35057.10000000056,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 35655.10000000056,
+        "code": "ArrowLeft",
+        "run": 6
+      },
+      {
+        "elapsedMs": 36245.300000000745,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 36884.10000000056,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 37311.700000000186,
+        "code": "ArrowLeft",
+        "run": 6
+      },
+      {
+        "elapsedMs": 37759.40000000037,
+        "code": "ArrowRight",
+        "run": 6
+      },
+      {
+        "elapsedMs": 38383.200000000186,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 38752.700000000186,
+        "code": "ArrowRight",
+        "run": 6
+      },
+      {
+        "elapsedMs": 39254.700000000186,
+        "code": "Space",
+        "run": 6
+      },
+      {
+        "elapsedMs": 39771.300000000745,
+        "code": "ArrowLeft",
+        "run": 6
+      },
+      {
+        "elapsedMs": 41287,
+        "code": "Retry",
+        "run": 7
+      },
+      {
+        "elapsedMs": 41916.10000000056,
+        "code": "Space",
+        "run": 7
+      },
+      {
+        "elapsedMs": 42260.800000000745,
+        "code": "Space",
+        "run": 7
+      },
+      {
+        "elapsedMs": 42793.90000000037,
+        "code": "ArrowLeft",
+        "run": 7
+      },
+      {
+        "elapsedMs": 43377.5,
+        "code": "ArrowRight",
+        "run": 7
+      },
+      {
+        "elapsedMs": 43718.5,
+        "code": "Space",
+        "run": 7
+      },
+      {
+        "elapsedMs": 44295.700000000186,
+        "code": "ArrowRight",
+        "run": 7
+      },
+      {
+        "elapsedMs": 44854.300000000745,
+        "code": "Space",
+        "run": 7
+      },
+      {
+        "elapsedMs": 45220,
+        "code": "ArrowLeft",
+        "run": 7
+      },
+      {
+        "elapsedMs": 46788.300000000745,
+        "code": "Retry",
+        "run": 8
+      },
+      {
+        "elapsedMs": 47390.300000000745,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 47721.90000000037,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 48320.10000000056,
+        "code": "ArrowLeft",
+        "run": 8
+      },
+      {
+        "elapsedMs": 48900.10000000056,
+        "code": "ArrowRight",
+        "run": 8
+      },
+      {
+        "elapsedMs": 49250.60000000056,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 49762.700000000186,
+        "code": "ArrowRight",
+        "run": 8
+      },
+      {
+        "elapsedMs": 50257,
+        "code": "Space",
+        "run": 8
+      },
+      {
+        "elapsedMs": 50744.5,
+        "code": "ArrowLeft",
+        "run": 8
+      },
+      {
+        "elapsedMs": 51812.800000000745,
+        "code": "Retry",
+        "run": 9
+      },
+      {
+        "elapsedMs": 52319.700000000186,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 52725.10000000056,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 53250.700000000186,
+        "code": "ArrowLeft",
+        "run": 9
+      },
+      {
+        "elapsedMs": 53775,
+        "code": "ArrowRight",
+        "run": 9
+      },
+      {
+        "elapsedMs": 54294.40000000037,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 54847.90000000037,
+        "code": "ArrowRight",
+        "run": 9
+      },
+      {
+        "elapsedMs": 55174.800000000745,
+        "code": "Space",
+        "run": 9
+      },
+      {
+        "elapsedMs": 55702,
+        "code": "ArrowLeft",
+        "run": 9
+      },
+      {
+        "elapsedMs": 57308.40000000037,
+        "code": "Retry",
+        "run": 10
+      },
+      {
+        "elapsedMs": 57672.90000000037,
+        "code": "Space",
+        "run": 10
+      },
+      {
+        "elapsedMs": 58218.5,
+        "code": "Space",
+        "run": 10
+      },
+      {
+        "elapsedMs": 58751.800000000745,
+        "code": "ArrowLeft",
+        "run": 10
+      },
+      {
+        "elapsedMs": 59277,
+        "code": "ArrowRight",
+        "run": 10
+      },
+      {
+        "elapsedMs": 59789.60000000056,
+        "code": "Space",
+        "run": 10
+      },
+      {
+        "elapsedMs": 60293.800000000745,
+        "code": "ArrowRight",
+        "run": 10
+      },
+      {
+        "elapsedMs": 60800.40000000037,
+        "code": "Space",
+        "run": 10
+      },
+      {
+        "elapsedMs": 61217.300000000745,
+        "code": "ArrowLeft",
+        "run": 10
+      },
+      {
+        "elapsedMs": 62692.300000000745,
+        "code": "Retry",
+        "run": 11
+      },
+      {
+        "elapsedMs": 63252.10000000056,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 63796.10000000056,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 64180.10000000056,
+        "code": "ArrowLeft",
+        "run": 11
+      },
+      {
+        "elapsedMs": 64717.40000000037,
+        "code": "ArrowRight",
+        "run": 11
+      },
+      {
+        "elapsedMs": 65353.300000000745,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 65760.10000000056,
+        "code": "ArrowRight",
+        "run": 11
+      },
+      {
+        "elapsedMs": 66076.90000000037,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 66851,
+        "code": "ArrowLeft",
+        "run": 11
+      },
+      {
+        "elapsedMs": 67015.90000000037,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 67656.40000000037,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 68377.5,
+        "code": "ArrowLeft",
+        "run": 11
+      },
+      {
+        "elapsedMs": 68755,
+        "code": "ArrowRight",
+        "run": 11
+      },
+      {
+        "elapsedMs": 69121,
+        "code": "Space",
+        "run": 11
+      },
+      {
+        "elapsedMs": 70872.80000000075,
+        "code": "Retry",
+        "run": 12
+      },
+      {
+        "elapsedMs": 71255.80000000075,
+        "code": "ArrowRight",
+        "run": 12
+      },
+      {
+        "elapsedMs": 71827.5,
+        "code": "Space",
+        "run": 12
+      },
+      {
+        "elapsedMs": 72203.5,
+        "code": "ArrowLeft",
+        "run": 12
+      },
+      {
+        "elapsedMs": 72753.40000000037,
+        "code": "Space",
+        "run": 12
+      },
+      {
+        "elapsedMs": 73283,
+        "code": "Space",
+        "run": 12
+      },
+      {
+        "elapsedMs": 74783.80000000075,
+        "code": "Retry",
+        "run": 13
+      },
+      {
+        "elapsedMs": 75314.90000000037,
+        "code": "ArrowLeft",
+        "run": 13
+      },
+      {
+        "elapsedMs": 75743.70000000019,
+        "code": "ArrowRight",
+        "run": 13
+      },
+      {
+        "elapsedMs": 76314.80000000075,
+        "code": "Space",
+        "run": 13
+      },
+      {
+        "elapsedMs": 76744.20000000019,
+        "code": "ArrowRight",
+        "run": 13
+      },
+      {
+        "elapsedMs": 77269.80000000075,
+        "code": "Space",
+        "run": 13
+      },
+      {
+        "elapsedMs": 77814.60000000056,
+        "code": "ArrowLeft",
+        "run": 13
+      },
+      {
+        "elapsedMs": 79311.10000000056,
+        "code": "Retry",
+        "run": 14
+      },
+      {
+        "elapsedMs": 79707,
+        "code": "Space",
+        "run": 14
+      },
+      {
+        "elapsedMs": 80265.20000000019,
+        "code": "Space",
+        "run": 14
+      },
+      {
+        "elapsedMs": 80782.60000000056,
+        "code": "ArrowLeft",
+        "run": 14
+      },
+      {
+        "elapsedMs": 81343.40000000037,
+        "code": "ArrowRight",
+        "run": 14
+      },
+      {
+        "elapsedMs": 81685.80000000075,
+        "code": "Space",
+        "run": 14
+      },
+      {
+        "elapsedMs": 82205.40000000037,
+        "code": "ArrowRight",
+        "run": 14
+      },
+      {
+        "elapsedMs": 82721.80000000075,
+        "code": "Space",
+        "run": 14
+      },
+      {
+        "elapsedMs": 83282.40000000037,
+        "code": "ArrowLeft",
+        "run": 14
+      },
+      {
+        "elapsedMs": 84359.10000000056,
+        "code": "Retry",
+        "run": 15
+      },
+      {
+        "elapsedMs": 84754.40000000037,
+        "code": "Space",
+        "run": 15
+      },
+      {
+        "elapsedMs": 85310.70000000019,
+        "code": "Space",
+        "run": 15
+      },
+      {
+        "elapsedMs": 85701.20000000019,
+        "code": "ArrowLeft",
+        "run": 15
+      },
+      {
+        "elapsedMs": 86280,
+        "code": "ArrowRight",
+        "run": 15
+      },
+      {
+        "elapsedMs": 86803.10000000056,
+        "code": "Space",
+        "run": 15
+      },
+      {
+        "elapsedMs": 87344.20000000019,
+        "code": "ArrowRight",
+        "run": 15
+      },
+      {
+        "elapsedMs": 87789.40000000037,
+        "code": "Space",
+        "run": 15
+      },
+      {
+        "elapsedMs": 88380.80000000075,
+        "code": "ArrowLeft",
+        "run": 15
+      },
+      {
+        "elapsedMs": 89669.90000000037,
+        "code": "Retry",
+        "run": 16
+      }
+    ]
+  },
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36",
+  "gpuRenderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+  "heap": {
+    "usedBytes": 8758012,
+    "totalBytes": 10362880,
+    "scope": "V8 heap; not total tab or GPU memory"
+  },
+  "baseline": "docs/reviews/perf-P0-09/desktop.json",
+  "screenshot": {
+    "path": "/workspace/scratch/kometa-crash/c7bdbf6-perf/desktop.png",
+    "screenAtRead": "playing"
+  }
+}

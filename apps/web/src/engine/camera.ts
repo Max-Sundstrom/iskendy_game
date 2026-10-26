@@ -8,7 +8,9 @@ const CAM = DEFAULT_TUNING.presentation.camera;
 
 export type ChaseCamera = {
   camera: PerspectiveCamera;
-  update(x: number, y: number, z: number, speed: number, boosting: boolean, dt: number): void;
+  update(x: number, y: number, z: number, speed: number, boosting: boolean, dt: number, reducedMotion?: boolean): void;
+  reset(x: number, y: number, z: number): void;
+  reduceMotion(): void;
   resize(aspect: number): void;
 };
 
@@ -31,29 +33,44 @@ export function createChaseCamera(tuning: SimTuning): ChaseCamera {
   let followX = 0;
   let fov = CAM.fovMinDeg;
   let airLift = 0;
+  const place = (y: number, z: number) => {
+    camera.fov = fovForAspect(fov, aspect);
+    camera.position.set(
+      followX,
+      CAM.heightM + y * 0.6 + CAM.airRaiseM * airLift,
+      -z + CAM.distanceM + CAM.airPullbackM * airLift,
+    );
+    look.set(followX, 1.0 + y * 0.5, -z - CAM.lookAheadM);
+    camera.lookAt(look);
+    camera.updateProjectionMatrix();
+  };
   return {
     camera,
     resize(a) {
       aspect = a;
       camera.aspect = a;
+      camera.fov = fovForAspect(fov, aspect);
       camera.updateProjectionMatrix();
     },
-    update(x, y, z, speed, boosting, dt) {
+    reduceMotion() {
+      fov = CAM.fovMinDeg;
+      camera.fov = fovForAspect(fov, aspect);
+      camera.updateProjectionMatrix();
+    },
+    reset(x, y, z) {
+      followX = x * 0.85;
+      fov = CAM.fovMinDeg;
+      airLift = 0;
+      place(y, z);
+    },
+    update(x, y, z, speed, boosting, dt, reducedMotion = false) {
       const k = 1 - Math.exp(-dt * 8); // presentation-only smoothing
       followX += (x * 0.85 - followX) * k;
       const t = MathUtils.clamp((speed - tuning.speed.minMps) / (tuning.speed.maxMps - tuning.speed.minMps), 0, 1);
       const target = CAM.fovMinDeg + (CAM.fovMaxDeg - CAM.fovMinDeg) * t + (boosting ? CAM.boostFovKickDeg : 0);
-      fov += (target - fov) * k;
+      fov = reducedMotion ? CAM.fovMinDeg : fov + (target - fov) * k;
       airLift += ((y > 0.5 ? 1 : 0) - airLift) * k;
-      camera.fov = fovForAspect(fov, aspect);
-      camera.position.set(
-        followX,
-        CAM.heightM + y * 0.6 + CAM.airRaiseM * airLift,
-        -z + CAM.distanceM + CAM.airPullbackM * airLift,
-      );
-      look.set(followX, 1.0 + y * 0.5, -z - CAM.lookAheadM);
-      camera.lookAt(look);
-      camera.updateProjectionMatrix();
+      place(y, z);
     },
   };
 }
