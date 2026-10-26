@@ -1,5 +1,9 @@
 # P3-00C CI timeout investigation
 
+For the later published `a1a05d3` deadline failures and October 26 public-API horizon/observer investigation,
+see [the follow-up](ci-horizon.md). Its synthetic guard regressions passed, but the full production run still
+failed the desktop deadline; the historical local successes below do not establish a green current CI gate.
+
 PR #4 at `5c5fd2cb6217ec23d5a2c3bf99af79dc0566077d` is **not fully verified**. CI's repeated-crash test
 exceeded its existing 120 s deadline; a separately completed container job also failed hidden-frame PNG equality.
 The local timing investigation below reproduces the deadline failure without
