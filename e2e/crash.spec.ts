@@ -3,6 +3,7 @@ import { parseReplay, parseTuning } from '@kometa/shared';
 import { playReplay } from '../packages/sim/src/replay';
 import { readEvents } from '../packages/sim/src/events';
 import tuningJson from '../packages/content/tuning.default.json' with { type: 'json' };
+import { reachCrash } from './helpers/reach-crash';
 
 const simTuning = parseTuning(tuningJson).sim;
 
@@ -19,15 +20,6 @@ const start = async (page: Page, seed: number) => {
   await page.goto(`/?seed=${seed}&q=low&intro=0`);
   await page.clock.runFor(32);
   await expect(page.locator('#app')).toHaveAttribute('data-screen', 'playing');
-};
-const reachCrash = async (page: Page) => {
-  // Bounded low-frame-rate catch-up frames run the production loop (at most five sim ticks each).
-  // Stop on the first crash frame so even slow CI rendering cannot skip its presentation interval.
-  for (let frame = 0; frame < 150; frame++) {
-    if ((await page.locator('#app').getAttribute('data-screen')) === 'crashing') return;
-    await page.clock.fastForward(100);
-  }
-  await expect(page.locator('#app')).toHaveAttribute('data-screen', 'crashing');
 };
 const finishCrash = async (page: Page) => {
   // Keep the same 800 ms horizon with eight real frames below the production 250 ms frame clamp.
@@ -67,7 +59,7 @@ test('crash freezes the run, pauses while hidden and records once across two ret
   await start(page, 96);
   const app = page.locator('#app');
   for (let run = 0; run < 3; run++) {
-    await reachCrash(page);
+    await reachCrash(page, [339, 324, 313][run] ?? 0);
     await expect(page.locator('.crash-cue')).toBeVisible();
     await expect(page.locator('.results')).toBeHidden();
     const saved = await savedRuns(page);
@@ -123,7 +115,7 @@ test('crash freezes the run, pauses while hidden and records once across two ret
 test('reduced motion keeps the crash scene static before results', async ({ page }, info) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await start(page, 28);
-  await reachCrash(page);
+  await reachCrash(page, 258);
   await expect(page.locator('.crash-cue')).toBeVisible();
   await capture(page, info, 'reduced-impact-start');
   const before = await page.locator('#game').screenshot();
