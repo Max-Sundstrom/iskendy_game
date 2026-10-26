@@ -109,9 +109,11 @@ describe('crash presentation', () => {
     }
     expect(s.frameEvents).toContainEqual({ kind: 'crash', cause: 'landing' });
     expect(s.state.tick).toBe(64);
-    expect(s.state.player.flipTurns).toBe(0);
+    // P2-02b deliberately preserves the final integrated landing pose instead of resetting it to zero.
+    // The previous P3-00C tick fallback would now discard an actual tick of rotation.
+    expect(s.state.player.flipTurns).toBeGreaterThan(s.prev.flip);
     const hash = stateHash(s.state);
-    expect(crashFlipTurns(s)).toBe(s.prev.flip);
+    expect(crashFlipTurns(s)).toBe(s.state.player.flipTurns);
     expect(crashFlipTurns(s)).toBeGreaterThan(0.5);
     expect(stateHash(s.state)).toBe(hash);
   });

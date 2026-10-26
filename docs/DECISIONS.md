@@ -187,6 +187,23 @@ bumps `SIM_VERSION` (invariant 10).
 | 2026-10-23 | P1-05 | determinism `cb0aae87-91cfb58f` | `score.total` (1 point per metre, GDD §9) joins the state; events, streaks and the pot follow in P2-03 |
 | 2026-10-23 | P2-01 + P2-02 (flips) | determinism `9685154f-ea4436ea`; golden replays `early-crash` `0ec6d8a9`, `busy-inputs` `950f5632`, `long-run` `a6039b65` | platforms ridden with coyote time, hop chains and slam hops, CLEAR tracking; front flips, landing grades and the sloppy penalty; new state joins the hash |
 | 2026-10-23 | P1-03 | determinism `7083bcea-3e3cf928` (now a session with restarts after crashes); tuningHash `38343d24…` | traffic, director v0, collisions; new keys `sim.player`, `sim.traffic`, `sim.vehicles`, `sim.director.firstRowM/spawnAheadM/despawnBehindM` |
+| 2026-10-23 | P2-02b | determinism `9685154f-ea4436ea` → `5d224451-353277e8` (both Node/browser fixtures); tuningHash `38343d240df13aa3` → `9e2e6e03faddfbea`; replays `early-crash` `0ec6d8a9` → `538c5a99`, `busy-inputs` `950f5632` → `923a1653`, `long-run` `a6039b65` → `c82fb955`; cosine table/spacing/error pin `2b04aa6753db261b` | Accepted airborne lane changes now commit signed barrel rolls; five new fields join the hash. Q22/Q23 add queue and orientation flags. All three replays retain exact duration, score, distance and crash cause. The 10k retry session changes from 21 to 25 runs because actual roll landings affect penalties/crashes. Terminal crash pitch/roll are preserved instead of erased; renderer consumes that same-tick pose. SIM_VERSION remains 1 under ADR-024. |
+
+P2-02b outcome evidence: `early-crash` still ends on tick 258, rear collision, score 155 and distance
+155.37045680500898 m; only the expanded state layout changes its hash. `long-run` still ends on tick 2070,
+second scrape, score 1531 and distance 1531.9897301506035 m; its policy never requests an airborne lane
+change, so its hash change likewise reflects the expanded layout. `busy-inputs` still ends on tick 106,
+landing crash, score 62 and distance 62.645557488526215 m. It now completes the first left roll on tick 42,
+lands perfectly on tick 48, completes a right roll on tick 101 and immediately begins its queued left roll.
+Its crash retains pitch 0.7272727272727268 turns and roll 0.8148148148148151 turns, replacing the old zeroed
+pitch. Active/queued trick flags are cleared, but counts and terminal angles remain for crash presentation.
+
+The 10k session's first physical outcome difference is global tick 459 (seed 8, run tick 177): the queued
+left roll lands at 0.888888888888889 turns, 40° from upright, so it receives the existing 0.8 s SLOPPY penalty.
+The previous sim had no roll and treated that jump as plain. This changes distance and subsequent traffic
+encounters (the earlier implementation crashes into a rear at global tick 697 while the new run survives),
+so later retries use different seeds/timings. The new fixture follows these intended rules; no assertion was
+relaxed. Independent quaternion tests and the old pure-axis boundaries constrain the new grading.
 
 ## ADR-026 · accepted · Owner playtest feedback: launch gantry intro and a visual slice before P2 (owner, 2026-10-23)
 After playing the P1 build, the owner asked for:
@@ -264,6 +281,17 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
   jump when the free-fall time to the road is under `jump.bufferS` (120 ms); otherwise it starts or queues a flip.
   While flying, a flip needs a re-press, so the 150 ms hold threshold costs a little height; a double flip wants
   altitude, for example after a roof hop.
+
+- **Q22 (proposed default implemented behind flag, P2-02b): barrel-roll queue.** GDD commits each 0.45 s
+  roll but does not specify inputs during one. `sim.tricks.barrelRollQueuedInputs=1` keeps the first pending
+  direction from an actual airborne lane-change start; overflow is ignored for rolls only. Mode `0` has no
+  pending roll. Merely queued lane input, bumps, ground starts and scrape return do not request a roll.
+  Direction cannot reverse the current roll; completed counts are independent of signed net rotation.
+- **Q23 (proposed default implemented behind flag, P2-02b): what is "upright" for a mixed landing?**
+  `sim.landing.orientationMode="uprightForward"` grades shortest quaternion distance from the original
+  upright/forward orientation. This rejects pitch180°+roll180° (wheels down but facing backward). Alternate
+  `"upVector"` ignores heading and accepts that pose. The default avoids silently accepting a reversed car;
+  owner confirmation remains open. Both options use deterministic lookup interpolation, not runtime trig.
 
 ## Change log
 - 2026-10-23 — Kit created from reference screenshot analysis.

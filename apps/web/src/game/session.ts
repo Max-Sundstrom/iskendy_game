@@ -19,6 +19,8 @@ export type Snapshot = {
   z: number;
   /** Front-flip rotation in turns (PlayerState.flipTurns). */
   flip: number;
+  /** Signed barrel rotation; never wrap between complete turns. */
+  roll: number;
   readonly trafficZ: Float64Array;
 };
 
@@ -37,12 +39,13 @@ function snapshot(s: SimState, into: Snapshot): void {
   into.y = s.player.y;
   into.z = s.player.z;
   into.flip = s.player.flipTurns;
+  into.roll = s.player.rollTurns;
   into.trafficZ.set(s.traffic.z);
 }
 
 export function createSession(seed: number, tuning: SimTuning = DEFAULT_TUNING.sim): Session {
   const state = createSimState(seed, tuning);
-  const prev: Snapshot = { x: 0, y: 0, z: 0, flip: 0, trafficZ: new Float64Array(TRAFFIC_CAPACITY) };
+  const prev: Snapshot = { x: 0, y: 0, z: 0, flip: 0, roll: 0, trafficZ: new Float64Array(TRAFFIC_CAPACITY) };
   snapshot(state, prev);
   return { tuning, state, prev, frameEvents: [], recorder: createRecorder(seed, tuning) };
 }
@@ -52,9 +55,16 @@ export function advance(session: Session, steps: number, input: number | (() => 
   session.frameEvents.length = 0;
   for (let i = 0; i < steps && session.state.status === SimStatus.running; i++) {
     const held = typeof input === 'number' ? input : input();
+    const touchSeq = session.state.player.touchSeq;
     snapshot(session.state, session.prev);
     session.recorder.record(held);
     step(session.state, held, session.tuning);
+    if (session.state.status === SimStatus.running && session.state.player.touchSeq !== touchSeq) {
+      // Safe touchdown resets tricks even if a roof hop or buffered jump immediately returns to the air.
+      // Align only this tick's rotation snapshots, so a later roll in a catch-up frame still interpolates.
+      session.prev.flip = session.state.player.flipTurns;
+      session.prev.roll = session.state.player.rollTurns;
+    }
     for (const e of readEvents(session.state.events)) {
       if (e.kind === 'originShift') {
         // The snapshot was taken before the shift; move it into the new frame so interpolation stays continuous.

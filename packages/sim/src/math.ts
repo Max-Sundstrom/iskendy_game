@@ -1,4 +1,4 @@
-import { SAT_EXP, SAT_EXP_MAX, SAT_EXP_STEP } from './tables';
+import { COS_HALF_TURN, COS_HALF_TURN_STEP, SAT_EXP, SAT_EXP_MAX, SAT_EXP_STEP } from './tables';
 
 // Deterministic maths for the sim: only + − × ÷ and Math.floor/min/max/abs/sqrt (ARCHITECTURE §4.4).
 
@@ -21,4 +21,16 @@ export function easeOutCubic(t: number): number {
 
 export function clamp01(t: number): number {
   return t < 0 ? 0 : t > 1 ? 1 : t;
+}
+
+/** Magnitude of cos(pi * turns), folded before interpolation; accumulated state angles stay untouched. */
+export function cosHalfTurn(turns: number): number {
+  const phase = Math.abs(turns - Math.round(turns));
+  if (phase === 0) return 1;
+  if (phase >= 0.5) return 0;
+  const f = phase / COS_HALF_TURN_STEP;
+  const i = Math.floor(f);
+  const lo = COS_HALF_TURN[i] ?? 0;
+  const hi = COS_HALF_TURN[i + 1] ?? 0;
+  return lo + (hi - lo) * (f - i);
 }

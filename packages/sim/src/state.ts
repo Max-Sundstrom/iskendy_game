@@ -55,6 +55,15 @@ export type PlayerState = {
   flipping: boolean;
   flipQueued: boolean;
   flipsDone: number;
+  /** Signed barrel rotation in this jump; positive rolls toward the driver's right. */
+  rollTurns: number;
+  /** Exact integer endpoint of the committed roll, including its direction. */
+  rollTargetTurns: number;
+  rolling: boolean;
+  /** First accepted airborne lane change waiting behind the current roll: -1, 0 or +1. */
+  rollQueuedDir: number;
+  /** Completed rolls, independent of signed/net rotation. */
+  rollsDone: number;
 };
 
 export type SimState = {
@@ -119,6 +128,11 @@ export function createSimState(seed: number, tuning: SimTuning): SimState {
       flipping: false,
       flipQueued: false,
       flipsDone: 0,
+      rollTurns: 0,
+      rollTargetTurns: 0,
+      rolling: false,
+      rollQueuedDir: 0,
+      rollsDone: 0,
     },
     rng: { director: createRng(seed, 1), pickups: createRng(seed, 2) },
     traffic: createTraffic(),
