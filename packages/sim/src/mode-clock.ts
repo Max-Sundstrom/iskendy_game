@@ -1,6 +1,6 @@
 import type { SimTuning } from '@kometa/shared';
 
-// Internal timing primitive only: no production caller, meter policy, collision effects or SimState wiring.
+// Exact timing primitive; modes.ts owns eligibility/events, while physics owns the interval's effects.
 export type ModeClock = {
   activeTicksLeft: number;
   graceTicksLeft: number;

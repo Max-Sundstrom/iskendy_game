@@ -1,0 +1,1484 @@
+{
+  "status": "OBSERVATION; separate independent outcome review required",
+  "head": "b1d80d1a2e8e0a73389df1ac5fdba201b8cc218a",
+  "runtimeBlobs": {
+    "packages/sim/src/collisions.ts": "51d9d56ef22b7c71161387a8a35de489504ee0e4",
+    "packages/sim/src/director.ts": "7aa875a5cecb0072158451433a4cb50209c5b607",
+    "packages/sim/src/events.ts": "2d98817477621ada687357f24f9efce6f7558437",
+    "packages/sim/src/hash.ts": "2e4df4a9736806236e6b65a4d441a1cc6581aae2",
+    "packages/sim/src/mode-clock.ts": "fa13cfbd29bab93b2f88f63bc77ef9c320bb876a",
+    "packages/sim/src/mode-contact-sweep.ts": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+    "packages/sim/src/mode-contacts.ts": "c74e0c04c5c312d25e747b61544531c8c04a84b8",
+    "packages/sim/src/mode-test-helpers.ts": "a93387c78d13f08834a37487efef86d73f73a6ea",
+    "packages/sim/src/modes.ts": "153cd911a289672752cd8f3831e5f3b9e91c03b0",
+    "packages/sim/src/score-ledger.ts": "a38c3b446d468322b9bed20bd909997e7f5e88c7",
+    "packages/sim/src/score.ts": "d9acafaba5b31bd9cfbaabe85ca2d83d4ad14d74",
+    "packages/sim/src/state.ts": "2c86fc824fa34b018e032d29af2f94d965e2542f",
+    "packages/sim/src/step.ts": "91e15c9767c5d2381e36ea5de47e57723cd48a39",
+    "packages/sim/src/tricks.ts": "af7332cccea49fff40f5a5c87677fb724a5cc998",
+    "packages/sim/src/vertical.ts": "119e5f8c9fc7ccf40a02f0b43e8d7a8dc0e58784"
+  },
+  "tuningHash": "9e91b7802bf1b6b1",
+  "originalReplaySha256": "ccab5de8b7891bfa61ebe5ce9d03aef7531a7fc83396eacd0b4618497ad52a7e",
+  "seed": 1,
+  "inputs": 50,
+  "unchangedInputs": true,
+  "tuples": [
+    [525, 27, 1, 300],
+    [688, 30, 0, 1],
+    [825, 28, 1, 60],
+    [885, 29, 0, 0],
+    [928, 13, 1, 0]
+  ],
+  "terminal": {
+    "tick": 928,
+    "hash": "66e41f15",
+    "score": 18828.474375929447,
+    "claimedScore": 18828,
+    "distanceM": 638.4743759294411,
+    "lostPot": [],
+    "airLiters": 270.5,
+    "mode": {
+      "activeTicksLeft": 0,
+      "graceTicksLeft": 0,
+      "kind": 0,
+      "smashChain": 1
+    }
+  },
+  "replayVerification": true,
+  "freshRetryReset": true,
+  "milestones": [
+    {
+      "inputTick": 524,
+      "tick": 525,
+      "held": 4,
+      "status": 1,
+      "hash": "ed6610f1",
+      "player": {
+        "lane": 2,
+        "laneFrom": 2,
+        "laneTo": 2,
+        "laneStartX": -3.6,
+        "laneT": 0,
+        "changing": false,
+        "queuedDir": 0,
+        "x": 0,
+        "z": 326.63152298384904,
+        "distanceM": 326.63152298384904,
+        "speedMps": 39.69448388311123,
+        "y": 4.6673307025399975,
+        "vy": 1.026254661071988,
+        "airborne": true,
+        "flying": true,
+        "slamming": false,
+        "boosting": false,
+        "jumpHeldS": 0.55,
+        "jumpBufferS": 0,
+        "airLiters": 219,
+        "penaltyS": 0,
+        "scrapeTimerS": 0,
+        "rideSlot": -1,
+        "coyoteS": 0,
+        "hopChain": 0,
+        "touchSeq": 4,
+        "penaltyFactor": 0,
+        "flipTurns": 1,
+        "flipping": false,
+        "flipQueued": false,
+        "flipsDone": 1,
+        "rollTurns": -0.7777777777777775,
+        "rollTargetTurns": -1,
+        "rolling": true,
+        "rollQueuedDir": 1,
+        "rollsDone": 0
+      },
+      "score": {
+        "total": 326.63152298384904,
+        "pot": 14865,
+        "streakN": 22,
+        "streakTicksLeft": 150,
+        "meter": 0,
+        "boostTicks": 0,
+        "roofDistanceM": 0
+      },
+      "mode": {
+        "activeTicksLeft": 300,
+        "graceTicksLeft": 0,
+        "kind": 1,
+        "smashChain": 0
+      },
+      "events": [
+        [18, 1, 0],
+        [23, 6, 2250],
+        [27, 1, 300]
+      ],
+      "start": {
+        "player": {
+          "lane": 1,
+          "laneFrom": 1,
+          "laneTo": 2,
+          "laneStartX": -3.6,
+          "laneT": 0.9374999999999998,
+          "changing": true,
+          "queuedDir": 0,
+          "x": -0.0008789062500000888,
+          "z": 325.96994825246384,
+          "distanceM": 325.96994825246384,
+          "speedMps": 39.68537945268111,
+          "y": 4.650226458188798,
+          "vy": 1.1709871368628444,
+          "airborne": true,
+          "flying": true,
+          "slamming": false,
+          "boosting": false,
+          "jumpHeldS": 0.5333333333333333,
+          "jumpBufferS": 0,
+          "airLiters": 220,
+          "penaltyS": 0,
+          "scrapeTimerS": 0,
+          "rideSlot": -1,
+          "coyoteS": 0,
+          "hopChain": 0,
+          "touchSeq": 4,
+          "penaltyFactor": 0,
+          "flipTurns": 0.9999999999999993,
+          "flipping": true,
+          "flipQueued": false,
+          "flipsDone": 0,
+          "rollTurns": -0.7407407407407405,
+          "rollTargetTurns": -1,
+          "rolling": true,
+          "rollQueuedDir": 1,
+          "rollsDone": 0
+        },
+        "traffic": [
+          {
+            "slot": 0,
+            "type": 1,
+            "lane": 2,
+            "z": 536.7972819794544,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 1,
+            "type": 0,
+            "lane": 4,
+            "z": 295.90684285659825,
+            "speed": 22.71244851127267
+          },
+          {
+            "slot": 2,
+            "type": 3,
+            "lane": 2,
+            "z": 301.2559627654724,
+            "speed": 21.270935164298862
+          },
+          {
+            "slot": 3,
+            "type": 1,
+            "lane": 3,
+            "z": 323.33251784269714,
+            "speed": 18.554708618670702
+          },
+          {
+            "slot": 4,
+            "type": 3,
+            "lane": 2,
+            "z": 326.1695615228854,
+            "speed": 20.024126859381795
+          },
+          {
+            "slot": 5,
+            "type": 3,
+            "lane": 3,
+            "z": 331.2284598425902,
+            "speed": 18.554708618670702
+          },
+          {
+            "slot": 6,
+            "type": 0,
+            "lane": 1,
+            "z": 391.32142900478453,
+            "speed": 23.40074407821521
+          },
+          {
+            "slot": 7,
+            "type": 0,
+            "lane": 2,
+            "z": 412.6102532809463,
+            "speed": 22.944260131567717
+          },
+          {
+            "slot": 8,
+            "type": 1,
+            "lane": 2,
+            "z": 421.0869287110559,
+            "speed": 22.944260131567717
+          },
+          {
+            "slot": 9,
+            "type": 1,
+            "lane": 0,
+            "z": 418.08435940371743,
+            "speed": 20.893717251718044
+          },
+          {
+            "slot": 10,
+            "type": 0,
+            "lane": 3,
+            "z": 424.24435745542496,
+            "speed": 20.730137046892196
+          },
+          {
+            "slot": 11,
+            "type": 1,
+            "lane": 4,
+            "z": 424.8601939203652,
+            "speed": 19.708437779918313
+          },
+          {
+            "slot": 12,
+            "type": 0,
+            "lane": 3,
+            "z": 444.6401593960983,
+            "speed": 21.588612091261894
+          },
+          {
+            "slot": 13,
+            "type": 0,
+            "lane": 2,
+            "z": 457.95021783745204,
+            "speed": 21.345589749515057
+          },
+          {
+            "slot": 14,
+            "type": 1,
+            "lane": 1,
+            "z": 471.11578676619905,
+            "speed": 20.88901192508638
+          },
+          {
+            "slot": 15,
+            "type": 0,
+            "lane": 4,
+            "z": 503.26976277584185,
+            "speed": 27.44506037980318
+          },
+          {
+            "slot": 16,
+            "type": 3,
+            "lane": 3,
+            "z": 491.22025536904044,
+            "speed": 22.300439377315342
+          },
+          {
+            "slot": 17,
+            "type": 1,
+            "lane": 0,
+            "z": 492.09318966462126,
+            "speed": 19.92651553079486
+          },
+          {
+            "slot": 18,
+            "type": 3,
+            "lane": 3,
+            "z": 507.0899047839521,
+            "speed": 22.747756131459028
+          },
+          {
+            "slot": 19,
+            "type": 3,
+            "lane": 1,
+            "z": 508.39848211474526,
+            "speed": 19.586885407101363
+          },
+          {
+            "slot": 20,
+            "type": 0,
+            "lane": 2,
+            "z": 527.9528326733794,
+            "speed": 27.24681431381032
+          },
+          {
+            "slot": 21,
+            "type": 0,
+            "lane": 4,
+            "z": 528.6101987362007,
+            "speed": 22.592636150773615
+          },
+          {
+            "slot": 22,
+            "type": 0,
+            "lane": 3,
+            "z": 544.1717103035807,
+            "speed": 26.18606599699706
+          }
+        ]
+      }
+    },
+    {
+      "inputTick": 687,
+      "tick": 688,
+      "held": 0,
+      "status": 1,
+      "hash": "6a23a3e7",
+      "player": {
+        "lane": 1,
+        "laneFrom": 1,
+        "laneTo": 1,
+        "laneStartX": 0,
+        "laneT": 0,
+        "changing": false,
+        "queuedDir": 0,
+        "x": -3.6,
+        "z": 453.3443094618639,
+        "distanceM": 453.3443094618639,
+        "speedMps": 47.62971360673,
+        "y": 0,
+        "vy": 0,
+        "airborne": false,
+        "flying": false,
+        "slamming": false,
+        "boosting": false,
+        "jumpHeldS": 0,
+        "jumpBufferS": 0,
+        "airLiters": 219,
+        "penaltyS": 0,
+        "scrapeTimerS": 0,
+        "rideSlot": -1,
+        "coyoteS": 0,
+        "hopChain": 0,
+        "touchSeq": 5,
+        "penaltyFactor": 0,
+        "flipTurns": 0,
+        "flipping": false,
+        "flipQueued": false,
+        "flipsDone": 0,
+        "rollTurns": 0,
+        "rollTargetTurns": 0,
+        "rolling": false,
+        "rollQueuedDir": 0,
+        "rollsDone": 0
+      },
+      "score": {
+        "total": 453.3443094618639,
+        "pot": 18190,
+        "streakN": 27,
+        "streakTicksLeft": 150,
+        "meter": 130,
+        "boostTicks": 0,
+        "roofDistanceM": 0
+      },
+      "mode": {
+        "activeTicksLeft": 137,
+        "graceTicksLeft": 0,
+        "kind": 1,
+        "smashChain": 1
+      },
+      "events": [
+        [30, 0, 1],
+        [23, 12, 750]
+      ],
+      "start": {
+        "player": {
+          "lane": 1,
+          "laneFrom": 1,
+          "laneTo": 1,
+          "laneStartX": 0,
+          "laneT": 0,
+          "changing": false,
+          "queuedDir": 0,
+          "x": -3.6,
+          "z": 452.5504809017517,
+          "distanceM": 452.5504809017517,
+          "speedMps": 47.61753730747854,
+          "y": 0,
+          "vy": 0,
+          "airborne": false,
+          "flying": false,
+          "slamming": false,
+          "boosting": false,
+          "jumpHeldS": 0,
+          "jumpBufferS": 0,
+          "airLiters": 219,
+          "penaltyS": 0,
+          "scrapeTimerS": 0,
+          "rideSlot": -1,
+          "coyoteS": 0,
+          "hopChain": 0,
+          "touchSeq": 5,
+          "penaltyFactor": 0,
+          "flipTurns": 0,
+          "flipping": false,
+          "flipQueued": false,
+          "flipsDone": 0,
+          "rollTurns": 0,
+          "rollTargetTurns": 0,
+          "rolling": false,
+          "rollQueuedDir": 0,
+          "rollsDone": 0
+        },
+        "traffic": [
+          {
+            "slot": 0,
+            "type": 1,
+            "lane": 2,
+            "z": 602.1083430731014,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 1,
+            "type": 0,
+            "lane": 1,
+            "z": 619.0161288124365,
+            "speed": 20.90817044908181
+          },
+          {
+            "slot": 2,
+            "type": 0,
+            "lane": 2,
+            "z": 628.3353332515279,
+            "speed": 20.811053365003318
+          },
+          {
+            "slot": 3,
+            "type": 0,
+            "lane": 2,
+            "z": 647.6532274259487,
+            "speed": 20.7896362147294
+          },
+          {
+            "slot": 4,
+            "type": 0,
+            "lane": 1,
+            "z": 659.3492172640435,
+            "speed": 24.18759622098878
+          },
+          {
+            "slot": 5,
+            "type": 5,
+            "lane": 0,
+            "z": 666.4140823914072,
+            "speed": 16
+          },
+          {
+            "slot": 6,
+            "type": 0,
+            "lane": 1,
+            "z": 454.89345041726796,
+            "speed": 23.40074407821521
+          },
+          {
+            "slot": 7,
+            "type": 0,
+            "lane": 2,
+            "z": 474.9421599717059,
+            "speed": 22.944260131567717
+          },
+          {
+            "slot": 8,
+            "type": 1,
+            "lane": 2,
+            "z": 483.4188354018155,
+            "speed": 22.944260131567717
+          },
+          {
+            "slot": 9,
+            "type": 1,
+            "lane": 0,
+            "z": 474.8456246042169,
+            "speed": 20.893717251718044
+          },
+          {
+            "slot": 10,
+            "type": 0,
+            "lane": 3,
+            "z": 480.56122976614444,
+            "speed": 20.730137046892196
+          },
+          {
+            "slot": 11,
+            "type": 1,
+            "lane": 4,
+            "z": 478.40144988914636,
+            "speed": 19.708437779918313
+          },
+          {
+            "slot": 12,
+            "type": 0,
+            "lane": 3,
+            "z": 503.2892222440283,
+            "speed": 21.588612091261894
+          },
+          {
+            "slot": 13,
+            "type": 0,
+            "lane": 2,
+            "z": 515.9390699902976,
+            "speed": 21.345589749515057
+          },
+          {
+            "slot": 14,
+            "type": 1,
+            "lane": 1,
+            "z": 527.8642691626861,
+            "speed": 20.88901192508638
+          },
+          {
+            "slot": 15,
+            "type": 0,
+            "lane": 4,
+            "z": 577.8288434743059,
+            "speed": 27.44506037980318
+          },
+          {
+            "slot": 16,
+            "type": 3,
+            "lane": 3,
+            "z": 551.8031156774181,
+            "speed": 22.300439377315342
+          },
+          {
+            "slot": 17,
+            "type": 1,
+            "lane": 0,
+            "z": 546.2268901899461,
+            "speed": 19.92651553079486
+          },
+          {
+            "slot": 18,
+            "type": 3,
+            "lane": 3,
+            "z": 568.8879756077558,
+            "speed": 22.747756131459028
+          },
+          {
+            "slot": 19,
+            "type": 3,
+            "lane": 1,
+            "z": 561.6095208040337,
+            "speed": 19.586885407101363
+          },
+          {
+            "slot": 20,
+            "type": 0,
+            "lane": 2,
+            "z": 594.0119447839442,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 21,
+            "type": 0,
+            "lane": 4,
+            "z": 589.9868602791406,
+            "speed": 22.592636150773615
+          },
+          {
+            "slot": 22,
+            "type": 0,
+            "lane": 3,
+            "z": 615.3105229287486,
+            "speed": 26.18606599699706
+          },
+          {
+            "slot": 23,
+            "type": 0,
+            "lane": 4,
+            "z": 626.3383053853945,
+            "speed": 27.819909534417093
+          },
+          {
+            "slot": 24,
+            "type": 5,
+            "lane": 0,
+            "z": 631.9308003460842,
+            "speed": 16
+          }
+        ]
+      }
+    },
+    {
+      "inputTick": 824,
+      "tick": 825,
+      "held": 0,
+      "status": 1,
+      "hash": "7842892c",
+      "player": {
+        "lane": 1,
+        "laneFrom": 1,
+        "laneTo": 1,
+        "laneStartX": 0,
+        "laneT": 0,
+        "changing": false,
+        "queuedDir": 0,
+        "x": -3.6,
+        "z": 564.0302330978068,
+        "distanceM": 564.0302330978068,
+        "speedMps": 49.31229486501033,
+        "y": 0,
+        "vy": 0,
+        "airborne": false,
+        "flying": false,
+        "slamming": false,
+        "boosting": false,
+        "jumpHeldS": 0,
+        "jumpBufferS": 0,
+        "airLiters": 219,
+        "penaltyS": 0,
+        "scrapeTimerS": 0,
+        "rideSlot": -1,
+        "coyoteS": 0,
+        "hopChain": 0,
+        "touchSeq": 5,
+        "penaltyFactor": 0,
+        "flipTurns": 0,
+        "flipping": false,
+        "flipQueued": false,
+        "flipsDone": 0,
+        "rollTurns": 0,
+        "rollTargetTurns": 0,
+        "rolling": false,
+        "rollQueuedDir": 0,
+        "rollsDone": 0
+      },
+      "score": {
+        "total": 564.0302330978068,
+        "pot": 18190,
+        "streakN": 27,
+        "streakTicksLeft": 13,
+        "meter": 130,
+        "boostTicks": 0,
+        "roofDistanceM": 0
+      },
+      "mode": {
+        "activeTicksLeft": 0,
+        "graceTicksLeft": 60,
+        "kind": 1,
+        "smashChain": 1
+      },
+      "events": [[28, 1, 60]],
+      "start": {
+        "player": {
+          "lane": 1,
+          "laneFrom": 1,
+          "laneTo": 1,
+          "laneStartX": 0,
+          "laneT": 0,
+          "changing": false,
+          "queuedDir": 0,
+          "x": -3.6,
+          "z": 563.2083615167232,
+          "distanceM": 563.2083615167232,
+          "speedMps": 49.30004965845402,
+          "y": 0,
+          "vy": 0,
+          "airborne": false,
+          "flying": false,
+          "slamming": false,
+          "boosting": false,
+          "jumpHeldS": 0,
+          "jumpBufferS": 0,
+          "airLiters": 219,
+          "penaltyS": 0,
+          "scrapeTimerS": 0,
+          "rideSlot": -1,
+          "coyoteS": 0,
+          "hopChain": 0,
+          "touchSeq": 5,
+          "penaltyFactor": 0,
+          "flipTurns": 0,
+          "flipping": false,
+          "flipQueued": false,
+          "flipsDone": 0,
+          "rollTurns": 0,
+          "rollTargetTurns": 0,
+          "rolling": false,
+          "rollQueuedDir": 0,
+          "rollsDone": 0
+        },
+        "traffic": [
+          {
+            "slot": 0,
+            "type": 1,
+            "lane": 2,
+            "z": 657.0016889002771,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 1,
+            "type": 0,
+            "lane": 1,
+            "z": 666.7564513378337,
+            "speed": 20.90817044908181
+          },
+          {
+            "slot": 2,
+            "type": 0,
+            "lane": 2,
+            "z": 675.8539051016178,
+            "speed": 20.811053365003318
+          },
+          {
+            "slot": 3,
+            "type": 0,
+            "lane": 2,
+            "z": 695.1228967829079,
+            "speed": 20.7896362147294
+          },
+          {
+            "slot": 4,
+            "type": 0,
+            "lane": 1,
+            "z": 714.5775619686387,
+            "speed": 24.18759622098878
+          },
+          {
+            "slot": 5,
+            "type": 5,
+            "lane": 0,
+            "z": 702.9474157247384,
+            "speed": 16
+          },
+          {
+            "slot": 6,
+            "type": 0,
+            "lane": 3,
+            "z": 730.9400559868425,
+            "speed": 23.82850123057142
+          },
+          {
+            "slot": 7,
+            "type": 0,
+            "lane": 2,
+            "z": 527.3315539387837,
+            "speed": 22.944260131567717
+          },
+          {
+            "slot": 8,
+            "type": 1,
+            "lane": 2,
+            "z": 535.8082293688921,
+            "speed": 22.944260131567717
+          },
+          {
+            "slot": 9,
+            "type": 1,
+            "lane": 0,
+            "z": 522.5529456623054,
+            "speed": 20.893717251718044
+          },
+          {
+            "slot": 10,
+            "type": 0,
+            "lane": 3,
+            "z": 527.8950426898806,
+            "speed": 20.730137046892196
+          },
+          {
+            "slot": 11,
+            "type": 1,
+            "lane": 4,
+            "z": 523.4023828199605,
+            "speed": 19.708437779918313
+          },
+          {
+            "slot": 12,
+            "type": 0,
+            "lane": 3,
+            "z": 552.5832198524048,
+            "speed": 21.588612091261894
+          },
+          {
+            "slot": 13,
+            "type": 0,
+            "lane": 2,
+            "z": 564.6781665850278,
+            "speed": 21.345589749515057
+          },
+          {
+            "slot": 14,
+            "type": 1,
+            "lane": 1,
+            "z": 575.5608463916354,
+            "speed": 20.88901192508638
+          },
+          {
+            "slot": 15,
+            "type": 0,
+            "lane": 4,
+            "z": 633.1355545941641,
+            "speed": 22.592636150773615
+          },
+          {
+            "slot": 16,
+            "type": 3,
+            "lane": 3,
+            "z": 602.7224522556277,
+            "speed": 22.300439377315342
+          },
+          {
+            "slot": 17,
+            "type": 1,
+            "lane": 0,
+            "z": 591.7257673185933,
+            "speed": 19.92651553079486
+          },
+          {
+            "slot": 18,
+            "type": 3,
+            "lane": 3,
+            "z": 620.8286854412602,
+            "speed": 22.747756131459028
+          },
+          {
+            "slot": 19,
+            "type": 3,
+            "lane": 1,
+            "z": 606.3329091502453,
+            "speed": 19.586885407101363
+          },
+          {
+            "slot": 20,
+            "type": 0,
+            "lane": 2,
+            "z": 648.9052906111199,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 21,
+            "type": 0,
+            "lane": 4,
+            "z": 641.5733794900779,
+            "speed": 22.592636150773615
+          },
+          {
+            "slot": 22,
+            "type": 0,
+            "lane": 3,
+            "z": 675.1020402885523,
+            "speed": 26.18606599699706
+          },
+          {
+            "slot": 23,
+            "type": 0,
+            "lane": 4,
+            "z": 689.8604321556406,
+            "speed": 27.819909534417093
+          },
+          {
+            "slot": 24,
+            "type": 5,
+            "lane": 0,
+            "z": 668.4641336794155,
+            "speed": 16
+          },
+          {
+            "slot": 25,
+            "type": 5,
+            "lane": 2,
+            "z": 726.0377490580026,
+            "speed": 16
+          },
+          {
+            "slot": 26,
+            "type": 0,
+            "lane": 0,
+            "z": 748.4846042275307,
+            "speed": 23.704485445749015
+          },
+          {
+            "slot": 27,
+            "type": 1,
+            "lane": 1,
+            "z": 751.795019527644,
+            "speed": 18.420837925747037
+          },
+          {
+            "slot": 28,
+            "type": 5,
+            "lane": 3,
+            "z": 761.0924005314552,
+            "speed": 16
+          }
+        ]
+      }
+    },
+    {
+      "inputTick": 884,
+      "tick": 885,
+      "held": 0,
+      "status": 1,
+      "hash": "b7c6ead8",
+      "player": {
+        "lane": 1,
+        "laneFrom": 1,
+        "laneTo": 1,
+        "laneStartX": 0,
+        "laneT": 0,
+        "changing": false,
+        "queuedDir": 0,
+        "x": -3.6,
+        "z": 607.1949446537368,
+        "distanceM": 607.1949446537368,
+        "speedMps": 43.43968233083574,
+        "y": 0,
+        "vy": 0,
+        "airborne": false,
+        "flying": false,
+        "slamming": false,
+        "boosting": false,
+        "jumpHeldS": 0,
+        "jumpBufferS": 0,
+        "airLiters": 249,
+        "penaltyS": 0,
+        "scrapeTimerS": 0,
+        "rideSlot": -1,
+        "coyoteS": 0,
+        "hopChain": 0,
+        "touchSeq": 5,
+        "penaltyFactor": 0,
+        "flipTurns": 0,
+        "flipping": false,
+        "flipQueued": false,
+        "flipsDone": 0,
+        "rollTurns": 0,
+        "rollTargetTurns": 0,
+        "rolling": false,
+        "rollQueuedDir": 0,
+        "rollsDone": 0
+      },
+      "score": {
+        "total": 18797.194944653744,
+        "pot": 0,
+        "streakN": 0,
+        "streakTicksLeft": 0,
+        "meter": 130,
+        "boostTicks": 0,
+        "roofDistanceM": 0
+      },
+      "mode": {
+        "activeTicksLeft": 0,
+        "graceTicksLeft": 0,
+        "kind": 0,
+        "smashChain": 1
+      },
+      "events": [[29, 0, 0]],
+      "start": {
+        "player": {
+          "lane": 1,
+          "laneFrom": 1,
+          "laneTo": 1,
+          "laneStartX": 0,
+          "laneT": 0,
+          "changing": false,
+          "queuedDir": 0,
+          "x": -3.6,
+          "z": 606.4709499482228,
+          "distanceM": 606.4709499482228,
+          "speedMps": 43.43032241609348,
+          "y": 0,
+          "vy": 0,
+          "airborne": false,
+          "flying": false,
+          "slamming": false,
+          "boosting": false,
+          "jumpHeldS": 0,
+          "jumpBufferS": 0,
+          "airLiters": 248.5,
+          "penaltyS": 0,
+          "scrapeTimerS": 0,
+          "rideSlot": -1,
+          "coyoteS": 0,
+          "hopChain": 0,
+          "touchSeq": 5,
+          "penaltyFactor": 0,
+          "flipTurns": 0,
+          "flipping": false,
+          "flipQueued": false,
+          "flipsDone": 0,
+          "rollTurns": 0,
+          "rollTargetTurns": 0,
+          "rolling": false,
+          "rollQueuedDir": 0,
+          "rollsDone": 0
+        },
+        "traffic": [
+          {
+            "slot": 0,
+            "type": 1,
+            "lane": 2,
+            "z": 681.0425702844417,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 1,
+            "type": 0,
+            "lane": 1,
+            "z": 687.6646217869128,
+            "speed": 20.90817044908181
+          },
+          {
+            "slot": 2,
+            "type": 0,
+            "lane": 2,
+            "z": 696.6649584666206,
+            "speed": 20.811053365003318
+          },
+          {
+            "slot": 3,
+            "type": 0,
+            "lane": 2,
+            "z": 715.9125329976346,
+            "speed": 20.7896362147294
+          },
+          {
+            "slot": 4,
+            "type": 0,
+            "lane": 1,
+            "z": 738.7651581896293,
+            "speed": 24.18759622098878
+          },
+          {
+            "slot": 5,
+            "type": 5,
+            "lane": 0,
+            "z": 718.9474157247375,
+            "speed": 16
+          },
+          {
+            "slot": 6,
+            "type": 0,
+            "lane": 3,
+            "z": 754.7685572174112,
+            "speed": 23.82850123057142
+          },
+          {
+            "slot": 7,
+            "type": 0,
+            "lane": 1,
+            "z": 816.0920015571136,
+            "speed": 24.875724238343537
+          },
+          {
+            "slot": 12,
+            "type": 0,
+            "lane": 3,
+            "z": 574.171831943664,
+            "speed": 21.588612091261894
+          },
+          {
+            "slot": 13,
+            "type": 0,
+            "lane": 2,
+            "z": 586.0237563345447,
+            "speed": 21.345589749515057
+          },
+          {
+            "slot": 14,
+            "type": 1,
+            "lane": 1,
+            "z": 596.4498583167227,
+            "speed": 20.88901192508638
+          },
+          {
+            "slot": 15,
+            "type": 0,
+            "lane": 4,
+            "z": 655.7281907449395,
+            "speed": 22.592636150773615
+          },
+          {
+            "slot": 16,
+            "type": 3,
+            "lane": 3,
+            "z": 625.0228916329457,
+            "speed": 22.300439377315342
+          },
+          {
+            "slot": 17,
+            "type": 1,
+            "lane": 0,
+            "z": 611.6522828493877,
+            "speed": 19.92651553079486
+          },
+          {
+            "slot": 18,
+            "type": 3,
+            "lane": 3,
+            "z": 643.5764415727219,
+            "speed": 22.747756131459028
+          },
+          {
+            "slot": 19,
+            "type": 3,
+            "lane": 1,
+            "z": 625.9197945573453,
+            "speed": 19.586885407101363
+          },
+          {
+            "slot": 20,
+            "type": 0,
+            "lane": 2,
+            "z": 672.9461719952844,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 21,
+            "type": 0,
+            "lane": 4,
+            "z": 664.1660156408533,
+            "speed": 22.592636150773615
+          },
+          {
+            "slot": 22,
+            "type": 0,
+            "lane": 3,
+            "z": 701.2881062855466,
+            "speed": 26.18606599699706
+          },
+          {
+            "slot": 23,
+            "type": 0,
+            "lane": 4,
+            "z": 717.680341690055,
+            "speed": 27.819909534417093
+          },
+          {
+            "slot": 24,
+            "type": 5,
+            "lane": 0,
+            "z": 684.4641336794145,
+            "speed": 16
+          },
+          {
+            "slot": 25,
+            "type": 5,
+            "lane": 2,
+            "z": 742.0377490580017,
+            "speed": 16
+          },
+          {
+            "slot": 26,
+            "type": 0,
+            "lane": 0,
+            "z": 772.1890896732792,
+            "speed": 23.704485445749015
+          },
+          {
+            "slot": 27,
+            "type": 1,
+            "lane": 1,
+            "z": 770.2158574533878,
+            "speed": 18.420837925747037
+          },
+          {
+            "slot": 28,
+            "type": 5,
+            "lane": 3,
+            "z": 777.0924005314542,
+            "speed": 16
+          },
+          {
+            "slot": 29,
+            "type": 1,
+            "lane": 4,
+            "z": 804.7840712377939,
+            "speed": 20.72290301322937
+          }
+        ]
+      }
+    },
+    {
+      "inputTick": 927,
+      "tick": 928,
+      "held": 0,
+      "status": 2,
+      "hash": "66e41f15",
+      "player": {
+        "lane": 1,
+        "laneFrom": 1,
+        "laneTo": 1,
+        "laneStartX": 0,
+        "laneT": 0,
+        "changing": false,
+        "queuedDir": 0,
+        "x": -3.6,
+        "z": 638.4743759294411,
+        "distanceM": 638.4743759294411,
+        "speedMps": 43.8415133744584,
+        "y": 0,
+        "vy": 0,
+        "airborne": false,
+        "flying": false,
+        "slamming": false,
+        "boosting": false,
+        "jumpHeldS": 0,
+        "jumpBufferS": 0,
+        "airLiters": 270.5,
+        "penaltyS": 0,
+        "scrapeTimerS": 0,
+        "rideSlot": -1,
+        "coyoteS": 0,
+        "hopChain": 0,
+        "touchSeq": 5,
+        "penaltyFactor": 0,
+        "flipTurns": 0,
+        "flipping": false,
+        "flipQueued": false,
+        "flipsDone": 0,
+        "rollTurns": 0,
+        "rollTargetTurns": 0,
+        "rolling": false,
+        "rollQueuedDir": 0,
+        "rollsDone": 0
+      },
+      "score": {
+        "total": 18828.474375929447,
+        "pot": 0,
+        "streakN": 0,
+        "streakTicksLeft": 0,
+        "meter": 130,
+        "boostTicks": 0,
+        "roofDistanceM": 0
+      },
+      "mode": {
+        "activeTicksLeft": 0,
+        "graceTicksLeft": 0,
+        "kind": 0,
+        "smashChain": 1
+      },
+      "events": [[13, 1, 0]],
+      "start": {
+        "player": {
+          "lane": 1,
+          "laneFrom": 1,
+          "laneTo": 1,
+          "laneStartX": 0,
+          "laneT": 0,
+          "changing": false,
+          "queuedDir": 0,
+          "x": -3.6,
+          "z": 637.7436840398667,
+          "distanceM": 637.7436840398667,
+          "speedMps": 43.8322133007856,
+          "y": 0,
+          "vy": 0,
+          "airborne": false,
+          "flying": false,
+          "slamming": false,
+          "boosting": false,
+          "jumpHeldS": 0,
+          "jumpBufferS": 0,
+          "airLiters": 270,
+          "penaltyS": 0,
+          "scrapeTimerS": 0,
+          "rideSlot": -1,
+          "coyoteS": 0,
+          "hopChain": 0,
+          "touchSeq": 5,
+          "penaltyFactor": 0,
+          "flipTurns": 0,
+          "flipping": false,
+          "flipQueued": false,
+          "flipsDone": 0,
+          "rollTurns": 0,
+          "rollTargetTurns": 0,
+          "rolling": false,
+          "rollQueuedDir": 0,
+          "rollsDone": 0
+        },
+        "traffic": [
+          {
+            "slot": 0,
+            "type": 1,
+            "lane": 2,
+            "z": 698.2718686097596,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 1,
+            "type": 0,
+            "lane": 1,
+            "z": 702.6488106087528,
+            "speed": 20.90817044908181
+          },
+          {
+            "slot": 2,
+            "type": 0,
+            "lane": 2,
+            "z": 711.5795467115394,
+            "speed": 20.811053365003318
+          },
+          {
+            "slot": 3,
+            "type": 0,
+            "lane": 2,
+            "z": 730.8117722848554,
+            "speed": 20.7896362147294
+          },
+          {
+            "slot": 4,
+            "type": 0,
+            "lane": 1,
+            "z": 756.0996021480059,
+            "speed": 24.18759622098878
+          },
+          {
+            "slot": 5,
+            "type": 5,
+            "lane": 0,
+            "z": 730.4140823914036,
+            "speed": 16
+          },
+          {
+            "slot": 6,
+            "type": 0,
+            "lane": 3,
+            "z": 771.8456497659854,
+            "speed": 23.82850123057142
+          },
+          {
+            "slot": 7,
+            "type": 0,
+            "lane": 1,
+            "z": 833.9196039279261,
+            "speed": 24.875724238343537
+          },
+          {
+            "slot": 8,
+            "type": 10,
+            "lane": 4,
+            "z": 843.5243327866398,
+            "speed": 14
+          },
+          {
+            "slot": 9,
+            "type": 1,
+            "lane": 1,
+            "z": 855.717430136652,
+            "speed": 21.881967118009925
+          },
+          {
+            "slot": 13,
+            "type": 0,
+            "lane": 2,
+            "z": 601.3214289883651,
+            "speed": 21.345589749515057
+          },
+          {
+            "slot": 14,
+            "type": 1,
+            "lane": 1,
+            "z": 611.4203168630353,
+            "speed": 20.88901192508638
+          },
+          {
+            "slot": 15,
+            "type": 0,
+            "lane": 4,
+            "z": 671.9195799863286,
+            "speed": 22.592636150773615
+          },
+          {
+            "slot": 16,
+            "type": 3,
+            "lane": 3,
+            "z": 641.0048731866904,
+            "speed": 22.300439377315342
+          },
+          {
+            "slot": 17,
+            "type": 1,
+            "lane": 0,
+            "z": 625.9329523131237,
+            "speed": 19.92651553079486
+          },
+          {
+            "slot": 18,
+            "type": 3,
+            "lane": 3,
+            "z": 659.8790001336029,
+            "speed": 22.747756131459028
+          },
+          {
+            "slot": 19,
+            "type": 3,
+            "lane": 1,
+            "z": 639.9570624324336,
+            "speed": 19.586885407101363
+          },
+          {
+            "slot": 20,
+            "type": 0,
+            "lane": 2,
+            "z": 690.1754703206024,
+            "speed": 24.040881384164095
+          },
+          {
+            "slot": 21,
+            "type": 0,
+            "lane": 4,
+            "z": 680.3574048822423,
+            "speed": 22.592636150773615
+          },
+          {
+            "slot": 22,
+            "type": 0,
+            "lane": 3,
+            "z": 720.0547869167259,
+            "speed": 26.18606599699706
+          },
+          {
+            "slot": 23,
+            "type": 0,
+            "lane": 4,
+            "z": 737.617943523052,
+            "speed": 27.819909534417093
+          },
+          {
+            "slot": 24,
+            "type": 5,
+            "lane": 0,
+            "z": 695.9308003460806,
+            "speed": 16
+          },
+          {
+            "slot": 25,
+            "type": 5,
+            "lane": 2,
+            "z": 753.5044157246678,
+            "speed": 16
+          },
+          {
+            "slot": 26,
+            "type": 0,
+            "lane": 0,
+            "z": 789.1773042427324,
+            "speed": 23.704485445749015
+          },
+          {
+            "slot": 27,
+            "type": 1,
+            "lane": 1,
+            "z": 783.4174579668376,
+            "speed": 18.420837925747037
+          },
+          {
+            "slot": 28,
+            "type": 5,
+            "lane": 3,
+            "z": 788.5590671981203,
+            "speed": 16
+          },
+          {
+            "slot": 29,
+            "type": 1,
+            "lane": 4,
+            "z": 819.63548506394,
+            "speed": 20.72290301322937
+          }
+        ]
+      }
+    }
+  ]
+}

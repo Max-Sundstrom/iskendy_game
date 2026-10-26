@@ -95,7 +95,7 @@ Goal: the core loop with primitive shapes, playable on a phone and on desktop.
 | P2-03 | Sim | full event table (GDD §9), streak window, multiplier, pot banking | scripted scenario produces the exact expected score |
 | P2-04 | Sim | LIFTOFF meter; LIFTOFF / COSMONAUT / OVERDRIVE; smash; grace | mode timings and stacking tests |
 | P2-04a1 | Sim | Unwired deterministic active/grace clock | draft [PR #10](https://github.com/Max-Sundstrom/iskendy_game/pull/10), both exact-head CI green; 166278 independent state comparisons; no playable-mode claim |
-| P2-04a2 | Sim | First playable LIFTOFF core, SMASH and finite grace under delegated Q28 choices | contract frozen; implementation/independent QA in progress; HUD follows separately |
+| P2-04a2 | Sim | First playable LIFTOFF core, SMASH and finite grace under delegated Q28 choices | local sim/browser QA verified; 410 unit / 255 sim; draft publication and exact-head CI pending; HUD follows separately |
 | P2-05 | Sim | rings, star, AIR canister, item capsule; RADAR / MAGNET / SHIELD / EMP | per-item tests |
 | P2-06 | Sim | director v2: patterns, difficulty curve, waves, fairness solver | fairness property test: 10 000 seeds × 10 km, zero unsolvable rows |
 | P2-07 | UI | full HUD (GDD §14) with the binder; mode bar; streak; event feed; mobile buttons | no React renders per frame (profiler screenshot) |

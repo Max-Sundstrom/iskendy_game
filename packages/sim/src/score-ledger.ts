@@ -3,7 +3,7 @@ import { emit } from './events';
 import type { SimState } from './state';
 
 // Cleared before each synchronous scoring pass; these scratch credits never affect another tick/run.
-const REASONS = ScoreReason.nearMiss;
+const REASONS = ScoreReason.smash;
 const credits = new Float64Array(REASONS * 2);
 
 /** Clears presentation aggregation without changing the ledger or the source-event prefix. */

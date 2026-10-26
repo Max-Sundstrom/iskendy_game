@@ -25,6 +25,12 @@ function mixNumber(h: number, value: number): number {
   return mixWord(mixWord(h, hi >>> 0), lo >>> 0);
 }
 
+/** Mixes an exact safe integer without quantization or truncating its upper 32 bits. */
+function mixInteger(h: number, value: number): number {
+  const hi = Math.floor(value / TWO_32);
+  return mixWord(mixWord(h, hi), value - hi * TWO_32);
+}
+
 function mixRng(h: number, r: RngState): number {
   return mixWord(mixWord(mixWord(mixWord(h, r.a), r.b), r.c), r.d);
 }
@@ -75,6 +81,10 @@ export function stateHash(s: SimState): string {
   h = mixNumber(h, s.score.meter);
   h = mixWord(h, s.score.boostTicks);
   h = mixNumber(h, s.score.roofDistanceM);
+  h = mixWord(h, s.mode.kind);
+  h = mixInteger(h, s.mode.activeTicksLeft);
+  h = mixInteger(h, s.mode.graceTicksLeft);
+  h = mixInteger(h, s.mode.smashChain);
   const t = s.traffic;
   for (let i = 0; i < t.active.length; i++) {
     if (t.active[i] === 0) continue;

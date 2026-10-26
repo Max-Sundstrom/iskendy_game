@@ -11,4 +11,4 @@ describe('determinism golden', () => {
   });
 });
 
-const GOLDEN_10K = '5e81a89c-04c562d2';
+const GOLDEN_10K = 'ab3be31c-99f78172';

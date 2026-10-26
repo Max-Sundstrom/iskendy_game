@@ -5,7 +5,8 @@ import { SimEventKind, type SimEvent, type ScoreReason } from '@kometa/shared';
 // Current producers: <=8 raw events + scoring milestones per traffic slot (64 slots),
 // <=20 non-traffic events/milestones, <=20 aggregated credits, one settlement and one origin shift:
 // Near misses add <=64 raw +64 milestones +2 credit buckets: <=684 outputs even at fireworksEvery=1.
-// Keep headroom; new producers must update this bound/tests.
+// Mode contacts add <=64 SMASH +64 milestones +64 retirements +2 credit buckets +2 transitions: <=880.
+// SMASH/retirement are mutually exclusive per slot; this deliberately loose bound retains headroom.
 const CAPACITY = 1024;
 
 /** Index = FlyStop code from vertical.ts. */
@@ -26,7 +27,7 @@ export function createEventBuffer(): EventBuffer {
 
 /** Records an event; the producer bound above guarantees room for every current gameplay event. */
 export function emit(buf: EventBuffer, kind: SimEventKind, a = 0, b = 0): void {
-  if (buf.count >= CAPACITY) return;
+  if (buf.count >= CAPACITY) throw new RangeError('Simulation event capacity exceeded');
   buf.kind[buf.count] = kind;
   buf.a[buf.count] = a;
   buf.b[buf.count] = b;
@@ -102,6 +103,21 @@ export function readEvents(buf: EventBuffer): SimEvent[] {
         break;
       case SimEventKind.nearMiss:
         out.push({ kind: 'nearMiss', vehicleType: a, slot: b });
+        break;
+      case SimEventKind.modeStarted:
+        out.push({ kind: 'modeStarted', mode: 'liftoff', activeTicks: b });
+        break;
+      case SimEventKind.modeEnded:
+        out.push({ kind: 'modeEnded', mode: 'liftoff', graceTicks: b });
+        break;
+      case SimEventKind.modeGraceEnded:
+        out.push({ kind: 'modeGraceEnded' });
+        break;
+      case SimEventKind.smash:
+        out.push({ kind: 'smash', vehicleType: a, chain: b });
+        break;
+      case SimEventKind.trafficPhasedOut:
+        out.push({ kind: 'trafficPhasedOut', vehicleType: a });
         break;
       case SimEventKind.scoreAddedDirect:
         out.push({ kind: 'scoreAddedDirect', reason: a as ScoreReason, points: b });

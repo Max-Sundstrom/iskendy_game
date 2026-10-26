@@ -11,12 +11,13 @@ import { saturatingExp } from './math';
 import { SimStatus, type SimState } from './state';
 import { moveTraffic, TRAFFIC_CAPACITY } from './traffic';
 import { updateAir, verticalInput, verticalIntegrate } from './vertical';
+import { finishModeTick, modePhase, ModePhase } from './modes';
 
 /** Reused scratch for the step's starting position (no allocation per step). */
 const start: StepStart = { x: 0, y: 0, z: 0 };
 
-// One fixed 60 Hz step (ARCHITECTURE §4.3). Order so far:
-// input → lateral → AIR → vertical → forward → traffic → ride → collisions → score/streak → director → origin shift.
+// One fixed 60 Hz step (ARCHITECTURE §4.3). Capture mode phase, then input → lateral → AIR → vertical → forward
+// → traffic/ride/contacts → near-miss finish → score/streak → old phase advance or trigger → director → origin.
 // Mutates `state` in place and allocates nothing (invariant 5).
 
 /** Forward speed from distance (GDD §5.2): vMin + (vMax − vMin) · (1 − e^(−d / dScale)). */
@@ -31,6 +32,7 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   if (state.status !== SimStatus.running) return;
   const dt = 1 / tuning.tickRateHz;
   const p = state.player;
+  const phase = modePhase(state);
 
   const startRideSlot = p.rideSlot;
   start.x = p.x;
@@ -59,18 +61,24 @@ export function step(state: SimState, held: number, tuning: SimTuning): void {
   verticalIntegrate(state, tuning, dt);
 
   const penalty = p.penaltyS > 0 ? 1 - p.penaltyFactor : 1;
-  p.speedMps = speedAtDistance(p.distanceM, tuning) * (p.boosting ? tuning.speed.boostMultiplier : 1) * penalty;
+  p.speedMps =
+    speedAtDistance(p.distanceM, tuning) *
+    (p.boosting ? tuning.speed.boostMultiplier : 1) *
+    penalty *
+    (phase === ModePhase.active ? tuning.speed.liftoffMultiplier : 1);
   const dz = p.speedMps * dt;
   p.distanceM += dz;
   p.z += dz;
   state.score.total += dz * tuning.score.perMeter;
 
   moveTraffic(state.traffic, tuning, dt);
-  updateRide(state, tuning);
+  // Protected contacts never create/retain support; their resolver detaches without a coyote/landing award.
+  if (phase === ModePhase.idle) updateRide(state, tuning);
   prepareNearMisses(state, tuning, start, startRideSlot, dt);
   resolveCollisions(state, tuning, start, dt);
   finishNearMisses(state, tuning);
   scoreTick(state, tuning, startRideSlot, dz, (state.traffic.speed[startRideSlot] ?? 0) * dt);
+  finishModeTick(state, tuning, phase);
   runDirector(state, tuning);
 
   // Floating origin (invariant 7): nothing in the sim depends on absolute z.

@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "runtimeHead": "b1d80d1a2e8e0a73389df1ac5fdba201b8cc218a",
+  "runtimeBlobs": {
+    "packages/sim/src/collisions.ts": "51d9d56ef22b7c71161387a8a35de489504ee0e4",
+    "packages/sim/src/director.ts": "7aa875a5cecb0072158451433a4cb50209c5b607",
+    "packages/sim/src/events.ts": "2d98817477621ada687357f24f9efce6f7558437",
+    "packages/sim/src/hash.ts": "2e4df4a9736806236e6b65a4d441a1cc6581aae2",
+    "packages/sim/src/mode-clock.ts": "fa13cfbd29bab93b2f88f63bc77ef9c320bb876a",
+    "packages/sim/src/mode-contact-sweep.ts": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+    "packages/sim/src/mode-contacts.ts": "c74e0c04c5c312d25e747b61544531c8c04a84b8",
+    "packages/sim/src/mode-test-helpers.ts": "a93387c78d13f08834a37487efef86d73f73a6ea",
+    "packages/sim/src/modes.ts": "153cd911a289672752cd8f3831e5f3b9e91c03b0",
+    "packages/sim/src/score-ledger.ts": "a38c3b446d468322b9bed20bd909997e7f5e88c7",
+    "packages/sim/src/score.ts": "d9acafaba5b31bd9cfbaabe85ca2d83d4ad14d74",
+    "packages/sim/src/state.ts": "2c86fc824fa34b018e032d29af2f94d965e2542f",
+    "packages/sim/src/step.ts": "91e15c9767c5d2381e36ea5de47e57723cd48a39",
+    "packages/sim/src/tricks.ts": "af7332cccea49fff40f5a5c87677fb724a5cc998",
+    "packages/sim/src/vertical.ts": "119e5f8c9fc7ccf40a02f0b43e8d7a8dc0e58784"
+  },
+  "cases": 16,
+  "results": [
+    {
+      "name": "300 active + 60 grace; one ordinary tick; no premature restart or double advancement",
+      "passed": true,
+      "details": {
+        "tick": 362,
+        "activeTicks": 300
+      }
+    },
+    {
+      "name": "zero grace: last active contact SMASH wins and no synthetic graceEnded",
+      "passed": true
+    },
+    {
+      "name": "full meter cannot rescue a fatal ordinary tick; terminal step is inert; Retry clean",
+      "passed": true
+    },
+    {
+      "name": "manual configuration retains meter without implicit input binding",
+      "passed": true
+    },
+    {
+      "name": "active stored AIR 0/positive; boost+flight+penalty; first grace restores costs",
+      "passed": true
+    },
+    {
+      "name": "untricked and mixed protected road touchdown once; unsafe AFTER grace crashes",
+      "passed": true
+    },
+    {
+      "name": "roof SLAM destroys or phases without HOP/landing; keeps SLAM until road",
+      "passed": true
+    },
+    {
+      "name": "old support detach; Jump at t=0 remains valid; grace gives no support reward",
+      "passed": true
+    },
+    {
+      "name": "expiry exact endpoint faces/corners cleanup, outside neighbor retained",
+      "passed": true
+    },
+    {
+      "name": "grace crossed-and-exited object retained; future ordinary collision has no immunity",
+      "passed": true
+    },
+    {
+      "name": "pending near completion and CLEAR cannot escape own-slot cleanup",
+      "passed": true
+    },
+    {
+      "name": "64 SMASH contacts: independent quarter-unit ledger, cap, every milestone and buffer bound",
+      "passed": true,
+      "details": {
+        "count": 130,
+        "capacity": 1024,
+        "pot": 79387.5
+      }
+    },
+    {
+      "name": "same-tick slot reuse clears lifetime; copied SMASH payload survives director",
+      "passed": true
+    },
+    {
+      "name": "origin-shift expiry equivalent to translated geometry",
+      "passed": true
+    },
+    {
+      "name": "hash distinguishes high counter bits and chain; pause leaves state untouched",
+      "passed": true
+    },
+    {
+      "name": "interleaved sessions match standalone progression including raw events",
+      "passed": true
+    }
+  ]
+}

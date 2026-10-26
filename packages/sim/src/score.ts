@@ -98,6 +98,15 @@ export function scoreTick(
     const a = events.a[i] ?? 0;
     const b = events.b[i] ?? 0;
     switch (kind) {
+      case SimEventKind.smash:
+        awardAction(
+          state,
+          tuning,
+          ScoreReason.smash,
+          Math.min(tuning.score.smashCap, tuning.score.smashBase + tuning.score.smashChainStep * (b - 1)),
+          0,
+        );
+        break;
       case SimEventKind.nearMiss:
         awardAction(state, tuning, ScoreReason.nearMiss, tuning.score.nearMiss, tuning.meterGain.nearMiss);
         break;

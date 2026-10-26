@@ -62,9 +62,9 @@ for v1:
 | G21 | Mixed flip+roll landing | Quaternion default cannot cancel signed axes; both modes have inclusive pure-axis bounds, periodicity and an independent quaternion oracle | sim `orientation.test.ts` |
 | G22 | Landing crash, interrupted tricks and Retry | Store same-tick terminal pitch/roll; clear active/queued tricks; safe road/hop/platform reset all; Retry starts fresh | sim `roll.test.ts`, `orientation.test.ts`; browser acceptance pending |
 | G23 | Completed untouched close pass | Exact swept side gap0…0.6m during simultaneous body overlap; one award per vehicle lifetime, contact/roof/CLEAR excluded, flag-off preserves physics | sim near-miss tests; seed1 Right350 → near352 → bank502 → crash509 actual-input replay; browser evidence pending |
-| G24 | Full meter, mode expiry and later refill | Trigger after a surviving tick that started idle; exactly 300 active/60 grace ticks, no-step pause preserves counters, no retroactive crash rescue; one ordinary tick before another mode | P2-04a2 sim/replay/cross-engine, acceptance pending |
-| G25 | Protected rear/side/roof contact and slot reuse | Common-time closed sweep; one SMASH per destroyed lifetime, no duplicate roof/CLEAR/NEAR reward; support detach without coyote; reused slot has fresh tracking | P2-04a2 independent geometry/lifecycle QA, acceptance pending |
-| G26 | Protected flight with stored AIR=0, then grace expiry | Active flight/BOOST free with finite tank preserved; ordinary grace costs; actual protected touchdown is STUNT; post-grace unsafe landing still crashes | P2-04a2 boundary tests, acceptance pending |
+| G24 | Full meter, mode expiry and later refill | Trigger after a surviving tick that started idle; exactly 300 active/60 grace ticks, no-step pause preserves counters, no retroactive crash rescue; one ordinary tick before another mode | P2-04a2 sim/replay/browser PASS; exact-head cross-engine CI pending |
+| G25 | Protected rear/side/roof contact and slot reuse | Common-time closed sweep; one SMASH per destroyed lifetime, no duplicate roof/CLEAR/NEAR reward; support detach without coyote; reused slot has fresh tracking | P2-04a2 independent geometry/lifecycle QA PASS (7,873 cases) |
+| G26 | Protected flight with stored AIR=0, then grace expiry | Active flight/BOOST free with finite tank preserved; ordinary grace costs; actual protected touchdown is STUNT; post-grace unsafe landing still crashes | P2-04a2 boundary tests and independent QA PASS |
 
 ## P — Platform and device
 

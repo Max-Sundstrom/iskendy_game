@@ -35,3 +35,12 @@ One line per finished task: `YYYY-MM-DD · <ID> · <owner> · <one-sentence outc
 - 2026-10-26 · P3-00C · Codex + independent QA · Crash/hidden/Retry checks retained; one-worker configuration passed complete exact-head CI 40338232302 at 958ab89; draft, not merged. · [PR #4](https://github.com/Max-Sundstrom/iskendy_game/pull/4)
 - 2026-10-26 · P2-02b/P2-03a/P2-03b · Codex + independent QA · Barrels, fractional score/streaks and actual near miss have complete exact-head CI at c6f370c / 9f250bb / 8e19074; draft, not merged. · [PR #5](https://github.com/Max-Sundstrom/iskendy_game/pull/5), [PR #6](https://github.com/Max-Sundstrom/iskendy_game/pull/6), [PR #8](https://github.com/Max-Sundstrom/iskendy_game/pull/8)
 - 2026-10-26 · P2-04a1 · Codex + independent QA · Internal clock with 166278 independent comparisons; both CI runs green at eea81ae, runtime not wired. Actual keyboard/synthetic-touch route preparation validated separately on unchanged P2-03b. · [PR #10](https://github.com/Max-Sundstrom/iskendy_game/pull/10)
+
+
+### 2026-10-26 — P2-04a2 local acceptance
+
+Implemented playable LIFTOFF under delegated Q28 choices, preserving tuning and dependencies.
+Independent corrected geometry (7,873 cases / 15,746 comparisons), legacy parity, adversarial scenarios
+and the 928-tick actual-input ledger passed before fixture changes. Unit 410, sim 255, static/build/size
+checks and production Chromium keyboard/synthetic-touch pause/Retry passed. Evidence and screenshots:
+`docs/reviews/P2-04a2/`. Draft publication/exact-head CI pending; no main merge or preview update.
