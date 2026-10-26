@@ -86,4 +86,4 @@ describe('utf8Bytes', () => {
 });
 
 // Cross-checked with an independent Python FNV-1a 64 over the same canonical JSON (P0-03 handoff note).
-const GOLDEN_DEFAULT_HASH = '9e2e6e03faddfbea';
+const GOLDEN_DEFAULT_HASH = 'cc1f730496d3c9cc';

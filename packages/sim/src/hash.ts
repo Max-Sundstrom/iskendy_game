@@ -69,6 +69,12 @@ export function stateHash(s: SimState): string {
   h = mixWord(h, p.rollsDone);
   h = mixNumber(h, s.director.nextRowM);
   h = mixNumber(h, s.score.total);
+  h = mixNumber(h, s.score.pot);
+  h = mixWord(h, s.score.streakN);
+  h = mixWord(h, s.score.streakTicksLeft);
+  h = mixNumber(h, s.score.meter);
+  h = mixWord(h, s.score.boostTicks);
+  h = mixNumber(h, s.score.roofDistanceM);
   const t = s.traffic;
   for (let i = 0; i < t.active.length; i++) {
     if (t.active[i] === 0) continue;

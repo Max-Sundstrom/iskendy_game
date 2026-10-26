@@ -1,0 +1,39 @@
+{
+  "mode": "physics",
+  "passed": [
+    "golden physical trajectory identical:early-crash",
+    "golden physical trajectory identical:busy-inputs",
+    "golden physical trajectory identical:long-run",
+    "10000scripted ticks: identical physics,sourceevents,retries vs barrel baseline"
+  ],
+  "failed": [],
+  "early-crash": {
+    "ticks": 258,
+    "distance": 155.37045680500898,
+    "oldScore": 155.37045680500898,
+    "newScore": 155.37045680500898,
+    "pot": 0,
+    "hash": "a73a2af9"
+  },
+  "busy-inputs": {
+    "ticks": 106,
+    "distance": 62.645557488526215,
+    "oldScore": 62.645557488526215,
+    "newScore": 62.645557488526215,
+    "pot": 0,
+    "hash": "9fe5fb3b"
+  },
+  "long-run": {
+    "ticks": 2070,
+    "distance": 1531.9897301506035,
+    "oldScore": 1531.9897301506035,
+    "newScore": 1531.9897301506035,
+    "pot": 0,
+    "hash": "d101ad75"
+  },
+  "scripted": {
+    "hash": "8be91f5c-6f883e35",
+    "runs": 25,
+    "independentRuns": 25
+  }
+}

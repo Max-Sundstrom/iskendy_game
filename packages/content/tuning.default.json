@@ -97,6 +97,7 @@
       "multiplierStep": 0.25,
       "multiplierCap": 8,
       "sloppyBankRatio": 0.5,
+      "scrapeBankRatio": 0,
       "fireworksEvery": 10
     },
     "score": {
@@ -118,6 +119,13 @@
       "smashCap": 200,
       "ring": 10,
       "coneBowling": 10
+    },
+    "scoring": {
+      "boostIntervalS": 0.25,
+      "roofRideIntervalM": 10,
+      "boostTarget": "total",
+      "roofRideTarget": "activePot",
+      "roofRideDistanceBasis": "world"
     },
     "meterGain": {
       "boostPerQuarterSecond": 1,

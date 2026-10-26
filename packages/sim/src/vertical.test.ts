@@ -152,7 +152,9 @@ describe('slam (GDD §5.5)', () => {
     let slamLanding = false;
     for (let t = 0; t < 60; t++) {
       step(s, Action.jump, T);
-      if (has(s, SimEventKind.land)) slamLanding = s.events.a[s.events.count - 1] === 1 || slamLanding;
+      for (let i = 0; i < s.events.count; i++) {
+        if (s.events.kind[i] === SimEventKind.land) slamLanding = s.events.a[i] === 1 || slamLanding;
+      }
     }
     expect(slamLanding).toBe(true);
   });

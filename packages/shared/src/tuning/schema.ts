@@ -131,6 +131,7 @@ const streak = z.strictObject({
   multiplierStep: pos(),
   multiplierCap: z.number().min(1),
   sloppyBankRatio: ratio(),
+  scrapeBankRatio: ratio(),
   fireworksEvery: posInt(),
 });
 
@@ -153,6 +154,14 @@ const score = z.strictObject({
   smashCap: nonNeg(),
   ring: nonNeg(),
   coneBowling: nonNeg(),
+});
+
+const scoring = z.strictObject({
+  boostIntervalS: durationS(),
+  roofRideIntervalM: pos(),
+  boostTarget: z.enum(['total', 'activePot']),
+  roofRideTarget: z.enum(['total', 'activePot']),
+  roofRideDistanceBasis: z.enum(['world', 'relative']),
 });
 
 const meterGain = z.strictObject({
@@ -248,6 +257,7 @@ export const SimTuningSchema = z
     modes,
     streak,
     score,
+    scoring,
     meterGain,
     pickups,
     items,

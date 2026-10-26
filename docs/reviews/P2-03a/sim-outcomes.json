@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 1,
+  "checkpoint": "02d4fc81c8ad57104cf304889952634f1b811082",
+  "dirty": true,
+  "tuningHash": {
+    "before": "9e2e6e03faddfbea",
+    "after": "cc1f730496d3c9cc"
+  },
+  "determinism": {
+    "before": "5d224451-353277e8",
+    "after": "8be91f5c-6f883e35",
+    "runs": 25
+  },
+  "outcomes": [
+    {
+      "name": "early-crash",
+      "before": {
+        "ticks": 258,
+        "score": 155,
+        "distanceM": 155.37045680500898,
+        "hash": "538c5a99"
+      },
+      "after": {
+        "ticks": 258,
+        "score": 155,
+        "distanceM": 155.37045680500898,
+        "hash": "a73a2af9",
+        "scoreState": {
+          "total": 155.37045680500898,
+          "pot": 0,
+          "streakN": 0,
+          "streakTicksLeft": 0,
+          "meter": 0,
+          "boostTicks": 0,
+          "roofDistanceM": 0
+        },
+        "cause": {
+          "kind": "crash",
+          "cause": "rear"
+        }
+      },
+      "sameInputLog": true,
+      "timeline": []
+    },
+    {
+      "name": "busy-inputs",
+      "before": {
+        "ticks": 106,
+        "score": 62,
+        "distanceM": 62.645557488526215,
+        "hash": "923a1653"
+      },
+      "after": {
+        "ticks": 106,
+        "score": 62,
+        "distanceM": 62.645557488526215,
+        "hash": "9fe5fb3b",
+        "scoreState": {
+          "total": 62.645557488526215,
+          "pot": 0,
+          "streakN": 0,
+          "streakTicksLeft": 0,
+          "meter": 110,
+          "boostTicks": 0,
+          "roofDistanceM": 0
+        },
+        "cause": {
+          "kind": "crash",
+          "cause": "landing"
+        }
+      },
+      "sameInputLog": true,
+      "timeline": [
+        {
+          "tick": 42,
+          "events": [
+            {
+              "kind": "scoreAddedToPot",
+              "reason": 7,
+              "points": 120
+            }
+          ]
+        },
+        {
+          "tick": 48,
+          "events": [
+            {
+              "kind": "scoreAddedToPot",
+              "reason": 8,
+              "points": 150
+            }
+          ]
+        },
+        {
+          "tick": 101,
+          "events": [
+            {
+              "kind": "scoreAddedToPot",
+              "reason": 7,
+              "points": 180
+            }
+          ]
+        },
+        {
+          "tick": 106,
+          "events": [
+            {
+              "kind": "streakSettled",
+              "banked": 0,
+              "lost": 450
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "long-run",
+      "before": {
+        "ticks": 2070,
+        "score": 1531,
+        "distanceM": 1531.9897301506035,
+        "hash": "c82fb955"
+      },
+      "after": {
+        "ticks": 2070,
+        "score": 1531,
+        "distanceM": 1531.9897301506035,
+        "hash": "d101ad75",
+        "scoreState": {
+          "total": 1531.9897301506035,
+          "pot": 0,
+          "streakN": 0,
+          "streakTicksLeft": 0,
+          "meter": 0,
+          "boostTicks": 0,
+          "roofDistanceM": 0
+        },
+        "cause": {
+          "kind": "crash",
+          "cause": "secondScrape"
+        }
+      },
+      "sameInputLog": true,
+      "timeline": []
+    }
+  ],
+  "sourceSha256": {
+    "score.ts": "9dfa52682f711c996e3202695a2491e17ad54886a9d076599560c5032fe77ee9",
+    "score-ledger.ts": "06a3806c897834cec09ae217fa8de922d03f8c90b5c4bb32168edb14f80722e7",
+    "step.ts": "1af985841667f33f0578e103897c0d8b7b5240fb65f33507e357c87b9cb90df4",
+    "state.ts": "d57a56d1e72da9f22d991ce268435e958c2b8e4dc14439622a5cccb300d19a88",
+    "hash.ts": "63c5f489ccbdb35e3a152dfffcb018878c1b28a42247019a2991c6734b9f1f6d",
+    "events.ts": "b60c038b3a92f9bcccbb844da7cc13ef3c8c1e446e937c6ed94aba1ee8f09ed6"
+  }
+}

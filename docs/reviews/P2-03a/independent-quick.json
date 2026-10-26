@@ -1,0 +1,29 @@
+{
+  "mode": "quick",
+  "passed": [
+    "two flips, roll, perfect:1290/N4/meter230",
+    "producer order CLEAR→SEMI4050; reverse3375",
+    "road pair182.5 and roof grade→HOP→SLAM382.5",
+    "input SLAM/start events give0; platform duplicated flag scores once",
+    "149empty→timer1;150th→bank;151st startsN1",
+    "award at150th expiry refreshes currentN before settlement",
+    "actual BOOST ticks14/15/30 and partial reset",
+    "insufficientAIR on scheduled boost pulse resets without awarding",
+    "activePot BOOST at expiry uses×1.5 then banks115 without refreshing",
+    "activePot BOOST without series falls back directly; noN or timer",
+    "world25m roof→40direct/rem5; relative25−20→rem5/0points",
+    "roof activePot×1.5 pulses refresh withoutN; directtarget still refreshes",
+    "roof subthreshold travel does not refresh; boundary/invalid reset remainder",
+    "roof exact10m from100×0.1 is not delayed by floating noise",
+    "sloppy same-touchdown HOP+SLAM half-banks106.25",
+    "late crash dominates sloppy/scrape/timeout; directBOOST survives",
+    "scrape priority and explicit quarter-bank; no later-action reopening",
+    "fatal road SLAM loses50; state.status alone also forces loss",
+    "large source prefix + HOP/SLAM + every1 milestone remains intact, late crash dominates",
+    "multiplier cap×8 and meter cap; no fake mode activation",
+    "actual step emits63CLEAR then slot63 rearcrash; staged127325 is lost",
+    "interleaved fresh sessions cannot inherit global credit scratch",
+    "each of all7 score fields participates in stateHash"
+  ],
+  "failed": []
+}

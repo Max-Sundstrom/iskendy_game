@@ -1,4 +1,4 @@
-import type { SimTuning } from '@kometa/shared';
+import { ScoreReason, type SimTuning } from '@kometa/shared';
 import { describe, expect, it } from 'vitest';
 import { readEvents } from './events';
 import { cosHalfTurn } from './math';
@@ -217,7 +217,15 @@ describe('touchdown integration and terminal pose (G11/G22)', () => {
       rolling: true,
     });
     step(s, 0, T);
-    expect(readEvents(s.events).map((e) => e.kind)).toEqual(['flipDone', 'rollDone', 'land', 'landingGraded']);
+    expect(readEvents(s.events)).toEqual([
+      { kind: 'flipDone', count: 1 },
+      { kind: 'rollDone', count: 1, direction: -1 },
+      { kind: 'land', slam: false },
+      { kind: 'landingGraded', grade: 'perfect', flips: 1 },
+      { kind: 'scoreAddedToPot', reason: ScoreReason.frontFlip, points: 360 },
+      { kind: 'scoreAddedToPot', reason: ScoreReason.barrelRoll, points: 150 },
+      { kind: 'scoreAddedToPot', reason: ScoreReason.perfectLanding, points: 180 },
+    ]);
   });
 });
 

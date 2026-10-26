@@ -9,4 +9,4 @@ test('the sim hashes the same in the browser as in Node', async ({ page }) => {
   await expect(page.locator('body')).toHaveAttribute('data-hash', GOLDEN_10K);
 });
 
-const GOLDEN_10K = '5d224451-353277e8';
+const GOLDEN_10K = '8be91f5c-6f883e35';

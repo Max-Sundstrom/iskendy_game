@@ -66,6 +66,16 @@ export type PlayerState = {
   rollsDone: number;
 };
 
+export type ScoreState = {
+  total: number;
+  pot: number;
+  streakN: number;
+  streakTicksLeft: number;
+  meter: number;
+  boostTicks: number;
+  roofDistanceM: number;
+};
+
 export type SimState = {
   tick: number;
   readonly seed: number;
@@ -76,8 +86,8 @@ export type SimState = {
   readonly rng: { readonly director: RngState; readonly pickups: RngState };
   readonly traffic: Traffic;
   readonly director: DirectorState;
-  /** Score so far; P1 counts distance only, P2-03 adds events, streaks and the pot (GDD §9). */
-  readonly score: { total: number };
+  /** Banked score, pending series and interval counters (GDD §9). */
+  readonly score: ScoreState;
   readonly events: EventBuffer;
 };
 
@@ -137,7 +147,7 @@ export function createSimState(seed: number, tuning: SimTuning): SimState {
     rng: { director: createRng(seed, 1), pickups: createRng(seed, 2) },
     traffic: createTraffic(),
     director: { nextRowM: tuning.director.firstRowM },
-    score: { total: 0 },
+    score: { total: 0, pot: 0, streakN: 0, streakTicksLeft: 0, meter: 0, boostTicks: 0, roofDistanceM: 0 },
     events: createEventBuffer(),
   };
 }
