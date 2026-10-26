@@ -157,6 +157,7 @@ const score = z.strictObject({
 });
 
 const scoring = z.strictObject({
+  nearMissEnabled: z.boolean(),
   boostIntervalS: durationS(),
   roofRideIntervalM: pos(),
   boostTarget: z.enum(['total', 'activePot']),

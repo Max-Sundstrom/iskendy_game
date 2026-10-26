@@ -1,5 +1,6 @@
 import { SimEventKind, type SimTuning } from '@kometa/shared';
 import { emit } from './events';
+import { invalidateNearMiss } from './near-miss';
 import { laneCenterX, SimStatus, type SimState } from './state';
 import { crash, CrashCause } from './outcome';
 import { hop, startRide } from './roofs';
@@ -68,6 +69,7 @@ export function resolveCollisions(state: SimState, tuning: SimTuning, start: Ste
         if (t.over[i] !== seq || !lat1) t.over[i] = 0;
         else if (p.z - halfL >= front1) {
           t.over[i] = 0;
+          invalidateNearMiss(state, i);
           emit(state.events, SimEventKind.clear, t.type[i] ?? 0, v.top === 'platform' ? 1 : 0);
         }
       }
@@ -76,6 +78,7 @@ export function resolveCollisions(state: SimState, tuning: SimTuning, start: Ste
     if (!zOverlap1 && !crossedRear) continue;
     if (!lat0 && !lat1) continue;
     if (p.y >= top) continue; // clear above
+    invalidateNearMiss(state, i);
     if (start.y >= top - tol && p.vy <= 0 && v.top !== 'none') {
       // Came down onto the top: platforms are ridden, everything else bounces (G10, G11).
       if (v.top === 'platform') startRide(state, tuning, i, top);

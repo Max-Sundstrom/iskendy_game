@@ -98,6 +98,9 @@ export function scoreTick(
     const a = events.a[i] ?? 0;
     const b = events.b[i] ?? 0;
     switch (kind) {
+      case SimEventKind.nearMiss:
+        awardAction(state, tuning, ScoreReason.nearMiss, tuning.score.nearMiss, tuning.meterGain.nearMiss);
+        break;
       case SimEventKind.clear:
         if (b === 1)
           awardAction(state, tuning, ScoreReason.semiCleared, tuning.score.semiCleared, tuning.meterGain.semiCleared);

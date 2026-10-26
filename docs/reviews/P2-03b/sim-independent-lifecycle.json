@@ -1,0 +1,67 @@
+{
+  "runtimeManifestSha256": "8309ab6b5de8b77c4ae9553e6f7c3a6e1ce8a42571b61313143b8e76e09bb7cf",
+  "baselineCommit": "8e8fc39285e68e63dae2abc496d56fccb8f74008",
+  "passed": [
+    {
+      "name": "actual session input: seed1 Right350 → near352, bank502, crash509, valid replay and fresh Retry state",
+      "nearTick": 352,
+      "bankTick": 502,
+      "crashTick": 509,
+      "hash": "fc2ed824",
+      "score": 366.06451666705124,
+      "replayValid": true
+    },
+    {
+      "name": "actual step fresh entry, one award per lifetime and exact150-tick bank"
+    },
+    {
+      "name": "new alongside traffic never arms; failed wide pass retries only after fresh entry"
+    },
+    {
+      "name": "actual road touchdown preserves unrelated valid near"
+    },
+    {
+      "name": "actual same-slot CLEAR invalidates staged completion"
+    },
+    {
+      "name": "actual HOP and platform ride never duplicate near"
+    },
+    {
+      "name": "actual current ride and jump-away starting ride exclude the exact slot"
+    },
+    {
+      "name": "actual side scrape rewinds x without resurrecting the contacted near"
+    },
+    {
+      "name": "actual unrelated cone scrape coexists with pre-contact near completion then loses50pot"
+    },
+    {
+      "name": "actual late-slot rear crash suppresses earlier tentative completion"
+    },
+    {
+      "name": "actual old CLEAR stays before near: correct producer multiplier and unchanged event prefix"
+    },
+    {
+      "name": "64 actual simultaneous completions: ascending slots, old land prefix, every1 milestones and bounded credits",
+      "eventCount": 130,
+      "allocated": 1024,
+      "conservativeProducerBound": 684
+    },
+    {
+      "name": "origin shift keeps awarded identity; exact slot emits once before origin event"
+    },
+    {
+      "name": "despawn and reused director slot clear all stale pass states"
+    },
+    {
+      "name": "all five persistent active states hash distinctly; inactive residue has no effect"
+    },
+    {
+      "name": "interleaved actual steps, flag-off and terminal reset cannot inherit completion scratch"
+    },
+    {
+      "name": "flag-off actual near trajectory preserves baseline score and every old raw event"
+    }
+  ],
+  "failed": []
+}

@@ -14,6 +14,8 @@ export type Traffic = {
   readonly speed: Float64Array;
   /** player.touchSeq + 1 while the player is passing over this vehicle in the air, else 0 (CLEAR tracking). */
   readonly over: Int32Array;
+  /** NearPass state for this vehicle lifetime; reset on removal and every spawn assignment. */
+  readonly nearMiss: Uint8Array;
 };
 
 export function createTraffic(): Traffic {
@@ -24,6 +26,7 @@ export function createTraffic(): Traffic {
     z: new Float64Array(TRAFFIC_CAPACITY),
     speed: new Float64Array(TRAFFIC_CAPACITY),
     over: new Int32Array(TRAFFIC_CAPACITY),
+    nearMiss: new Uint8Array(TRAFFIC_CAPACITY),
   };
 }
 

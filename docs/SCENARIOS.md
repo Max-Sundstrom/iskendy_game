@@ -61,6 +61,7 @@ for v1:
 | G20 | Accepted airborne lane changes during a committed roll | Signed 360° in 27 default ticks; first pending direction wins, overflow affects no lane motion; disabled-queue flag tested | sim `roll.test.ts` |
 | G21 | Mixed flip+roll landing | Quaternion default cannot cancel signed axes; both modes have inclusive pure-axis bounds, periodicity and an independent quaternion oracle | sim `orientation.test.ts` |
 | G22 | Landing crash, interrupted tricks and Retry | Store same-tick terminal pitch/roll; clear active/queued tricks; safe road/hop/platform reset all; Retry starts fresh | sim `roll.test.ts`, `orientation.test.ts`; browser acceptance pending |
+| G23 | Completed untouched close pass | Exact swept side gap0…0.6m during simultaneous body overlap; one award per vehicle lifetime, contact/roof/CLEAR excluded, flag-off preserves physics | sim near-miss tests; seed1 Right350 → near352 → bank502 → crash509 actual-input replay; browser evidence pending |
 
 ## P — Platform and device
 

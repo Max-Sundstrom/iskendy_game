@@ -245,9 +245,9 @@ Traffic only travels forward. Relative speed = player speed − traffic speed.
 - CRASH loses the pot. SLOPPY landing banks 50 % and resets the streak.
 - Fireworks over the road at n = 10, 20, 30…
 
-**P2-03a implementation slice:** distance, actual BOOST intervals, CLEAR/SEMI, HOP, ROOF RIDE,
-completed flips/rolls, graded landings and landing SLAM now feed deterministic ledgers. NEAR MISS,
-SMASH, RING and cone bowling remain pending their own gameplay triggers. The meter saturates but mode
+**P2-03 implementation slices:** distance, actual BOOST intervals, CLEAR/SEMI, HOP, ROOF RIDE,
+completed flips/rolls, graded landings, landing SLAM and completed NEAR MISS passes now feed deterministic
+ledgers. SMASH, RING and cone bowling remain pending their own gameplay triggers. The meter saturates but mode
 activation is P2-04; full streak/meter/feed UI is P2-07, so the current HUD/results show banked total only.
 Fractional points remain in the ledger; only displayed/replay claimed score is floored. Extra flips use the
 linear points bonus `frontFlip × (1 + extraFlipBonus × (count − 1))`, with unchanged meter per completed flip.
@@ -260,6 +260,16 @@ ROOF RIDE uses world distance by default (`roofRideDistanceBasis`), with `relati
 travel minus actual platform travel. Only a full tick on the same valid platform counts; exit/change/re-entry
 resets the fractional distance. A pulse credits `activePot` by default or `total` by flag, refreshing an existing
 series without increasing N or starting one. SCRAPE banks `scrapeBankRatio=0` by default.
+
+**P2-03b proposed policy (Q27):** `scoring.nearMissEnabled=true` awards an untouched completed forward
+pass once per vehicle lifetime. The unrotated body boxes must overlap longitudinally and vertically while
+their lateral surface gap lies in the inclusive 0…0.6 m corridor. A close interval during the pass is remembered;
+points arrive only after the player's rear clears the vehicle front. Exact roof-plane contact has no body
+overlap; low airborne side passes can qualify. Body penetration, contact, HOP, ride or CLEAR disqualifies that
+vehicle's pending encounter. Default adjacent lane centres are too far apart to qualify. The current motor
+filter is `vehicle.top !== 'none'`, excluding cones and barriers in current content. A failed encounter can
+retry after separation; a successful vehicle remains spent. Disabling the flag removes the new events and
+points without changing physical outcomes. These completion, geometry and repeat policies await owner approval.
 
 Physics awards retain producer order: only adjacent road SLAM/grade events are normalized to grade-first;
 roof HOP then SLAM remains that order. After all awards, one settlement resolves CRASH before SCRAPE before

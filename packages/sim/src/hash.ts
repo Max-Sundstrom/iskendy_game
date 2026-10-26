@@ -81,6 +81,7 @@ export function stateHash(s: SimState): string {
     h = mixWord(h, i | ((t.type[i] ?? 0) << 8) | ((t.lane[i] ?? 0) << 16));
     h = mixNumber(h, t.z[i] ?? 0);
     h = mixNumber(h, t.speed[i] ?? 0);
+    h = mixWord(h, t.nearMiss[i] ?? 0);
     h = mixWord(h, t.over[i] === p.touchSeq + 1 ? 1 : 0); // only whether a CLEAR is still open matters
   }
   h = mixRng(h, s.rng.director);

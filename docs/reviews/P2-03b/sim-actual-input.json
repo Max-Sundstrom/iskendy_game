@@ -1,0 +1,56 @@
+{
+  "seed": 1,
+  "time": 350,
+  "direction": 2,
+  "events": [
+    {
+      "tick": 352,
+      "kind": "nearMiss",
+      "vehicleType": 3,
+      "slot": 0
+    },
+    {
+      "tick": 502,
+      "kind": "streakSettled",
+      "banked": 50,
+      "lost": 0
+    },
+    {
+      "tick": 509,
+      "kind": "crash",
+      "cause": "rear"
+    }
+  ],
+  "replay": {
+    "schemaVersion": 1,
+    "simVersion": 1,
+    "seed": 1,
+    "tuningHash": "9e91b7802bf1b6b1",
+    "mode": "endless",
+    "ticks": 509,
+    "inputs": [
+      [
+        350,
+        2
+      ],
+      [
+        351,
+        0
+      ]
+    ],
+    "claimedScore": 366,
+    "claimedDistanceM": 316.06451666705124,
+    "finalHash": "fc2ed824"
+  },
+  "valid": true,
+  "score": {
+    "total": 366.06451666705124,
+    "pot": 0,
+    "streakN": 0,
+    "streakTicksLeft": 0,
+    "meter": 10,
+    "boostTicks": 0,
+    "roofDistanceM": 0
+  },
+  "inputTickConvention": "Zero-based held masks; event ticks are completed-step counts."
+}

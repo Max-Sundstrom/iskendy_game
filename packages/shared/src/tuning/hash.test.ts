@@ -36,6 +36,12 @@ describe('tuningHash', () => {
     expect(tuningHash(reverseKeys(sim()) as SimTuning)).toBe(tuningHash(sim()));
   });
 
+  it('includes the near-miss policy even though it is a boolean rather than a numeric tuning leaf', () => {
+    const enabled = sim();
+    const disabled = { ...enabled, scoring: { ...enabled.scoring, nearMissEnabled: false } };
+    expect(tuningHash(disabled)).not.toBe(tuningHash(enabled));
+  });
+
   it('ignores presentation and server numbers', () => {
     const raw = structuredClone(defaultTuning);
     raw.presentation.camera.distanceM = 99;
@@ -86,4 +92,4 @@ describe('utf8Bytes', () => {
 });
 
 // Cross-checked with an independent Python FNV-1a 64 over the same canonical JSON (P0-03 handoff note).
-const GOLDEN_DEFAULT_HASH = 'cc1f730496d3c9cc';
+const GOLDEN_DEFAULT_HASH = '9e91b7802bf1b6b1';

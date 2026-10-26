@@ -4,7 +4,8 @@ import { SimEventKind, type SimEvent, type ScoreReason } from '@kometa/shared';
 
 // Current producers: <=8 raw events + scoring milestones per traffic slot (64 slots),
 // <=20 non-traffic events/milestones, <=20 aggregated credits, one settlement and one origin shift:
-// <=554 outputs even at fireworksEvery=1. Keep headroom; new producers must update this bound/tests.
+// Near misses add <=64 raw +64 milestones +2 credit buckets: <=684 outputs even at fireworksEvery=1.
+// Keep headroom; new producers must update this bound/tests.
 const CAPACITY = 1024;
 
 /** Index = FlyStop code from vertical.ts. */
@@ -98,6 +99,9 @@ export function readEvents(buf: EventBuffer): SimEvent[] {
         break;
       case SimEventKind.rollDone:
         out.push({ kind: 'rollDone', count: a, direction: b < 0 ? -1 : 1 });
+        break;
+      case SimEventKind.nearMiss:
+        out.push({ kind: 'nearMiss', vehicleType: a, slot: b });
         break;
       case SimEventKind.scoreAddedDirect:
         out.push({ kind: 'scoreAddedDirect', reason: a as ScoreReason, points: b });

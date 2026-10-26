@@ -56,6 +56,7 @@ function spawnRow(state: SimState, tuning: SimTuning, rowM: number): void {
     state.traffic.lane[slot] = lane;
     state.traffic.z[slot] = z;
     state.traffic.over[slot] = 0;
+    state.traffic.nearMiss[slot] = 0;
     state.traffic.speed[slot] = v.minMps + nextFloat(state.rng.director) * (v.maxMps - v.minMps);
   }
 }
@@ -68,8 +69,10 @@ export function runDirector(state: SimState, tuning: SimTuning): void {
     if (
       t.active[i] === 1 &&
       (t.z[i] ?? 0) + (tuning.vehicles[t.type[i] ?? 0]?.lengthM ?? 0) < p.z - tuning.director.despawnBehindM
-    )
+    ) {
       t.active[i] = 0;
+      t.nearMiss[i] = 0;
+    }
   }
   const dir = tuning.director;
   while (state.director.nextRowM < p.distanceM + dir.spawnAheadM) {
