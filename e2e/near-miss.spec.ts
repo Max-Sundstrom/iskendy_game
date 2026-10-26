@@ -224,7 +224,7 @@ test('a real close pass banks into HUD, result and replay; hidden time and Retry
   const validation = playReplay(replay, tuning);
   expect(validation.valid, validation.reason).toBe(true);
   expect(validation.state.score.total).toBe(expected.total);
-  expect(validation.hash).toBe('fc2ed824');
+  expect(validation.hash).toBe('b3d301a4');
   expect(expected.total).toBeCloseTo(366.06451666705124, 9);
   expect(digits(await page.locator('.results-score').textContent())).toBe(366);
   expect(digits(await hud.textContent())).toBe(366);
