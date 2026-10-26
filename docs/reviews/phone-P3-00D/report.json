@@ -1,0 +1,120 @@
+{
+  "sourceHead": "71f51fa600d458d88cacdc70bb871a81cb3bdbbe",
+  "startedAt": "2026-10-23T22:42:12.129Z",
+  "viewport": {
+    "width": 390,
+    "height": 844,
+    "deviceScaleFactor": 3
+  },
+  "limitations": [
+    "Chromium mobile emulation with synthetic pointer events; not a physical phone.",
+    "One bounded local acceptance run; not the full PR4 three-run regression or a performance measurement.",
+    "Normal intro and default high quality; local strict CSP uses frame-ancestors none. Hosting/iframe acceptance remains separate.",
+    "No scoring branch included."
+  ],
+  "passed": true,
+  "errors": [],
+  "assets": [
+    {
+      "url": "http://127.0.0.1:5184/?seed=28",
+      "status": 200,
+      "type": "document"
+    },
+    {
+      "url": "http://127.0.0.1:5184/assets/index-duw5Ttrp.css",
+      "status": 200,
+      "type": "stylesheet"
+    },
+    {
+      "url": "http://127.0.0.1:5184/assets/index-B-iOLh1O.js",
+      "status": 200,
+      "type": "script"
+    }
+  ],
+  "browserVersion": "154.0.8037.57",
+  "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'",
+  "introFrames": 48,
+  "playing": {
+    "simVersion": "1",
+    "screen": "playing",
+    "distance": "2",
+    "lane": "2",
+    "flip": "0.00",
+    "roll": "0.00",
+    "air": "0"
+  },
+  "midRoll": {
+    "simVersion": "1",
+    "screen": "playing",
+    "distance": "14",
+    "lane": "1",
+    "flip": "0.00",
+    "roll": "-0.56",
+    "air": "1"
+  },
+  "completedRoll": {
+    "simVersion": "1",
+    "screen": "playing",
+    "distance": "23",
+    "lane": "1",
+    "flip": "0.00",
+    "roll": "-1.00",
+    "air": "1"
+  },
+  "safeLanding": {
+    "simVersion": "1",
+    "screen": "playing",
+    "distance": "32",
+    "lane": "1",
+    "flip": "0.00",
+    "roll": "0.00",
+    "air": "0"
+  },
+  "impact": {
+    "simVersion": "1",
+    "screen": "crashing",
+    "distance": "155",
+    "lane": "2",
+    "flip": "0.00",
+    "roll": "0.00",
+    "air": "0"
+  },
+  "hiddenFrame": {
+    "elapsedClockMs": 5000,
+    "identicalPng": true,
+    "sha256": "922ca0f0af2f861a538152d9b14ed9f2bd1b2a489c22866d47c599a0da6d86a7"
+  },
+  "replay": {
+    "seed": 28,
+    "ticks": 258,
+    "inputs": [
+      [5, 4],
+      [6, 0],
+      [10, 1],
+      [11, 0],
+      [55, 2],
+      [56, 0]
+    ],
+    "valid": true,
+    "hash": "69ec071b",
+    "distanceM": 155.37045680500898,
+    "score": 155,
+    "terminalEvents": [
+      {
+        "kind": "crash",
+        "cause": "rear"
+      }
+    ]
+  },
+  "retry": {
+    "simVersion": "1",
+    "screen": "playing",
+    "distance": "2",
+    "lane": "2",
+    "flip": "0.00",
+    "roll": "0.00",
+    "air": "0"
+  },
+  "cleanupComplete": true,
+  "wallSeconds": 52.662391885
+}
