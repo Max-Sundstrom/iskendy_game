@@ -14,9 +14,9 @@ const crossEngine = process.env['CROSS_ENGINE']
 export default defineConfig({
   testDir: 'e2e',
   fullyParallel: true,
-  // CI and cloud runners render with SwiftShader (no GPU): shader compiles and frames are slow, so allow time and
-  // keep parallelism low enough not to starve each test.
-  workers: 2,
+  // Software-rendered WebGL cases share the runner's CPU quota. The unchanged crash journey exceeded 120 s
+  // with two workers but passed in 65 s alone; serialize cases while retaining every frame and assertion.
+  workers: 1,
   timeout: 120_000,
   forbidOnly: Boolean(process.env['CI']),
   retries: 0,

@@ -1,0 +1,957 @@
+{
+  "head": "a1a05d30061809f3959d6d1796d9a1bdcbef1b81",
+  "runtimeChanged": false,
+  "testBlobs": {
+    "e2e/crash.spec.ts": "829892b762b615d36fae6c75cb9e46fb64dfb0d6",
+    "e2e/helpers/reach-crash.ts": "a243afcecc34d2d29aa06b01a7c590a9707fb248",
+    "e2e/crash-horizon.spec.ts": "79454cb5569e95b6f99986732463ea134b4e7a91"
+  },
+  "workers": 2,
+  "timeoutMs": 120000,
+  "retries": 0,
+  "runtime": "7559c647fef96e3e05fb5835b4524c2dc33d08b9",
+  "node": "24.19.0",
+  "pnpm": "12.11.2",
+  "playwright": "1.64.0",
+  "chromium": "154.0.8037.57",
+  "server": "fresh production Vite preview with deployment CSP",
+  "syntheticStats": {
+    "startTime": "2026-10-26T13:41:45.312Z",
+    "duration": 4325.63,
+    "expected": 12,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "productionStats": {
+    "startTime": "2026-10-26T13:42:37.083Z",
+    "duration": 152704.69199999998,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "project": "desktop",
+      "name": "crash freezes the run, pauses while hidden and records once across two retries",
+      "status": "timedOut",
+      "wallMs": 120767,
+      "errors": [
+        "Test timeout of 120000ms exceeded.",
+        "Error: expect(locator).toBeVisible() failed\n\nLocator: locator('.crash-cue')\nExpected: visible\nError: Test timeout of 120000ms exceeded.\n\nCall log:\n  - Expect \"toBeVisible\" locator('.crash-cue') with timeout 5000ms\n  - waiting for locator('.crash-cue')\n  - Test timeout of 120000ms exceeded.\n\n\n  61 |   for (let run = 0; run < 3; run++) {\n  62 |     await reachCrash(page, [339, 324, 313][run] ?? 0);\n> 63 |     await expect(page.locator('.crash-cue')).toBeVisible();\n     |                                              ^\n  64 |     await expect(page.locator('.results')).toBeHidden();\n  65 |     const saved = await savedRuns(page);\n  66 |     const runs: unknown = JSON.parse(saved);\n    at /workspace/kometa-crash/e2e/crash.spec.ts:63:46"
+      ]
+    },
+    {
+      "project": "desktop",
+      "name": "reduced motion keeps the crash scene static before results",
+      "status": "passed",
+      "wallMs": 45987,
+      "errors": []
+    },
+    {
+      "project": "desktop",
+      "name": "a late real flip shows its bad landing orientation before results",
+      "status": "passed",
+      "wallMs": 45190,
+      "errors": []
+    },
+    {
+      "project": "mobile",
+      "name": "crash freezes the run, pauses while hidden and records once across two retries",
+      "status": "passed",
+      "wallMs": 51725,
+      "errors": []
+    },
+    {
+      "project": "mobile",
+      "name": "reduced motion keeps the crash scene static before results",
+      "status": "passed",
+      "wallMs": 18268,
+      "errors": []
+    },
+    {
+      "project": "mobile",
+      "name": "a late real flip shows its bad landing orientation before results",
+      "status": "passed",
+      "wallMs": 10368,
+      "errors": []
+    }
+  ],
+  "traces": [
+    {
+      "caseDirectory": "crash-a-late-real-flip-sho-95398--orientation-before-results-desktop",
+      "sha256": "88103050ca16f6e7f74856115da3e190d05e870d6a3a245ca6cb5bd3c3555b07",
+      "guardsRecordedInBrowserTrace": [],
+      "replayReads": [
+        [
+          {
+            "seed": 5,
+            "ticks": 63,
+            "finalHash": "6aaec938"
+          }
+        ]
+      ],
+      "methodTimings": {
+        "newPage": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 178.713
+        },
+        "clockInstall": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 30.811
+        },
+        "clockPauseAt": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 6.159
+        },
+        "goto": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 567.476
+        },
+        "clockRunFor": {
+          "count": 4,
+          "completed": 4,
+          "wallMs": 35572.7
+        },
+        "expect": {
+          "count": 5,
+          "completed": 5,
+          "wallMs": 663.335
+        },
+        "keyboardPress": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 10.806
+        },
+        "evaluateExpression": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 2.937
+        },
+        "screenshot": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 562.781
+        },
+        "clockFastForward": {
+          "count": 8,
+          "completed": 8,
+          "wallMs": 4194.543
+        }
+      },
+      "horizonCallsIncludingTimeoutTeardown": []
+    },
+    {
+      "caseDirectory": "crash-a-late-real-flip-sho-95398--orientation-before-results-mobile",
+      "sha256": "b87a64edcaee64be00e73052808ce2b38dc2ed277b2340fd22b3f30dab17dd37",
+      "guardsRecordedInBrowserTrace": [],
+      "replayReads": [
+        [
+          {
+            "seed": 5,
+            "ticks": 64,
+            "finalHash": "6c60db5c"
+          }
+        ]
+      ],
+      "methodTimings": {
+        "newPage": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 162.447
+        },
+        "clockInstall": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 34.968
+        },
+        "clockPauseAt": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 3.381
+        },
+        "goto": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 592.35
+        },
+        "clockRunFor": {
+          "count": 4,
+          "completed": 4,
+          "wallMs": 5320.877
+        },
+        "expect": {
+          "count": 5,
+          "completed": 5,
+          "wallMs": 365.25
+        },
+        "evaluateExpression": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 8.468
+        },
+        "screenshot": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 390.157
+        },
+        "clockFastForward": {
+          "count": 8,
+          "completed": 8,
+          "wallMs": 353.656
+        }
+      },
+      "horizonCallsIncludingTimeoutTeardown": []
+    },
+    {
+      "caseDirectory": "crash-crash-freezes-the-ru-ffd0e-rds-once-across-two-retries-desktop",
+      "sha256": "17bf32aa923911707ea2939637d360a4983ae7978c421f3c2921595c9a46d7c1",
+      "guardsRecordedInBrowserTrace": [
+        {
+          "traceMs": 42520.097,
+          "observed": {
+            "screen": "crashing",
+            "count": 1,
+            "seenAt": 1007832,
+            "now": 1007832
+          }
+        },
+        {
+          "traceMs": 91037.956,
+          "observed": {
+            "screen": "crashing",
+            "count": 1,
+            "seenAt": 1020353,
+            "now": 1020353
+          }
+        }
+      ],
+      "replayReads": [
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          }
+        ]
+      ],
+      "methodTimings": {
+        "newPage": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 166.841
+        },
+        "clockInstall": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 60.072
+        },
+        "clockPauseAt": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 20.259
+        },
+        "goto": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 664.76
+        },
+        "clockRunFor": {
+          "count": 6,
+          "completed": 6,
+          "wallMs": 6216.136
+        },
+        "expect": {
+          "count": 20,
+          "completed": 20,
+          "wallMs": 1490.535
+        },
+        "evaluateExpressionHandle": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 18.409
+        },
+        "clockFastForward": {
+          "count": 212,
+          "completed": 211,
+          "wallMs": 95696.729
+        },
+        "evaluateExpression": {
+          "count": 8,
+          "completed": 8,
+          "wallMs": 1716.808
+        },
+        "getAttribute": {
+          "count": 4,
+          "completed": 4,
+          "wallMs": 44.911
+        },
+        "screenshot": {
+          "count": 5,
+          "completed": 5,
+          "wallMs": 4979.602
+        },
+        "waitForSelector": {
+          "count": 4,
+          "completed": 4,
+          "wallMs": 1950.869
+        },
+        "emulateMedia": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 17.763
+        },
+        "keyboardPress": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 23.688
+        },
+        "click": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 141.942
+        }
+      },
+      "horizonCallsIncludingTimeoutTeardown": [
+        {
+          "armedTraceMs": 9502.994,
+          "frames": 68,
+          "completedFrames": 68,
+          "clockWallMs": 32287.292,
+          "endpointTraceMs": 42522.203
+        },
+        {
+          "armedTraceMs": 57054.947,
+          "frames": 65,
+          "completedFrames": 65,
+          "clockWallMs": 32891.991,
+          "endpointTraceMs": 91040.233
+        },
+        {
+          "armedTraceMs": 96300.397,
+          "frames": 63,
+          "completedFrames": 63,
+          "clockWallMs": 26078.86,
+          "endpointTraceMs": 122441.56
+        }
+      ]
+    },
+    {
+      "caseDirectory": "crash-crash-freezes-the-ru-ffd0e-rds-once-across-two-retries-mobile",
+      "sha256": "ff0461fad4d61cf81ec328dae7e368108400959731c42d7b6a13137bce89cf8c",
+      "guardsRecordedInBrowserTrace": [
+        {
+          "traceMs": 116497.798,
+          "observed": {
+            "screen": "crashing",
+            "count": 1,
+            "seenAt": 1007832,
+            "now": 1007832
+          }
+        },
+        {
+          "traceMs": 133320.191,
+          "observed": {
+            "screen": "crashing",
+            "count": 1,
+            "seenAt": 1020353,
+            "now": 1020353
+          }
+        },
+        {
+          "traceMs": 143520.164,
+          "observed": {
+            "screen": "crashing",
+            "count": 1,
+            "seenAt": 1027485,
+            "now": 1027485
+          }
+        }
+      ],
+      "replayReads": [
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          },
+          {
+            "seed": 98,
+            "ticks": 313,
+            "finalHash": "3c1697fe"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          },
+          {
+            "seed": 98,
+            "ticks": 313,
+            "finalHash": "3c1697fe"
+          }
+        ]
+      ],
+      "methodTimings": {
+        "newPage": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 132.188
+        },
+        "clockInstall": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 25.486
+        },
+        "clockPauseAt": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 4.162
+        },
+        "goto": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 801.446
+        },
+        "clockRunFor": {
+          "count": 6,
+          "completed": 6,
+          "wallMs": 5438.187
+        },
+        "expect": {
+          "count": 26,
+          "completed": 26,
+          "wallMs": 585.897
+        },
+        "evaluateExpressionHandle": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 11.259
+        },
+        "clockFastForward": {
+          "count": 221,
+          "completed": 221,
+          "wallMs": 34386.744
+        },
+        "evaluateExpression": {
+          "count": 11,
+          "completed": 11,
+          "wallMs": 377.14
+        },
+        "getAttribute": {
+          "count": 5,
+          "completed": 5,
+          "wallMs": 38.189
+        },
+        "screenshot": {
+          "count": 6,
+          "completed": 6,
+          "wallMs": 1995.318
+        },
+        "waitForSelector": {
+          "count": 4,
+          "completed": 4,
+          "wallMs": 106.405
+        },
+        "emulateMedia": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 16.369
+        },
+        "keyboardPress": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 10.348
+        },
+        "tap": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 122.11
+        }
+      },
+      "horizonCallsIncludingTimeoutTeardown": [
+        {
+          "armedTraceMs": 103119.849,
+          "frames": 68,
+          "completedFrames": 68,
+          "clockWallMs": 13305.449,
+          "endpointTraceMs": 116499.587
+        },
+        {
+          "armedTraceMs": 124143.443,
+          "frames": 65,
+          "completedFrames": 65,
+          "clockWallMs": 8802.252,
+          "endpointTraceMs": 133349.969
+        },
+        {
+          "armedTraceMs": 135527.115,
+          "frames": 63,
+          "completedFrames": 63,
+          "clockWallMs": 7931.419,
+          "endpointTraceMs": 143521.412
+        }
+      ]
+    },
+    {
+      "caseDirectory": "crash-reduced-motion-keeps-27ed2-scene-static-before-results-desktop",
+      "sha256": "4cd711c5be98867e36406f487c783b3b99667fe81c1b04b6c904ea4741edad0e",
+      "guardsRecordedInBrowserTrace": [
+        {
+          "traceMs": 36491.003,
+          "observed": {
+            "screen": "crashing",
+            "count": 1,
+            "seenAt": 1006232,
+            "now": 1006232
+          }
+        }
+      ],
+      "replayReads": [],
+      "methodTimings": {
+        "newPage": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 203.565
+        },
+        "emulateMedia": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 11.881
+        },
+        "clockInstall": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 25.314
+        },
+        "clockPauseAt": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 6.299
+        },
+        "goto": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 671.806
+        },
+        "clockRunFor": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 5395.446
+        },
+        "expect": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 721.013
+        },
+        "evaluateExpressionHandle": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 5.186
+        },
+        "clockFastForward": {
+          "count": 60,
+          "completed": 60,
+          "wallMs": 31489.734
+        },
+        "evaluateExpression": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 4.48
+        },
+        "screenshot": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 732.286
+        },
+        "waitForSelector": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 2048.214
+        }
+      },
+      "horizonCallsIncludingTimeoutTeardown": [
+        {
+          "armedTraceMs": 9564.704,
+          "frames": 52,
+          "completedFrames": 52,
+          "clockWallMs": 26857.911,
+          "endpointTraceMs": 36492.397
+        }
+      ]
+    },
+    {
+      "caseDirectory": "crash-reduced-motion-keeps-27ed2-scene-static-before-results-mobile",
+      "sha256": "20fc99d31961ea12f20379718425dc29a647d6d96d6f43a43580ed7aebfbc899",
+      "guardsRecordedInBrowserTrace": [
+        {
+          "traceMs": 138013.404,
+          "observed": {
+            "screen": "crashing",
+            "count": 1,
+            "seenAt": 1006232,
+            "now": 1006232
+          }
+        }
+      ],
+      "replayReads": [],
+      "methodTimings": {
+        "newPage": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 141.239
+        },
+        "emulateMedia": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 30.478
+        },
+        "clockInstall": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 35.079
+        },
+        "clockPauseAt": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 9.178
+        },
+        "goto": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 586.456
+        },
+        "clockRunFor": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 3582.926
+        },
+        "expect": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 55.748
+        },
+        "evaluateExpressionHandle": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 3.548
+        },
+        "clockFastForward": {
+          "count": 60,
+          "completed": 60,
+          "wallMs": 8259.493
+        },
+        "evaluateExpression": {
+          "count": 1,
+          "completed": 1,
+          "wallMs": 217.891
+        },
+        "screenshot": {
+          "count": 3,
+          "completed": 3,
+          "wallMs": 1001.745
+        },
+        "waitForSelector": {
+          "count": 2,
+          "completed": 2,
+          "wallMs": 33.451
+        }
+      },
+      "horizonCallsIncludingTimeoutTeardown": [
+        {
+          "armedTraceMs": 130395.828,
+          "frames": 52,
+          "completedFrames": 52,
+          "clockWallMs": 7349.343,
+          "endpointTraceMs": 138017.156
+        }
+      ]
+    }
+  ],
+  "previousLocalTrace": [
+    {
+      "profile": "desktop",
+      "sourceRuntime": "7559c647",
+      "testBlob": "98b97f7f",
+      "segments": [
+        {
+          "screenReads": 69,
+          "fastForwards": 68,
+          "screenReadMs": 11662.060999999998,
+          "fastForwardMs": 11815.877000000008,
+          "endTraceMs": 34915.894
+        },
+        {
+          "screenReads": 66,
+          "fastForwards": 65,
+          "screenReadMs": 14136.726000000053,
+          "fastForwardMs": 7561.039999999979,
+          "endTraceMs": 68815.252
+        },
+        {
+          "screenReads": 64,
+          "fastForwards": 63,
+          "screenReadMs": 7919.34599999999,
+          "fastForwardMs": 8505.129999999946,
+          "endTraceMs": 91806.226
+        }
+      ],
+      "calls": [
+        {
+          "method": "clockFastForward",
+          "count": 221,
+          "sumMs": 33953.48,
+          "p50Ms": 6.48,
+          "maxMs": 1591.24
+        },
+        {
+          "method": "getAttribute",
+          "count": 204,
+          "sumMs": 33732.8,
+          "p50Ms": 5.63,
+          "maxMs": 1281.81
+        },
+        {
+          "method": "clockRunFor",
+          "count": 6,
+          "sumMs": 6796.76,
+          "p50Ms": 466.08,
+          "maxMs": 3065.54
+        },
+        {
+          "method": "expect",
+          "count": 26,
+          "sumMs": 2155.0,
+          "p50Ms": 5.08,
+          "maxMs": 569.9
+        },
+        {
+          "method": "waitForSelector",
+          "count": 4,
+          "sumMs": 1569.53,
+          "p50Ms": 369.21,
+          "maxMs": 796.76
+        },
+        {
+          "method": "screenshot",
+          "count": 6,
+          "sumMs": 1030.48,
+          "p50Ms": 150.98,
+          "maxMs": 233.79
+        },
+        {
+          "method": "evaluateExpression",
+          "count": 8,
+          "sumMs": 670.35,
+          "p50Ms": 4.08,
+          "maxMs": 642.11
+        },
+        {
+          "method": "goto",
+          "count": 1,
+          "sumMs": 650.53,
+          "p50Ms": 650.53,
+          "maxMs": 650.53
+        }
+      ]
+    },
+    {
+      "profile": "mobile",
+      "sourceRuntime": "7559c647",
+      "testBlob": "98b97f7f",
+      "segments": [
+        {
+          "screenReads": 69,
+          "fastForwards": 68,
+          "screenReadMs": 3644.7089999999735,
+          "fastForwardMs": 8908.469000000012,
+          "endTraceMs": 94207.606
+        },
+        {
+          "screenReads": 66,
+          "fastForwards": 65,
+          "screenReadMs": 3825.7249999999476,
+          "fastForwardMs": 3247.430999999997,
+          "endTraceMs": 107976.152
+        },
+        {
+          "screenReads": 64,
+          "fastForwards": 63,
+          "screenReadMs": 3422.906999999992,
+          "fastForwardMs": 3713.087999999945,
+          "endTraceMs": 117560.847
+        }
+      ],
+      "calls": [
+        {
+          "method": "clockFastForward",
+          "count": 221,
+          "sumMs": 18606.99,
+          "p50Ms": 10.7,
+          "maxMs": 693.05
+        },
+        {
+          "method": "getAttribute",
+          "count": 204,
+          "sumMs": 10914.69,
+          "p50Ms": 6.13,
+          "maxMs": 441.18
+        },
+        {
+          "method": "clockRunFor",
+          "count": 6,
+          "sumMs": 3341.21,
+          "p50Ms": 260.59,
+          "maxMs": 2116.86
+        },
+        {
+          "method": "screenshot",
+          "count": 6,
+          "sumMs": 1501.81,
+          "p50Ms": 238.01,
+          "maxMs": 351.04
+        },
+        {
+          "method": "expect",
+          "count": 26,
+          "sumMs": 1177.84,
+          "p50Ms": 4.79,
+          "maxMs": 877.85
+        },
+        {
+          "method": "goto",
+          "count": 1,
+          "sumMs": 525.68,
+          "p50Ms": 525.68,
+          "maxMs": 525.68
+        },
+        {
+          "method": "waitForSelector",
+          "count": 4,
+          "sumMs": 388.35,
+          "p50Ms": 111.39,
+          "maxMs": 157.57
+        },
+        {
+          "method": "newPage",
+          "count": 1,
+          "sumMs": 176.85,
+          "p50Ms": 176.85,
+          "maxMs": 176.85
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "CI artifacts not materialized: CONNECT 403",
+    "No further browser retry",
+    "Desktop third guard assertions completed only during timeout teardown; third replay/result assertions did not run",
+    "No performance improvement established; runs are not a controlled hardware/contention comparison",
+    "No runtime, fixture, deadline, workers or retry configuration change"
+  ],
+  "nextExperiment": {
+    "status": "proposal only, not run",
+    "onlyChangedVariable": "CLI workers=1 instead of2",
+    "configurationChanged": false,
+    "preserved": [
+      "six cases",
+      "196 driving frames/976 repeated-case ticks",
+      "same assertions/first-impact guards",
+      "120000ms per-test deadline",
+      "retries0",
+      "trace on"
+    ],
+    "notVerified": [
+      "two-worker contention",
+      "CI container/dev job completion",
+      "25-minute full-job budget"
+    ],
+    "reason": "Possible software-renderer/inter-test contention; inference only"
+  }
+}
