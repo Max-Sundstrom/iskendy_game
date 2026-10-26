@@ -86,7 +86,11 @@ diagnostic checkpoint after independent evidence review; it is not a CI fix or r
 merge or preview deployment is authorized by this checkpoint. The clean `c7bdbf6` 90 s reports remain applicable
 to the unchanged runtime; performance smoke was not repeated for this test-only change. Published-head CI remains red.
 
-## Proposed next experiment — not executed
+## Proposed next experiment — status at diagnostic checkpoint
+
+At diagnostic checkpoint `6c9646f`, the experiment below had not run. The parent subsequently authorized exactly
+one execution; [its separate report](one-worker.md) records the six-case pass, sampled resources and limits.
+The historical failure and measurements above remain unchanged.
 
 The current scheduling runs the repeated desktop case alongside the other two desktop WebGL cases. A possible
 explanation for the high clock-call cost is contention between software-rendered browser contexts, including
@@ -107,8 +111,8 @@ BASE_URL=http://127.0.0.1:5183 PW_CHROMIUM_EXECUTABLE=/usr/bin/chromium \
   --output /workspace/scratch/kometa-crash/ci-oct26/horizon-one-worker
 ```
 
-This command has **not** run. It needs the parent's decision and an exclusive browser slot. Repository worker
-configuration remains two. The experiment would retain all cases, 196 repeated-case driving frames/976 sim ticks,
+At that checkpoint this command had **not** run and needed the parent's decision and an exclusive browser slot.
+Repository worker configuration was two. The proposed experiment would retain all cases, 196 repeated-case driving frames/976 sim ticks,
 exact replay assertions, first-impact guards, PNG comparisons, two Retry, the 120 s per-test deadline and zero
 retries. It would stop testing contention between two concurrently executing E2E cases; it would not demonstrate
 physical-device performance, two-worker CI success or a complete container/dev-server CI pass. A one-worker pass

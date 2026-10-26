@@ -15,6 +15,10 @@ passed all six production browser cases, 189 unit tests and both full 90 s perfo
 The [October 26 investigation](ci-horizon.md) retains the new CI failures and a test-only protocol-read correction.
 Its DOM regression suite passed 12/12, but the authorized production run passed only 5/6: the desktop repeated case
 again exceeded 120 s. No additional browser retry was made. The card is not fully verified.
+After that escalation, the parent authorized [one controlled single-worker run](one-worker.md): all six cases
+passed, including the desktop repeated case in 64.995 s, with unchanged scenarios/assertions/deadline. Resource
+samples show average 3.622 CPU equivalents under a four-CPU quota; there are no paired two-worker resource samples.
+The orchestrator subsequently selected one Playwright worker. Full CI on the new published head is still pending.
 
 ## Actual browser images
 
