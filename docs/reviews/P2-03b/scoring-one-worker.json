@@ -1,0 +1,263 @@
+{
+  "purpose": "One authorized unchanged scoring scenario run with one worker; local diagnosis of CI timeout, not a replacement CI result.",
+  "measuredHead": "6f2a84a7e13bbaea56850ed32af903e8cea6044f",
+  "runtimeBuildSource": "6f8b142696b221c6a4c7a3fbeb024b807b2e3b64",
+  "runtimeDiffAppsPackagesDeploySinceBuild": "empty",
+  "startedUtc": "2026-10-26T14:12:56.078Z",
+  "closedUtc": "2026-10-26T14:14:11.951Z",
+  "command": "BASE_URL=http://127.0.0.1:5186 PW_CHROMIUM_EXECUTABLE=/usr/bin/chromium pnpm exec playwright test e2e/scoring.spec.ts --workers=1 --trace on --output /workspace/scratch/scoring-ci-oct26/one-worker/traces --reporter=json",
+  "environment": {
+    "node": "v24.19.0",
+    "pnpm": "12.11.2",
+    "playwright": "1.64.0",
+    "chromium": "154.0.8037.57",
+    "server": "local production Vite preview",
+    "physicalDevice": false
+  },
+  "config": {
+    "projects": [
+      "desktop",
+      "mobile"
+    ],
+    "workers": 1,
+    "timeoutMs": 120000,
+    "retries": 0,
+    "trace": "on",
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "dpr": 3,
+      "isMobile": true,
+      "hasTouch": true
+    }
+  },
+  "fileSha256": {
+    "e2e/scoring.spec.ts": "5541cd3fe6d0baa38238bb4bb11a911c2cd459f8db63dace095a7f368f62a5f1",
+    "playwright.config.ts": "674a5fa1aebfbc893858f76ec2ee8e5d312b7b0f531770febef4524c242e4714",
+    "apps/web/dist/index.html": "0c196202a0955ccc8136b4678a6c99e9a451eb9d9c68a3edade2b2e63e70ded4",
+    "apps/web/dist/assets/index-BhYXB1WF.js": "1c1721ddb90a3bbbebfaad004a621adcbb8a802e1c56572ce3fa585021b43123",
+    "apps/web/dist/assets/index-duw5Ttrp.css": "b0ae8b56c5822974725b40dd9addd95099ab5b643c867dcf96d414f4949bdc0d"
+  },
+  "readiness": {
+    "httpStatus": 200,
+    "bypassCsp": false,
+    "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'"
+  },
+  "stats": {
+    "startTime": "2026-10-26T14:12:56.829Z",
+    "duration": 74442.27,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "tests": [
+    {
+      "project": "desktop",
+      "status": "passed",
+      "durationMs": 53072,
+      "retry": 0,
+      "ledger": {
+        "first": {
+          "total": 267.87045680500904,
+          "display": 267,
+          "slams": [
+            6,
+            18
+          ],
+          "settlements": [
+            {
+              "tick": 168,
+              "banked": 112.5,
+              "lost": 0
+            }
+          ]
+        },
+        "second": {
+          "total": 313.42881941505215,
+          "display": 313,
+          "slams": [],
+          "settlements": []
+        }
+      },
+      "browserErrors": []
+    },
+    {
+      "project": "mobile",
+      "status": "passed",
+      "durationMs": 18914,
+      "retry": 0,
+      "ledger": {
+        "first": {
+          "total": 267.87045680500904,
+          "display": 267,
+          "slams": [
+            6,
+            18
+          ],
+          "settlements": [
+            {
+              "tick": 168,
+              "banked": 112.5,
+              "lost": 0
+            }
+          ]
+        },
+        "second": {
+          "total": 313.42881941505215,
+          "display": 313,
+          "slams": [],
+          "settlements": []
+        }
+      },
+      "browserErrors": []
+    }
+  ],
+  "replayAssertionsPassed": {
+    "first": {
+      "seed": 28,
+      "crashTicks": 258,
+      "bankTick": 168,
+      "banked": 112.5
+    },
+    "second": {
+      "seed": 29,
+      "crashTicks": 505,
+      "inputCount": 0
+    },
+    "clarification": "313 is the floored second score, not the crash tick."
+  },
+  "clockScheduleEachProject": {
+    "fastForward100Ms": 168,
+    "blocks": [
+      32,
+      24,
+      112
+    ],
+    "fastForward5000Ms": 1,
+    "runForMs": [
+      32,
+      50,
+      150,
+      50,
+      150,
+      32
+    ],
+    "runForTotalMs": 464
+  },
+  "traceTiming": [
+    {
+      "project": "desktop",
+      "ff100Count": 168,
+      "ff100Blocks": [
+        {
+          "calls": 32,
+          "wallSeconds": 7.402599
+        },
+        {
+          "calls": 24,
+          "wallSeconds": 6.074843
+        },
+        {
+          "calls": 112,
+          "wallSeconds": 24.771606
+        }
+      ],
+      "ff100WallP50Ms": 6.361,
+      "ff100WallP95Ms": 697.019,
+      "ff100WallMaxMs": 913.778,
+      "allClockCallsWallSeconds": 44.958409
+    },
+    {
+      "project": "mobile",
+      "ff100Count": 168,
+      "ff100Blocks": [
+        {
+          "calls": 32,
+          "wallSeconds": 2.062879
+        },
+        {
+          "calls": 24,
+          "wallSeconds": 2.076529
+        },
+        {
+          "calls": 112,
+          "wallSeconds": 7.331001
+        }
+      ],
+      "ff100WallP50Ms": 6.07,
+      "ff100WallP95Ms": 207.83,
+      "ff100WallMaxMs": 480.706,
+      "allClockCallsWallSeconds": 14.284499
+    }
+  ],
+  "resources": {
+    "sampleIntervalSeconds": 1,
+    "sampleCount": 76,
+    "wallSeconds": 75.72776920600018,
+    "cpuMax": "400000 100000",
+    "quotaCores": 4,
+    "cpuset": "0-4",
+    "meanCgroupCpuCores": 3.672854527688401,
+    "cgroupCpuDelta": {
+      "usage_usec": 278137080,
+      "user_usec": 266162062,
+      "system_usec": 11975018,
+      "nice_usec": 0,
+      "nr_periods": 753,
+      "nr_throttled": 622,
+      "throttled_usec": 43629329,
+      "nr_bursts": 0,
+      "burst_usec": 0
+    },
+    "peakSampledTreeRssBytes": 1307582464,
+    "peakSampledCgroupMemoryBytes": 2017468416,
+    "memoryLimitBytes": 17179869184
+  },
+  "cleanup": {
+    "exitCode": 0,
+    "previewClosed": true,
+    "ownedPreviewPid": 10023,
+    "ownedPreviewPidExited": true,
+    "port5186ConnectionRefusedAfterClose": true,
+    "sourceStatusAfterRun": "clean",
+    "finalHead": "6f2a84a7e13bbaea56850ed32af903e8cea6044f",
+    "testAndConfigSha256Unchanged": true
+  },
+  "ciComparison": {
+    "workflowRun": 40333793849,
+    "head": "6f2a84a7e13bbaea56850ed32af903e8cea6044f",
+    "smokeJob": 121609818173,
+    "containerJob": 121609818116,
+    "desktopFailure": "120 s timeout inside scoring.spec.ts:199 frames(112), fastForward(100) at line 53",
+    "mobileScoringPassed": true,
+    "runtimeMismatchFound": false
+  },
+  "interpretation": "The unchanged scenario completes locally below 120 s with serialized projects. CPU quota pressure and expensive clock progression make resource contention a plausible CI timeout contributor, not a proven sole cause.",
+  "limitations": [
+    "Cgroup and load counters include other processes on this container/host scope.",
+    "Aggregated RSS double-counts shared mappings; it is not unique physical memory.",
+    "One-second samples may miss peaks and CPU of very short-lived child processes.",
+    "The first tree sample includes existing preview startup CPU and is excluded from peak CPU.",
+    "No corresponding resource samples exist for the earlier two-worker run.",
+    "The throttled_usec delta is a cgroup counter, not seconds of lost test wall time.",
+    "No matched same-host two-worker resource measurement exists; runner, test mix, cache and server differences can confound comparison.",
+    "One successful run does not establish a flake rate or validate a later CI configuration commit.",
+    "Local Chromium emulation does not validate physical mobile hardware or other browser engines."
+  ],
+  "independentReview": "review_perf independently verified raw report, config/test hashes, runtime diff, ledgers and resource interpretation; no additional run.",
+  "fullLocalEvidenceDirectory": "/workspace/scratch/scoring-ci-oct26/one-worker",
+  "fullArtifactSha256": {
+    "report.json": "0f628d861ce6c1179691d162118430dba7925ba5edb414e35ef3d18b964918b4",
+    "resources.jsonl": "4fc161538e245a456bc806fda8945747eeafd91584100bc511a4566eee11e0cc",
+    "resource-summary.json": "2bff7c3290d1ae97d2b5dd4cb8c88a4c5236c0ca063265f3398f59f713001711",
+    "trace-clock-summary.json": "d1350bcbf2817d19f7bcb3cb2c29a031bff31eb64edcf7f30344bb12dd5f4109",
+    "preflight.json": "0996948e888a8f5b966ab21654a16610c8a5d394934a79708fac4b1e27c0e39d",
+    "run.json": "22a8d88f1c4db2077d991de3850e1319ea95a58495711d43ba2a536e5700ef98"
+  }
+}

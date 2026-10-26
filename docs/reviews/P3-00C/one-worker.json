@@ -1,0 +1,498 @@
+{
+  "measuredHead": "6c9646f122ec2cde1b11294daf26b9a1b2c29791",
+  "dirtyAtStart": false,
+  "sourceChangedDuringRun": false,
+  "testBlobs": {
+    "e2e/crash.spec.ts": "829892b762b615d36fae6c75cb9e46fb64dfb0d6",
+    "e2e/helpers/reach-crash.ts": "a243afcecc34d2d29aa06b01a7c590a9707fb248",
+    "e2e/crash-horizon.spec.ts": "79454cb5569e95b6f99986732463ea134b4e7a91"
+  },
+  "productionBundle": {
+    "name": "index-DhBb9taH.js",
+    "sha256": "8fca2378a982b9902b391b72321591c0c3197039e5efb74ab7174b6b02be7244",
+    "rebuiltBetweenComparedRuns": false
+  },
+  "node": "24.19.0",
+  "pnpm": "12.11.2",
+  "playwright": "1.64.0",
+  "chromium": "154.0.8037.57",
+  "server": "isolated production Vite preview with deployment CSP",
+  "workers": 1,
+  "repositoryWorkersAtMeasurement": 2,
+  "timeoutMs": 120000,
+  "retries": 0,
+  "cliOverride": "--workers=1",
+  "stats": {
+    "startTime": "2026-10-26T14:07:34.064Z",
+    "duration": 157704.597,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "project": "desktop",
+      "name": "crash freezes the run, pauses while hidden and records once across two retries",
+      "status": "passed",
+      "wallMs": 64995,
+      "startTime": "2026-10-26T14:07:34.822Z",
+      "previousTwoWorkerStatus": "timedOut",
+      "previousTwoWorkerWallMs": 120767
+    },
+    {
+      "project": "desktop",
+      "name": "reduced motion keeps the crash scene static before results",
+      "status": "passed",
+      "wallMs": 23631,
+      "startTime": "2026-10-26T14:08:40.647Z",
+      "previousTwoWorkerStatus": "passed",
+      "previousTwoWorkerWallMs": 45987
+    },
+    {
+      "project": "desktop",
+      "name": "a late real flip shows its bad landing orientation before results",
+      "status": "passed",
+      "wallMs": 22773,
+      "startTime": "2026-10-26T14:09:04.471Z",
+      "previousTwoWorkerStatus": "passed",
+      "previousTwoWorkerWallMs": 45190
+    },
+    {
+      "project": "mobile",
+      "name": "crash freezes the run, pauses while hidden and records once across two retries",
+      "status": "passed",
+      "wallMs": 24147,
+      "startTime": "2026-10-26T14:09:27.955Z",
+      "previousTwoWorkerStatus": "passed",
+      "previousTwoWorkerWallMs": 51725
+    },
+    {
+      "project": "mobile",
+      "name": "reduced motion keeps the crash scene static before results",
+      "status": "passed",
+      "wallMs": 9830,
+      "startTime": "2026-10-26T14:09:52.599Z",
+      "previousTwoWorkerStatus": "passed",
+      "previousTwoWorkerWallMs": 18268
+    },
+    {
+      "project": "mobile",
+      "name": "a late real flip shows its bad landing orientation before results",
+      "status": "passed",
+      "wallMs": 9042,
+      "startTime": "2026-10-26T14:10:02.523Z",
+      "previousTwoWorkerStatus": "passed",
+      "previousTwoWorkerWallMs": 10368
+    }
+  ],
+  "traces": [
+    {
+      "caseDirectory": "crash-a-late-real-flip-sho-95398--orientation-before-results-desktop",
+      "sha256": "e53e5b55512b528cf8b2e44cca53019ff70457c230c80659f1a26b83288502f8",
+      "guards": [],
+      "replayReads": [
+        [
+          {
+            "seed": 5,
+            "ticks": 63,
+            "finalHash": "6aaec938"
+          }
+        ]
+      ],
+      "drivingSegments": [],
+      "screenReadRpc": 0,
+      "clockCalls": 8,
+      "completedClockCalls": 8,
+      "clockTotalWallMs": 1456.451,
+      "clockMedianWallMs": 200.198,
+      "clockP95WallMs": 412.653
+    },
+    {
+      "caseDirectory": "crash-a-late-real-flip-sho-95398--orientation-before-results-mobile",
+      "sha256": "05e9ded8e3d6caebfe87535ff2dc6ade86b765bfa0f505ef50fb8718fa312107",
+      "guards": [],
+      "replayReads": [
+        [
+          {
+            "seed": 5,
+            "ticks": 63,
+            "finalHash": "6aaec938"
+          }
+        ]
+      ],
+      "drivingSegments": [],
+      "screenReadRpc": 0,
+      "clockCalls": 8,
+      "completedClockCalls": 8,
+      "clockTotalWallMs": 387.526,
+      "clockMedianWallMs": 10.982,
+      "clockP95WallMs": 148.998
+    },
+    {
+      "caseDirectory": "crash-crash-freezes-the-ru-ffd0e-rds-once-across-two-retries-desktop",
+      "sha256": "63c881c00c90621eca5ee0e0c20c67b9c5775911d94c260c6ea800f95669743e",
+      "guards": [
+        {
+          "screen": "crashing",
+          "count": 1,
+          "seenAt": 1007832,
+          "now": 1007832
+        },
+        {
+          "screen": "crashing",
+          "count": 1,
+          "seenAt": 1020353,
+          "now": 1020353
+        },
+        {
+          "screen": "crashing",
+          "count": 1,
+          "seenAt": 1027485,
+          "now": 1027485
+        }
+      ],
+      "replayReads": [
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          },
+          {
+            "seed": 98,
+            "ticks": 313,
+            "finalHash": "3c1697fe"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          },
+          {
+            "seed": 98,
+            "ticks": 313,
+            "finalHash": "3c1697fe"
+          }
+        ]
+      ],
+      "drivingSegments": [
+        {
+          "frames": 68,
+          "clockWallMs": 16785.224
+        },
+        {
+          "frames": 65,
+          "clockWallMs": 14547.042
+        },
+        {
+          "frames": 63,
+          "clockWallMs": 14306.851
+        }
+      ],
+      "screenReadRpc": 0,
+      "clockCalls": 221,
+      "completedClockCalls": 221,
+      "clockTotalWallMs": 50688.879,
+      "clockMedianWallMs": 4.665,
+      "clockP95WallMs": 793.557
+    },
+    {
+      "caseDirectory": "crash-crash-freezes-the-ru-ffd0e-rds-once-across-two-retries-mobile",
+      "sha256": "a70e3888d53fe2f84c508545fe56b01715683dac857e27e6779c464fc634b9e7",
+      "guards": [
+        {
+          "screen": "crashing",
+          "count": 1,
+          "seenAt": 1007832,
+          "now": 1007832
+        },
+        {
+          "screen": "crashing",
+          "count": 1,
+          "seenAt": 1020353,
+          "now": 1020353
+        },
+        {
+          "screen": "crashing",
+          "count": 1,
+          "seenAt": 1027485,
+          "now": 1027485
+        }
+      ],
+      "replayReads": [
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          },
+          {
+            "seed": 98,
+            "ticks": 313,
+            "finalHash": "3c1697fe"
+          }
+        ],
+        [
+          {
+            "seed": 96,
+            "ticks": 339,
+            "finalHash": "97c6d523"
+          },
+          {
+            "seed": 97,
+            "ticks": 324,
+            "finalHash": "27d0477e"
+          },
+          {
+            "seed": 98,
+            "ticks": 313,
+            "finalHash": "3c1697fe"
+          }
+        ]
+      ],
+      "drivingSegments": [
+        {
+          "frames": 68,
+          "clockWallMs": 4633.624
+        },
+        {
+          "frames": 65,
+          "clockWallMs": 4125.016
+        },
+        {
+          "frames": 63,
+          "clockWallMs": 4262.573
+        }
+      ],
+      "screenReadRpc": 0,
+      "clockCalls": 221,
+      "completedClockCalls": 221,
+      "clockTotalWallMs": 14303.929,
+      "clockMedianWallMs": 7.17,
+      "clockP95WallMs": 209.17
+    },
+    {
+      "caseDirectory": "crash-reduced-motion-keeps-27ed2-scene-static-before-results-desktop",
+      "sha256": "04bfcff4d54fa8bf01b4e8dd1b6bb9071fa4c04f57e56f961216ffe1d6219148",
+      "guards": [
+        {
+          "screen": "crashing",
+          "count": 1,
+          "seenAt": 1006232,
+          "now": 1006232
+        }
+      ],
+      "replayReads": [],
+      "drivingSegments": [
+        {
+          "frames": 52,
+          "clockWallMs": 13704.212
+        }
+      ],
+      "screenReadRpc": 0,
+      "clockCalls": 60,
+      "completedClockCalls": 60,
+      "clockTotalWallMs": 15790.531,
+      "clockMedianWallMs": 21.813,
+      "clockP95WallMs": 756.859
+    },
+    {
+      "caseDirectory": "crash-reduced-motion-keeps-27ed2-scene-static-before-results-mobile",
+      "sha256": "cf0a03bdf778795692ef475bb8fdb49cbeea9c78d7d88ecefd2d88fd3d5883c4",
+      "guards": [
+        {
+          "screen": "crashing",
+          "count": 1,
+          "seenAt": 1006232,
+          "now": 1006232
+        }
+      ],
+      "replayReads": [],
+      "drivingSegments": [
+        {
+          "frames": 52,
+          "clockWallMs": 3503.853
+        }
+      ],
+      "screenReadRpc": 0,
+      "clockCalls": 60,
+      "completedClockCalls": 60,
+      "clockTotalWallMs": 3924.057,
+      "clockMedianWallMs": 4.455,
+      "clockP95WallMs": 255.946
+    }
+  ],
+  "resources": {
+    "startedUtc": "2026-10-26T14:07:33.404870+00:00",
+    "command": [
+      "/bin/sh",
+      "/workspace/.kometa-toolchain/node_modules/.bin/pnpm",
+      "exec",
+      "playwright",
+      "test",
+      "e2e/crash.spec.ts",
+      "--workers=1",
+      "--trace",
+      "on",
+      "--output",
+      "/workspace/scratch/kometa-crash/ci-oct26/one-worker/traces",
+      "--reporter=json"
+    ],
+    "cpuMax": "400000 100000",
+    "cpuset": "0-4",
+    "memoryMax": "17179869184",
+    "sampleIntervalS": 1,
+    "clockTicksPerSecond": 100,
+    "baselineCpuStat": {
+      "usage_usec": 1103954200,
+      "user_usec": 1022841273,
+      "system_usec": 81112926,
+      "nice_usec": 0,
+      "nr_periods": 9528,
+      "nr_throttled": 2090,
+      "throttled_usec": 169179678,
+      "nr_bursts": 0,
+      "burst_usec": 0
+    },
+    "finishedUtc": "2026-10-26T14:10:11.968183+00:00",
+    "exitCode": 0,
+    "wallS": 158.56319234800003,
+    "samples": 158,
+    "cgroupCpuDelta": {
+      "usage_usec": 574304053,
+      "user_usec": 548453899,
+      "system_usec": 25850154,
+      "nice_usec": 0,
+      "nr_periods": 1585,
+      "nr_throttled": 1262,
+      "throttled_usec": 88254431,
+      "nr_bursts": 0,
+      "burst_usec": 0
+    },
+    "meanCgroupCpuCores": 3.6219253945112926,
+    "peakSampledTreeRssBytes": 1425940480,
+    "peakSampledTreeCpuCores": 4.121649073419451,
+    "peakSampledCgroupMemoryBytes": 2136911872,
+    "loadAverageStart": [
+      0.0,
+      0.02734375,
+      0.341796875
+    ],
+    "loadAverageEnd": [
+      3.58447265625,
+      1.5458984375,
+      0.86962890625
+    ],
+    "limitations": [
+      "Cgroup and load counters include other processes on this container/host scope.",
+      "Aggregated RSS double-counts shared mappings; it is not unique physical memory.",
+      "One-second samples may miss peaks and CPU of very short-lived child processes.",
+      "The first tree sample includes existing preview startup CPU and is excluded from peak CPU.",
+      "No corresponding resource samples exist for the earlier two-worker run."
+    ]
+  },
+  "preflightNotes": [
+    "Owned orphan preview PID6935 was identified by exact argv and terminated before measurement; new preview PID9064 was terminated and port5183 closure verified after the run.",
+    "Direct Python exec of the intentional shebang-less pnpm shim failed with Exec format error before tests launched; explicit /bin/sh launched the same pinned shim. Only one browser suite was run."
+  ],
+  "limits": [
+    "No matched resource samples exist for the previous two-worker run; exact cause is not established.",
+    "This is six local production crash scenarios, not the full dev/container/CI suite.",
+    "No physical-device, GPU-memory or GC measurement.",
+    "The root subsequently changed only the Playwright worker configuration to1 after independent review; full published-head CI remains pending."
+  ]
+}
