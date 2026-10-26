@@ -105,6 +105,11 @@ export function gradeLanding(state: SimState, tuning: SimTuning): boolean {
   const p = state.player;
   const tricked = p.flipping || p.flipsDone > 0 || p.rolling || p.rollsDone > 0;
   const flips = p.flipsDone;
+  if (state.mode.activeTicksLeft > 0 || state.mode.graceTicksLeft > 0) {
+    resetLandedTricks(state);
+    emit(state.events, SimEventKind.landingGraded, LandingGrade.stunt, flips);
+    return true;
+  }
   if (!tricked) {
     resetLandedTricks(state);
     return true;

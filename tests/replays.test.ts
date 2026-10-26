@@ -1,6 +1,15 @@
 import { readdirSync, readFileSync } from 'node:fs';
-import { parseReplay, ReplayError, type Replay } from '@kometa/shared';
-import { createRecorder, createSimState, DEFAULT_TUNING, playReplay, SIM_VERSION, SimStatus, step } from '@kometa/sim';
+import { parseReplay, ReplayError, SimEventKind, type Replay } from '@kometa/shared';
+import {
+  createRecorder,
+  createSimState,
+  DEFAULT_TUNING,
+  playReplay,
+  SIM_VERSION,
+  SimStatus,
+  stateHash,
+  step,
+} from '@kometa/sim';
 import fc from 'fast-check';
 import { describe, expect, it } from 'vitest';
 
@@ -23,8 +32,8 @@ function record(seed: number, inputs: number[]): Replay {
 }
 
 describe('golden replays', () => {
-  it('has the three goldens', () => {
-    expect(goldens.sort()).toEqual(['busy-inputs.json', 'early-crash.json', 'long-run.json']);
+  it('has the four goldens, including a complete LIFTOFF run', () => {
+    expect(goldens.sort()).toEqual(['busy-inputs.json', 'early-crash.json', 'liftoff.json', 'long-run.json']);
   });
 
   for (const f of goldens) {
@@ -34,6 +43,59 @@ describe('golden replays', () => {
       expect(r.valid).toBe(true);
     });
   }
+
+  it('replays a complete LIFTOFF episode through its independently reviewed natural crash', () => {
+    const replay = load('liftoff.json');
+    const original = parseReplay(
+      readFileSync('docs/reviews/P2-04a1/meter-route/safe-landing.replay.json', 'utf8'),
+      LIMITS,
+    );
+    expect(replay.inputs).toHaveLength(50);
+    expect(replay.inputs).toEqual(original.inputs);
+    expect(replay).toMatchObject({
+      seed: 1,
+      ticks: 928,
+      claimedScore: 18828,
+      claimedDistanceM: 638.4743759294411,
+      finalHash: '66e41f15',
+    });
+
+    const state = createSimState(replay.seed, T);
+    const recorder = createRecorder(replay.seed, T);
+    const events: [tick: number, kind: number, a: number, b: number][] = [];
+    let held = 0;
+    let nextInput = 0;
+    for (let tick = 0; tick < replay.ticks && state.status === SimStatus.running; tick++) {
+      const input = replay.inputs[nextInput];
+      if (input?.[0] === tick) {
+        held = input[1];
+        nextInput++;
+      }
+      recorder.record(held);
+      step(state, held, T);
+      for (let i = 0; i < state.events.count; i++) {
+        const kind = state.events.kind[i] ?? 0;
+        if (kind === SimEventKind.crash || (kind >= SimEventKind.modeStarted && kind <= SimEventKind.trafficPhasedOut))
+          events.push([state.tick, kind, state.events.a[i] ?? 0, state.events.b[i] ?? 0]);
+      }
+    }
+
+    // P2-04a2: separately checked physical contact and 928-tick ledger, not generator-derived assertions.
+    expect(events).toEqual([
+      [525, 27, 1, 300],
+      [688, 30, 0, 1],
+      [825, 28, 1, 60],
+      [885, 29, 0, 0],
+      [928, 13, 1, 0],
+    ]);
+    expect(state.status).toBe(SimStatus.crashed);
+    expect(state.tick).toBe(928);
+    expect(stateHash(state)).toBe(replay.finalHash);
+    expect(Math.floor(state.score.total)).toBe(replay.claimedScore);
+    expect(state.player.distanceM).toBe(replay.claimedDistanceM);
+    expect(state.player.airLiters).toBe(270.5);
+    expect(recorder.finish(state)).toEqual(replay);
+  });
 });
 
 describe('record → JSON → parse → play', () => {

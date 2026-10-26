@@ -1,0 +1,44 @@
+{
+  "head": "b1d80d1a2e8e0a73389df1ac5fdba201b8cc218a",
+  "blobs": {
+    "packages/sim/src/collisions.ts": "51d9d56ef22b7c71161387a8a35de489504ee0e4",
+    "packages/sim/src/director.ts": "7aa875a5cecb0072158451433a4cb50209c5b607",
+    "packages/sim/src/events.ts": "2d98817477621ada687357f24f9efce6f7558437",
+    "packages/sim/src/hash.ts": "2e4df4a9736806236e6b65a4d441a1cc6581aae2",
+    "packages/sim/src/mode-clock.ts": "fa13cfbd29bab93b2f88f63bc77ef9c320bb876a",
+    "packages/sim/src/mode-contact-sweep.test.ts": "853d347ab849c02d95252fe52e0090ce2ceb17ea",
+    "packages/sim/src/mode-contact-sweep.ts": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+    "packages/sim/src/mode-contacts.test.ts": "9569d2a77d780144bc61a81ba91980e35d6c25ff",
+    "packages/sim/src/mode-contacts.ts": "c74e0c04c5c312d25e747b61544531c8c04a84b8",
+    "packages/sim/src/mode-test-helpers.ts": "a93387c78d13f08834a37487efef86d73f73a6ea",
+    "packages/sim/src/modes.test.ts": "7d76f9b862c03940c2eaa5c97cabf1effdadb84e",
+    "packages/sim/src/modes.ts": "153cd911a289672752cd8f3831e5f3b9e91c03b0",
+    "packages/sim/src/score-ledger.ts": "a38c3b446d468322b9bed20bd909997e7f5e88c7",
+    "packages/sim/src/score.ts": "d9acafaba5b31bd9cfbaabe85ca2d83d4ad14d74",
+    "packages/sim/src/state.ts": "2c86fc824fa34b018e032d29af2f94d965e2542f",
+    "packages/sim/src/step.ts": "91e15c9767c5d2381e36ea5de47e57723cd48a39",
+    "packages/sim/src/tricks.ts": "af7332cccea49fff40f5a5c87677fb724a5cc998",
+    "packages/sim/src/vertical.ts": "119e5f8c9fc7ccf40a02f0b43e8d7a8dc0e58784",
+    "packages/sim/src/mode-ledger.test.ts": "3018bd2c3401231ddbbeaab9dc82cd06edffeda5"
+  },
+  "note": "Second source/test freeze after causal exact-geometry correction. Only sweep source/test changed; all other17 blobs match first freeze. Independent full differential remains pending.",
+  "checks": {
+    "focusedModeClockSweepContact": "62 passed, 4 files, 1.40 s",
+    "focusedLedger": "16 passed, 1 file, 1.22 s",
+    "fullTypecheck": "pass",
+    "fullLint": "pass, 143 modules / 432 dependencies",
+    "fullFormatCheck": "pass",
+    "fullUnitAndSim": "pending independent outcome review and authorized fixture update",
+    "browserAndPerf": "not run, outside sim-author scope"
+  },
+  "geometryCorrection": {
+    "firstIndependentDifferential": "11 mismatches /7873 cases; historical evidence preserved",
+    "targetedCorrection": "26/26 PASS in395ms: original13 +11 independent witnesses +2 technical tests",
+    "scopedSimTypecheck": "pass",
+    "scopedESLint": "pass",
+    "prettierAndDiff": "pass",
+    "microbenchmark": "geometry-cost.json; 64 queries ~0.0014-0.0021ms ordinary paths, ~0.1467ms selected exact common-time path; geometry-only Node24 microbenchmark, no full sim/device budget claim",
+    "benchmarkSetup": "initial baseline git-cat-file failed (hash had not been written to object DB); Node import failed before measurement. Old source reconstructed and blob verified dccd376 before one completed retry.",
+    "fullDifferential": "pending new freeze review"
+  }
+}

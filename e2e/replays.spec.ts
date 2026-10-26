@@ -1,6 +1,7 @@
 import { expect, test } from '@playwright/test';
 import busy from '../tests/replays/busy-inputs.json' with { type: 'json' };
 import early from '../tests/replays/early-crash.json' with { type: 'json' };
+import liftoff from '../tests/replays/liftoff.json' with { type: 'json' };
 import long from '../tests/replays/long-run.json' with { type: 'json' };
 
 // P1-06 acceptance: the golden replays reproduce in every engine the project runs (Chromium here; WebKit and Firefox
@@ -13,6 +14,7 @@ test('golden replays reproduce in this browser engine', async ({ page }) => {
   expect(JSON.parse(raw ?? '[]')).toEqual([
     { name: 'busy-inputs', hash: busy.finalHash, valid: true },
     { name: 'early-crash', hash: early.finalHash, valid: true },
+    { name: 'liftoff', hash: liftoff.finalHash, valid: true },
     { name: 'long-run', hash: long.finalHash, valid: true },
   ]);
 });

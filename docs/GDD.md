@@ -289,6 +289,21 @@ without an award that tick banks it. All score intervals use integer ticks.
 
 All modes end with a 1 s grace period (car blinks, collisions still forgiven).
 
+**Selected implementation contract, P2-04a2 / DECISIONS Q28:** the first LIFTOFF slice uses the phase at
+tick start. Filling the meter after surviving an ordinary tick consumes it once and starts the next tick;
+it does not undo a collision already resolved. Active mode preserves the finite AIR tank without drain or
+regeneration and permits flight/BOOST at stored zero. Actual contacts destroy traffic once, including its
+roof/support, without duplicate HOP, landing or coyote rewards. Actual active/grace touchdowns align to
+STUNT; after grace, ordinary landing rules return even if a flight began in the mode.
+
+Grace has no speed/free-AIR/SMASH bonus. On the final protected tick, remaining closed body overlaps are
+removed without points or meter, before ordinary collisions return. This replaces the design's proposed
+until-exit immunity tail. Actual contact on the last active tick still earns SMASH. The chain resets per
+episode, adds to the existing style pot/N with the tuned 100/+5/200 formula and gives no meter. Stored full
+meter survives active/grace but the next activation requires one completed ordinary physics tick. This
+strict finite boundary does not itself prove balance or director fairness. Stars and OVERDRIVE are later
+cards; full mode presentation/HUD/rocket/audio are separate acceptance gates.
+
 ---
 
 ## 11. Difficulty and spawn director

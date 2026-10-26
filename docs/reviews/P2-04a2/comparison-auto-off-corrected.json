@@ -1,0 +1,83 @@
+{
+  "passed": true,
+  "baseline": "eea81aeba79437abec194787597a67729478433f",
+  "candidate": "b1d80d1a2e8e0a73389df1ac5fdba201b8cc218a",
+  "candidateLabel": "corrected-off",
+  "policy": "off",
+  "parityRows": 13599,
+  "note": "PASS covers stated parity and activation-prefix checks; later mode outcomes need independent scenario QA.",
+  "report": [
+    {
+      "name": "golden-busy-inputs",
+      "requiresParity": true,
+      "oldRows": 107,
+      "newRows": 107,
+      "changedHashes": 107,
+      "changedProjections": 0,
+      "firstProjectionDifference": null,
+      "firstPhysicsDifference": null,
+      "firstEventDifference": null,
+      "fieldDifferences": {}
+    },
+    {
+      "name": "golden-early-crash",
+      "requiresParity": true,
+      "oldRows": 259,
+      "newRows": 259,
+      "changedHashes": 259,
+      "changedProjections": 0,
+      "firstProjectionDifference": null,
+      "firstPhysicsDifference": null,
+      "firstEventDifference": null,
+      "fieldDifferences": {}
+    },
+    {
+      "name": "golden-long-run",
+      "requiresParity": true,
+      "oldRows": 2071,
+      "newRows": 2071,
+      "changedHashes": 2071,
+      "changedProjections": 0,
+      "firstProjectionDifference": null,
+      "firstPhysicsDifference": null,
+      "firstEventDifference": null,
+      "fieldDifferences": {}
+    },
+    {
+      "name": "scripted-10k",
+      "requiresParity": true,
+      "oldRows": 10025,
+      "newRows": 10025,
+      "changedHashes": 10025,
+      "changedProjections": 0,
+      "firstProjectionDifference": null,
+      "firstPhysicsDifference": null,
+      "firstEventDifference": null,
+      "fieldDifferences": {}
+    },
+    {
+      "name": "meter-prefix",
+      "requiresParity": true,
+      "oldRows": 526,
+      "newRows": 526,
+      "changedHashes": 526,
+      "changedProjections": 0,
+      "firstProjectionDifference": null,
+      "firstPhysicsDifference": null,
+      "firstEventDifference": null,
+      "fieldDifferences": {}
+    },
+    {
+      "name": "meter-continuation",
+      "requiresParity": true,
+      "oldRows": 611,
+      "newRows": 611,
+      "changedHashes": 611,
+      "changedProjections": 0,
+      "firstProjectionDifference": null,
+      "firstPhysicsDifference": null,
+      "firstEventDifference": null,
+      "fieldDifferences": {}
+    }
+  ]
+}

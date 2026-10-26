@@ -1,0 +1,238 @@
+{
+  "totals": {
+    "cases": 7873,
+    "contactFalsePositive": 10,
+    "contactFalseNegative": 1,
+    "overlapMismatches": 0,
+    "sourceBefore": "dccd376bdd134073352dbf28f9b8b1de74e7a6a5",
+    "sourceAfter": "dccd376bdd134073352dbf28f9b8b1de74e7a6a5"
+  },
+  "failures": [
+    {
+      "name": "type=0; midpoint singleton shared by axes; reverse=true",
+      "group": "defaultDimensions",
+      "vehicle": "sedan",
+      "sweep": {
+        "from": [0, 2.825, 2.25],
+        "to": [-3.75, 0.17500000000000004, 2.25],
+        "lower": [-1.875, -1.15, -2.2],
+        "upper": [1.875, 1.5, 6.7]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=5; midpoint singleton shared by axes; reverse=false",
+      "group": "defaultDimensions",
+      "vehicle": "semi",
+      "sweep": {
+        "from": [-4.5, 1.425, 8.25],
+        "to": [0, 6.575, 8.25],
+        "lower": [-2.25, -1.15, -2.2],
+        "upper": [2.25, 4, 18.7]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=5; midpoint singleton shared by axes; reverse=true",
+      "group": "defaultDimensions",
+      "vehicle": "semi",
+      "sweep": {
+        "from": [0, 6.575, 8.25],
+        "to": [-4.5, 1.425, 8.25],
+        "lower": [-2.25, -1.15, -2.2],
+        "upper": [2.25, 4, 18.7]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=5; one-third singleton shared by axes; reverse=false",
+      "group": "defaultDimensions",
+      "vehicle": "semi",
+      "sweep": {
+        "from": [-4.5, 1.425, 8.25],
+        "to": [2.25, 9.15, 8.25],
+        "lower": [-2.25, -1.15, -2.2],
+        "upper": [2.25, 4, 18.7]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=5; one-third singleton shared by axes; reverse=true",
+      "group": "defaultDimensions",
+      "vehicle": "semi",
+      "sweep": {
+        "from": [2.25, 9.15, 8.25],
+        "to": [-4.5, 1.425, 8.25],
+        "lower": [-2.25, -1.15, -2.2],
+        "upper": [2.25, 4, 18.7]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=7; midpoint singleton shared by axes; reverse=true",
+      "group": "defaultDimensions",
+      "vehicle": "cones",
+      "sweep": {
+        "from": [0, 2.075, 0.5],
+        "to": [-2.95, -0.07499999999999996, 0.5],
+        "lower": [-1.475, -1.15, -2.2],
+        "upper": [1.475, 1, 3.2]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=9; one-third singleton shared by axes; reverse=false",
+      "group": "defaultDimensions",
+      "vehicle": "marshrutka",
+      "sweep": {
+        "from": [-4.05, 0.7250000000000001, 2.9999999999999996],
+        "to": [2.025, 6.35, 2.9999999999999996],
+        "lower": [-2.025, -1.15, -2.2],
+        "upper": [2.025, 2.6, 8.2]
+      },
+      "expectedContact": {
+        "hit": true,
+        "enter": {
+          "n": "1",
+          "d": "3"
+        },
+        "exit": {
+          "n": "4222124650659840",
+          "d": "12666373951979519"
+        },
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": false,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=11; midpoint singleton shared by axes; reverse=false",
+      "group": "defaultDimensions",
+      "vehicle": "sweeper",
+      "sweep": {
+        "from": [-4.45, 0.925, 3.4999999999999996],
+        "to": [0, 5.075, 3.4999999999999996],
+        "lower": [-2.225, -1.15, -2.2],
+        "upper": [2.225, 3, 9.2]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=11; midpoint singleton shared by axes; reverse=true",
+      "group": "defaultDimensions",
+      "vehicle": "sweeper",
+      "sweep": {
+        "from": [0, 5.075, 3.4999999999999996],
+        "to": [-4.45, 0.925, 3.4999999999999996],
+        "lower": [-2.225, -1.15, -2.2],
+        "upper": [2.225, 3, 9.2]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=11; one-third singleton shared by axes; reverse=false",
+      "group": "defaultDimensions",
+      "vehicle": "sweeper",
+      "sweep": {
+        "from": [-4.45, 0.925, 3.4999999999999996],
+        "to": [2.225, 7.15, 3.4999999999999996],
+        "lower": [-2.225, -1.15, -2.2],
+        "upper": [2.225, 3, 9.2]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    },
+    {
+      "name": "type=11; one-third singleton shared by axes; reverse=true",
+      "group": "defaultDimensions",
+      "vehicle": "sweeper",
+      "sweep": {
+        "from": [2.225, 7.15, 3.4999999999999996],
+        "to": [-4.45, 0.925, 3.4999999999999996],
+        "lower": [-2.225, -1.15, -2.2],
+        "upper": [2.225, 3, 9.2]
+      },
+      "expectedContact": {
+        "hit": false,
+        "enter": null,
+        "exit": null,
+        "singleton": false
+      },
+      "expectedOverlap": false,
+      "actualContact": true,
+      "actualOverlap": false
+    }
+  ]
+}

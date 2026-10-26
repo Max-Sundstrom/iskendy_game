@@ -90,6 +90,13 @@ export type SimState = {
 platforms & roofs → collisions (swept) → pickups → tricks & landing grades → scoring & streak → meter & mode
 triggers → director (despawn/spawn, fairness) → achievements → stats → origin shift`.
 
+P2-04a2 concrete mode order captures the phase at tick start, applies its movement/AIR/contact/landing
+rules, completes near misses and scoring, then advances that old clock or starts a mode from an originally
+idle tick. New active/grace counters are not decremented on creation. Final protected-tick overlap cleanup
+must precede CLEAR/near producers and director slot reuse; actual active SMASH has priority over cleanup.
+`SimState.mode` stores kind, active/grace ticks and SMASH chain; all four join deterministic hashing, with
+full safe-integer counters rather than truncated 32-bit values. No persistent per-object immunity tail.
+
 ### 4.4 Determinism rules
 - PRNG: `sfc32` seeded via `splitmix32`; separate streams for director and pickups. Cosmetic randomness
   (particles, debris) lives in the renderer with its own unseeded RNG — it never affects the sim.

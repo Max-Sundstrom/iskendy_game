@@ -46,7 +46,12 @@ export function verticalInput(
   }
   if (p.airborne && jumpHeld && !jumpPressed) {
     p.jumpHeldS += dt;
-    if (!p.flying && !p.slamming && p.jumpHeldS >= tuning.fly.holdThresholdS && p.airLiters > 0) {
+    if (
+      !p.flying &&
+      !p.slamming &&
+      p.jumpHeldS >= tuning.fly.holdThresholdS &&
+      (p.airLiters > 0 || state.mode.activeTicksLeft > 0)
+    ) {
       p.flying = true;
       emit(state.events, SimEventKind.flyStart);
     }
@@ -108,6 +113,11 @@ export function verticalIntegrate(state: SimState, tuning: SimTuning, dt: number
 /** AIR bookkeeping (GDD §6): regen on the ground when not boosting; fly and boost costs stack. */
 export function updateAir(state: SimState, tuning: SimTuning, boostHeld: boolean, dt: number): void {
   const p = state.player;
+  if (state.mode.activeTicksLeft > 0) {
+    // Active thrust neither consumes nor regenerates the finite stored tank, even when it is empty.
+    p.boosting = boostHeld;
+    return;
+  }
   const a = tuning.air;
   p.boosting = boostHeld && p.airLiters > 0;
   const before = p.airLiters;

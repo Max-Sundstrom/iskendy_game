@@ -5,6 +5,7 @@ import { laneCenterX, SimStatus, type SimState } from './state';
 import { crash, CrashCause } from './outcome';
 import { hop, startRide } from './roofs';
 import { TRAFFIC_CAPACITY, vehicleCenterX, vehicleHalfWidth } from './traffic';
+import { resolveModeContacts } from './mode-contacts';
 
 // Player vs traffic (GDD §5.8–5.9, ARCHITECTURE §4.5). Boxes in lane space; the forward test is swept, using the
 // positions at the start and end of the step, so nothing tunnels at 95 m/s (≈ 1.6 m per step).
@@ -36,6 +37,10 @@ function scrape(state: SimState, tuning: SimTuning, start: StepStart): void {
 
 /** Resolves contacts for this step; must run after the player and traffic have moved. */
 export function resolveCollisions(state: SimState, tuning: SimTuning, start: StepStart, dt: number): void {
+  if (state.mode.activeTicksLeft > 0 || state.mode.graceTicksLeft > 0) {
+    resolveModeContacts(state, tuning, start, dt);
+    return;
+  }
   const p = state.player;
   const t = state.traffic;
   const half = tuning.player.widthM / 2;

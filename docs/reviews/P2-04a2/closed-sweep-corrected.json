@@ -1,0 +1,44 @@
+{
+  "status": "pass",
+  "runtime": "v24.19.0",
+  "frozenHead": "b1d80d1a2e8e0a73389df1ac5fdba201b8cc218a",
+  "source": "packages/sim/src/mode-contact-sweep.ts",
+  "sourceBlobBefore": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+  "sourceBlobAfter": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+  "method": "Exact BigInt rational boundary-witness oracle on numeric AABB/relative-coordinate values defined by API; no epsilon or sampling.",
+  "scope": "Two geometry functions only; no simulation steps, fixture updates or browser.",
+  "groups": {
+    "preparedSymmetry": 2880,
+    "defaultDimensions": 650,
+    "defaultExactFaces": 234,
+    "defaultMaximumTick": 13,
+    "boundedDyadic": 4096
+  },
+  "cases": 7873,
+  "apiComparisons": 15746,
+  "mismatches": 0,
+  "embeddingBooleanChanges": 0,
+  "command": "node /workspace/scratch/P2-04a2/closed-sweep-differential.mjs",
+  "exitCode": 0,
+  "completedImplementationRuns": 2,
+  "correctiveRuns": 1,
+  "oracleCasesRunnerUnchanged": true,
+  "testBlobObservedBeforeAndAfter": "853d347ab849c02d95252fe52e0090ce2ceb17ea",
+  "firstRun": {
+    "status": "fail",
+    "mismatches": 11,
+    "sourceBlob": "dccd376bdd134073352dbf28f9b8b1de74e7a6a5",
+    "fullResultArchive": "/workspace/scratch/P2-04a2/closed-sweep-first-differential-result.json",
+    "fullResultSha256": "3a7f2f9e4918be657d901a8b07b27f13f761eed9be41dfcd4c7b1eaee4db677b"
+  },
+  "unchangedInputSha256": {
+    "closed-sweep-oracle.mjs": "5e21b9ea6944781db9cdaae783528ebca62b4e7231efde857bdc3980453417d5",
+    "closed-sweep-cases.mjs": "dc2eaaa73b79e1dae8f2ac700881813ae5a167b3042de2abc0e9c1ca4e878f42",
+    "closed-sweep-differential.mjs": "fe4b4da28da45f9bf1a2d81ae379c630dcfec0b736f481baea5031a504a8f725"
+  },
+  "limitations": [
+    "Geometry-only synthetic paths; no gameplay route claim",
+    "No sim step, browser, full suite, goldens, determinism fixtures, or performance acceptance",
+    "Original matrix unchanged; new nonfinite-derived-geometry RangeError contract not independently exercised here"
+  ]
+}

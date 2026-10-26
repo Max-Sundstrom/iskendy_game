@@ -1,0 +1,966 @@
+{
+  "status": "passed",
+  "measuredSource": {
+    "baseHead": "b1d80d1a2e8e0a73389df1ac5fdba201b8cc218a",
+    "acceptance": "Uncommitted runtime pinned by complete production source blobs; head alone is not the measured candidate.",
+    "correctiveSweepBlob": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+    "runtimeBlobCount": 89,
+    "runtimeBlobs": {
+      "apps/web/src/engine/buildings.ts": "58ff5b6ba9160ff058f7ff886bbf304882f81820",
+      "apps/web/src/engine/camera.ts": "fee10085d721c8c06f0929bf237da13aa2a35670",
+      "apps/web/src/engine/car.ts": "6bf9538bf56ec3b12332a1b11d3280f9e2e68669",
+      "apps/web/src/engine/crash.ts": "873925058b97abcc862bc965a35d1c5d80fc6d4f",
+      "apps/web/src/engine/flora.ts": "fa5d3ded7fc57758c824167a8d34f3892b8b3a63",
+      "apps/web/src/engine/horizon.ts": "cd58cc08a51103df103a0bf7fed70fcfafea2901",
+      "apps/web/src/engine/intro.ts": "b840a35dad5d7c2af06326c3f6a0ee8e67ce2850",
+      "apps/web/src/engine/models/cars.ts": "54bcfc90669acdf2bb8e23f1e637faf1c22936f3",
+      "apps/web/src/engine/models/heavy.ts": "0b75346688ca02e0ae3184e4e886e96b393ce3df",
+      "apps/web/src/engine/models/index.ts": "340adbcac6db209a9348fc9e322e38d73e3ab3ae",
+      "apps/web/src/engine/models/loft.ts": "9a7faabe11e07b36defcc45763c3a153ae66dee3",
+      "apps/web/src/engine/models/parts.ts": "f053d8935a8070a16d436b1352bdeaef92122c46",
+      "apps/web/src/engine/perf-stats.ts": "1d7267d253476f43ee24f4b004bda137bcb68c06",
+      "apps/web/src/engine/perf.ts": "3e9b62f052f686740f80af2a7b67dfb5a95ccc91",
+      "apps/web/src/engine/props.ts": "4b330bc8485ea0e75b65e519d3dec8319e91f361",
+      "apps/web/src/engine/renderer-pose.ts": "be231c4da69cf98805c4e571a52942ab0437240e",
+      "apps/web/src/engine/renderer.ts": "32f048177c0a386f8849a5f5aa8a41d9cf605396",
+      "apps/web/src/engine/road.ts": "1c72c917937542082c0d53f55ec904c79bc813a8",
+      "apps/web/src/engine/scene.ts": "3e8bee1025849a1a3f5293a3359d80e2c1f4fbaf",
+      "apps/web/src/engine/thrusters.ts": "58ddc7d4a1a9f2321801846167493c67810bdb97",
+      "apps/web/src/engine/traffic.ts": "03d2da289637f958a34fee2dfd44ba765ed83cca",
+      "apps/web/src/engine/vapour.ts": "f54541f32fbe989374b4ceda56ffe737608c2b2b",
+      "apps/web/src/game/crash-sequence.ts": "46a5dede4cea42a1e950f15abb803d1fbc87f0cf",
+      "apps/web/src/game/loop.ts": "2f125a37dd8411f97644f025162bca22335738e3",
+      "apps/web/src/game/session.ts": "f00f4b285bf72c6ad457412c6b39321331c1769f",
+      "apps/web/src/input/controls.ts": "fba6947859bca42e954a7c48e65907a8a55a1423",
+      "apps/web/src/input/touch.ts": "ee82f3c919615704e468618aa3555a12e32334ef",
+      "apps/web/src/main.ts": "09e14d66a9b348c78e5043f4e23f4a4e4f097edb",
+      "apps/web/src/platform/best.ts": "17c9238b5dd1721a1b87e217b6fc872f68e6cff9",
+      "apps/web/src/platform/i18n.ts": "1487bc519af9510740760e81c19c0fc32b2f75fc",
+      "apps/web/src/platform/motion.ts": "bf6bebe9ec498c093297297b60a9a140e99773cc",
+      "apps/web/src/platform/promo.ts": "01083e2f4247e7a95ca8414092be17dd80897e6d",
+      "apps/web/src/platform/replays.ts": "1c582081ff1bc6e743d8faab099b9fc8221add90",
+      "apps/web/src/style.css": "a78754a060c2d1665d18ce1274d1c1f0f7bd814c",
+      "apps/web/src/ui/crash.ts": "9cb04c237aeea402450ae53d6214425e899ce662",
+      "apps/web/src/ui/dom.ts": "2b6a41db066c0341ec71cebaaab188f38da21fd4",
+      "apps/web/src/ui/hud.ts": "8e60fffe5bbca6350c31545b5168094f35e1e17d",
+      "apps/web/src/ui/index.ts": "498418f0b73686f14a201af4a562f385226830f0",
+      "apps/web/src/ui/intro.ts": "444dc5dd79a25995823d251fa3e62b22893b14f0",
+      "apps/web/src/ui/results.ts": "ea71a8ea0a2076ee1d2353ffff2e3b0b5e627a75",
+      "packages/content/art.json": "dfc14d11d688161e15d7021b36dbfa5b8ef12b0a",
+      "packages/content/i18n/en.json": "0292dc84151cf8f77f6bf3a8779cb3ba3718f91a",
+      "packages/content/i18n/ru.json": "c37cb16d92115c204cb3509a32f77949de36df3f",
+      "packages/content/package.json": "e08930a7df0bdf796df7eb38ef2080eaf5f420da",
+      "packages/content/tuning.default.json": "6f75781d6d6fb85b6c74cef911a049a9e98185fa",
+      "packages/shared/src/events.ts": "b4610f95ecd4b02034a0153e339d54e2118c3531",
+      "packages/shared/src/index.ts": "74777f82959604a95c4561d7f1bbcb452227090f",
+      "packages/shared/src/replay.ts": "7898a3c1c4a0c86591c27fca8a70b6e3f1d0c2b3",
+      "packages/shared/src/tuning/hash.ts": "2f01a470e42d675539a61ff091f211b2891ddfe2",
+      "packages/shared/src/tuning/index.ts": "d2347b7906886469522108631d34bba6068fdde7",
+      "packages/shared/src/tuning/parse.ts": "a31941bb5573cf1dbadd30e0aeb56e52772d71a6",
+      "packages/shared/src/tuning/schema.ts": "5321bf9c64d166f5ab6343745c2a4b5dda7378f5",
+      "packages/sim/src/collisions.ts": "51d9d56ef22b7c71161387a8a35de489504ee0e4",
+      "packages/sim/src/director.ts": "7aa875a5cecb0072158451433a4cb50209c5b607",
+      "packages/sim/src/events.ts": "2d98817477621ada687357f24f9efce6f7558437",
+      "packages/sim/src/hash.ts": "2e4df4a9736806236e6b65a4d441a1cc6581aae2",
+      "packages/sim/src/index.ts": "1de8049aea0131e840608ddb73e0046b10c3f237",
+      "packages/sim/src/input.ts": "2d0ad70768987b22583447f6321075821130de2b",
+      "packages/sim/src/jump.ts": "55854c126fbb0f57e71f759859bf0dd7121b75f1",
+      "packages/sim/src/lanes.ts": "636afce03d3c3e1e2613937316007aaba9cb0b22",
+      "packages/sim/src/lateral.ts": "306f48a1d5ca3b8fef872ce180694d54a2f10958",
+      "packages/sim/src/math.ts": "347ecf1153c54cec980019f5540528f00b283a50",
+      "packages/sim/src/mode-clock.ts": "fa13cfbd29bab93b2f88f63bc77ef9c320bb876a",
+      "packages/sim/src/mode-contact-sweep.ts": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+      "packages/sim/src/mode-contacts.ts": "c74e0c04c5c312d25e747b61544531c8c04a84b8",
+      "packages/sim/src/modes.ts": "153cd911a289672752cd8f3831e5f3b9e91c03b0",
+      "packages/sim/src/near-miss.ts": "6dd3f29f4a697ba62b47e2a0eaf8e622597ac370",
+      "packages/sim/src/near-sweep.ts": "a6fa934a0aee0207be7b8e92f18a7d3d64080779",
+      "packages/sim/src/outcome.ts": "cd3647018694ee56147ad7a2aa6b891eb42b2e08",
+      "packages/sim/src/replay.ts": "0e2746655b197aad53edda73a8d07a7ffaf3f1a0",
+      "packages/sim/src/rng.ts": "2df17718f35ce9a42929e24f65cb9a590791dc22",
+      "packages/sim/src/roll.ts": "8a3e046b9ecfae27b1169ee4d974e80d98883b81",
+      "packages/sim/src/roofs.ts": "22ca3e60aea0d7d6c9ea557d0a15ee6105996265",
+      "packages/sim/src/score-ledger.ts": "a38c3b446d468322b9bed20bd909997e7f5e88c7",
+      "packages/sim/src/score.ts": "d9acafaba5b31bd9cfbaabe85ca2d83d4ad14d74",
+      "packages/sim/src/state.ts": "2c86fc824fa34b018e032d29af2f94d965e2542f",
+      "packages/sim/src/step.ts": "91e15c9767c5d2381e36ea5de47e57723cd48a39",
+      "packages/sim/src/tables.ts": "ce5ba38c30ec669ccd05a036a4e3520f9f2ec803",
+      "packages/sim/src/testing.ts": "624c2f244cc74b60196f4601da4f750cf296be94",
+      "packages/sim/src/traffic.ts": "c6f4a53c417e6b6b0e4ff9963ae8400e331838bb",
+      "packages/sim/src/tricks.ts": "af7332cccea49fff40f5a5c87677fb724a5cc998",
+      "packages/sim/src/tuning.ts": "7395910eaa5f326baa90e19d17e2dad3d49a0e00",
+      "packages/sim/src/version.ts": "b51be7bb35253d2738fbe4deb5160f16a04f9a32",
+      "packages/sim/src/vertical.ts": "119e5f8c9fc7ccf40a02f0b43e8d7a8dc0e58784",
+      "package.json": "1a7e0de0adad9a575154f25442ade9efb16db8b4",
+      "pnpm-lock.yaml": "aee84328332172a979975b2d42bb7f9a91e91d7a",
+      "pnpm-workspace.yaml": "31963b9897c5077ea6c874debd0cc3658b6525b9",
+      "apps/web/vite.config.ts": "fcda8602329689060d18355bdca9ffb8eef07e7a",
+      "deploy/Caddyfile": "809f10365891c8cfc54e372e2f6abdcff5aca2ea"
+    },
+    "finalHead": "b1d80d1a2e8e0a73389df1ac5fdba201b8cc218a",
+    "runtimeStillFrozen": true
+  },
+  "measuredBuildSha256": {
+    "apps/web/dist/index.html": "cea9a4a17ffb24dd8751c5cb6445f828eef3dbef655dabd029269210abacf301",
+    "apps/web/dist/assets/index-DA6YPkha.js": "8e2da9abd328dcd556eed4526565959352ba6916c05b80c68057a8e53c50569f"
+  },
+  "environment": {
+    "node": "v24.19.0",
+    "chromium": "154.0.8037.57",
+    "quality": "low",
+    "intro": "existing intro=0 test entry",
+    "desktop": {
+      "width": 1440,
+      "height": 900,
+      "dpr": 1
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "dpr": 3,
+      "isMobile": true,
+      "hasTouch": true
+    },
+    "profileWatchdogMs": 120000,
+    "browserContexts": "sequential",
+    "contentSecurityPolicy": "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self'; media-src 'self' blob:; worker-src 'self' blob:; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; frame-ancestors 'none'; require-trusted-types-for 'script'",
+    "bypassCsp": false
+  },
+  "profiles": [
+    {
+      "name": "desktop-keyboard",
+      "status": "passed",
+      "startedUtc": "2026-10-26T16:59:33.463Z",
+      "finishedUtc": "2026-10-26T17:00:44.183Z",
+      "wallSeconds": 70.72,
+      "errors": [],
+      "http": [
+        {
+          "url": "http://127.0.0.1:5188/?seed=1&q=low&intro=0",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:5188/assets/index-duw5Ttrp.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:5188/assets/index-DA6YPkha.js",
+          "status": 200
+        }
+      ],
+      "observationsCompared": 64,
+      "clockAdvancementCalls": 276,
+      "postCrashPresentationCalls": 16,
+      "pause": {
+        "atStateTick": 625,
+        "held": 0,
+        "emulatedVisibility": true,
+        "physicalAppSwitch": false,
+        "hiddenVirtualMs": 5000,
+        "domUnchanged": true,
+        "pixelsUnchanged": true,
+        "beforeSha256": "50772ad4f4903290f4cc708f01d3e159f0768547cffc846193ff8be1c2c25f5e",
+        "afterSha256": "50772ad4f4903290f4cc708f01d3e159f0768547cffc846193ff8be1c2c25f5e"
+      },
+      "replayValidation": {
+        "valid": true,
+        "actualTuples": [
+          [
+            525,
+            27,
+            1,
+            300
+          ],
+          [
+            688,
+            30,
+            0,
+            1
+          ],
+          [
+            825,
+            28,
+            1,
+            60
+          ],
+          [
+            885,
+            29,
+            0,
+            0
+          ],
+          [
+            928,
+            13,
+            1,
+            0
+          ]
+        ],
+        "landmarks": [
+          {
+            "tick": 525,
+            "meter": 0,
+            "airLiters": 219,
+            "airborne": true,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 300,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 0
+            },
+            "hash": "ed6610f1",
+            "events": [
+              {
+                "kind": "flipDone",
+                "count": 1
+              },
+              {
+                "kind": "scoreAddedToPot",
+                "reason": 6,
+                "points": 2250
+              },
+              {
+                "kind": "modeStarted",
+                "mode": "liftoff",
+                "activeTicks": 300
+              }
+            ]
+          },
+          {
+            "tick": 610,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 215,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 0
+            },
+            "hash": "5c4e2874",
+            "events": [
+              {
+                "kind": "land",
+                "slam": false
+              },
+              {
+                "kind": "landingGraded",
+                "grade": "stunt",
+                "flips": 1
+              },
+              {
+                "kind": "scoreAddedToPot",
+                "reason": 9,
+                "points": 145
+              }
+            ]
+          },
+          {
+            "tick": 625,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 200,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 0
+            },
+            "hash": "640c0778",
+            "events": []
+          },
+          {
+            "tick": 688,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 137,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 1
+            },
+            "hash": "6a23a3e7",
+            "events": [
+              {
+                "kind": "smash",
+                "vehicleType": 0,
+                "chain": 1
+              },
+              {
+                "kind": "scoreAddedToPot",
+                "reason": 12,
+                "points": 750
+              }
+            ]
+          },
+          {
+            "tick": 824,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 1,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 1
+            },
+            "hash": "1ff717a1",
+            "events": []
+          },
+          {
+            "tick": 825,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 0,
+              "graceTicksLeft": 60,
+              "kind": 1,
+              "smashChain": 1
+            },
+            "hash": "7842892c",
+            "events": [
+              {
+                "kind": "modeEnded",
+                "mode": "liftoff",
+                "graceTicks": 60
+              }
+            ]
+          },
+          {
+            "tick": 884,
+            "meter": 130,
+            "airLiters": 248.5,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 0,
+              "graceTicksLeft": 1,
+              "kind": 1,
+              "smashChain": 1
+            },
+            "hash": "92f7b7e9",
+            "events": []
+          },
+          {
+            "tick": 885,
+            "meter": 130,
+            "airLiters": 249,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 0,
+              "graceTicksLeft": 0,
+              "kind": 0,
+              "smashChain": 1
+            },
+            "hash": "b7c6ead8",
+            "events": [
+              {
+                "kind": "modeGraceEnded"
+              }
+            ]
+          },
+          {
+            "tick": 928,
+            "meter": 130,
+            "airLiters": 270.5,
+            "airborne": false,
+            "status": 2,
+            "mode": {
+              "activeTicksLeft": 0,
+              "graceTicksLeft": 0,
+              "kind": 0,
+              "smashChain": 1
+            },
+            "hash": "66e41f15",
+            "events": [
+              {
+                "kind": "crash",
+                "cause": "rear"
+              }
+            ]
+          }
+        ],
+        "finalHash": "66e41f15",
+        "all50InputTransitionsExact": true
+      },
+      "retryValidation": {
+        "genuineButton": true,
+        "seed": 2,
+        "valid": true,
+        "ticks": 284,
+        "hash": "7927b6d5",
+        "mode": {
+          "activeTicksLeft": 0,
+          "graceTicksLeft": 0,
+          "kind": 0,
+          "smashChain": 0
+        },
+        "meter": 0,
+        "inputs": [],
+        "best": {
+          "schemaVersion": 1,
+          "score": 18828,
+          "distanceM": 638.4743759294411
+        }
+      },
+      "deliveredEventCount": 50,
+      "traceSaved": true,
+      "traceZipCrcValid": true,
+      "traceSha256": "e11e5ab61fbb4ba111553ef65ca7090c7c4bad3526cf2ff814b8e97d827fd84d",
+      "actualReplaySha256": "e9319a48d4cc0b70382b50336e361e435bf74b96d8fb35266e76fa8f5a24984a",
+      "actualRetryReplaySha256": "12ebe8ca827dff6609d30f79be314ec72b360f03150518c5853764b014d55dec"
+    },
+    {
+      "name": "mobile-touch",
+      "status": "passed",
+      "startedUtc": "2026-10-26T17:00:44.687Z",
+      "finishedUtc": "2026-10-26T17:01:11.000Z",
+      "wallSeconds": 26.313,
+      "errors": [],
+      "http": [
+        {
+          "url": "http://127.0.0.1:5188/?seed=1&q=low&intro=0",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:5188/assets/index-duw5Ttrp.css",
+          "status": 200
+        },
+        {
+          "url": "http://127.0.0.1:5188/assets/index-DA6YPkha.js",
+          "status": 200
+        }
+      ],
+      "observationsCompared": 64,
+      "clockAdvancementCalls": 276,
+      "postCrashPresentationCalls": 16,
+      "pause": {
+        "atStateTick": 625,
+        "held": 0,
+        "emulatedVisibility": true,
+        "physicalAppSwitch": false,
+        "hiddenVirtualMs": 5000,
+        "domUnchanged": true,
+        "pixelsUnchanged": true,
+        "beforeSha256": "64038c5e4b7d58baf37a6a4bbf518a1316f44e0e138e1cd263a019423d904194",
+        "afterSha256": "64038c5e4b7d58baf37a6a4bbf518a1316f44e0e138e1cd263a019423d904194"
+      },
+      "replayValidation": {
+        "valid": true,
+        "actualTuples": [
+          [
+            525,
+            27,
+            1,
+            300
+          ],
+          [
+            688,
+            30,
+            0,
+            1
+          ],
+          [
+            825,
+            28,
+            1,
+            60
+          ],
+          [
+            885,
+            29,
+            0,
+            0
+          ],
+          [
+            928,
+            13,
+            1,
+            0
+          ]
+        ],
+        "landmarks": [
+          {
+            "tick": 525,
+            "meter": 0,
+            "airLiters": 219,
+            "airborne": true,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 300,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 0
+            },
+            "hash": "ed6610f1",
+            "events": [
+              {
+                "kind": "flipDone",
+                "count": 1
+              },
+              {
+                "kind": "scoreAddedToPot",
+                "reason": 6,
+                "points": 2250
+              },
+              {
+                "kind": "modeStarted",
+                "mode": "liftoff",
+                "activeTicks": 300
+              }
+            ]
+          },
+          {
+            "tick": 610,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 215,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 0
+            },
+            "hash": "5c4e2874",
+            "events": [
+              {
+                "kind": "land",
+                "slam": false
+              },
+              {
+                "kind": "landingGraded",
+                "grade": "stunt",
+                "flips": 1
+              },
+              {
+                "kind": "scoreAddedToPot",
+                "reason": 9,
+                "points": 145
+              }
+            ]
+          },
+          {
+            "tick": 625,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 200,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 0
+            },
+            "hash": "640c0778",
+            "events": []
+          },
+          {
+            "tick": 688,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 137,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 1
+            },
+            "hash": "6a23a3e7",
+            "events": [
+              {
+                "kind": "smash",
+                "vehicleType": 0,
+                "chain": 1
+              },
+              {
+                "kind": "scoreAddedToPot",
+                "reason": 12,
+                "points": 750
+              }
+            ]
+          },
+          {
+            "tick": 824,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 1,
+              "graceTicksLeft": 0,
+              "kind": 1,
+              "smashChain": 1
+            },
+            "hash": "1ff717a1",
+            "events": []
+          },
+          {
+            "tick": 825,
+            "meter": 130,
+            "airLiters": 219,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 0,
+              "graceTicksLeft": 60,
+              "kind": 1,
+              "smashChain": 1
+            },
+            "hash": "7842892c",
+            "events": [
+              {
+                "kind": "modeEnded",
+                "mode": "liftoff",
+                "graceTicks": 60
+              }
+            ]
+          },
+          {
+            "tick": 884,
+            "meter": 130,
+            "airLiters": 248.5,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 0,
+              "graceTicksLeft": 1,
+              "kind": 1,
+              "smashChain": 1
+            },
+            "hash": "92f7b7e9",
+            "events": []
+          },
+          {
+            "tick": 885,
+            "meter": 130,
+            "airLiters": 249,
+            "airborne": false,
+            "status": 1,
+            "mode": {
+              "activeTicksLeft": 0,
+              "graceTicksLeft": 0,
+              "kind": 0,
+              "smashChain": 1
+            },
+            "hash": "b7c6ead8",
+            "events": [
+              {
+                "kind": "modeGraceEnded"
+              }
+            ]
+          },
+          {
+            "tick": 928,
+            "meter": 130,
+            "airLiters": 270.5,
+            "airborne": false,
+            "status": 2,
+            "mode": {
+              "activeTicksLeft": 0,
+              "graceTicksLeft": 0,
+              "kind": 0,
+              "smashChain": 1
+            },
+            "hash": "66e41f15",
+            "events": [
+              {
+                "kind": "crash",
+                "cause": "rear"
+              }
+            ]
+          }
+        ],
+        "finalHash": "66e41f15",
+        "all50InputTransitionsExact": true
+      },
+      "retryValidation": {
+        "genuineButton": true,
+        "seed": 2,
+        "valid": true,
+        "ticks": 284,
+        "hash": "7927b6d5",
+        "mode": {
+          "activeTicksLeft": 0,
+          "graceTicksLeft": 0,
+          "kind": 0,
+          "smashChain": 0
+        },
+        "meter": 0,
+        "inputs": [],
+        "best": {
+          "schemaVersion": 1,
+          "score": 18828,
+          "distanceM": 638.4743759294411
+        }
+      },
+      "deliveredEventCount": 75,
+      "traceSaved": true,
+      "traceZipCrcValid": true,
+      "traceSha256": "a6a6a3a3432ab12aa0b01da183b4aca7ca5bececdc41b34884412b1dce2688fa",
+      "actualReplaySha256": "e9319a48d4cc0b70382b50336e361e435bf74b96d8fb35266e76fa8f5a24984a",
+      "actualRetryReplaySha256": "12ebe8ca827dff6609d30f79be314ec72b360f03150518c5853764b014d55dec"
+    }
+  ],
+  "actualFirstReplay": {
+    "schemaVersion": 1,
+    "simVersion": 1,
+    "seed": 1,
+    "tuningHash": "9e91b7802bf1b6b1",
+    "mode": "endless",
+    "ticks": 928,
+    "inputs": [
+      [
+        0,
+        4
+      ],
+      [
+        1,
+        0
+      ],
+      [
+        3,
+        4
+      ],
+      [
+        16,
+        5
+      ],
+      [
+        17,
+        4
+      ],
+      [
+        27,
+        6
+      ],
+      [
+        28,
+        4
+      ],
+      [
+        50,
+        5
+      ],
+      [
+        51,
+        4
+      ],
+      [
+        101,
+        0
+      ],
+      [
+        122,
+        4
+      ],
+      [
+        123,
+        0
+      ],
+      [
+        125,
+        4
+      ],
+      [
+        138,
+        6
+      ],
+      [
+        139,
+        4
+      ],
+      [
+        149,
+        5
+      ],
+      [
+        150,
+        4
+      ],
+      [
+        172,
+        6
+      ],
+      [
+        173,
+        4
+      ],
+      [
+        223,
+        0
+      ],
+      [
+        244,
+        4
+      ],
+      [
+        245,
+        0
+      ],
+      [
+        247,
+        4
+      ],
+      [
+        260,
+        5
+      ],
+      [
+        261,
+        4
+      ],
+      [
+        271,
+        6
+      ],
+      [
+        272,
+        4
+      ],
+      [
+        294,
+        5
+      ],
+      [
+        295,
+        4
+      ],
+      [
+        345,
+        0
+      ],
+      [
+        366,
+        4
+      ],
+      [
+        367,
+        0
+      ],
+      [
+        369,
+        4
+      ],
+      [
+        382,
+        6
+      ],
+      [
+        383,
+        4
+      ],
+      [
+        393,
+        5
+      ],
+      [
+        394,
+        4
+      ],
+      [
+        416,
+        6
+      ],
+      [
+        417,
+        4
+      ],
+      [
+        467,
+        0
+      ],
+      [
+        488,
+        4
+      ],
+      [
+        489,
+        0
+      ],
+      [
+        491,
+        4
+      ],
+      [
+        504,
+        5
+      ],
+      [
+        505,
+        4
+      ],
+      [
+        515,
+        6
+      ],
+      [
+        516,
+        4
+      ],
+      [
+        538,
+        5
+      ],
+      [
+        539,
+        4
+      ],
+      [
+        589,
+        0
+      ]
+    ],
+    "claimedScore": 18828,
+    "claimedDistanceM": 638.4743759294411,
+    "finalHash": "66e41f15"
+  },
+  "actualRetryReplay": {
+    "schemaVersion": 1,
+    "simVersion": 1,
+    "seed": 2,
+    "tuningHash": "9e91b7802bf1b6b1",
+    "mode": "endless",
+    "ticks": 284,
+    "inputs": [],
+    "claimedScore": 171,
+    "claimedDistanceM": 171.57555541577233,
+    "finalHash": "7927b6d5"
+  },
+  "qaReferences": {
+    "routeSha256": "e9319a48d4cc0b70382b50336e361e435bf74b96d8fb35266e76fa8f5a24984a",
+    "correctedRouteReportSha256": "b2d9627d547a9fe4b7bd7addec8d45932f668a9367b120696d83237767ecd764",
+    "independentLedgerSha256": "954dc074744d36b617366b4fb4d4465dbf48f2be7898fcf5feadfe2a1e6958af"
+  },
+  "cleanup": {
+    "browserClosed": true,
+    "previewClosed": true,
+    "closedUtc": "2026-10-26T17:01:11.653Z",
+    "errors": [],
+    "port5188ConnectionRefusedAfterClose": true
+  },
+  "pixelEvidence": {
+    "desktop-keyboard-before-smash.png": "658c56b1f18863425a29af0f2ee4dc22d234024f1442cc48f37ec632b0441c6d",
+    "desktop-keyboard-after-smash-replay-proven.png": "c7d7c4fa4052bf15dcfffeb548d1c1b438786a7e6a355fbfe10cfd47a016b12a",
+    "mobile-touch-mode-start-replay-proven.png": "9e423b184316ed17427f6d5a8f763e23bb223b30581692e6fa513faff752fb7b",
+    "mobile-touch-fresh-retry-tick1.png": "9e5e5c1ba85e5cfe037bbf9bde9b9fa2ac8a0837d5ce7a9f4dd864f0870c4888"
+  },
+  "review": "Coordinator and independent review inspected real SMASH before/after and mobile activation/Retry; independent reviewer validated actual replays, paused PNG byte equality and trace entries. Author verified ZIP CRC.",
+  "limits": [
+    "Mode state, counters, meter and SMASH awards are derived from replaying the exact production recorder log; current HUD has no mode/meter/countdown/infinity indicator.",
+    "Controlled fastForward100 frames reach the production five-step cap; this is discrete input/replay acceptance, not normal-cadence/full-motion/performance evidence.",
+    "Synthetic PointerEvents and synthetic document.hidden visibilitychange are not physical touchscreen or OS backgrounding evidence.",
+    "One original first-run/Retry journey per viewport, no retries or source changes; low quality, skipped intro, no new mode VFX/audio/rocket or newer model-refinement acceptance.",
+    "No performance smoke, full E2E matrix, other engines, dependencies, deployment or preview/publication archive in this browser task."
+  ],
+  "fullScratchEvidence": "/workspace/scratch/P2-04a2-browser"
+}

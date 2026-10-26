@@ -1,3 +1,7 @@
+/** Stable mode identities; OVERDRIVE will augment a base mode, not replace its identity. */
+export const ModeKind = { none: 0, liftoff: 1 } as const;
+export type ModeKind = (typeof ModeKind)[keyof typeof ModeKind];
+
 /** Stable numeric reasons for score credits; append new mechanics without renumbering. */
 export const ScoreReason = {
   boost: 1,
@@ -11,6 +15,7 @@ export const ScoreReason = {
   stuntLanding: 9,
   slam: 10,
   nearMiss: 11,
+  smash: 12,
 } as const;
 export type ScoreReason = (typeof ScoreReason)[keyof typeof ScoreReason];
 
@@ -57,6 +62,15 @@ export const SimEventKind = {
   streakMilestone: 25,
   /** a: vehicle type index, b: traffic slot at event time (do not dereference after director reuse). */
   nearMiss: 26,
+  /** a: ModeKind, b: full active ticks; effects begin on the next physics tick. */
+  modeStarted: 27,
+  /** a: ModeKind, b: full grace ticks, possibly zero. */
+  modeEnded: 28,
+  modeGraceEnded: 29,
+  /** a: vehicle type index, b: episode SMASH chain; payload survives traffic slot reuse. */
+  smash: 30,
+  /** a: vehicle type index retired on grace exit, without score or SMASH credit. */
+  trafficPhasedOut: 31,
 } as const;
 
 export type SimEventKind = (typeof SimEventKind)[keyof typeof SimEventKind];
@@ -88,4 +102,9 @@ export type SimEvent =
   | { kind: 'streakSettled'; banked: number; lost: number }
   | { kind: 'streakMilestone'; count: number }
   | { kind: 'nearMiss'; vehicleType: number; slot: number }
+  | { kind: 'modeStarted'; mode: 'liftoff'; activeTicks: number }
+  | { kind: 'modeEnded'; mode: 'liftoff'; graceTicks: number }
+  | { kind: 'modeGraceEnded' }
+  | { kind: 'smash'; vehicleType: number; chain: number }
+  | { kind: 'trafficPhasedOut'; vehicleType: number }
   | { kind: 'landingGraded'; grade: 'perfect' | 'stunt' | 'sloppy'; flips: number };

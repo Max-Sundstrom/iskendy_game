@@ -1,0 +1,68 @@
+{
+  "passed": true,
+  "rows": 928,
+  "source": {
+    "packages/sim/src/collisions.ts": "51d9d56ef22b7c71161387a8a35de489504ee0e4",
+    "packages/sim/src/director.ts": "7aa875a5cecb0072158451433a4cb50209c5b607",
+    "packages/sim/src/events.ts": "2d98817477621ada687357f24f9efce6f7558437",
+    "packages/sim/src/hash.ts": "2e4df4a9736806236e6b65a4d441a1cc6581aae2",
+    "packages/sim/src/mode-clock.ts": "fa13cfbd29bab93b2f88f63bc77ef9c320bb876a",
+    "packages/sim/src/mode-contact-sweep.ts": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+    "packages/sim/src/mode-contacts.ts": "c74e0c04c5c312d25e747b61544531c8c04a84b8",
+    "packages/sim/src/mode-test-helpers.ts": "a93387c78d13f08834a37487efef86d73f73a6ea",
+    "packages/sim/src/modes.ts": "153cd911a289672752cd8f3831e5f3b9e91c03b0",
+    "packages/sim/src/score-ledger.ts": "a38c3b446d468322b9bed20bd909997e7f5e88c7",
+    "packages/sim/src/score.ts": "d9acafaba5b31bd9cfbaabe85ca2d83d4ad14d74",
+    "packages/sim/src/state.ts": "2c86fc824fa34b018e032d29af2f94d965e2542f",
+    "packages/sim/src/step.ts": "91e15c9767c5d2381e36ea5de47e57723cd48a39",
+    "packages/sim/src/tricks.ts": "af7332cccea49fff40f5a5c87677fb724a5cc998",
+    "packages/sim/src/vertical.ts": "119e5f8c9fc7ccf40a02f0b43e8d7a8dc0e58784"
+  },
+  "actions": {
+    "2": 1,
+    "6": 5,
+    "7": 15,
+    "8": 4,
+    "9": 1,
+    "12": 1
+  },
+  "settlements": [[838, 18190, 0]],
+  "contacts": [
+    {
+      "tick": 688,
+      "slot": 6,
+      "type": 0,
+      "eventType": 0,
+      "singleton": false,
+      "enter": "160969364201075/454656575584128",
+      "exit": "1"
+    }
+  ],
+  "independentBankedStyle": 18190,
+  "finalMeter": 130,
+  "finalTotalFromDistanceAndStyle": 18828.47437592944,
+  "tuples": [
+    [525, 27, 1, 300],
+    [688, 30, 0, 1],
+    [825, 28, 1, 60],
+    [885, 29, 0, 0],
+    [928, 13, 1, 0]
+  ],
+  "terminal": {
+    "tick": 928,
+    "hash": "66e41f15",
+    "score": 18828.474375929447,
+    "claimedScore": 18828,
+    "distanceM": 638.4743759294411,
+    "lostPot": [],
+    "airLiters": 270.5,
+    "mode": {
+      "activeTicksLeft": 0,
+      "graceTicksLeft": 0,
+      "kind": 0,
+      "smashChain": 1
+    }
+  },
+  "correctedOutcomeMatchesFirstObservation": true,
+  "method": "Offline physical-event awards, absolute streak deadline, distance+banked-style total, per-tick ledger/credits/mode/AIR checks; no sim/scoring code imported."
+}

@@ -51,13 +51,13 @@ function spawnRow(state: SimState, tuning: SimTuning, rowM: number): void {
     const slot = freeSlot(state.traffic);
     if (slot < 0) return;
     if (!laneIsClear(state.traffic, tuning, lane, z, v.lengthM, tuning.traffic.spawnClearanceM)) continue;
-    state.traffic.active[slot] = 1;
     state.traffic.type[slot] = type;
     state.traffic.lane[slot] = lane;
     state.traffic.z[slot] = z;
     state.traffic.over[slot] = 0;
     state.traffic.nearMiss[slot] = 0;
     state.traffic.speed[slot] = v.minMps + nextFloat(state.rng.director) * (v.maxMps - v.minMps);
+    state.traffic.active[slot] = 1; // publish this lifetime only after every tracking field is initialized
   }
 }
 

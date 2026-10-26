@@ -1,0 +1,49 @@
+{
+  "runtime": "v24.19.0",
+  "method": "Same process, preallocated inputs; 5k warmup per function/group, 3 alternating before/after rounds of 50k queries. Geometry-only microbenchmark; not full sim or frame/device acceptance.",
+  "oldBlob": "dccd376bdd134073352dbf28f9b8b1de74e7a6a5",
+  "newBlob": "70fc9d11de12e20f107f7569dd5279cb43c7559b",
+  "iterations": 50000,
+  "groups": [
+    {
+      "name": "distant-disjoint",
+      "beforeMs": [2.525958000000003, 1.2818919999999991, 0.9510930000000002],
+      "afterMs": [2.8685940000000016, 1.0925670000000025, 1.0589769999999987],
+      "beforeMedianMs": 1.2818919999999991,
+      "afterMedianMs": 1.0925670000000025,
+      "afterPer64QueriesMs": 0.0013984857600000031
+    },
+    {
+      "name": "fully-inside",
+      "beforeMs": [2.5648569999999893, 0.9898720000000054, 1.0059870000000046],
+      "afterMs": [1.055681000000007, 1.0087410000000006, 1.2400690000000054],
+      "beforeMedianMs": 1.0059870000000046,
+      "afterMedianMs": 1.055681000000007,
+      "afterPer64QueriesMs": 0.001351271680000009
+    },
+    {
+      "name": "rear-entry-only",
+      "beforeMs": [2.2693009999999987, 1.3580480000000108, 1.0142489999999924],
+      "afterMs": [3.2958579999999955, 1.6311490000000077, 1.5304819999999921],
+      "beforeMedianMs": 1.3580480000000108,
+      "afterMedianMs": 1.6311490000000077,
+      "afterPer64QueriesMs": 0.00208787072000001
+    },
+    {
+      "name": "common-time-singleton",
+      "beforeMs": [1.324247000000014, 1.415945000000022, 1.0250449999999773],
+      "afterMs": [112.14058399999999, 114.63726200000002, 117.76034600000003],
+      "beforeMedianMs": 1.324247000000014,
+      "afterMedianMs": 114.63726200000002,
+      "afterPer64QueriesMs": 0.14673569536000003
+    },
+    {
+      "name": "crossed-noncommon",
+      "beforeMs": [1.2082510000000184, 1.7192019999999957, 1.2066189999999324],
+      "afterMs": [126.70918699999999, 114.248561, 113.04740100000004],
+      "beforeMedianMs": 1.2082510000000184,
+      "afterMedianMs": 114.248561,
+      "afterPer64QueriesMs": 0.14623815807999999
+    }
+  ]
+}

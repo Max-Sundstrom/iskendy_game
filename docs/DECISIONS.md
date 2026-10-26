@@ -190,6 +190,16 @@ bumps `SIM_VERSION` (invariant 10).
 | 2026-10-23 | P2-02b | determinism `9685154f-ea4436ea` → `5d224451-353277e8` (both Node/browser fixtures); tuningHash `38343d240df13aa3` → `9e2e6e03faddfbea`; replays `early-crash` `0ec6d8a9` → `538c5a99`, `busy-inputs` `950f5632` → `923a1653`, `long-run` `a6039b65` → `c82fb955`; cosine table/spacing/error pin `2b04aa6753db261b` | Accepted airborne lane changes now commit signed barrel rolls; five new fields join the hash. Q22/Q23 add queue and orientation flags. All three replays retain exact duration, score, distance and crash cause. The 10k retry session changes from 21 to 25 runs because actual roll landings affect penalties/crashes. Terminal crash pitch/roll are preserved instead of erased; renderer consumes that same-tick pose. SIM_VERSION remains 1 under ADR-024. |
 | 2026-10-23 | P2-03a | determinism `5d224451-353277e8` → `8be91f5c-6f883e35` (both Node/browser fixtures); tuningHash `9e2e6e03faddfbea` → `cc1f730496d3c9cc`; replays `early-crash` `538c5a99` → `a73a2af9`, `busy-inputs` `923a1653` → `9fe5fb3b`, `long-run` `c82fb955` → `d101ad75` | Scoring/streak ledger and interval counters now join the hash. New Q24–Q26 passive-credit policies and SCRAPE ratio are in tuning. No physics changes: all three replay inputs/ticks/distances/causes and final displayed scores remain identical; 10k retry count remains25. The busy replay earns pot120+150+180 then loses450 on its landing crash, retaining meter110. SIM_VERSION remains1 under ADR-024. |
 | 2026-10-26 | P2-03b | determinism `8be91f5c-6f883e35` → `5e81a89c-04c562d2` (both Node/browser fixtures); tuningHash `cc1f730496d3c9cc` → `9e91b7802bf1b6b1`; replays `early-crash` `a73a2af9` → `93946362`, `busy-inputs` `9fe5fb3b` → `3e19786b`, `long-run` `d101ad75` → `04f57e5b` | Q27 adds the near-miss flag and persistent active-slot pass states to hashing. Independent comparison before regeneration proved all three physical trajectories, old raw event order, scores, inputs, ticks and distances unchanged, plus 10k scripted ticks across the same 25 runs. Those fixtures earn no near awards. Separate default-input seed1 Right350 now earns 50 on tick352, banks on502 and crashes on509 with score366; flag-off has identical physics and score316. SIM_VERSION remains 1 under ADR-024. |
+| 2026-10-26 | P2-04a2 | determinism `5e81a89c-04c562d2` → `ab3be31c-99f78172` (both Node/browser fixtures); unchanged tuningHash `9e91b7802bf1b6b1`; replays `early-crash` `93946362` → `1df1ea82`, `busy-inputs` `3e19786b` → `fc6dfa0b`, `long-run` `04f57e5b` → `c7bfecbb`; new `liftoff` `66e41f15`; NEAR E2E `fc2ed824` → `b3d301a4` | Q28 adds mode kind, active/grace counters and SMASH chain to persistent hashing. Independent pre-regeneration comparison proves all legacy fields/events unchanged across the three old goldens and the same 10k/25-run session (12,462 rows); none activates a mode. Auto-trigger disabled also preserves the meter routes (13,599 rows). The new unchanged 50-input seed-1 route starts LIFTOFF at 525, SMASHes real traffic at 688, ends active/grace at 825/885 and crashes naturally at 928, score 18,828. A separate 928-row ledger audit and exact contact oracle justify that new outcome; the oracle caught 11 rounding errors, then passed all 7,873 unchanged cases after the causal exact-arithmetic correction. SIM_VERSION remains 1 under ADR-024. |
+
+P2-04a2 independent comparison, geometric counterexamples/correction and mode-route ledger evidence are
+in `docs/reviews/P2-04a2/`. The original three replay inputs, durations, distances and displayed scores stay
+unchanged; the fourth adds active-mode coverage to the exact catalogue and browser engine checks. Hashes
+were regenerated only after independent outcome approval. No tuning or dependency update is included.
+The first exact-head CI exposed one additional hard-coded NEAR E2E hash missed by the golden/pin update.
+Independent comparison of all 795 seed-1/Retry rows, every legacy field/typed-array byte and raw event
+proved this is solely the added zero mode hash layout: score/distance/crash/input remained unchanged.
+See `docs/reviews/P2-04a2/near-miss-pin.md`; only that expected hash was changed, with all assertions kept.
 
 P2-03b independent lifecycle and physical comparison evidence is in `docs/reviews/P2-03b/`; the default-input
 replay records a completed close pass without retuning or state injection. The new hash layout stores all
@@ -346,7 +356,28 @@ Since ADR-022 every default in this table is an accepted decision; a new owner a
   Disabling the flag removes near events/points without changing previous physical outcomes. The 50 base
   points and 10 meter already come from GDD tuning; this policy bundle is proposed, not owner-approved.
 
+- **Q28 (selected under delegated gameplay authority, 2026-10-26): finite LIFTOFF episode.**
+  The owner delegated gameplay-rule choices to the orchestrator; the wait for R1–R11 is lifted. This does
+  not authorize dependency updates, main merges or deployments. The new phone-preview request was cancelled.
+  P2-04a2 implements the first slice using existing tuning: auto-start from full meter after a surviving
+  ordinary tick, effects on the next tick, 300 active ticks then 60 grace ticks. A full meter earned during
+  active/grace is retained; activation requires a tick that started idle, so continuous protection is finite.
+  R1 preserves finite AIR during active without drain/regen; zero stored AIR permits flight and BOOST.
+  R2 destroys actual contacted traffic once, including support, without extra HOP/landing/SLAM/coyote.
+  R3 gives STUNT alignment to actual protected touchdowns; ordinary grading returns after grace.
+  R4 replaces the earlier proposed until-exit tail: final protected-tick closed end-overlaps are retired
+  without rewards, before contact-free awards/director reuse. Actual last-active-tick SMASH has priority.
+  R5 resets SMASH chain per episode; base/step/cap come from tuning, award uses the existing pot/N exactly
+  once, meter +0. Active speed multiplies existing BOOST and penalty factors. Protected contact is closed
+  swept AABB on one common x/y/relative-z time interval, with no substeps/epsilon; ordinary collisions stay
+  unchanged. No indefinite per-object immunity or safety-until-landing promise is introduced.
+  These choices prevent repeat rewards and expiry inside a trapped object; they do not prove full-route
+  fairness or balance. Independent outcome/replay/geometry checks are required before completion.
+  COSMONAUT/OVERDRIVE/pickup choices remain subsequent implementation cards under the same authority,
+  not questions awaiting a further owner response. The four unrelated deferred tuning proposals remain untouched.
+
 ## Change log
+- 2026-10-26 — Q28: delegated gameplay choices; finite LIFTOFF contract P2-04a2, no preview publication.
 - 2026-10-23 — Kit created from reference screenshot analysis.
 - 2026-10-23 — v0.2: Moscow × GTA VI-inspired direction (proposed), security/anti-cheat, infrastructure and
   load model, scenario catalogue, host embedding contract, test strategy, multi-agent system, Phases A and D0.

@@ -1,8 +1,9 @@
-import type { SimTuning } from '@kometa/shared';
+import { ModeKind, type SimTuning } from '@kometa/shared';
 import { createEventBuffer, type EventBuffer } from './events';
 import { laneCenterX } from './lanes';
 import { createRng, type RngState } from './rng';
 import { createTraffic, type Traffic } from './traffic';
+import { createModeClock, type ModeClock } from './mode-clock';
 
 // Sim state (ARCHITECTURE §4.2), grown task by task. Lane space: x is lateral metres, positive to the driver's
 // right; lane 0 is the leftmost lane; z is forward distance since the last origin shift; units m, s, L.
@@ -76,6 +77,8 @@ export type ScoreState = {
   roofDistanceM: number;
 };
 
+export type ModeState = ModeClock & { kind: ModeKind; smashChain: number };
+
 export type SimState = {
   tick: number;
   readonly seed: number;
@@ -88,6 +91,8 @@ export type SimState = {
   readonly director: DirectorState;
   /** Banked score, pending series and interval counters (GDD §9). */
   readonly score: ScoreState;
+  /** Active/grace ticks and per-episode destruction count; allocated once per run. */
+  readonly mode: ModeState;
   readonly events: EventBuffer;
 };
 
@@ -148,6 +153,7 @@ export function createSimState(seed: number, tuning: SimTuning): SimState {
     traffic: createTraffic(),
     director: { nextRowM: tuning.director.firstRowM },
     score: { total: 0, pot: 0, streakN: 0, streakTicksLeft: 0, meter: 0, boostTicks: 0, roofDistanceM: 0 },
+    mode: { ...createModeClock(), kind: ModeKind.none, smashChain: 0 },
     events: createEventBuffer(),
   };
 }
